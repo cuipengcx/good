@@ -1,0 +1,225 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>资讯列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<form id="form-article-list" action="/admin/article/list" >
+<input type="hidden" id="pageNum" name="pageNum" th:value="${pageNum}"/>
+<div class="page-container">
+	<div class="text-c"  style="text-align:left">
+		<button onclick="removeIframe()" class="btn btn-primary radius">关闭选项卡</button>
+		检索关键字
+	 <span class="select-box inline">
+		<input type="text" name="findtext" id="findtext" placeholder="类别/标题" style="width:250px" class="input-text" th:value="${findtext}"/>
+		<button name="" onclick="javascript:list();" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" data-title="添加资讯" onclick="article_add('添加资讯','/admin/article/addArticleInit')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a></span> <span class="r" >共有数据：<strong th:text="${pageInfo.total}">54</strong> 条</span> </div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="50" id="order0" onclick="javascript:articleorder('0')">
+						内部编号<a id="sp0" style="color: blue;"> ↑ </a>
+						<input type="hidden" id="ordertype" name="ordertype" th:value="${ordertype}"/>
+						<input type="hidden" id="ordervalue" name="ordervalue" th:value="${ordervalue}"/>
+					</th>
+					<th width="30" id="order1" onclick="javascript:articleorder('1')">
+						类别<a id="sp1" style="color: blue;"> ↑ </a>
+					</th>
+					<th width="150">标题</th>
+					<th width="20">排序</th>
+					<th width="60" id="order2" onclick="javascript:articleorder('2')">
+						添加时间<a id="sp2" style="color: blue;"> ↑ </a>
+					</th>
+					<th width="25">是否显示</th>
+					<th width="60">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c" th:each="model:${pageInfo.list}" th:object="${model}">
+					<td th:text="*{id}">1</td>
+					<td th:text="*{description}">金恪动态</td>
+					<td class="text-l" th:text="*{title}"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','article-zhang.html','10001')" title="查看">资讯标题</u></td>
+					<td th:text="*{order_number}">0</td>
+					<td th:text="*{#dates.format(createTime,'yyyy-MM-dd')}">2014-6-11</td>
+					<td class="td-status">
+						<span th:if="*{is_use} == 1" th:text="已发布" class="label label-success radius">已发布</span>
+						<span th:if="*{is_use} == 0" th:text="已下架" class="label label-defaunt radius">已下架</span>
+					</td>
+					<td class="f-14 td-manage">
+						<a style="text-decoration:none" th:if="*{is_use} == 0" th:onClick="'javascript:article_start(' + this + ',' + *{id} + ')'" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>
+						<a style="text-decoration:none" th:if="*{is_use} == 1" th:onClick="'javascript:article_stop(' + this + ',' + *{id} + ')'" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
+						<a style="text-decoration:none" class="ml-5" th:onclick="'javascript:article_edit(\'资讯编辑\',\'/admin/article/editArticleInit\',' + *{id} + ')'" onClick="article_edit('资讯编辑','/admin/article/addArticleInit','10001')" href="javascript:;" title="编辑">
+						<i class="Hui-iconfont">&#xe6df;</i></a> 
+						<a style="text-decoration:none" class="ml-5" th:onClick="'javascript:article_del(' + this + ',' + *{id} + ')'" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div th:replace="admin/page :: page"></div>
+	</div>
+</div>
+<div style="margin-top:15px; text-align:center;" id="page11"></div>
+<div th:replace="admin/footer :: footer"></div>
+</form>
+
+<!--请在下方写此页面业务相关的脚本-->
+<!-- <script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script>  -->
+<!-- <script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script>  -->
+<!-- <script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script> -->
+<script type="text/javascript">
+
+/*资讯-添加*/
+function article_add(title,url,w,h){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+/*资讯-编辑*/
+function article_edit(title,url,id,w,h){
+
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url + "?id=" + id
+	});
+	layer.full(index);
+}
+/*资讯-删除*/
+function article_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '/admin/article/delArticle',
+			data : {
+				"id" : id
+			},
+			dataType: 'json',
+			success: function(data){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("删除资讯出错");
+                if(XMLHttpRequest.status == 403){
+                    layer_close();
+                    errorMessage('无权操作!');
+                }else {
+                    errorMessage("系统错误!");
+                }
+            },
+		});		
+	});
+}
+
+/*资讯-下架*/
+function article_stop(obj,id){
+	layer.confirm('确认要下架吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '/admin/article/updateIsuse',
+			dataType: 'json',
+			data : {
+				"id" : id,
+				"is_use" : 0
+			},
+			success: function(data){
+				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
+				$(obj).remove();
+				layer.msg('已下架!',{icon: 5,time:1000});
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("下架处理出错");
+                if(XMLHttpRequest.status == 403){
+                    layer_close();
+                    errorMessage('无权操作!');
+                }else {
+                    errorMessage("系统错误!");
+                }
+            },
+		});
+
+	});
+}
+
+/*资讯-发布*/
+function article_start(obj,id){
+	layer.confirm('确认要发布吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '/admin/article/updateIsuse',
+			dataType: 'json',
+			data : {
+				"id" : id,
+				"is_use" : 1
+			},
+			success: function(data){
+				$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
+				$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
+				$(obj).remove();
+				layer.msg('已发布!',{icon: 6,time:1000});
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("发布处理出错");
+                if(XMLHttpRequest.status == 403){
+                    layer_close();
+                    errorMessage('无权操作!');
+                }else {
+                    errorMessage("系统错误!");
+                }
+            },
+		});
+	});
+}
+
+/** 检索 */
+function list(){
+	$("#form-article-list").submit();
+}
+
+laypage({
+	  cont: 'page11',
+	  pages: $("#pages").val(), //可以叫服务端把总页数放在某一个隐藏域，再获取。假设我们获取到的是18
+	  curr: $("#pageNum").val(), 
+	  jump: function(e, first){ //触发分页后的回调
+	    if(!first){ //一定要加此判断，否则初始时会无限刷新
+	      $("#pageNum").val(e.curr)
+	      $("#form-article-list").submit();
+	    }
+	  }
+});
+
+/* 排序搜索 */ 
+function articleorder(order){
+
+	$("#ordertype").val(order);
+	if($("#ordervalue").val() == "0"){
+		$("#ordervalue").val("1");
+	} else {
+		$("#ordervalue").val("0");
+	}
+	
+	$("#form-article-list").submit();
+}
+
+//排序样式切换
+$(function (){
+
+	$("#sp0").html(" ↑ ");
+	$("#sp1").html(" ↑ ");
+	$("#sp2").html(" ↑ ");
+	
+	if($("#ordervalue").val() == "1"){
+		$("#sp"+$("#ordertype").val()).html(" ↓ ");
+	}
+
+});
+</script> 
+</body>
+</html>

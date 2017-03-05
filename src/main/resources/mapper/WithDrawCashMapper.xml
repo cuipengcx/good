@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.WithDrawCashMapper">
+ <resultMap type="com.jk.model.WithDrawCash" id="BaseMap">
+ 	<result column="project_id" property="project_id" jdbcType="BIGINT"/>
+ 	<result column="project_name" property="project_name" jdbcType="VARCHAR"/>
+ 	<result column="user_id" property="user_id" jdbcType="BIGINT"/>
+ 	<result column="user_name" property="user_name" jdbcType="VARCHAR"/>
+ 	<result column="withdraw_amount" property="withdraw_amount" jdbcType="DECIMAL"/>
+ 	<result column="refuse_reason" property="refuse_reason" jdbcType="VARCHAR"/>
+ 	<result column="status" property="status" jdbcType="INTEGER"/>
+ 	<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+ 	<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"/>
+ </resultMap>
+ 
+  <select id="withdrawcashList" resultMap="BaseMap" parameterType="map">
+	  select id, project_id,project_name,user_id,user_name,withdraw_amount/100 withdraw_amount,refuse_reason, status, create_time,modify_time  from t_withdrawcash
+	  <where> 
+	  	  1=1
+		  <if test="findproject != null and findproject!=''">
+		       and (project_id like '%${findproject}%' or project_name like '%${findproject}%')
+		  </if> 
+		  <if test="finduser != null and finduser!=''">
+		       and (user_id like '%${finduser}%' or user_name like '%${finduser}%')
+		  </if> 
+		  <if test="findtimestart != null and findtimestart!=''">
+		       <![CDATA[ AND DATE_FORMAT(create_time, '%Y-%m-%d') >= #{findtimestart} ]]>  
+		  </if> 
+		  <if test="findtimeend != null and findtimeend!=''">
+		       <![CDATA[ AND DATE_FORMAT(create_time, '%Y-%m-%d') <= #{findtimeend} ]]>  
+		  </if> 
+	  </where>
+	  order by ${ordertype} ${ordervalue}
+	  
+  </select>
+  
+</mapper>

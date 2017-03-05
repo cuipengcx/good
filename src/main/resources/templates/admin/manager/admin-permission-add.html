@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css"></head>
+
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-admin-permission-add" >
+        <input type="hidden" th:name="parentName" th:id="parentName"/>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>类型：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input type="radio" id="sex-1" checked="checked" th:name="type" th:value="0"/>
+					<label for="sex-1">目录</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="sex-2" name="sex" th:name="type" th:value="1"/>
+					<label for="sex-2">菜单</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="sex-3" name="sex" th:name="type" th:value="2"/>
+					<label for="sex-3">按钮</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>节点名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="name" th:name="name"/>
+			</div>
+		</div>
+		<div class="row cl parentDiv">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>上级节点：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box" style="width:250px;">
+				<select class="select" name="adminRole" size="1" th:name="parentId" id="parentId">
+					<option value="">--请选择--</option>
+				</select>
+				</span>
+			</div>
+		</div>
+		<div class="row cl URLDiv">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>URL：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="访问URL" name="url" id="url" th:name="url"/>
+			</div>
+		</div>
+		<div class="row cl permsDiv">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>授权标识：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="多个用逗号分割，如:user:list,user:create" name="perms" id="perms" th:name="perms"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">排序号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="number" class="input-text" name="sort" id="sort" th:name="sort" th:value="0"/>
+			</div>
+		</div>
+		<div class="row cl iconDiv">
+			<label class="form-label col-xs-4 col-sm-3">图标：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" placeholder="菜单图标" name="icon" id="icon" th:name="icon"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;"/>
+			</div>
+		</div>
+	</form>
+</article>
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/admin/manager/admin-permission-add.js}"></script>
+</body>
+</html>

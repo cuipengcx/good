@@ -1,0 +1,116 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>资讯类别列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯类别管理 <span class="c-gray en">&gt;</span> 资讯类别列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<form id="form-article-list" action="/admin/article/list" >
+<input type="hidden" id="pageNum" name="pageNum" th:value="${pageNum}"/>
+<div class="page-container">
+	<div class="text-c"  style="text-align:left">
+		<button onclick="removeIframe()" class="btn btn-primary radius">关闭选项卡</button>
+	</div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"> <a class="btn btn-primary radius" data-title="添加父类别" onclick="addparent('添加父类别','/admin/articletype/addArticleTypeInit')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加父类别</a></span> <span class="r" >共有数据：<strong th:text="${allTypeslist.size()}">54</strong> 条</span> </div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="50" >内部编号</th>
+					<th width="150">名称</th>
+					<th width="20">描述</th>
+					<th width="20">排序</th>
+					<th width="60" >添加时间</th>
+					<th width="60">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c" th:each="model:${allTypeslist}" th:object="${model}">
+					<td>
+						<b th:if="*{parent_id} == -1" th:text="*{id}">1</b>
+						<span th:if="*{parent_id} != -1" th:text="*{id}">1</span>
+					</td>
+					<td>
+						<b th:if="*{parent_id} == -1" th:text="*{name}">关于我们</b>
+						<span th:if="*{parent_id} != -1" th:text="*{name}">关于我们</span>
+					</td>
+					<td>
+						<b th:if="*{parent_id} == -1" th:text="*{description}">关于我们父菜单</b>
+						<span th:if="*{parent_id} != -1" th:text="*{description}">关于我们父菜单</span>
+					</td>
+					<td>
+						<b th:if="*{parent_id} == -1" th:text="*{order_number}">0</b>
+						<span th:if="*{parent_id} != -1" th:text="*{order_number}">0</span>
+					</td>
+					<td>
+						<b th:if="*{parent_id} == -1" th:text="*{#dates.format(createTime,'yyyy-MM-dd')}">2014-6-11</b>
+						<span th:if="*{parent_id} != -1" th:text="*{#dates.format(createTime,'yyyy-MM-dd')}">2014-6-11</span>
+					</td>
+					<td class="f-14 td-manage">
+						<a style="text-decoration:none" th:if="*{parent_id} == -1" th:onClick="'javascript:article_addchild(' + this + ',' + *{id} + ')'" href="javascript:;" title="在该父类下添加子类">添加子类</a>
+						<a style="text-decoration:none" class="ml-5"  th:onClick="'javascript:articleType_del(' + this + ',' + *{id} + ')'" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div style="margin-top:15px; text-align:center;" id="page11"></div>
+<div th:replace="admin/footer :: footer"></div>
+</form>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+/*资讯-添加父类*/
+function addparent(title,url,w,h){
+
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url + "?parentid=-1"
+	});
+	layer.full(index);
+}
+
+/*资讯类别-删除*/
+function articleType_del(obj,id){
+	layer.confirm('确认要删除吗？',function(index){
+		$.ajax({
+			type: 'POST',
+			url: '/admin/articletype/delArticleType',
+			data : {
+				"id" : id
+			},
+			dataType: 'json',
+			success: function(data){
+// 				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+				window.location.reload();
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {
+				alert("删除资讯类别出错!");
+	            if(XMLHttpRequest.status == 403){
+	                layer_close();
+	                errorMessage('无权操作!');
+	            }else {
+	                errorMessage("系统错误!");
+	            }
+	        },
+		});		
+	});
+}
+
+
+/*资讯-添加子类*/
+function article_addchild(obj,id){
+	var index = layer.open({
+		type: 2,
+		title: "添加子类",
+		content: "/admin/articletype/addArticleTypeInit?parentid=" + id
+	});
+	layer.full(index);
+}
+</script> 
+</body>
+</html>

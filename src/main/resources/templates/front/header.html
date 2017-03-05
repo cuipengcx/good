@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="css">
+    <meta charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" th:href="@{/front-css/reset.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/front-css/main.css}">
+<!-- 	<link rel="stylesheet" type="text/css" th:href="@{/front-css/normalize.css}"> -->
+	<link rel="stylesheet" type="text/css" th:href="@{/front-css/pcMain.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/front-css/style.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/front-css/swiper.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/select2/select2.min.css}"/>
+    <script type="text/javascript" th:src="@{/js/jquery.1.8.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/layer/2.4/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/jquery.validation/1.14.0/jquery.validate.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/jquery.validation/1.14.0/validate-methods.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/jquery.validation/1.14.0/messages_zh.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/My97DatePicker/4.8/WdatePicker.js}"></script>
+    <script type="text/javascript" th:src="@{/h-ui/lib/laypage/1.3/laypage.js}"></script>
+    <script type="text/javascript" th:src="@{/js/layerUtil.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/front/banner.js}"></script>
+	<script type="text/javascript" th:src="@{/js/front/main.js}"></script>
+	<script type="text/javascript" th:src="@{/js/front/swiper.js}"></script>
+	<script type="text/javascript" th:src="@{/js/front/project/project-alert.js}"></script>
+</head>
+<body th:fragment="header">
+		<div class="container clearfix">
+			<h1 class="pl logo">
+				<a href="index.html"><img th:src="@{/front-img/logo.png}"></a>
+			</h1>
+			<div class="nav pl">
+				<a href="/front/find/list" data-tag="find">发现</a>
+				<a href="range.html" data-tag="range">榜单</a>
+				<a href="javascrip:;" th:onclick="'javascript:checkUserAuthenticationInfo();'" data-tag="create">新建项目</a>
+				<a href="about.html" data-tag="about">关于我们</a>
+			</div>
+			<!-- 未登录状态 -->
+			<div class="login_and_reg pr" th:if="${session.frontUser == null}">
+				<a href="login.html" th:href="@{/front/login}">登录</a>
+				<a href="register.html" th:href="@{/front/register}">注册</a>
+			</div>
+			<!-- 登录状态 -->
+			<div class="is_login pr clearfix" th:unless="${session.frontUser == null}">
+				<img class="pl" th:src="@{/front-img/icon_home_head_img.png}">
+				<p class="pl" th:text="${session.frontUser.email}">谁谁谁</p>
+				<div class="hide_box">
+					<a href="pc-myProfile.html">个人中心</a>
+					<a href="login.html" th:href="@{/front/logout}">退出</a>
+				</div>
+			</div>
+			<div class="search pr">
+				<button class="pr search_btn">搜索</button>
+				<input type="text" class="search_input pr" name="">
+			</div>
+		</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jk.mapper.AuthenticationInfoMapper">
+
+    <resultMap id="AuthenticationInfoResultMap" type="authenticationInfo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="good_user_id" property="goodUserId" jdbcType="BIGINT" />
+        <result column="auth_user_name" property="authUserName" jdbcType="VARCHAR" />
+        <result column="id_card" property="idCard" jdbcType="VARCHAR" />
+        <result column="id_card_face" property="idCardFace" jdbcType="VARCHAR" />
+        <result column="id_card_back" property="idCardBack" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="auth_legal_user_name" property="authLegalUserName" jdbcType="VARCHAR" />
+        <result column="perms" property="perms" jdbcType="VARCHAR" />
+        <result column="business_licence" property="businessLicence" jdbcType="VARCHAR" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
+        <result column="register_address" property="registerAddress" jdbcType="VARCHAR" />
+        <result column="company_introduce" property="companyIntroduce" jdbcType="VARCHAR" />
+        <result column="check_time" property="checkTime" jdbcType="TIMESTAMP" />
+        <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+        <result column="admin_id" property="adminId" jdbcType="BIGINT" />
+        <result column="admin_name" property="adminName" jdbcType="VARCHAR" />
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="findList" resultMap="AuthenticationInfoResultMap">
+        SELECT * FROM t_authentication_info auth
+        <where>
+            <if test="type != null and type != ''">
+                AND auth.type = #{type}
+            </if>
+            <if test="username != null and username != ''">
+                <if test="type == 0 ">
+                    AND (auth.auth_legal_user_name LIKE CONCAT(CONCAT('%', #{username}),'%') or auth.auth_user_name LIKE CONCAT(CONCAT('%', #{username}),'%'))
+                </if>
+                <if test="type == 1">
+                    AND auth.auth_user_name LIKE CONCAT(CONCAT('%', #{username}),'%')
+                </if>
+                <if test="type == 2 ">
+                    AND auth.auth_legal_user_name LIKE CONCAT(CONCAT('%', #{username}),'%')
+                </if>
+            </if>
+            <if test="checkStatus != null">
+               AND auth.check_status = #{checkStatus}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND create_time between  #{startTime} and #{endTime}
+            </if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="/admin/header :: css">
+<title>图片组</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目管理 <span class="c-gray en">&gt;</span> 项目列表 <span class="c-gray en">&gt;</span> 项目里程碑<span class="c-gray en">&gt;</span> 图片组<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<div class="page-container">
+	<div class="portfolio-content">
+		<ul class="cl portfolio-area">
+			<th:block  th:each="item:${listImg}" >	
+				<li class="item">
+					<div class="portfoliobox">
+						<div class="picbox"><a th:href="${item}" data-lightbox="gallery" data-title=""><img th:src="${item}"></a></div>
+						<div class="textbox"></div>
+					</div>
+				</li>
+			</th:block>
+		</ul>
+	</div>
+</div>
+
+<script type="text/javascript" th:src="@{/h-ui/lib/lightbox2/2.8.1/js/lightbox-plus-jquery.min.js}"></script> 
+<div th:replace="/admin/footer :: footer"></div>
+<script type="text/javascript">
+$(function(){
+	$.Huihover(".portfolio-area li");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+<title>项目列表</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 项目管理 <span class="c-gray en">&gt;</span> 项目列表 <span class="c-gray en">&gt;</span> 专家评审<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
+<form action="" th:action="@{/admin/comment/listExpertComment}"   th:method="post">
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20">
+		<span class="l">
+		<a href="javascript:;" th:onclick="'javascript:expert_comment_add(\'添加评论\',\'/admin/comment/addComment\','+${projectId}+',\'1000\',\'600\');'" class="btn btn-primary radius">
+		<i class="Hui-iconfont">&#xe600;</i> 添加评论</a>
+		</span> 
+		<span class="r">共有数据：<strong  th:text="${pageInfo.total}">54</strong> 条</span> 
+	</div>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th scope="col" colspan="13">项目列表</th>
+			</tr>
+			<tr class="text-c">
+				<th width="150">项目编号</th>
+				<th width="90">项目名称</th>
+				<th width="90">专家姓名</th>
+				<th width="90">专家职称</th>
+				<th width="100">图片</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		<tbody>		
+			<tr class="text-c" th:each="expertComment : ${pageInfo.list}" >
+				<td th:text="${expertComment.projectNumber}">项目编号</td>
+				<td th:text="${expertComment.projectName}">项目名称</td>
+				<td th:text="${expertComment.expertName}">专家姓名</td>	
+				<td th:text="${expertComment.expertTitle}">专家职称</td>
+				<td><img width="100" class="picture-thumb" th:src="${expertComment.imgCode}"></td>											
+				<td class="td-manage">					
+				<a title="编辑项目" href="javascript:;" th:onClick="'javascript:expert_comment_update(\'专家评语编辑\',\'/admin/comment/updateExpertComment/'+${expertComment.id}+'\',\'800\',\'600\');'" class="ml-5" style="text-decoration:none">
+				<i class="Hui-iconfont">&#xe6df;</i></a> 
+				<a title="删除" href="javascript:;" th:onClick="'javascript:expert_comment_delete(this,'+${expertComment.id}+');'" class="ml-5" style="text-decoration:none">
+				<i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:replace="admin/page :: page"></div>
+</div>
+<input type="hidden" id="projectId" name="projectId" th:value="${projectId}"/>
+</form>
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/project/project-expert-list.js}"></script>
+</body>
+</html>

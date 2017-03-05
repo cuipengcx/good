@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="front/header :: css"></head>
+
+<body>
+<!--头部导航-->
+<div class="header header_color header_shadow header_font_size" th:include="front/header :: header"></div>
+
+<div class="login-box">
+    <h1>登录</h1>
+    <ul>
+        <li>
+            <input type="text" name="" placeholder="请输入邮箱账号" th:name="username">
+        </li>
+        <li>
+            <input type="password" name="" placeholder="请输入登录密码" th:name="password">
+        </li>
+        <li>
+            <input type="text" name="" placeholder="请输入验证码" style="width: 200px" th:name="imageCode"/>
+            <span class="verfiy">
+                <img src="/front/imageCode" th:onclick="'javascript:changImg();'" th:id="imageCodeId" style="cursor:pointer;"/>
+            </span>
+        </li>
+    </ul>
+    <div>
+        <label>
+            <input type="checkbox" th:name="remeberMe" th:id="remeberMe"/>
+            <span>记住密码</span>
+        </label>
+        <a href="forget_pass_1.html">
+            <span class="forget-pass">忘记密码？</span>
+        </a>
+
+    </div>
+    <div class="btn btnSubmit" th:onclick="'javascript:onLine(\'/front/login\')'">立即登录</div>
+    <div class="or-line">
+        <em>或</em>
+    </div>
+    <div class="btn" style="background:#3b5998"><a href="register.html" th:href="@{/front/register}">注册账号</a></div>
+</div>
+
+<!-- footer -->
+<div th:replace="front/footer :: footer"></div>
+
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.cookie.js}"></script>
+<script th:inline="javascript">
+    var usernameObj = $("input[name = 'username']");
+    var passwordObj = $("input[name = 'password']");
+    var imageCodeObj = $("input[name = 'imageCode']");
+    var remeberMe = $("input[name = 'remeberMe']");
+
+    $(function () {
+        // 记住用户名
+        if($.cookie("remeberMe") == "true") {
+            remeberMe.prop("checked", true);
+            usernameObj.val($.cookie("username"));
+            passwordObj.val($.cookie("password"));
+//        passwordObj.focus();
+        } else {
+            remeberMe.prop("checked", false);
+//        $username.focus();
+        }
+    });
+
+    function onLine(url) {
+        $.ajax({
+            type:"POST",
+            dataType:"json",
+            url: url,
+            data:{
+                "username": usernameObj.val(),
+                "password": passwordObj.val(),
+                "imageCode": imageCodeObj.val(),
+                "timestamp":new Date().getTime()
+            },
+            statusCode: {
+                200: function(){
+                    succeedMessage("登录成功!",1000);
+                    window.location.href = "/front/index";
+                },
+                404: function(data){
+                    warningMessage(data.responseText);
+                    changImg();
+                },
+                401: function (data) {
+                    warningMessage(data.responseText);
+                    changImg();
+                },
+                405: function (data) {
+                    warningMessage(data.responseText);
+                    changImg();
+                },
+                500: function(){
+                    errorMessage('系统错误!',1000);
+                    changImg();
+                }
+            },
+            beforeSend:function () {
+                if(usernameObj.val() == ""){
+                    warningMessage("请输入用户名!",1000);
+                    usernameObj.focus();
+                    return false;
+                }
+                if(passwordObj.val() == ""){
+                    warningMessage("请输入密码!",1000);
+                    passwordObj.focus();
+                    return false;
+                }
+                if(imageCodeObj.val() == ""){
+                    warningMessage("请输入验证码!",1000);
+                    imageCodeObj.focus();
+                    return false;
+                }
+
+                if (remeberMe.prop("checked")) {
+                    $.cookie("remeberMe", "true", {path:"/",expires: 7 }); //存储一个带7天期限的cookie
+                    $.cookie("username", usernameObj.val(),{path:"/",expires: 7});
+                    $.cookie("password", passwordObj.val(), { path:"/",expires: 7 });
+                } else {
+                    //removeCookie("adminUsername");
+                    $.cookie("remeberMe", "false", { path:"/",expire: -1 });
+                    $.cookie("username", "", {path:"/", expires: -1 });
+                    $.cookie("password", "", {path:"/", expires: -1 });
+                }
+
+            }
+        });
+    }
+
+    /**
+     * 切换验证码
+     */
+    function changImg() {
+        $("#imageCodeId").attr("src", "/front/imageCode?date="+new Date())
+    }
+
+    $("body").keydown(function() {
+        if (event.keyCode == "13") {//keyCode=13是回车键
+            $('.btnSubmit').trigger("click");
+        }
+    });
+</script>
+</html>

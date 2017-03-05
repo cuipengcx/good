@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>敏感词编辑</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-sw-edit" action="#">
+		<input type="hidden" name="id" id="id" th:value="${sw.id}" >
+		<input type="hidden" name="version" id="version" th:value="${sw.version}" >
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>敏感词：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="word" name="word" th:value="${sw.word}"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="sw_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<div th:replace="admin/footer :: footer"></div>
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+
+$(function(){
+	
+	//表单验证
+	$("#form-sw-edit").validate({
+		rules:{
+			word:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			
+		}
+	});
+});
+
+function sw_save_submit(){
+
+	if (! $("#form-sw-edit").valid()) {
+        return;
+    }
+
+	var id = $("#id").val();
+	var word = $("#word").val();
+	var version = $("#version").val();
+	
+	$.ajax({
+		url : "/admin/sensitiveword/doEditSw",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"id" : id,
+			"word" : word,
+			"version" : version
+		},
+		success : function(data) {
+			alert("敏感词编辑成功");
+			var index = parent.layer.getFrameIndex(window.name);
+			//parent.$('.btn-refresh').click();
+			window.parent.location.reload();
+			parent.layer.close(index);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("对不起，出现错误!");
+            if(XMLHttpRequest.status == 403){
+                layer_close();
+                errorMessage('无权操作!');
+            }else {
+                errorMessage("系统错误!");
+            }
+        },
+	});
+
+}
+
+function removeIframe(){
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.close(index);
+}
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

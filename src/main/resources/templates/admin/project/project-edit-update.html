@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>项目编辑</title>
+</head>
+<body>
+
+
+<div class="page-container">
+	<form class="form form-horizontal" id="form-project-edit">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目编号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" th:value="${project.projectNumber}"  placeholder="项目名称应简单、 具体，且易于记忆。项目名称会被用于关键字检索。" maxlength="20"  id="projectNumber" name="projectNumber"  readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" th:value="${project.projectName}"   placeholder="0~20有效数字" maxlength="20"  id="projectName" name="projectName" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目导语：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectLead"  id="projectLead" th:text="${project.projectLead}"   cols="" rows="" class="textarea"  placeholder="只用一句话介绍项目"   onKeyUp="$.Huitextarealength(this,200)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+				<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目照片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<img id="imgCode" name="imgCode" width="200" height="150" th:src="${project.projectPicture}">
+			    <div id="filePicker"><input type="file" name="imgFile" id="files" onchange="uploadImage('files','imgCode');"></div>
+			    <input type="hidden" name="projectPicture" id="projectPicture" th:value="${project.projectPicture}"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<span class="select-box">
+					<select class="select" disabled="disabled"   id="projectType" name="projectType">
+						<option>请选择</option>
+						<option   th:selected="${project.projectType==1}"   value="1">个人项目</option>
+						<option  th:selected="${project.projectType==2}"    value="2">企业项目</option>
+					</select>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">账户名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.userName}"  placeholder="" id="userName" name="userName" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">机构/个人姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.authenticationName}"  placeholder="" id="authenticationName" name="authenticationName" readonly="readonly"/>
+			</div>
+		</div>		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目类别：</label>
+			<div class="formControls col-xs-8 col-sm-9">			
+				<span class="select-box">
+						<select class="select" id="industryId" name="industryId"> 
+							<option  th:each="industry:${industryList}"  th:value="${industry.id}"      th:selected="${industry.id==project.projectType}"  th:text="${industry.industryName}" >男</option>
+						</select>
+			    </span>			
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目城市：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+			    <select class="select_gallery" id="cityId" name="cityId">						           	  
+		           	  <th:block  th:each="parentArea:${areaParentList}">
+		            		<optgroup th:label="${parentArea.areaName}">
+			          			<th:block th:each="childArea:${areaChildList}">
+			          				<option  th:if="${parentArea.id==childArea.parentId}"  th:value="${childArea.id}" th:selected="${childArea.id==project.cityId}" th:text="${childArea.areaName}"></option>
+			          			</th:block>   
+			           		</optgroup>							           	  
+	           	  	  </th:block>
+				</select>   								
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目需求资金：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectCapital}/100"  placeholder="" id="projectCapital" name="projectCapital"  maxlength="12"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预计收益人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.earnings}"  placeholder="" id="earnings" name="earnings"  maxlength="10"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目合作伙伴：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectPartner}"  placeholder="不能为空,多个合伙人用符号;隔开。" id="projectPartner" name="projectPartner" maxlength="100"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目创建时间：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<input type="text" class="input-text" value=""  readonly="readonly" th:value="${#dates.format(project.createTime, 'yyyy-MM-dd')}"  placeholder=""id="create_time" name="createTime" />
+			</div>
+		</div>		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目周期-开始时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${#dates.format(project.beginTime, 'yyyy-MM-dd')}"  placeholder="" onfocus="WdatePicker({dateFmt:'yyyy/MM/dd'})" id="beginTime" name="beginTime" />
+			</div>
+		</div>		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目周期-结束时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${#dates.format(project.endTime, 'yyyy-MM-dd')}"  placeholder="" onfocus="WdatePicker({dateFmt:'yyyy/MM/dd'})" id="endTime" name="endTime" />
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>收益群体描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="incomeGroupDescription"  id="incomeGroupDescription" th:text="${project.incomeGroupDescription}"   cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目需求分析 ：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectRequiredmentAnalysis"  id="projectRequiredmentAnalysis" th:text="${project.projectRequiredmentAnalysis}"   cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-120" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,120)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/120</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目团队-全职人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.fullTimeNumber}"  placeholder="" id="fullTimeNumber" name="fullTimeNumber" maxlength="5"/>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目团队-兼职人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.partTimeNumber}"  placeholder="" id="partTimeNumber" name="partTimeNumber"  maxlength="5"/>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目团队-志愿者人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.volunteerNumber}"  placeholder="" id="volunteerNumber" name="volunteerNumber" maxlength="5"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目目标：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectObjectives"  id="projectObjectives" th:text="${project.projectObjectives}"   cols="" rows="" class="textarea"  placeholder="" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目设计路径1：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadOne"  id="projectDesignRoadOne" th:text="${project.projectDesignRoadOne}"   cols="" rows="" class="textarea"  placeholder="必填" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目设计路径2：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadTwo"  id="projectDesignRoadTwo" th:text="${project.projectDesignRoadTwo}"   cols="" rows="" class="textarea"  placeholder="选填"  onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目设计路径3：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadThree"  id="projectDesignRoadThree" th:text="${project.projectDesignRoadThree}"  cols="" rows="" class="textarea"  placeholder="选填"  onKeyUp="$.Huitextarealength(this,120)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预期成果1：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsOne"  id="expectedResultsOne" th:text="${project.expectedResultsOne}"   cols="" rows="" class="textarea"  placeholder="必填"  onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预期成果2：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsTwo"  id="expectedResultsTwo" th:text="${project.expectedResultsTwo}"   cols="" rows="" class="textarea"  placeholder="选填"  onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>预期成果3：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsThree"  id="expectedResultsThree" th:text="${project.expectedResultsThree}"  cols="" rows="" class="textarea"  placeholder="选填"  onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>			
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button  class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>编辑保存</button>
+				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<span class="c-red">只能操作带*号的选项</span>
+			</div>
+		</div>
+	<input type="hidden"  name="id"   th:value="${project.id}"/>
+	</form>
+</div>
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/ajaxfileupload.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/select2/select2.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/select2/zh-CN.js}"></script>
+</body>
+<script type="text/javascript">
+$(function(){ 
+	$(".select_gallery").select2({
+	placeholder: "请选择",
+    language: "zh-CN"
+	}); 
+}); 
+/**
+ * 上传图片
+ * @param fileElementId
+ * @param imageElementId
+ */
+function uploadImage(fileElementId, imageElementId) {
+	var path = $("#" + fileElementId).val();	
+	if(path == "") {
+		errorMessage("请选择上传的图片",2000);
+		return;
+	}
+	if (!isImageFile(path)) {
+		errorMessage("请上传图片",2000);
+		return;
+	}
+	jQuery.ajaxFileUpload({
+		url : "/upload/uploadimage",
+		secureuri : false,
+		fileElementId : fileElementId,
+		dataType : 'text',
+		success : function(data) {
+			var data = eval('(' + data + ')'); 
+			if (data.error > 0) {
+				$("#" + imageElementId).attr("src", "");
+				$("#projectPicture").val("");				
+				errorMessage(data.message,5000);
+				return;
+			}else{
+				succeedMessage("图片上传成功",5000);
+				$("#" + imageElementId).attr("src", data.dataurl);
+				$("#projectPicture").val(data.dataurl);
+			}
+		},
+		error : function(data, status, e) {
+			alert("上传图片失败");
+		}
+	})
+}
+/**
+ * 根据扩展名判断是否为图片
+ */
+function isImageFile(path) {
+	if (path.length == 0) {
+		return false;
+	}
+	var lowerPath = path.toLowerCase();
+	var number = lowerPath.lastIndexOf(".");
+	if(number == -1) 
+		return false;
+    var checkKey = lowerPath.substring(number+1,lowerPath.length);
+   if(checkKey == "jpg" || checkKey =="jpeg"  || checkKey =="png" || checkKey == "gif" ) {
+	    return true;
+	}
+	return false;
+}
+
+
+
+$(function () {			
+    $('.skin-minimal input').iCheck({
+        checkboxClass: 'icheckbox-blue',
+        radioClass: 'iradio-blue',
+        increaseArea: '20%'
+    }); 
+    
+    $("#form-project-edit").validate({
+    	rules:{
+    		projectName:{             //名称
+    			required:true
+    		},
+    		projectLead:{			  //导语
+    			required:true
+    		},
+    		projectCapital:{		//资金
+    			required:true,
+    			money:true  			
+    		},
+    		cityId:"required",
+    		earnings:{				//收益人数
+    			required:true,
+    			isIntGtZero:true
+    		},
+    		projectPartner:{		//合作伙伴
+    			required:true
+    		},
+    		beginTime:{				//开始时间
+    			required:true
+    		},
+    		endTime:{				//结束时间
+    			required:true
+    		},
+    		incomeGroupDescription:"required",//收益群体描述
+    		projectRequiredmentAnalysis:"required",//项目需求分析
+    		fullTimeNumber:{            //全职人数
+    			required:true,
+    			isIntGtZero:true
+    		},
+    		partTimeNumber:{			//业余人数
+    			required:true,
+    			isIntGtZero:true
+    		},
+    		volunteerNumber:{			//志愿者
+    			required:true,
+    			isIntGtZero:true
+    		},
+    		projectObjectives:"required",
+    		projectDesignRoadOne:"required",
+    		expectedResultsOne:"required",
+    		projectPicture:"required"
+    	},
+    	message:{
+    		projectName:{
+    			required:"项目名称不能为空"
+    		},
+    		projectLead:"导语不能为空",
+    		projectCapital:{
+    			required:"资金不能为空",
+    			money:"资金格式错误"
+    		},
+    		earnings:{
+    			required:"不能为空",
+    			earnings:"格式错误"
+    		},
+    		cityId:"请选择项目城市",
+    		beginTime:{
+    			required:"项目开始时间不能为空"
+    		},
+    		endTime:{
+    			required:"项目结束时间不能为空"
+    		},
+    		incomeGroupDescription:"收益群体描述不能为空",
+    		projectRequiredmentAnalysis:"项目需求分析不能为空",
+    		fullTimeNumber:{
+    			required:"全职人数不能为空",
+    			isIntGtZero:"格式错误"
+    		},
+    		partTimeNumber:{
+    			required:"业余人数不能为空",
+    			isIntGtZero:"格式错误"
+    		},
+    		volunteerNumber:{
+    			required:"志愿者不能为空",
+    			isIntGtZero:"格式错误"
+    		},
+    		projectObjectives:"项目目标不能为空",
+    		projectDesignRoadOne:"项目设计路径1不能为空",
+    		expectedResultsOne:"预期成果1不能为空",
+    		projectPicture:"请上传项目图片"
+    	},
+    	onkeyup:false,
+        focusCleanup:true,
+        success:"valid",
+        submitHandler:function(form){
+        	$("#projectCapital").val($("#projectCapital").val()*100);
+            $(form).ajaxSubmit({
+            	url:"/admin/project/ajaxProjectUpdate?"+Math.random(),
+            	dataType:"json",
+            	type:"post",
+            	success:function(data){
+            		if(data.status=='success'){	
+                		succeedMessage(data.message,5000);
+    	               var index = parent.layer.getFrameIndex(window.name);
+    	               parent.location.reload();
+    	               parent.layer.close(index);
+    				}else{
+    					errorMessage("编辑保存失败",2000);
+    				}
+            	},
+            	error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    if(XMLHttpRequest.status == 403){
+                        layer_close();
+                        errorMessage('无权操作!');
+                    }else {
+                        errorMessage("系统错误!");
+                    }
+                }         	
+            });          	
+           return false; // 非常重要，如果是false，则表明是不跳转，在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
+        }
+    	
+    });
+});
+
+
+
+</script>
+</html>

@@ -1,0 +1,113 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css"></head>
+<link rel="stylesheet" type="text/css" th:href="@{/h-ui/static/h-ui.admin/css/H-ui.login.css}" />
+
+<body>
+<input type="hidden" id="TenantId" name="TenantId" value="" />
+<div class="header"></div>
+<div class="loginWraper">
+  <div id="loginform" class="loginBox">
+    <form class="form form-horizontal" action="index.html" method="post" th:action="@{/admin/login}">
+      <div class="row cl">
+        <label class="form-label col-xs-3"><i class="Hui-iconfont">&#xe60d;</i></label>
+        <div class="formControls col-xs-8">
+          <input th:name="username" type="text" placeholder="账户" class="input-text size-L" />
+        </div>
+      </div>
+      <div class="row cl">
+        <label class="form-label col-xs-3">
+          <i class="Hui-iconfont">&#xe60e;</i>
+        </label>
+        <div class="formControls col-xs-8">
+          <input th:name="password" type="password" placeholder="密码" class="input-text size-L" />
+        </div>
+      </div>
+      <!--<div class="row cl">-->
+        <!--<div class="formControls col-xs-8 col-xs-offset-3">-->
+          <!--<input class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;">-->
+          <!--<img src="images/VerifyCode.aspx.png"> <a id="kanbuq" href="javascript:;">看不清，换一张</a> </div>-->
+      <!--</div>-->
+      <!--<div class="row cl">-->
+        <!--<div class="formControls col-xs-8 col-xs-offset-3">-->
+          <!--<label for="online">-->
+            <!--<input type="checkbox" name="online" id="online" value="">-->
+            <!--使我保持登录状态</label>-->
+        <!--</div>-->
+      <!--</div>-->
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <input type="button" class="btn btn-success radius size-L btnSubmit" value="&nbsp;登&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;" th:onclick="'javascript:onLine(\'/admin/login\');'"/>
+          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;取&nbsp;&nbsp;&nbsp;&nbsp;消&nbsp;"/>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="footer">Copyright 你的公司名称 by H-ui.admin.v2.3</div>
+<div th:replace="admin/footer :: footer"></div>
+<script th:inline="javascript">
+
+    if(self != top) {
+      top.location = self.location;
+    }
+
+    function onLine(url) {
+      var usernameObj = $("input[name = 'username']");
+      var passwordObj = $("input[name = 'password']");
+      $.ajax({
+        type:"POST",
+        dataType:"json",
+        url: url,
+        data:{
+          "username": usernameObj.val(),
+          "password": passwordObj.val(),
+          "timestamp":new Date().getTime()
+        },
+        statusCode: {
+          200: function(){
+            succeedMessage("登录成功!",1000);
+            window.location.href = "/admin/index";
+          },
+          404: function(){
+            warningMessage('用户不存在!',1000);
+          },
+          401: function () {
+            warningMessage('用户或密码错误!',1000);
+          },
+          403: function () {
+            warningMessage('用户或密码错误!',1000);
+          },
+          405: function () {
+            warningMessage('账户已锁定!',1000);
+          },
+          408: function () {
+            warningMessage('错误次数过多!',1000);
+          },
+          500: function(){
+            errorMessage('系统错误!',1000);
+          }
+        },
+        beforeSend:function () {
+           if(usernameObj.val() == ""){
+              warningMessage("请输入用户名!",1000);
+              usernameObj.focus();
+              return false;
+           }
+           if(passwordObj.val() == ""){
+             warningMessage("请输入密码!",1000);
+             passwordObj.focus();
+             return false;
+           }
+        }
+      });
+    }
+
+    $("body").keydown(function() {
+      if (event.keyCode == "13") {//keyCode=13是回车键
+        $('.btnSubmit').trigger("click");
+      }
+    });
+</script>
+</body>
+</html>

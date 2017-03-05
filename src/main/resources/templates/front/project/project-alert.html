@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head></head>
+<body th:fragment="project-alert">
+		<div class="alert_box" th:object="${goodUser}">
+			<div class="padding">
+				<h3>验证信息确认</h3>
+				<div class="alert_group clearfix">
+					<p class="pl">个人权益或者机构权益认证已经完成</p>
+					<img class="pr" th:if="*{personAuthed} or *{teamAuthed}" th:src="@{/front-img/icon_yes.png}">
+					<a class="pr"   th:unless="*{personAuthed} or *{teamAuthed}" href="#">验证</a>
+				</div>
+				<div class="alert_group clearfix">
+					<p class="pl">手机号码验证</p>
+					<img class="pr" th:if="*{mobilePhone!=null}"    th:src="@{/front-img/icon_yes.png}">
+					<a class="pr"   th:unless="*{mobilePhone!=null}"  href="javascript:;">验证</a>
+				</div>
+				<div class="alert_group clearfix">
+					<p class="pl">邮箱验证</p>
+					<img class="pr" th:if="*{emailAuthed}"     th:src="@{/front-img/icon_yes.png}">
+					<a class="pr"   th:unless="*{emailAuthed}" href="javascript:;">验证</a>
+				</div>
+				<p class="alert_b">如果已经完成操作，请刷新<a href="javascript:;" th:onclick="'javascript:checkUserAuthenticationInfo();'">点击重试</a></p>
+			</div>				
+		</div>
+<script type="text/javascript">
+
+$(function(){
+	if([[${flag}]]){
+		$("#home_alert").hide();
+		location.href="/front/project/toCreateInit";
+	}	
+});
+	
+</script>
+		
+</body>	

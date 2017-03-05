@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css"></head>
+
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>认证管理 <span class="c-gray en">&gt;</span>
+    认证列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<form id="myForm" th:action="@{/admin/authentication-info}" th:method="get">
+    <div class="page-container">
+        <div class="text-c">
+            类型:
+            <span class="select-box inline">
+                <select class="select" id="type" name="type">
+                    <option value="" th:selected="${type} == ''">全部</option>
+                    <option value="1" th:selected="${type} == 1">个人</option>
+                    <option value="2" th:selected="${type} == 2">机构</option>
+                </select>
+            </span>
+            状态:
+            <span class="select-box inline">
+                <select class="select" id="checkStatus" name="checkStatus">
+                    <option value="" th:selected="${checkStatus} == ''">全部</option>
+                    <option value="0" th:selected="${checkStatus} == 0">待审核</option>
+                    <option value="1" th:selected="${checkStatus} == 1">通过</option>
+                    <option value="2" th:selected="${checkStatus} == 2">拒绝</option>
+                </select>
+            </span>
+
+            申请日期范围：
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}'})" id="datemin" class="input-text Wdate" style="width:120px;" name="startTime" th:value="${startTime}" readonly="readonly"/>
+            -
+            <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d'})" id="datemax" class="input-text Wdate" style="width:120px;" name="endTime" th:value="${endTime}" readonly="readonly"/>
+
+            <input type="text" class="input-text" style="width:250px" placeholder="输入个人姓名/机构名" name="username" th:value="${username}"/>
+
+            <button type="submit" class="btn btn-success">
+                <i class="Hui-iconfont">&#xe665;</i>
+                搜索
+            </button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <!--<span class="l">-->
+            <!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+            <!--<a href="javascript:;" th:onclick="'javascript:admin_add(\'添加管理员\',\'/admin/manager/user/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>-->
+            <!--</span>-->
+            <span class="r">共有数据：<strong th:text="${pageInfo.total}" id="total">54</strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="6">认证列表</th>
+            </tr>
+            <tr class="text-c">
+                <th>个人名称/法人名称</th>
+                <th>认证类型</th>
+                <th>申请时间</th>
+                <th>审核状态</th>
+                <th>审核时间</th>
+                <th width="100">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" th:each="model:${pageInfo.list}" th:object="${model}">
+                <td>
+                    <span th:if="*{type} == 1" th:text="*{authUserName}"></span>
+                    <span th:if="*{type} == 2" th:text="*{authLegalUserName}"></span>
+                </td>
+                <td>
+                    <span th:if="*{type} == 1">个人</span>
+                    <span th:if="*{type} == 2">机构</span>
+                </td>
+                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}">3</td>
+                <td id="status">
+                    <span class="label radius label-warning" th:if="*{checkStatus} == 0">待审核</span>
+                    <span class="label radius label-success" th:if="*{checkStatus} == 1">通过</span>
+                    <span class="label radius label-danger" th:if="*{checkStatus} == 2">拒绝</span>
+                </td>
+                <td th:text="*{#dates.format(checkTime, 'yyyy-MM-dd HH:mm')}"></td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" onClick="article_shenhe(this,'10001')" th:onclick="'javascript:authentication_info_check(this, \'/admin/authentication-info-check/'+*{id}+'\',\'\',\'\');'"  href="javascript:;" title="审核" th:if="*{checkStatus} == 0">审核</a>
+                    <a title="详情" href="javascript:;" onclick="system_log_show(this,'10001')" th:onclick="'javascript:authentication_info_view(\'查看详情\', \'/admin/authentication-info-view/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:replace="admin/page :: page"></div>
+    </div>
+</form>
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/good/authentication-info.js}"></script>
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

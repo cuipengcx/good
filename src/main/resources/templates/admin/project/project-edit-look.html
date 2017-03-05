@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>项目详情</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/select2/select2.min.css}"/>
+</head>
+<body>
+
+
+<div class="page-container">
+	<form class="form form-horizontal" id="form-project-edit">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目编号：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectNumber}"  placeholder="" id="projectNumber" name="projectNumber" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectName}"  placeholder="" id="projectName" name="projectName" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目导语：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectLead"  id="projectLead" th:text="${project.projectLead}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-100" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,200)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>项目照片：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<img id="imgCode" name="imgCode" width="200" height="150" th:src="${project.projectPicture}">
+<!-- 			    <div id="filePicker"><input type="file" name="imgFile" id="files" onchange="uploadImage('files','img');"></div> -->
+<!-- 			    <input type="hidden" name="imgCode" id="imgCode" /> -->
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select class="select" disabled="disabled">
+					<option>请选择</option>
+					<option   th:selected="${project.projectType==1}"   value="1">个人项目</option>
+					<option  th:selected="${project.projectType==2}"    value="2">企业项目</option>
+				</select>
+				</span> </div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">账户名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.userName}"  placeholder="" id="userName" name="userName" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">机构/个人姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.authenticationName}"  placeholder="" id="authenticationName" name="authenticationName" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目类别：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+			<th:block  th:each="industry:${industryList}">	
+				<input  th:if="${industry.id==project.industryId}"   th:value="${industry.industryName}"  type="text" class="input-text" value="" placeholder="" id="industryId" name="industryId" readonly="readonly"/>
+			</th:block>		
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目城市：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+			    <select class="select_gallery" id="cityId" name="cityId" disabled="disabled">
+	           	  	  <option value="-1">全部城市</option>							           	  
+		           	  <th:block  th:each="parentArea:${areaParentList}">
+		            		<optgroup th:label="${parentArea.areaName}">
+			          			<th:block th:each="childArea:${areaChildList}">
+			          				<option  th:if="${parentArea.id==childArea.parentId}"  th:value="${childArea.id}" th:selected="${childArea.id==project.cityId}" th:text="${childArea.areaName}"></option>
+			          			</th:block>   
+			           		</optgroup>							           	  
+	           	  	  </th:block>
+				</select>   								
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目需求资金：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectCapital}/100"  placeholder="" id="projectCapital" name="projectPartner" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">预计收益人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.earnings}"  placeholder="" id="earnings" name="earnings" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目合作伙伴：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.projectPartner}"  placeholder="" id="projectPartner" name="projectPartner" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目创建时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${#dates.format(project.createTime, 'yyyy/MM/dd')}"  placeholder="" id="createTime" name="projectPartner" readonly="readonly"/>
+			</div>
+		</div>		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目周期-开始时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${#dates.format(project.beginTime, 'yyyy/MM/dd')}"  placeholder="" id="beginTime" name="beginTime" readonly="readonly"/>
+			</div>
+		</div>		
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目周期-结束时间：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${#dates.format(project.endTime, 'yyyy/MM/dd')}"  placeholder="" id="endTime" name="endTime" readonly="readonly"/>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">收益群体描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="incomeGroupDescription"  id="incomeGroupDescription" th:text="${project.incomeGroupDescription}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目需求分析 ：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectRequiredmentAnalysis"  id="projectRequiredmentAnalysis" th:text="${project.projectRequiredmentAnalysis}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-120" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,120)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/120</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目团队-全职人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.fullTimeNumber}"  placeholder="" id="fullTimeNumber" name="fullTimeNumber" readonly="readonly"/>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目团队-兼职人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.partTimeNumber}"  placeholder="" id="partTimeNumber" name="partTimeNumber" readonly="readonly"/>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目团队-志愿者人数：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" th:value="${project.volunteerNumber}"  placeholder="" id="volunteerNumber" name="volunteerNumber" readonly="readonly"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目目标：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectObjectives"  id="projectObjectives" th:text="${project.projectObjectives}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-120" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目设计路径1：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadOne"  id="projectDesignRoadOne" th:text="${project.projectDesignRoadOne}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目设计路径2：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadTwo"  id="projectDesignRoadTwo" th:text="${project.projectDesignRoadTwo}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">项目设计路径3：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="projectDesignRoadThree"  id="projectDesignRoadThree" th:text="${project.projectDesignRoadThree}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,120)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">预期成果1：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsOne"  id="expectedResultsOne" th:text="${project.expectedResultsOne}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">预期成果2：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsTwo"  id="expectedResultsTwo" th:text="${project.expectedResultsTwo}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">预期成果3：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<textarea name="expectedResultsThree"  id="expectedResultsThree" th:text="${project.expectedResultsThree}"  readonly="readonly" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" datatype="*10-80" dragonfly="true" nullmsg="备注不能为空！" onKeyUp="$.Huitextarealength(this,80)"></textarea>
+				<p class="textarea-numberbar"><em class="textarea-length">0</em>/80</p>
+			</div>
+		</div>	
+	</form>
+	<input type="hidden" id="projectId" th:value="${project.id}"/>
+</div>
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/admin/project/project-edit.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/select2/select2.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/select2/zh-CN.js}"></script>
+</body>
+<script type="text/javascript">
+</script>
+</html>

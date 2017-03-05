@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>资讯类别追加</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-articletype-add" action="#">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>父类名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<label th:text="${parentname}">父类名称</label>
+				<input type="hidden" id="parentid" name="parentid" th:value="${parentid}" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="name" name="name" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>描述：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="description" name="description" />
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序值：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="0" placeholder="" id="order_number" name="order_number" />
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="article_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+<!-- 				<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button> -->
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<div th:replace="admin/footer :: footer"></div>
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+
+$(function(){
+	
+	//表单验证
+	$("#form-articletype-add").validate({
+		rules:{
+			name:{
+				required:true,
+			},
+			description:{
+				required:true,
+			},
+			order_number:{
+				required:true,
+				maxlength: 5,
+				number:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			
+		}
+	});
+});
+
+function article_save_submit(){
+
+	if (! $("#form-articletype-add").valid()) {
+        return;
+    }
+
+	var parentid = $("#parentid").val();
+	var name = $("#name").val();
+	var order_number = $("#order_number").val();
+	var description = $("#description").val();
+	
+	$.ajax({
+		url : "/admin/articletype/doAddArticleType",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"parent_id" : parentid,
+			"name" : name,
+			"order_number" : order_number,
+			"description" : description
+		},
+		success : function(data) {
+			alert("资讯添加类别成功");
+			var index = parent.layer.getFrameIndex(window.name);
+			//parent.$('.btn-refresh').click();
+			window.parent.location.reload();
+			parent.layer.close(index);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("对不起，出现错误!");
+            if(XMLHttpRequest.status == 403){
+                layer_close();
+                errorMessage('无权操作!');
+            }else {
+                errorMessage("系统错误!");
+            }
+        },
+	});
+
+}
+
+function removeIframe(){
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.close(index);
+}
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body th:fragment="page">
+    <!--当前页码-->
+    <input type="hidden" th:value="${pageInfo.pageNum}" th:name="pageNum" id="pageNum"/>
+    <!--总页数-->
+    <input type="hidden" th:value="${pageInfo.pages}" id="pages"/>
+    <div  id="paging" style="float: right;"></div>
+</body>
+</html>

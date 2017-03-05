@@ -1,0 +1,308 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>推荐位追加</title>
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" id="form-articletype-add" action="#">
+		<input type="hidden" name="id" id="id" th:value="${recommend.id}" />
+		<input type="hidden" name="typeselect" id="typeselect" th:value="${recommend.type}" />
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>推荐位类别：</label>
+			<div class="formControls col-xs-8 col-sm-9"> 
+				<span class="select-box">
+<!-- 					<select name="typeselect" class="select" id="typeselect"> -->
+<!-- 						<option value="0" th:selected="${recommend.type==0}">-首页-项目推荐位-</option> -->
+<!-- 						<option value="1" th:selected="${recommend.type==1}">-子页-项目推荐位-</option> -->
+<!-- 						<option value="2" th:selected="${recommend.type==2}">-榜单-企业排行-</option> -->
+<!-- 					</select> -->
+					<span value="0" th:if="${recommend.type==0}">-首页-项目推荐位-</span>
+					<span value="1" th:if="${recommend.type==1}">-子页-项目推荐位-</span>
+					<span value="2" th:if="${recommend.type==2}">-榜单-企业排行-</span>
+				</span> 
+			</div>
+		</div>
+		<div class="row cl" id="div_recommend_id">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>推荐ID：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" th:value="${recommend.recommend_id}" placeholder="" id="recommend_id" name="recommend_id" />
+			</div>
+		</div>
+		<div class="row cl" id="div_recommendimg">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span><span id="span_recommendimg">首页图片上传：</span></label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<img id="editImage2" name="editImage2" width="100" height="100" th:src="${recommend.image_filename}">
+			    <div id="filePicker"><input type="file" name="imgFile" id="imgFile2" onchange="uploadImage('imgFile2','editImage2','recommendimg');"></div>
+			    <input type="hidden" name="recommendimg" id="recommendimg" th:value="${recommend.image_filename}"/>
+			</div>
+		</div>
+		<div class="row cl" id="div_company_logo">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span><span id="span_company_logo">企业LOGO：</span></label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<img id="editImage3" name="editImage3" width="100" height="100"  th:src="${recommend.company_logo}">
+			    <div id="filePicker"><input type="file" name="imgFile" id="imgFile3" onchange="uploadImage('imgFile3','editImage3','company_logo');"></div>
+			    <input type="hidden" name="company_logo" id="company_logo" th:value="${recommend.company_logo}"/>
+			</div>
+		</div>
+		<div class="row cl" id="div_company_name">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>企业名称(企业专用)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="company_name" name="company_name" th:value="${recommend.company_name}"/>
+			</div>
+		</div>
+		<div class="row cl" id="div_company_p_number">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支持项目数(企业专用)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="company_p_number" name="company_p_number"  th:value="${recommend.company_p_number}"/>
+			</div>
+		</div>
+		<div class="row cl" id="div_company_p_amount">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>支持金额(企业专用)：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="company_p_amount" name="company_p_amount" th:value="${recommend.company_p_amount}"/>
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序值：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" th:value="${recommend.recommend_id}" value="0" placeholder="" id="order_number" name="order_number" />
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button onClick="recommend_save_submit();" class="btn btn-primary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+<!-- 				<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button> -->
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/ajaxfileupload.js}"></script>
+
+<!--请在下方写此页面业务相关的脚本-->
+
+<script type="text/javascript">
+
+$(function(){
+	
+	//表单验证
+	$("#form-articletype-add").validate({
+		rules:{
+			order_number:{
+				required:true,
+				maxlength: 5,
+				number:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			
+		}
+	});
+	
+	changeForm();
+});
+
+function recommend_save_submit(){
+
+	if (! $("#form-articletype-add").valid()) {
+        return;
+    }
+
+	var id = $("#id").val();
+	var type = $("#typeselect").val();
+	var recommend_id = $("#recommend_id").val();
+	var order_number = $("#order_number").val();
+	var recommendimg = $("#recommendimg").val();
+	var company_logo = $("#company_logo").val();
+	var company_name = $("#company_name").val();
+	var company_p_number = $("#company_p_number").val();
+	var company_p_amount = $("#company_p_amount").val();
+
+	$.ajax({
+		url : "/admin/recommend/doEditRecommend",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"id" : id,
+			"type" : type,
+			"recommend_id" : recommend_id,
+			"order_number" : order_number,
+			"image_filename" : recommendimg,
+			"company_logo" : company_logo,
+			"company_name" : company_name,
+			"company_p_number" : company_p_number,
+			"company_p_amount" : company_p_amount
+		},
+		success : function(data) {
+			if(data.status == "success"){
+				alert("推荐位添加成功");
+				var index = parent.layer.getFrameIndex(window.name);
+				//parent.$('.btn-refresh').click();
+				window.parent.location.reload();
+				parent.layer.close(index);
+			} else {
+				alert(data.message);
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("对不起，出现错误!");
+            if(XMLHttpRequest.status == 403){
+                layer_close();
+                errorMessage('无权操作!');
+            }else {
+                errorMessage("系统错误!");
+            }
+        },
+	});
+
+}
+
+function removeIframe(){
+	var index = parent.layer.getFrameIndex(window.name);
+	parent.layer.close(index);
+}
+
+/**
+ * 上传图片
+ * @param fileElementId
+ * @param imageElementId
+ */
+function uploadImage(fileElementId, imageElementId, returnid) {
+	
+	var path = $("#" + fileElementId).val();
+
+	if(path == "") {
+		alert("请选择上传的图片");
+		return;
+	}
+
+	if (!isImageFile(path)) {
+		alert("请上传图片");
+		return;
+	}
+
+	jQuery.ajaxFileUpload({
+		url : "/upload/uploadimage",
+		secureuri : false,
+		fileElementId : fileElementId,
+		dataType : 'text',
+		success : function(data) {
+			var data = eval('(' + data + ')'); 
+
+			if (data.error > 0) {
+				$("#" + imageElementId).attr("src", "");
+				$("#" + returnid).val("");
+				
+				alert(data.message);
+				return;
+			}
+			$("#" + imageElementId).attr("src", data.dataurl);
+			$("#" + returnid).val(data.dataurl);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			alert("上传图片失败!");
+            if(XMLHttpRequest.status == 403){
+                layer_close();
+                errorMessage('无权操作!');
+            }else {
+                errorMessage("系统错误!");
+            }
+        },
+	})
+}
+
+
+/**
+ * 根据扩展名判断是否为图片
+ */
+function isImageFile(path) {
+
+	if (path.length == 0) {
+		return false;
+	}
+	var lowerPath = path.toLowerCase();
+	var number = lowerPath.lastIndexOf(".");
+	if(number == -1) 
+		return false;
+    var checkKey = lowerPath.substring(number+1,lowerPath.length);
+   if(checkKey == "jpg" || checkKey =="jpeg"  || checkKey =="png" || checkKey == "gif" ) {
+	    return true;
+	}
+	return false;
+}
+
+function changeForm(){
+	var typeselect = $("#typeselect").val();
+	
+	remove_all_validate();
+	
+	if(typeselect=="0"){
+		$("#div_recommendimg").show();
+		$("#div_recommend_id").show();
+		
+		$("#div_company_logo").hide();
+		$("#div_company_name").hide();
+		$("#div_company_p_number").hide();
+		$("#div_company_p_amount").hide();
+		
+		$("#recommendimg").rules("add",{required:true,messages:{min:"请输入图片"}});  
+		$("#recommend_id").rules("add",{required:true,maxlength: 10,number:true,});  
+		
+	} else if(typeselect=="1"){
+		$("#div_recommendimg").hide();
+		$("#div_recommend_id").show();
+		
+		$("#div_company_logo").hide();
+		$("#div_company_name").hide();
+		$("#div_company_p_number").hide();
+		$("#div_company_p_amount").hide();
+ 
+		$("#recommend_id").rules("add",{required:true,maxlength: 10,number:true,});  
+		
+	} else if(typeselect=="2"){
+		$("#div_recommendimg").hide();
+		$("#div_recommend_id").hide();
+		
+		$("#div_company_logo").show();
+		$("#div_company_name").show();
+		$("#div_company_p_number").show();
+		$("#div_company_p_amount").show();
+ 
+		$("#company_logo").rules("add",{required:true,messages:{min:"请输入图片"}});  
+		$("#company_name").rules("add",{required:true});
+		$("#company_p_number").rules("add",{required:true,maxlength: 10,number:true,});
+		$("#company_p_amount").rules("add",{required:true,maxlength: 15,number:true,});
+		
+	} else {
+		$("#div_recommendimg").hide();
+		$("#div_recommend_id").hide();
+		
+		$("#div_company_logo").hide();
+		$("#div_company_name").hide();
+		$("#div_company_p_number").hide();
+		$("#div_company_p_amount").hide();
+		
+	}
+}
+
+var remove_all_validate=function(){  
+
+    $("#recommend_id").rules("remove");
+    $("#recommendimg").rules("remove");  
+    $("#company_logo").rules("remove");  
+    $("#company_name").rules("remove");  
+    $("#company_p_number").rules("remove");  
+    $("#company_p_amount").rules("remove");  
+}  
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css"></head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>用户管理
+    <span class="c-gray en">&gt;</span>用户列表
+    <span class="c-gray en">&gt;</span>支持流水详情
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<form id="myForm" th:action="@{/admin/good/list-pay/{goodUserId}(goodUserId=${goodUserId})}" th:method="get">
+    <div class="page-container">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="r">共有数据：<strong th:text="${pageInfo.total}" id="total">54</strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="3">支持流水详情</th>
+            </tr>
+            <tr class="text-c">
+                <th>项目名称</th>
+                <th>支付金额</th>
+                <th>支付时间</th>
+                <!--<th width="100">操作</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" th:each="model:${pageInfo.list}" th:object="${model}">
+                <td th:text="*{project_name}">d</td>
+                <td th:text="*{pay_amount}">2</td>
+                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:replace="admin/page :: page"></div>
+    </div>
+</form>
+
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
+</body>
+</html>

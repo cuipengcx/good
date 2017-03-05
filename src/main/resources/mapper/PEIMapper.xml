@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.PEIMapper">
+  <resultMap type="com.jk.model.PEI" id="Base_Map">
+  	 	<result column="id" property="id" jdbcType="BIGINT"/>
+  	 	<result column="project_id" property="projectId" jdbcType="BIGINT"/>
+  	 	<result column="number" property="number" jdbcType="INTEGER"/>
+  	 	<result column="code" property="code" jdbcType="VARCHAR"/>
+  	 	<result column="create_time" property="createTime" jdbcType="DATE"/>
+  	 	<result column="modify_time" property="modifyTime" jdbcType="DATE"/> 
+  </resultMap>
+  <sql id="base_list">
+  		id,project_id,number,code,create_time,modify_time
+  </sql>
+	<!-- 批量插入 -->
+  <insert id="insertBath" parameterType="list">
+  			insert into t_pei (project_id,number,code,create_time) values
+  			<foreach collection="list" item="pei" index="index" separator=",">
+  				(
+  				#{pei.projectId},
+  				#{pei.number},
+  				#{pei.code},
+  				now()
+  				) 			
+  			</foreach>
+  </insert>
+  
+	<select id="findByProjectId" parameterType="long" resultMap="Base_Map">
+		select <include refid="base_list"/> from t_pei  where project_id=#{projectId} order by id  asc
+	</select>
+	
+	<!-- 删除 -->
+	<delete id="deleteByProjectId" parameterType="long">
+		delete from t_pei where project_id=#{projectId}
+	</delete>
+</mapper>

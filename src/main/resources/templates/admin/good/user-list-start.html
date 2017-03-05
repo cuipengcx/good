@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css"></head>
+
+<body>
+
+<nav class="breadcrumb">
+    <i class="Hui-iconfont">&#xe67f;</i>
+    首页
+    <span class="c-gray en">&gt;</span>用户管理
+    <span class="c-gray en">&gt;</span>用户列表
+    <span class="c-gray en">&gt;</span>发起项目详情
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+        <i class="Hui-iconfont">&#xe68f;</i>
+    </a>
+</nav>
+<form id="myForm" th:action="@{/admin/good/list-start/{goodUserId}(goodUserId=${goodUserId})}" th:method="get">
+    <div class="page-container">
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="r">共有数据：<strong th:text="${pageInfo.total}" id="total">54</strong> 条</span>
+        </div>
+        <table class="table table-border table-bordered table-bg">
+            <thead>
+            <tr>
+                <th scope="col" colspan="8">发起项目详情</th>
+            </tr>
+            <tr class="text-c">
+                <th>项目编号</th>
+                <th>项目名称</th>
+                <th>项目类型</th>
+                <th>项目周期</th>
+                <th>项目状态</th>
+                <th>项目分类</th>
+                <th>项目PEI</th>
+                <th>创建时间</th>
+                <!--<th width="100">操作</th>-->
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-c" th:each="model:${pageInfo.list}" th:object="${model}">
+                <td th:text="*{projectNumber}">d</td>
+                <td th:text="*{projectName}">2</td>
+                <td>
+                    <span th:if="*{projectType} == 1">个人项目</span>
+                    <span th:if="*{projectType} == 2">机构项目</span>
+                </td>
+                <td>
+                    <span th:text="*{#dates.format(beginTime, 'yyyy-MM-dd HH:mm')}"></span>
+                    --
+                    <span th:text="*{#dates.format(endTime, 'yyyy-MM-dd HH:mm')}"></span>
+                </td>
+                <td>
+                    <span class="label label-warning radius" th:if="*{status} == 0">未审核</span>
+                    <span class="label label-danger radius" th:if="*{status} == 1">审核失败</span>
+                    <span class="label label-success radius" th:if="*{status} == 2">审核成功</span>
+                    <span class="label label-secondary radius" th:if="*{status} == 3">终止项目</span>
+                </td>
+                <td th:each="industry:${industryList}" th:if="*{industryId} == ${industry.id}" th:text="${industry.industryName}">项目分类</td>
+                <td>
+                    <span th:if="*{isScore == 1}" th:text="*{score}"></span>
+                </td>
+                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:replace="admin/page :: page"></div>
+    </div>
+</form>
+
+<div th:replace="admin/footer :: footer"></div>
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
+</body>
+</html>

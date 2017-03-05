@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.ExpertCommentMapper">
+	<resultMap type="com.jk.model.ExpertComment" id="Base_result_list">
+		<result column="id" property="id" jdbcType="BIGINT"/>
+		<result column="project_id" property="peojectId" jdbcType="BIGINT"/>
+		<result column="project_number" property="projectNumber" jdbcType="VARCHAR"/>
+		<result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+		<result column="img_code" property="imgCode" jdbcType="VARCHAR"/>
+		<result column="contents" property="contents" jdbcType="VARCHAR"/>
+		<result column="expert_name" property="expertName" jdbcType="VARCHAR"/>
+		<result column="expert_title" property="expertTitle" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="DATE"/>
+		<result column="modify_time" property="modifyTime" jdbcType="DATE"/>		
+	</resultMap>
+
+	<sql id="base_list">
+		id,project_number,project_name,img_code,contents,create_time,modify_time,expert_name,expert_title
+	</sql>
+	<select id="findList" parameterType="map" resultMap="Base_result_list">
+		select <include refid="base_list"/>  from  t_expert_comment 
+		<where>
+			<if test="projectId!=null and projectId!=''">
+				project_id=#{projectId}
+			</if>		
+		</where>
+	</select>
+	
+	<update id="updateByExpertComment" parameterType="com.jk.model.ExpertComment">
+		update t_expert_comment 
+			<set>
+				<if test="projectId!=null and projectId!=''">
+					project_id=#{projectId},
+				</if>
+				<if test="projectNumber!=null and projectNumber!=''">
+					project_number=#{projectNumber},
+				</if>
+				<if test="projectName!=null and projectName!=''">
+					project_name=#{projectName},
+				</if>
+				<if test="imgCode!=null and imgCode!=''">
+					img_code=#{imgCode},
+				</if>
+				<if test="contents!=null and contents!=''">
+					contents=#{contents},
+				</if>
+				<if test="expertTitle!=null and expertTitle!=''">
+					expert_title=#{expertTitle},
+				</if>
+				<if test="expertName!=null and expertName!=''">
+					expert_name=#{expertName},
+				</if>
+				<if test="createTime!=null">
+					create_time=#{createTime},
+				</if>
+				<if test="modifyTime!=null">
+					modify_time=#{modifyTime},
+				</if>
+			</set>
+				where id=#{id}								
+	</update>
+</mapper>
