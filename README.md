@@ -1,14 +1,10 @@
-## 1.添加druid连接池
-## 2.整合通用Mapper和pageHelper分页插件
-## 3.添加logback日志输出
-## 4.优化logback日志
-## 5.完成分页功能
-## 6.配置统一异常处理
-## 7.完成禁用|启用 删除
-## 8.权限(基本完成)
-## 9.添加重复提交表单限制
+## 平台简介
+
+Good权限管理系统是作者一边学习一边开发，目前还有好多功能未实现，后续会陆续完成！
+
+下面是项目完成情况：
 ```
- 1.加密规则 加盐 (先不解决)
+  1.加密规则 加盐 (先不解决)
   2.动态菜单  (解决)
   3.无权限提示页面错误  (解决)
   4.编辑角色时 角色授权树回显有BUG(解决)
@@ -21,5 +17,64 @@
   11.添加完菜单资源后，超级管理员自动分配权限(先不解决)
 ```
 
-学习yml配置
-thymeleaf语法
+## 内置功能
+
+1. 系统管理
+     - 用户管理
+     - 角色管理
+     - 权限管理
+     - 组织机构
+     - 任务调度
+     - 字典管理
+
+2. 日志管理
+     - 操作日志
+     - 登录日志
+
+3. 系统监控
+    - 连接池监控
+    
+## 开发环境
+
+* Intellij IDEA 2016.2
+* jdk 1.8
+* Maven 3.3.9
+* Tomcat 8.5
+* Mysql 5.7
+* Navicat for Mysql
+* Google浏览器
+
+## 技术选型
+
+1、后端
+
+* 核心框架：Spring Boot 1.4.3
+* 视图框架：Spring MVC 4.3.5
+* 安全框架：Apache Shiro 1.3.2
+* 任务调度：Spring Task 
+* 持久层框架：Mybatis 3.4.2 + 通用Mapper 3.3.9
+* 服务端验证：Hibernate validator 5.2.4
+* 单元测试：Junit 4.12
+* 网络客户端：OKHttp + OKGO
+* Email客户端：Spring + JavaMail
+* 模板引擎：Thymeleaf 3.0.0
+* 数据库连接池：Alibaba Druid 1.0.18
+* 缓存框架：Spring Cache + Ehcache 2.5.3
+* 日志管理：SLF4J 1.7.22 + Logback 1.1.8
+* 分页插件：PageHelper 5.0.0
+* 工具类：Apache Commons、Jackson 2.2、Lombok 1.16.14、Hutool 2.16.0
+
+1、前端
+
+* UI框架：H-UI 3.0
+* JS框架：jQuery 1.11.0
+* 表单验证控件：Jquery-validation 1.14.0
+* 树结构控件：zTree v3
+* 分页控件：laypage 1.3
+* 弹出层组件：layer 2.4
+* 富文本编辑器：ueditor 1.4.3
+* 上传文件控件：webuploader 0.1.5
+* 日期选择控件：My97DatePicker 4.8
+* 数据图表：echarts 3.4.0
+* 表单美化插件：iCheck 0.7
+
