@@ -1,6 +1,6 @@
 ## 平台简介
 
-Good权限管理系统是作者一边学习一边开发，目前还有好多功能未实现，后续会陆续完成！
+Good权限管理系统是作者学习基于springboot开发的一套后台系统，目前还有好多功能未实现，后续会陆续完成并全部开源！
 
 下面是项目完成情况：
 ```
@@ -78,3 +78,14 @@ Good权限管理系统是作者一边学习一边开发，目前还有好多功�
 * 数据图表：echarts 3.4.0
 * 表单美化插件：iCheck 0.7
 
+## 特别说明
+
+因为本人能力有限，如果系统中存在任何Bug或者缺陷，欢迎大家及时告知我，希望于大家共同学习！
+QQ：228727120@qq.com
+Email：nbdash@163.com
+
+## 特别鸣谢
+
+1.[Looly / hutool](http://git.oschina.net/loolly/hutool)   一个Java基础工具类，对文件、流、加密解密、转码、正则、线程、XML等JDK方法进行封装，组成各种Util工具类
+2.[abel533 / Mapper](http://git.oschina.net/free/Mapper)   极其方便的使用Mybatis单表的增删改查
+3.[abel533 / Mybatis_PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)   Mybatis分页插件
