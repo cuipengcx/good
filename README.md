@@ -2,6 +2,10 @@
 
 Good权限管理系统是作者学习springboot时基于springboot开发的一套后台系统，目前还有好多功能未实现，后续会陆续完成并全部开源！
 
+访问地址: [http://localhost/admin/index](http://localhost/admin/index)
+用户名: admin
+密码: 123
+
 下面是项目完成情况：
 ```
   1.加密规则 加盐 (先不解决)
