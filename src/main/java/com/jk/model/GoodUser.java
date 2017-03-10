@@ -1,11 +1,16 @@
 package com.jk.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Table;
 
 /**
  * @author 前台用户表
  * Created by JK on 2017/2/21.
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "t_good_user")
 public class GoodUser extends BaseEntity{
 
@@ -74,154 +79,4 @@ public class GoodUser extends BaseEntity{
      * 是否删除 true 删除 false 未删除
      */
     private Boolean isDel;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getAcceptEmail() {
-        return isAcceptEmail;
-    }
-
-    public void setAcceptEmail(Boolean acceptEmail) {
-        isAcceptEmail = acceptEmail;
-    }
-
-    public Integer getStartNumber() {
-        return startNumber;
-    }
-
-    public void setStartNumber(Integer startNumber) {
-        this.startNumber = startNumber;
-    }
-
-    public Integer getKeepNumber() {
-        return keepNumber;
-    }
-
-    public void setKeepNumber(Integer keepNumber) {
-        this.keepNumber = keepNumber;
-    }
-
-    public Integer getSupportNumber() {
-        return supportNumber;
-    }
-
-    public void setSupportNumber(Integer supportNumber) {
-        this.supportNumber = supportNumber;
-    }
-
-    public Long getGetPrice() {
-        return getPrice;
-    }
-
-    public void setGetPrice(Long getPrice) {
-        this.getPrice = getPrice;
-    }
-
-    public Long getPayPrice() {
-        return payPrice;
-    }
-
-    public void setPayPrice(Long payPrice) {
-        this.payPrice = payPrice;
-    }
-
-    public Boolean getPersonAuthed() {
-        return isPersonAuthed;
-    }
-
-    public void setPersonAuthed(Boolean personAuthed) {
-        isPersonAuthed = personAuthed;
-    }
-
-    public Boolean getTeamAuthed() {
-        return isTeamAuthed;
-    }
-
-    public void setTeamAuthed(Boolean teamAuthed) {
-        isTeamAuthed = teamAuthed;
-    }
-
-    public Boolean getEmailAuthed() {
-        return isEmailAuthed;
-    }
-
-    public void setEmailAuthed(Boolean emailAuthed) {
-        isEmailAuthed = emailAuthed;
-    }
-
-    public Boolean getLock() {
-        return isLock;
-    }
-
-    public void setLock(Boolean lock) {
-        isLock = lock;
-    }
-
-    public Boolean getDel() {
-        return isDel;
-    }
-
-    public void setDel(Boolean del) {
-        isDel = del;
-    }
-
-    @Override
-    public String toString() {
-        return "GoodUser{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", mobilePhone='" + mobilePhone + '\'' +
-                ", email='" + email + '\'' +
-                ", isAcceptEmail=" + isAcceptEmail +
-                ", startNumber=" + startNumber +
-                ", keepNumber=" + keepNumber +
-                ", supportNumber=" + supportNumber +
-                ", getPrice=" + getPrice +
-                ", payPrice=" + payPrice +
-                ", isPersonAuthed=" + isPersonAuthed +
-                ", isTeamAuthed=" + isTeamAuthed +
-                ", isEmailAuthed=" + isEmailAuthed +
-                ", isLock=" + isLock +
-                ", isDel=" + isDel +
-                '}';
-    }
 }

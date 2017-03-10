@@ -59,15 +59,15 @@ public class GoodUserServiceImpl extends BaseServiceImpl<GoodUser> implements Go
         }if(StringUtils.isNotEmpty(mobilePhone)){
             goodUser.setMobilePhone(mobilePhone);
         }if(null != isLock){
-            goodUser.setLock(isLock);
+            goodUser.setIsLock(isLock);
         }if(null != isDel){
-            goodUser.setDel(isDel);
+            goodUser.setIsDel(isDel);
         }if(null != isEmailAuthed){
-            goodUser.setEmailAuthed(isEmailAuthed);
+            goodUser.setIsEmailAuthed(isEmailAuthed);
         }if(null != isTeamAuthed){
-            goodUser.setTeamAuthed(isTeamAuthed);
+            goodUser.setIsTeamAuthed(isTeamAuthed);
         }if(null != isTeamAuthed){
-            goodUser.setPersonAuthed(isPersonAuthed);
+            goodUser.setIsPersonAuthed(isPersonAuthed);
         }
         return this.findOne(goodUser);
     }
@@ -86,15 +86,15 @@ public class GoodUserServiceImpl extends BaseServiceImpl<GoodUser> implements Go
         }if(StringUtils.isNotEmpty(mobilePhone)){
             goodUser.setMobilePhone(mobilePhone);
         }if(null != isLock){
-            goodUser.setLock(isLock);
+            goodUser.setIsLock(isLock);
         }if(null != isDel){
-            goodUser.setDel(isDel);
+            goodUser.setIsDel(isDel);
         }if(null != isEmailAuthed){
-            goodUser.setEmailAuthed(isEmailAuthed);
+            goodUser.setIsEmailAuthed(isEmailAuthed);
         }if(null != isTeamAuthed){
-            goodUser.setTeamAuthed(isTeamAuthed);
+            goodUser.setIsTeamAuthed(isTeamAuthed);
         }if(null != isTeamAuthed){
-            goodUser.setPersonAuthed(isPersonAuthed);
+            goodUser.setIsPersonAuthed(isPersonAuthed);
         }
         return this.findListByWhere(goodUser);
     }

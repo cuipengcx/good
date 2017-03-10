@@ -75,7 +75,7 @@ public class GoodUserController extends BaseController{
             }
 
             //禁用启用
-            goodUser.setLock(!goodUser.getLock());
+            goodUser.setIsLock(!goodUser.getIsLock());
             goodUserService.updateSelective(goodUser);
 
             log.info("禁用|启用用户成功! id = {}", id);
@@ -104,7 +104,7 @@ public class GoodUserController extends BaseController{
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("用户不存在!");
             }
 
-            goodUser.setDel(true);
+            goodUser.setIsDel(true);
             goodUserService.updateSelective(goodUser);
             log.info("删除用户成功! id = {}", id);
 

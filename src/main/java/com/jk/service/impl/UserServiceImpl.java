@@ -69,13 +69,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         int count = 0;
         //加密
         user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));
-        user.setLock(false);
-        user.setDel(false);
+        user.setIsLock(false);
+        user.setIsDel(false);
         Role role = roleMapper.selectByPrimaryKey(roleId);
         if(Role.ROLE_TYPE.equalsIgnoreCase(role.getPerms())){
-            user.setAdmin(true);
+            user.setIsAdmin(true);
         }else {
-            user.setAdmin(false);
+            user.setIsAdmin(false);
         }
         count = this.save(user);
 
@@ -98,9 +98,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         if(!oldRoleId.equals(roleId)){
             Role role = roleMapper.selectByPrimaryKey(roleId);
             if(Role.ROLE_TYPE.equalsIgnoreCase(role.getPerms())){
-                user.setAdmin(true);
+                user.setIsAdmin(true);
             }else {
-                user.setAdmin(false);
+                user.setIsAdmin(false);
             }
         }
         count = this.updateSelective(user);

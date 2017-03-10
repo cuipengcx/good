@@ -28,8 +28,8 @@ public class UserServiceTest extends BaseTest{
         record.setPassword(SecureUtil.md5().digestHex("123"));
         record.setEmail("228727120@qq.com");
         record.setMobilePhone("15001338253");
-        record.setDel(false);
-        record.setLock(false);
+        record.setIsDel(false);
+        record.setIsLock(false);
         Boolean flag = userService.saveUserAndUserRole(record, 1L);
         Assert.assertTrue(flag);
     }
@@ -66,8 +66,8 @@ public class UserServiceTest extends BaseTest{
             User user = new User();
             user.setId(144L);
             user.setPassword("123");
-            user.setDel(false);
-            user.setLock(false);
+            user.setIsDel(false);
+            user.setIsLock(false);
             user.setMobilePhone("8484887878787");
             user.setEmail("228@qq.com");
             user.setUsername("cuiuiuiui");

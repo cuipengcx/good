@@ -54,7 +54,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
         if(record == null){
             throw new UnknownAccountException();// 没找到帐号
         }
-        if (Boolean.TRUE.equals(record.getLock())) {
+        if (Boolean.TRUE.equals(record.getIsLock())) {
             throw new LockedAccountException(); // 帐号锁定
         }
 

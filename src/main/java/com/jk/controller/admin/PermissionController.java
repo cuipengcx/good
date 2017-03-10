@@ -103,7 +103,7 @@ public class PermissionController extends BaseController{
         try {
             log.debug("添加权限参数! permission = {}", permission);
 
-            permission.setLock(false);
+            permission.setIsLock(false);
             permission.setParentId(permission.getParentId() == null ? 0 : permission.getParentId());
             permissionService.save(permission);
             log.info("添加权限成功! permissionId = {}", permission.getId());

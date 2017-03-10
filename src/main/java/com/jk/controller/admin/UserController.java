@@ -78,7 +78,7 @@ public class UserController extends BaseController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("管理员不存在!");
             }
 
-            if(user.getAdmin()){
+            if(user.getIsAdmin()){
                 log.info("禁用|启用管理员失败, 超级管理员不允许操作! id = {}", id);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("超级管理员不允许操作!");
             }
@@ -134,13 +134,13 @@ public class UserController extends BaseController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("管理员不存在!");
             }
 
-            if(user.getAdmin()){
+            if(user.getIsAdmin()){
                 log.info("禁用|启用管理员失败, 超级管理员不允许操作! id = {}", id);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("超级管理员不允许操作!");
             }
 
             //禁用启用
-            user.setLock(!user.getLock());
+            user.setIsLock(!user.getIsLock());
             userService.updateSelective(user);
 
             log.info("禁用|启用管理员成功! id = {}", id);

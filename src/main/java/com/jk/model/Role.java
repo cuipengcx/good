@@ -1,11 +1,16 @@
 package com.jk.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Table;
 
 /**
  * 角色
  * Created by cuiP on 2017/2/8.
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "t_role")
 public class Role extends BaseEntity{
 
@@ -26,36 +31,4 @@ public class Role extends BaseEntity{
      * 备注
      */
     private String remark;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "name='" + name + '\'' +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

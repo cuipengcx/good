@@ -1,11 +1,16 @@
 package com.jk.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Table;
 
 /**
  * 权限
  * Created by cuiP on 2017/2/8.
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "t_permission")
 public class Permission extends BaseEntity{
     /**
@@ -50,99 +55,4 @@ public class Permission extends BaseEntity{
      * 菜单图标
      */
     private String icon;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getPerms() {
-        return perms;
-    }
-
-    public void setPerms(String perms) {
-        this.perms = perms;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public String getParentIds() {
-        return parentIds;
-    }
-
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
-    }
-
-    public Long getSort() {
-        return sort;
-    }
-
-    public void setSort(Long sort) {
-        this.sort = sort;
-    }
-
-    public Boolean getLock() {
-        return isLock;
-    }
-
-    public void setLock(Boolean lock) {
-        isLock = lock;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    @Override
-    public String toString() {
-        return "Permission{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", url='" + url + '\'' +
-                ", perms='" + perms + '\'' +
-                ", parentId=" + parentId +
-                ", parentIds='" + parentIds + '\'' +
-                ", sort=" + sort +
-                ", isLock=" + isLock +
-                ", icon='" + icon + '\'' +
-                '}';
-    }
 }

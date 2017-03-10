@@ -1,10 +1,15 @@
 package com.jk.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Table;
 
 /**
  * Created by JK on 2017/1/19.
  */
+@Data
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "t_sensitive_word")
 public class SensitiveWord extends BaseEntity{
     
@@ -17,45 +22,4 @@ public class SensitiveWord extends BaseEntity{
      * 敏感词
      */
     private String word;
-
-    /**
-     * version
-     *
-     * @return the version
-     */
-    
-    public Long getVersion() {
-        return version;
-    }
-
-    /**
-     * version
-     *
-     * @param version the version to set
-     */
-    
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    /**
-     * word
-     *
-     * @return the word
-     */
-    
-    public String getWord() {
-        return word;
-    }
-
-    /**
-     * word
-     *
-     * @param word the word to set
-     */
-    
-    public void setWord(String word) {
-        this.word = word;
-    }
-    
 }
