@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--导入属性配置 只能导入properties文件，对yml文件不行-->
+    <!--<properties resource="application.yml"/>-->
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <!--去除注释  -->
+        <!--<commentGenerator>-->
+            <!--<property name="suppressAllComments" value="true" />-->
+        <!--</commentGenerator>-->
+
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--通用Mapper生成插件-->
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.jk.util.MyMapper"/>
+        </plugin>
+
+        <!--数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.1.238:3306/iqc_app"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.jk.model" targetProject="D:\develop\MyProject\src\main\java">
+            <!-- 设置一个根对象，
+           如果设置了这个根对象，那么生成的keyClass或者recordClass会继承这个类；在Table的rootClass属性中可以覆盖该选项
+           注意：如果在key class或者record class中有root class相同的属性，MBG就不会重新生成这些属性了，包括：
+               1，属性名相同，类型相同，有相同的getter/setter方法；
+        -->
+            <property name="rootClass" value="com.jk.model.BaseEntity"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="D:\develop\MyProject\src\main\resources"/>
+
+        <javaClientGenerator targetPackage="com.jk.mapper" targetProject="D:\develop\MyProject\src\main\java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="%">
+            <!--mysql 配置-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+            <!--oracle 配置-->
+            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
+        </table>
+    </context>
+</generatorConfiguration>
