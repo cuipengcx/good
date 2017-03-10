@@ -3,12 +3,7 @@ package com.jk.controller.admin;
 import com.github.pagehelper.PageInfo;
 import com.jk.controller.BaseController;
 import com.jk.model.GoodUser;
-import com.jk.model.Industry;
-import com.jk.model.PayStream;
-import com.jk.model.Project;
 import com.jk.service.GoodUserService;
-import com.jk.service.PayStreamService;
-import com.jk.service.ProjectService;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -35,10 +27,6 @@ public class GoodUserController extends BaseController{
 
     @Resource
     private GoodUserService goodUserService;
-    @Resource
-    private ProjectService projectService;
-    @Resource
-    private PayStreamService payStreamService;
 
     /**
      * 分页查询前台用户列表
@@ -184,61 +172,5 @@ public class GoodUserController extends BaseController{
             messagesMap.put("message","修改失败!");
             return messagesMap;
         }
-    }
-
-    /**
-     * 分页查询用户发起的项目列表
-     * @param pageNum   当前页码
-     * @param goodUserId 用户ID
-     * @param modelMap
-     * @return
-     */
-    @GetMapping(value = "/list-start/{goodUserId}")
-    public String listStart(
-            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @PathVariable("goodUserId") Long goodUserId, ModelMap modelMap) {
-        try {
-            log.debug("分页查询用户发起的项目列表参数! pageNum = {}, goodUserId = {}", pageNum, goodUserId);
-            Map<String,Object> map=new HashMap<String,Object>();
-
-            map.put("pageNum", pageNum);
-            map.put("pageSize", PAGESIZE);
-            PageInfo<Project> pageInfo = projectService.findPage(map);
-            List<Industry> industryList=projectService.findAllIndustry();
-            log.info("分页查询用户发起的项目列表结果！ pageInfo = {}, industryList = {}", pageInfo, industryList);
-            modelMap.put("pageInfo", pageInfo);
-            modelMap.put("goodUserId", goodUserId);
-            modelMap.put("industryList", industryList);
-        } catch (Exception e) {
-            log.error("分页查询用户发起的项目列表失败! e = {}", e);
-        }
-        return BASE_PATH + "user-list-start";
-    }
-
-    /**
-     * 分页查询用户支持项目的流水列表
-     * @param pageNum
-     * @param goodUserId
-     * @param modelMap
-     * @return
-     */
-    @GetMapping(value = "/list-pay/{goodUserId}")
-    public String listPay(
-            @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-            @PathVariable("goodUserId") Long goodUserId, ModelMap modelMap) {
-        try {
-            log.debug("分页查询用户支持项目的流水列表参数! pageNum = {}, goodUserId = {}", pageNum, goodUserId);
-
-            PayStream payStream = new PayStream();
-            payStream.setUser_id(goodUserId);
-            PageInfo<PayStream> pageInfo = payStreamService.findPageListByWhere(pageNum, PAGESIZE, payStream);
-
-            log.info("分页查询用户支持项目的流水列表结果！ pageInfo = {}", pageInfo);
-            modelMap.put("pageInfo", pageInfo);
-            modelMap.put("goodUserId", goodUserId);
-        } catch (Exception e) {
-            log.error("分页查询用户支持项目的流水列表失败! e = {}", e);
-        }
-        return BASE_PATH + "user-list-pay";
     }
 }
