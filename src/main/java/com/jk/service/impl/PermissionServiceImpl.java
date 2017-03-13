@@ -51,7 +51,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
         return permissionMapper.findListPermissionByUserId(userId);
     }
 
-    @Cacheable(value = "menuListCache")
+    @Cacheable(value = "menuListCache", key = "#userId")
     @Transactional(readOnly=true)
     @Override
     public List<Permission> findMenuListByUserId(Long userId) {
