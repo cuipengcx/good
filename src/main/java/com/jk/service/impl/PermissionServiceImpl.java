@@ -9,6 +9,7 @@ import com.jk.model.RolePermission;
 import com.jk.service.PermissionService;
 import com.jk.vo.TreeNode;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -21,6 +22,7 @@ import java.util.List;
  *
  * Created by cuiP on 2017/2/8.
  */
+@CacheConfig(cacheNames = "permission")
 @Transactional
 @Service
 public class PermissionServiceImpl extends BaseServiceImpl<Permission> implements PermissionService{
@@ -45,14 +47,15 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
 
     @Transactional(readOnly=true)
     @Override
-    public List<Permission> findListPermissionByUserId(Long UserId) {
-        return permissionMapper.findListPermissionByUserId(UserId);
+    public List<Permission> findListPermissionByUserId(Long userId) {
+        return permissionMapper.findListPermissionByUserId(userId);
     }
 
+//    @Cacheable(key="#userId", value = "menuListCache")
     @Transactional(readOnly=true)
     @Override
-    public List<Permission> findMenuListByUserId(Long UserId) {
-        return permissionMapper.findMenuListByUserId(UserId);
+    public List<Permission> findMenuListByUserId(Long userId) {
+        return permissionMapper.findMenuListByUserId(userId);
     }
 
     @Transactional(readOnly=true)

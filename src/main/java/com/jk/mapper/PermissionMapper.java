@@ -15,14 +15,14 @@ public interface PermissionMapper extends MyMapper<Permission>{
      * @param UserId
      * @return
      */
-    List<Permission> findListPermissionByUserId(Long UserId);
+    List<Permission> findListPermissionByUserId(Long userId);
 
     /**
      * 根据用户ID查询用户菜单列表
      * @param UserId
      * @return
      */
-    List<Permission> findMenuListByUserId(Long UserId);
+    List<Permission> findMenuListByUserId(Long userId);
 
     /**
      * 返回树列表
