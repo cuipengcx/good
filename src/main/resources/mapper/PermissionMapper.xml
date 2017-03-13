@@ -38,20 +38,20 @@
 		SELECT
 			*
 		FROM
-			t_permission p
+			permission p
 		WHERE
  			p.type != '0'
  			AND p.id IN
  			(SELECT
 				rp.permission_id
 			FROM
-				t_role_permission rp
+				role_permission rp
 			WHERE
 				rp.role_id IN (
 					SELECT
 						ur.role_id
 					FROM
-						t_user_role ur
+						user_role ur
 					WHERE
 						ur.user_id = #{userId}
 				)
@@ -63,20 +63,20 @@
 		SELECT
 		*
 		FROM
-		t_permission p
+		permission p
 		WHERE
 		(p.type = '0' or p.type = '1')
 		AND p.id IN
 		(SELECT
 		rp.permission_id
 		FROM
-		t_role_permission rp
+		role_permission rp
 		WHERE
 		rp.role_id IN (
 		SELECT
 		ur.role_id
 		FROM
-		t_user_role ur
+		user_role ur
 		WHERE
 		ur.user_id = #{userId} order by p.sort desc
 		)
@@ -85,6 +85,6 @@
 
 	<!--返回树列表-->
 	<select id="findTreeList" resultMap="treeMap">
-		SELECT id,parent_id,name FROM t_permission
+		SELECT id,parent_id,name FROM permission
 	</select>
 </mapper>

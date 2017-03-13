@@ -27,7 +27,7 @@
     </resultMap>
 
     <select id="findList" resultMap="AuthenticationInfoResultMap">
-        SELECT * FROM t_authentication_info auth
+        SELECT * FROM authentication_info auth
         <where>
             <if test="type != null and type != ''">
                 AND auth.type = #{type}

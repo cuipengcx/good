@@ -1,12 +1,17 @@
 package com.jk.controller.admin;
 
 import com.jk.controller.BaseController;
+import com.jk.model.Permission;
 import com.jk.model.User;
+import com.jk.service.PermissionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 首页
@@ -18,6 +23,9 @@ public class IndexController extends BaseController{
 
     private static final String BASE_PATH = "admin/";
 
+    @Resource
+    private PermissionService permissionService;
+
     /**
      * 首页
      * @return
@@ -28,8 +36,10 @@ public class IndexController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         //取身份信息
         User user = (User) subject.getPrincipal();
+
+        List<Permission> menuList = permissionService.findMenuListByUserId(user.getId());
         //通过model传到页面
-        modelMap.addAttribute("user", user);
+        modelMap.addAttribute("menuList", menuList);
         log.info("------进入首页-------");
         return BASE_PATH+"index";
     }

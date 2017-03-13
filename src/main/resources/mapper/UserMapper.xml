@@ -20,11 +20,11 @@
     </resultMap>
 
     <select id="findById" parameterType="Long" resultType="com.jk.model.User">
-        SELECT * FROM t_user u WHERE u.id = #{id}
+        SELECT * FROM user u WHERE u.id = #{id}
     </select>
 
     <select id="findByUserName" resultMap="UserResultMap">
-      SELECT * FROM t_user u WHERE  u.username = #{username}
+      SELECT * FROM user u WHERE  u.username = #{username}
     </select>
     
 </mapper>

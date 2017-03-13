@@ -9,7 +9,7 @@
  </resultMap>
  
   <select id="swList" resultMap="BaseMap" parameterType="map">
-	  select id, word, create_time, modify_time, version from t_sensitive_word
+	  select id, word, create_time, modify_time, version from sensitive_word
 	  <where> 
 	  	  1=1
 		  <if test="findtext != null and findtext!=''">

@@ -13,9 +13,9 @@
 
     <!--根据用户ID查询角色对象信息-->
     <select id="findByUserId" parameterType="java.lang.Long" resultType="role">
-        SELECT * FROM t_role r where r.id IN
+        SELECT * FROM role r where r.id IN
         (
-            SELECT ur.role_id FROM t_user_role ur where ur.user_id=#{userId}
+            SELECT ur.role_id FROM user_role ur where ur.user_id=#{userId}
         )
     </select>
 </mapper>

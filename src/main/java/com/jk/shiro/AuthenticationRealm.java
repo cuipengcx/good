@@ -59,12 +59,9 @@ public class AuthenticationRealm extends AuthorizingRealm {
         }
 
         Role role = roleMapper.findByUserId(record.getId());
-        List<Permission> menuList = permissionMapper.findMenuListByUserId(record.getId());
 
         //设置角色名称
         record.setRoleName(role.getName());
-        //设置用户菜单
-        record.setMenus(menuList);
 
         //将此用户存放到登录认证info中，无需自己做密码对比，Shiro使用CredentialsMatcher会为我们进行密码对比校验
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
