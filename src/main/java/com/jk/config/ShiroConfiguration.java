@@ -18,6 +18,7 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -85,14 +86,14 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "securityManager")
-    public SecurityManager getSecurityManager() {
+    public SecurityManager getSecurityManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //注入自定义Realm
-        securityManager.setRealm(getAuthenticationRealm());
+        securityManager.setRealm(getAuthenticationRealm(ehCacheManagerFactoryBean));
         //注入缓存管理器
-        securityManager.setCacheManager(getCacheManage());
+        securityManager.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
         //注入session管理器
-        securityManager.setSessionManager(getSessionManage());
+        securityManager.setSessionManager(getSessionManage(ehCacheManagerFactoryBean));
         return securityManager;
     }
 
@@ -102,11 +103,11 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public AuthenticationRealm getAuthenticationRealm() {
+    public AuthenticationRealm getAuthenticationRealm(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
         AuthenticationRealm authenticationRealm = new AuthenticationRealm();
         //将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列
         authenticationRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
-        authenticationRealm.setCacheManager(getCacheManage());
+        authenticationRealm.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
         //开启授权信息缓存
         authenticationRealm.setAuthorizationCachingEnabled(true);
         //设置授权缓存对应ehcache中配置
@@ -143,7 +144,7 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "sessionManager")
-    public DefaultWebSessionManager getSessionManage() {
+    public DefaultWebSessionManager getSessionManage(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //session的失效时长，单位毫秒
         sessionManager.setGlobalSessionTimeout(3600000);  //60分钟失效
@@ -154,7 +155,7 @@ public class ShiroConfiguration {
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(getSessionIdCookie());
         sessionManager.setSessionDAO(getSessionDao());
-        sessionManager.setCacheManager(getCacheManage());
+        sessionManager.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
         // -----可以添加session 创建、删除的监听器
 
         return sessionManager;
@@ -187,9 +188,10 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "cacheShiroManager")
-    public CacheManager getCacheManage() {
+    public CacheManager getCacheShiroManage(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
         EhCacheManager ehCacheManager = new EhCacheManager();
-        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+//        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        ehCacheManager.setCacheManager(ehCacheManagerFactoryBean.getObject());
         return ehCacheManager;
     }
 
@@ -221,10 +223,10 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public MethodInvokingFactoryBean getMethodInvokingFactoryBean(){
+    public MethodInvokingFactoryBean getMethodInvokingFactoryBean(EhCacheManagerFactoryBean ehCacheManagerFactoryBean){
         MethodInvokingFactoryBean factoryBean = new MethodInvokingFactoryBean();
         factoryBean.setStaticMethod("org.apache.shiro.SecurityUtils.setSecurityManager");
-        factoryBean.setArguments(new Object[]{getSecurityManager()});
+        factoryBean.setArguments(new Object[]{getSecurityManager(ehCacheManagerFactoryBean)});
         return factoryBean;
     }
 
@@ -242,9 +244,9 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(){
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(EhCacheManagerFactoryBean ehCacheManagerFactoryBean){
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(getSecurityManager());
+        advisor.setSecurityManager(getSecurityManager(ehCacheManagerFactoryBean));
         return advisor;
     }
 

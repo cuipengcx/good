@@ -65,6 +65,11 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-cache</artifactId>-->
+        <!--</dependency>-->
+
         <!--mybatis-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -130,7 +135,7 @@
             邮件服务，
             脚本服务(JRuby)，
             缓存Cache（EHCache），
-            任务计划Scheduling（uartz）。
+            任务计划Scheduling（quartz）。
          -->
         <dependency>
             <groupId>org.springframework</groupId>

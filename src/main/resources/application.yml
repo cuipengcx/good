@@ -1,9 +1,11 @@
+#服务
 server:
     port: 80
     context-path: /
 #    session:
 #      timeout: 3600
 
+#日志
 logging:
     level:
 #        root: info
@@ -12,6 +14,7 @@ logging:
     path: D:\\log
 
 spring:
+    #数据源
     datasource:
         name: test
         url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true
@@ -45,26 +48,31 @@ spring:
         connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
         # 合并多个DruidDataSource的监控数据
         #useGlobalDataSourceStat: true
+    #视图
     mvc:
         view:
             prefix: /templates/
             suffix: .html
+    #thymeleaf模版
     thymeleaf:
       cache: false
       mode: HTML5
       encoding: UTF-8
       content-type: text/html
 
+#mybatis
 mybatis:
     type-aliases-package: com.jk.model
     mapper-locations: classpath:mapper/*.xml
 
+#通用mapper
 mapper:
     mappers:
         - com.jk.util.MyMapper
     not-empty: false
     identity: MYSQL
 
+#分页插件
 pagehelper:
     helperDialect: mysql
     reasonable: true
