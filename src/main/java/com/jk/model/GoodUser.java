@@ -3,15 +3,12 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Table;
-
 /**
  * @author 前台用户表
  * Created by JK on 2017/2/21.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_good_user")
 public class GoodUser extends BaseEntity{
 
     /**

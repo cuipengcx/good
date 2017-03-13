@@ -3,7 +3,6 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_user")
 public class User extends BaseEntity {
     /**
      * 用户名

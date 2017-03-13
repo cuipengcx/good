@@ -3,15 +3,12 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Table;
-
 /**
  * 角色
  * Created by cuiP on 2017/2/8.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_role")
 public class Role extends BaseEntity{
 
     //超级管理员标识

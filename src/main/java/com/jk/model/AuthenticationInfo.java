@@ -3,7 +3,6 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -13,7 +12,6 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_authentication_info")
 public class AuthenticationInfo extends BaseEntity{
     /**
      * 用户ID

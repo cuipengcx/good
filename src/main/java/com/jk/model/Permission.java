@@ -3,15 +3,12 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Table;
-
 /**
  * 权限
  * Created by cuiP on 2017/2/8.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "t_permission")
 public class Permission extends BaseEntity{
     /**
      * 资源名称
