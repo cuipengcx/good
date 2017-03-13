@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 192.168.1.238
-Source Server Version : 50166
-Source Host           : 192.168.1.238:3306
+Source Server         : 127.0.0.1
+Source Server Version : 50132
+Source Host           : localhost:3306
 Source Database       : good_manage
 
 Target Server Type    : MYSQL
-Target Server Version : 50166
+Target Server Version : 50132
 File Encoding         : 65001
 
-Date: 2017-03-03 17:23:39
+Date: 2017-03-13 10:11:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,7 +25,7 @@ CREATE TABLE `t_area` (
   `area_name` varchar(255) DEFAULT NULL,
   `is_hot` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=418 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=346 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_area
@@ -377,96 +377,6 @@ INSERT INTO `t_area` VALUES ('344', '33', '香港', '0');
 INSERT INTO `t_area` VALUES ('345', '34', '澳门', '0');
 
 -- ----------------------------
--- Table structure for `t_article`
--- ----------------------------
-DROP TABLE IF EXISTS `t_article`;
-CREATE TABLE `t_article` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编号id',
-  `time` timestamp NULL DEFAULT NULL COMMENT '添加时间',
-  `type_id` int(11) DEFAULT NULL COMMENT '类别',
-  `title` varchar(250) DEFAULT NULL COMMENT '标题',
-  `title2` varchar(250) DEFAULT NULL,
-  `author` varchar(20) DEFAULT NULL COMMENT '作者',
-  `content` longtext COMMENT '内容',
-  `keywords` varchar(200) DEFAULT NULL COMMENT '关键字',
-  `read_count` int(11) DEFAULT '0' COMMENT '阅读次数',
-  `image_filename` varchar(200) DEFAULT NULL COMMENT '图片路径',
-  `location_pc` tinyint(4) DEFAULT NULL COMMENT '0 不推荐 1 推荐至首页\r\n2 荐跑马灯效果区\r\n3 推荐首页头条',
-  `start_show_time` datetime DEFAULT NULL COMMENT '开始显示时间',
-  `summary` varchar(1000) DEFAULT NULL COMMENT '摘要',
-  `is_use` int(1) DEFAULT '0' COMMENT '是否显示',
-  `order_number` int(11) NOT NULL DEFAULT '0' COMMENT '编号',
-  `name` varchar(255) DEFAULT NULL,
-  `view_count` int(15) DEFAULT '100',
-  `agree_count` int(15) DEFAULT '100',
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `index_news_id` (`id`) USING BTREE,
-  KEY `index_news_type_id` (`type_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1345 DEFAULT CHARSET=utf8 COMMENT='资讯活动表';
-
--- ----------------------------
--- Records of t_article
--- ----------------------------
-INSERT INTO `t_article` VALUES ('1313', '2017-02-20 09:49:30', '83', '222', 'http://www.baidu.com', null, null, null, null, '/upload/images?filename=d088f8bf-0590-4df3-ac3f-ed8c9437bb1c.jpg', '0', null, null, '1', '1', null, '100', '100', '2017-02-20 09:49:30', '2017-02-24 17:58:47', null);
-INSERT INTO `t_article` VALUES ('1318', '2017-02-20 15:19:14', '83', '111', null, null, null, null, null, '/upload/images?filename=1e1d72f3-46b9-4bcd-8626-5cb2f2b3d868.png', '0', null, null, '1', '0', null, '100', '100', '2017-02-20 15:19:14', '2017-02-24 17:15:50', null);
-INSERT INTO `t_article` VALUES ('1321', '2017-02-24 17:17:45', '83', '轮播3', 'http://www.sina.com.cn', null, null, null, null, '/upload/images?filename=23a6ea78-e249-45df-ab09-7839b75fa525.png', '0', null, null, '1', '2', null, '100', '100', '2017-02-24 17:17:46', '2017-02-24 17:59:02', null);
-INSERT INTO `t_article` VALUES ('1322', '2017-02-27 15:19:03', '118', '张霞：公益故事的转播需要激发公众的参与1公益故事的', null, null, '<p>\n	张小姐~~2017\n</p>\n<p>\n	&nbsp;\n</p>\n<div class=\"font pl\" style=\"margin:0px;padding:19px 0px 0px 25px;font-size:13px;color:#777777;\">\n	<p style=\"font-style:inherit;font-size:inherit;font-family:inherit;vertical-align:baseline;color:inherit;text-indent:2em;\">\n		记得上高中的时候，学校号召全校师生为灾区捐衣捐物，那是我第一次经历公益捐赠活动。同学们都把捐赠的东西送上讲台，收集了以班级为单位再交给学校。班级同学们捐赠的东西寥寥无几，而只有我，除了身上穿的，把自己新的旧的一年四季的外穿衣物记..\n	</p>\n</div>\n<p>\n	<a href=\"\"></a><img src=\"/upload/images?filename=cac7ffaf-4864-4926-8078-a6c1fa3e8063.png\" alt=\"\" /><br />\n<a href=\"\">\n	<div class=\"font pl\" style=\"margin:0px;padding:19px 0px 0px 25px;font-size:13px;color:#777777;\">\n		<h3 style=\"font-style:inherit;font-size:18px;font-family:inherit;vertical-align:baseline;color:#333333;font-weight:normal;\">\n			霞：公益故事的转播需要激发公众的参与1公益故事的...\n		</h3>\n		<div class=\"author_info clearfix\" style=\"margin:0px 0px 23px;padding:0px;\">\n			<span class=\"pl\" style=\"font-style:inherit;font-size:inherit;font-family:inherit;vertical-align:baseline;line-height:inherit;color:inherit;\">张小姐</span><span class=\"pl\" style=\"font-style:inherit;font-size:inherit;font-family:inherit;vertical-align:baseline;line-height:inherit;color:inherit;\">2017年1月5日</span>\n		</div>\n		<p style=\"font-style:inherit;font-size:inherit;font-family:inherit;vertical-align:baseline;color:inherit;text-indent:2em;\">\n			记得上高中的时候，学校号召全校师生为灾区捐衣捐物，那是我第一次经历公益捐赠活动。同学们都把捐赠的东西送上讲台，收集了以班级为单位再交给学校。班级同学们捐赠的东西寥寥无几，而只有我，除了身上穿的，把自己新的旧的一年四季的外穿衣物记..\n		</p>\n	</div>\n</a>\n</p>', null, null, '/upload/images?filename=4d27dd4c-933f-4e7c-aad9-0aae8da31842.png', '0', null, '张小姐2017年1月5日\n\n记得上高中的时候，学校号召全 我，除了身上穿的，把自己新的旧的一年四季的外穿衣物记..', '1', '10', null, '102', '110', '2017-02-27 15:19:03', '2017-03-03 16:50:04', null);
-INSERT INTO `t_article` VALUES ('1323', '2017-02-27 15:19:42', '118', '张小姐2', null, null, 'dsfasdf', null, null, '/upload/images?filename=896722f1-ffb5-4614-b5ee-5dbcb6508b8c.jpg', '0', null, '张小姐2', '1', '12', null, '100', '102', '2017-02-27 15:19:42', '2017-03-03 14:23:09', null);
-INSERT INTO `t_article` VALUES ('1324', '2017-02-27 15:19:57', '118', '3333', null, null, '33', null, null, '/upload/images?filename=e33e43a1-b9fa-4764-bb20-20cac45b7d56.jpg', '0', null, '33', '1', '33', null, '100', '100', '2017-02-27 15:19:57', '2017-02-27 15:19:57', null);
-INSERT INTO `t_article` VALUES ('1325', '2017-02-27 15:20:12', '118', '444', null, null, '44', null, null, '/upload/images?filename=c3d04e2e-b0e1-4604-a12c-d32a980251bf.jpg', '0', null, '44', '1', '44', null, '100', '100', '2017-02-27 15:20:12', '2017-02-27 15:20:12', null);
-INSERT INTO `t_article` VALUES ('1326', '2017-02-27 15:20:24', '118', '55', null, null, '55', null, null, '/upload/images?filename=a898606f-fad6-4c0f-b3c0-347d5d667d61.jpg', '0', null, '55', '1', '55', null, '100', '100', '2017-02-27 15:20:24', '2017-02-27 15:20:24', null);
-INSERT INTO `t_article` VALUES ('1327', '2017-02-27 15:20:36', '118', '66', null, null, '66', null, null, '/upload/images?filename=aff71886-dcc3-4efc-af3e-8f93c85b8438.jpg', '0', null, '666', '1', '6', null, '100', '100', '2017-02-27 15:20:36', '2017-02-27 15:20:36', null);
-INSERT INTO `t_article` VALUES ('1328', '2017-02-27 15:20:47', '118', '77', null, null, '77', null, null, '/upload/images?filename=b2c704f8-0643-48d0-903e-b420af67ab87.jpg', '0', null, '77', '1', '77', null, '100', '105', '2017-02-27 15:20:47', '2017-03-03 14:23:20', null);
-INSERT INTO `t_article` VALUES ('1329', '2017-02-27 15:20:57', '118', '88', null, null, '88', null, null, '/upload/images?filename=3a178afa-9108-478f-b8c1-2958359386da.jpg', '0', null, '88', '1', '88', null, '100', '100', '2017-02-27 15:20:57', '2017-02-27 15:20:57', null);
-INSERT INTO `t_article` VALUES ('1330', '2017-02-27 15:21:11', '118', '99', null, null, '99', null, null, '/upload/images?filename=6d3b53bb-45c0-4f53-b288-fbce83fdf694.jpg', '0', null, '999', '1', '99', null, '100', '100', '2017-02-27 15:21:11', '2017-02-27 15:21:11', null);
-INSERT INTO `t_article` VALUES ('1331', '2017-02-27 15:21:25', '118', '100', null, null, '100', null, null, '/upload/images?filename=c2a466c5-ee8d-4e1a-bd5f-3e834eb4a75a.jpg', '0', null, '100', '1', '100', null, '100', '100', '2017-02-27 15:21:25', '2017-02-27 15:21:25', null);
-INSERT INTO `t_article` VALUES ('1332', '2017-02-27 15:21:42', '118', '101', null, null, '101', null, null, '/upload/images?filename=53fe9dd4-cc8d-4ddd-a427-f7a383d53cab.jpg', '0', null, '11', '1', '101', null, '100', '101', '2017-02-27 15:21:42', '2017-03-03 14:15:53', null);
-INSERT INTO `t_article` VALUES ('1333', '2017-02-27 15:21:58', '118', '102', null, null, '102', null, null, '/upload/images?filename=02a1342f-88ad-44db-9887-1b996d020253.jpg', '0', null, '102', '1', '102', null, '100', '100', '2017-02-27 15:21:58', '2017-02-27 15:21:58', null);
-INSERT INTO `t_article` VALUES ('1334', '2017-02-27 15:22:15', '119', '111', null, null, '111', null, null, '/upload/images?filename=1afd72d4-bee2-43b8-8cd7-ba144dc9dd0e.jpg', '0', null, '111', '1', '111', null, '100', '103', '2017-02-27 15:22:15', '2017-03-03 15:39:13', null);
-INSERT INTO `t_article` VALUES ('1335', '2017-02-27 15:22:27', '119', '222', null, null, '22', null, null, '/upload/images?filename=9b85cd69-5dee-4f38-a761-ff93662312eb.png', '0', null, '22', '1', '22', null, '100', '100', '2017-02-27 15:22:27', '2017-02-27 15:22:27', null);
-INSERT INTO `t_article` VALUES ('1336', '2017-02-27 15:22:39', '119', '33', null, null, '33', null, null, '/upload/images?filename=39a45734-d00a-4cad-b550-44979240f152.png', '0', null, '33', '1', '333', null, '100', '106', '2017-02-27 15:22:39', '2017-03-03 14:15:16', null);
-INSERT INTO `t_article` VALUES ('1337', '2017-02-27 15:22:52', '120', '444', null, null, '44', null, null, '/upload/images?filename=26d5e97d-769a-4e31-910a-acc5514324e9.png', '0', null, '44', '1', '444', null, '100', '105', '2017-02-27 15:22:52', '2017-03-03 14:14:50', null);
-INSERT INTO `t_article` VALUES ('1338', '2017-02-27 15:23:05', '120', '566', null, null, '55', null, null, '/upload/images?filename=27b863e8-281e-41f9-84e9-e5272df0872e.png', '0', null, '55', '1', '555', null, '101', '216768', '2017-02-27 15:23:05', '2017-03-03 15:44:11', null);
-INSERT INTO `t_article` VALUES ('1339', '2017-02-27 17:32:55', '122', '轮播图1', 'http://www.4fangguan.cn', null, null, null, null, '/upload/images?filename=770e724a-6a64-4a7d-8157-329a6ac3b551.png', '0', null, null, '1', '1', null, '100', '100', '2017-02-27 17:32:55', '2017-03-03 11:05:55', null);
-INSERT INTO `t_article` VALUES ('1340', '2017-02-27 17:35:53', '122', '轮播图2', 'http://www.q-jade.com.cn', null, null, null, null, '/upload/images?filename=922fd919-768c-4b59-9e6a-4a969acc94cb.png', '0', null, null, '1', '0', null, '100', '100', '2017-02-27 17:35:53', '2017-02-27 17:35:53', null);
-INSERT INTO `t_article` VALUES ('1343', '2017-03-03 16:35:38', '123', null, 'http://localhost:90/front/find/finddetail/1322', null, null, null, null, '/upload/images?filename=a2a439d5-cc0e-4b47-a2d7-fa052c5b751c.png', '0', null, null, '1', '22', null, null, null, '2017-03-03 16:35:38', '2017-03-03 16:49:55', null);
-INSERT INTO `t_article` VALUES ('1344', '2017-03-03 16:36:02', '123', null, 'http://www.sina.com.cn', null, null, null, null, '/upload/images?filename=0a19fab4-7c93-4fec-b5c4-dc1c73eec0e0.jpg', '0', null, null, '1', '2', null, null, null, '2017-03-03 16:36:02', '2017-03-03 16:36:02', null);
-
--- ----------------------------
--- Table structure for `t_article_types`
--- ----------------------------
-DROP TABLE IF EXISTS `t_article_types`;
-CREATE TABLE `t_article_types` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `parent_id` bigint(20) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `order_number` int(11) NOT NULL,
-  `status` int(1) NOT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_article_types
--- ----------------------------
-INSERT INTO `t_article_types` VALUES ('77', '-1', '发现', '发现', '20', '1', '2017-02-20 09:34:28', '2017-02-20 09:34:28');
-INSERT INTO `t_article_types` VALUES ('80', '-1', '消息', '消息', '30', '1', '2017-02-20 09:35:03', '2017-02-20 09:35:03');
-INSERT INTO `t_article_types` VALUES ('81', '80', '消息', '消息', '1', '1', '2017-02-20 09:35:12', '2017-02-20 09:35:12');
-INSERT INTO `t_article_types` VALUES ('82', '-1', '首页轮播图', '首页轮播图', '1', '1', '2017-02-20 09:35:50', '2017-02-20 09:35:50');
-INSERT INTO `t_article_types` VALUES ('83', '82', '首页轮播图', '首页轮播图', '1', '1', '2017-02-20 09:35:54', '2017-02-20 09:35:54');
-INSERT INTO `t_article_types` VALUES ('118', '77', '故事', '故事', '1', '1', '2017-02-27 10:36:15', '2017-02-27 10:36:15');
-INSERT INTO `t_article_types` VALUES ('119', '77', '新闻', '新闻', '10', '1', '2017-02-27 10:36:31', '2017-02-27 10:36:31');
-INSERT INTO `t_article_types` VALUES ('120', '77', '活动', '活动', '20', '1', '2017-02-27 10:36:46', '2017-02-27 10:36:46');
-INSERT INTO `t_article_types` VALUES ('121', '-1', '子页轮播图', '子页轮播图', '10', '1', '2017-02-27 17:30:40', '2017-02-27 17:30:40');
-INSERT INTO `t_article_types` VALUES ('122', '121', '发现页面轮播图', '发现页面轮播图', '0', '1', '2017-02-27 17:31:08', '2017-02-27 17:31:08');
-INSERT INTO `t_article_types` VALUES ('123', '77', '最近活动', '最近活动', '30', '1', '2017-03-03 15:49:11', '2017-03-03 15:49:11');
-
--- ----------------------------
 -- Table structure for `t_authentication_info`
 -- ----------------------------
 DROP TABLE IF EXISTS `t_authentication_info`;
@@ -489,55 +399,17 @@ CREATE TABLE `t_authentication_info` (
   `check_time` datetime DEFAULT NULL COMMENT '审核时间',
   `check_status` int(11) DEFAULT NULL COMMENT '审核状态 0.待审核 1.通过 2.拒绝',
   `remark` varchar(255) DEFAULT NULL COMMENT '审核理由',
-  `admin_id` bigint(20) DEFAULT NULL COMMENT '审核人ID',
-  `admin_name` varchar(168) DEFAULT NULL COMMENT '审核人姓名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户认证表';
 
 -- ----------------------------
 -- Records of t_authentication_info
 -- ----------------------------
-INSERT INTO `t_authentication_info` VALUES ('1', '1', '好项目基金会', '1212121212121', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:20:43', '金高路2355号', null, '2017-02-22 14:20:56', '2017-02-23 18:14:58', '2017-02-22 14:21:00', '2', '1', null, null);
-INSERT INTO `t_authentication_info` VALUES ('2', '2', '好项目基金会', '3323232', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:29:17', '金高路2355号', null, '2017-02-22 14:29:27', '2017-02-22 14:29:30', '2017-02-22 14:29:32', '1', '12121', null, null);
-INSERT INTO `t_authentication_info` VALUES ('3', '3', '好项目基金会', '1', '1', '121', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:04', '金高路2355号', null, '2017-02-22 14:29:51', '2017-02-22 14:29:49', '2017-02-22 14:29:46', '1', '1212', null, null);
-INSERT INTO `t_authentication_info` VALUES ('4', '4', '好项目基金会', '32', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:49', '金高路2355号', null, '2017-02-22 14:31:03', '2017-02-22 14:31:06', '2017-02-22 14:31:08', '1', '1212', null, null);
-INSERT INTO `t_authentication_info` VALUES ('5', '1', '', '121', '1', '1', '2', '1', '1', '弘毅基金会', '2017-02-22 14:34:09', '金高路2355号', null, '2017-02-22 14:34:32', '2017-02-22 14:34:34', '2017-02-22 14:34:37', '1', '121', null, null);
-
--- ----------------------------
--- Table structure for `t_expert_comment`
--- ----------------------------
-DROP TABLE IF EXISTS `t_expert_comment`;
-CREATE TABLE `t_expert_comment` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(10) DEFAULT NULL COMMENT '项目id',
-  `project_number` varchar(25) DEFAULT NULL COMMENT '项目编号',
-  `img_code` varchar(255) DEFAULT NULL COMMENT '上传的头像',
-  `contents` varchar(255) DEFAULT NULL COMMENT '评论内容',
-  `expert_name` varchar(25) DEFAULT NULL COMMENT '专家称呼',
-  `project_name` varchar(255) DEFAULT NULL COMMENT '项目名称',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `expert_title` varchar(25) DEFAULT NULL COMMENT '专家职称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_expert_comment
--- ----------------------------
-INSERT INTO `t_expert_comment` VALUES ('1', '1', '111111111', '/upload/images?filename=6eb71057-1caf-4364-b373-02d98cf28c97.jpg', '11221', 'jim', '5689', null, '2017-02-23 16:31:24', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('3', '1', '111111111', null, '1232143', '21', '5689', null, null, '职称1');
-INSERT INTO `t_expert_comment` VALUES ('21', '4', '111111114', '/upload/images?filename=ad7d5fca-b5bd-4799-a6ba-587f626b64fa.png', '11', '1', '项目4', '2017-02-20 18:44:10', '2017-02-21 14:25:36', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('22', '1', '111111111', '/upload/images?filename=f02a5a6d-1649-49de-8904-635de42d9879.jpg', '4444', '4444', '5689', '2017-02-21 10:33:06', '2017-02-21 10:33:06', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('23', '1', '111111111', '/upload/images?filename=bf757d31-2dcb-495b-940b-3a58c30e809f.png', '55555', '5555555', '5689', '2017-02-21 10:33:51', '2017-02-21 10:33:51', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('24', '1', '111111111', '/upload/images?filename=61949c63-f83f-45b0-aa3c-a33026fc819f.gif', 'y', 'y', '5689', '2017-02-21 10:34:25', '2017-02-21 10:34:25', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('25', '1', '111111111', '/upload/images?filename=2c43a785-47b1-48d1-99ba-7ef7a6b59bd2.gif', '123123', '123123', '5689', '2017-02-21 10:45:08', '2017-02-21 10:45:08', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('26', '1', '111111111', '/upload/images?filename=d8f0b8ce-d7d3-4358-b039-e41cbb6690ba.jpg', '0000', '000', '5689', '2017-02-21 10:51:09', '2017-02-21 10:51:09', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('29', '1', '111111111', '/upload/images?filename=5eb5737f-390b-4dd7-b92a-b213d65e263e.jpg', '1', '1', '5689', '2017-02-21 14:45:46', '2017-02-23 10:21:24', '职称1');
-INSERT INTO `t_expert_comment` VALUES ('30', '1', '111111111', '/upload/images?filename=9e65da05-0246-4fb0-a480-ac9a115aeab8.jpg', '21212', '222', '5689', '2017-02-22 17:22:02', '2017-02-23 16:25:56', '21212');
-INSERT INTO `t_expert_comment` VALUES ('31', '2', '111111112', '/upload/images?filename=53998968-94a2-42dc-8621-ecc0375cd541.jpg', '1', '1', '项目22', '2017-02-23 16:27:43', '2017-02-23 16:27:52', '9');
-INSERT INTO `t_expert_comment` VALUES ('32', '1', '111111111', '/upload/images?filename=b09e65e6-1f36-42ed-9874-620b21cc61f0.jpg', '1', 'jim', '5689', '2017-02-23 16:30:47', '2017-02-23 16:30:47', '大学教授');
-INSERT INTO `t_expert_comment` VALUES ('33', '1', '111111111', '/upload/images?filename=46938759-575c-4c97-91d8-fba1968f0366.jpg', '22222222', '1222222222222', '5689', '2017-02-23 16:31:05', '2017-02-23 16:31:05', '222222222222222222');
-INSERT INTO `t_expert_comment` VALUES ('34', '3', '111111113', '/upload/images?filename=0828d6df-6c41-4ef3-931a-126943fba01b.gif', '3', '3', '项目312', '2017-03-02 15:17:41', '2017-03-02 15:17:41', '3');
+INSERT INTO `t_authentication_info` VALUES ('1', '1', '好项目基金会', '1212121212121', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:20:43', '金高路2355号', null, '2017-02-22 14:20:56', '2017-02-22 14:20:58', '2017-02-22 14:21:00', '0', '1');
+INSERT INTO `t_authentication_info` VALUES ('2', '2', '好项目基金会', '3323232', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:29:17', '金高路2355号', null, '2017-02-22 14:29:27', '2017-02-22 14:29:30', '2017-02-22 14:29:32', '1', '12121');
+INSERT INTO `t_authentication_info` VALUES ('3', '3', '好项目基金会', '1', '1', '121', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:04', '金高路2355号', null, '2017-02-22 14:29:51', '2017-02-22 14:29:49', '2017-02-22 14:29:46', '1', '1212');
+INSERT INTO `t_authentication_info` VALUES ('4', '4', '好项目基金会', '32', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:49', '金高路2355号', null, '2017-02-22 14:31:03', '2017-02-22 14:31:06', '2017-02-22 14:31:08', '1', '1212');
+INSERT INTO `t_authentication_info` VALUES ('5', '1', '', '121', '1', '1', '2', '1', '1', '弘毅基金会', '2017-02-22 14:34:09', '金高路2355号', null, '2017-02-22 14:34:32', '2017-02-22 14:34:34', '2017-02-22 14:34:37', '1', '121');
 
 -- ----------------------------
 -- Table structure for `t_good_user`
@@ -548,6 +420,7 @@ CREATE TABLE `t_good_user` (
   `username` varchar(168) DEFAULT NULL COMMENT '个人/机构名',
   `password` varchar(168) DEFAULT NULL COMMENT '密码',
   `salt` varchar(168) DEFAULT NULL COMMENT '加密密码的盐',
+  `real_name` varchar(168) DEFAULT NULL COMMENT '真实姓名',
   `mobile_phone` varchar(168) DEFAULT NULL COMMENT '手机号',
   `email` varchar(168) DEFAULT NULL COMMENT '邮箱',
   `is_accept_email` bit(1) DEFAULT NULL COMMENT '是否接受系统邮件',
@@ -562,171 +435,16 @@ CREATE TABLE `t_good_user` (
   `is_del` bit(1) DEFAULT NULL COMMENT '是否删除 true 删除 false 未删除',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `is_email_authed` bit(1) DEFAULT NULL COMMENT '邮箱是否认证通过 默认false',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='前台用户表';
 
 -- ----------------------------
 -- Records of t_good_user
 -- ----------------------------
-INSERT INTO `t_good_user` VALUES ('1', 'cuipeng1', '202cb962ac59075b964b07152d234b70', null, '15001338253', '22@qq.com', null, '11', '1', '10', '100', '0', '', '', '', '', '2017-02-21 18:18:47', '2017-02-23 18:16:28', null);
-INSERT INTO `t_good_user` VALUES ('2', 'cuipeng2', '121', null, '12121', '221@qq.com', null, '11', '212', '2121', '212', '2121', '', '', '', '', '2017-02-22 14:27:04', '2017-02-22 14:27:07', null);
-INSERT INTO `t_good_user` VALUES ('3', 'cuipeng3', '321', null, '434343', '222@qq.com', null, '32', '121', '54', '53', '21', '', '', '', '', '2017-02-22 14:27:44', '2017-02-22 14:27:47', null);
-INSERT INTO `t_good_user` VALUES ('4', 'cuipeng4', '44', null, '12121', '223@qq.com', null, '44', '43', '45', '424', '42543', '', '', '', '', '2017-02-22 14:28:28', '2017-02-22 14:28:31', null);
-
--- ----------------------------
--- Table structure for `t_industry`
--- ----------------------------
-DROP TABLE IF EXISTS `t_industry`;
-CREATE TABLE `t_industry` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `industry_name` varchar(30) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_industry
--- ----------------------------
-INSERT INTO `t_industry` VALUES ('1', '环境');
-INSERT INTO `t_industry` VALUES ('2', '动物保护');
-INSERT INTO `t_industry` VALUES ('3', '社区发展');
-INSERT INTO `t_industry` VALUES ('4', '三农');
-INSERT INTO `t_industry` VALUES ('5', '文化');
-INSERT INTO `t_industry` VALUES ('6', '青少年');
-INSERT INTO `t_industry` VALUES ('7', '扶贫助困');
-INSERT INTO `t_industry` VALUES ('8', '心理健康');
-INSERT INTO `t_industry` VALUES ('9', '教育');
-INSERT INTO `t_industry` VALUES ('10', '儿童');
-INSERT INTO `t_industry` VALUES ('11', '老年人');
-INSERT INTO `t_industry` VALUES ('12', '安全救灾');
-INSERT INTO `t_industry` VALUES ('13', '见义勇为');
-INSERT INTO `t_industry` VALUES ('14', '公益事业发展');
-
--- ----------------------------
--- Table structure for `t_pay_stream`
--- ----------------------------
-DROP TABLE IF EXISTS `t_pay_stream`;
-CREATE TABLE `t_pay_stream` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(10) DEFAULT NULL,
-  `project_name` varchar(255) DEFAULT NULL,
-  `user_id` bigint(10) DEFAULT NULL,
-  `user_name` varchar(255) DEFAULT NULL,
-  `pay_amount` bigint(10) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
-  `modify_time` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_pay_stream
--- ----------------------------
-INSERT INTO `t_pay_stream` VALUES ('1', '4', '项目1', '6', '丁发展', '50', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('2', '5', '项目2', '7', '杨帆', '1111', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('3', '6', '金恪1', '8', '崔朋', '3333', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('4', '7', '项目1', '9', '丁发展', '20333', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('5', '8', '项目2', '10', '杨帆', '25344', '2017-02-22 11:30:27', '2017-02-22 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('6', '9', '金恪1', '11', '崔朋', '30566', '2017-02-11 11:30:27', '2017-02-21 11:30:28');
-INSERT INTO `t_pay_stream` VALUES ('7', '10', '项目1', '12', '丁发展', '354', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('8', '11', '项目2', '13', '杨帆', '40', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('9', '12', '金恪1', '14', '崔朋', '454', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('10', '13', '项目1', '15', '丁发展', '505', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('11', '14', '项目2', '16', '杨帆', '555', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('12', '15', '金恪1', '17', '崔朋', '605', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('13', '16', '项目1', '18', '丁发展', '65', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('14', '17', '项目2', '19', '杨帆', '706', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('15', '18', '金恪1', '20', '崔朋', '756', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('16', '19', '项目1', '21', '丁发展', '80', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('17', '20', '项目2', '22', '杨帆', '85', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('18', '21', '金恪1', '23', '崔朋', '90', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('19', '22', '项目2', '24', '崔朋', '95', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('20', '23', '项目2', '25', '崔朋', '100', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('21', '23', '项目3', '26', '崔朋', '105', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('22', '23', '项目4', '27', '崔朋', '110', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('23', '23', '项目5', '28', '崔朋', '115', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-INSERT INTO `t_pay_stream` VALUES ('24', '23', '项目6', '29', '崔朋', '120', '2017-02-21 11:30:27', '2017-02-21 11:30:27');
-
--- ----------------------------
--- Table structure for `t_pei`
--- ----------------------------
-DROP TABLE IF EXISTS `t_pei`;
-CREATE TABLE `t_pei` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(10) DEFAULT NULL COMMENT '项目id',
-  `number` varchar(5) DEFAULT '' COMMENT '分项',
-  `code` varchar(5) DEFAULT '' COMMENT '分数',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=305 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_pei
--- ----------------------------
-INSERT INTO `t_pei` VALUES ('225', '2', '1', '2', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('226', '2', '2', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('227', '2', '3', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('228', '2', '4', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('229', '2', '5', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('230', '2', '6', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('231', '2', '7', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('232', '2', '8', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('233', '2', '9', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('234', '2', '10', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('235', '2', '11', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('236', '2', '12', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('237', '2', '13', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('238', '2', '14', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('239', '2', '15', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('240', '2', '16', '0', '2017-02-17 17:16:28', null);
-INSERT INTO `t_pei` VALUES ('241', '3', '1', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('242', '3', '2', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('243', '3', '3', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('244', '3', '4', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('245', '3', '5', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('246', '3', '6', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('247', '3', '7', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('248', '3', '8', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('249', '3', '9', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('250', '3', '10', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('251', '3', '11', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('252', '3', '12', '5', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('253', '3', '13', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('254', '3', '14', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('255', '3', '15', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('256', '3', '16', '0', '2017-02-20 10:36:50', null);
-INSERT INTO `t_pei` VALUES ('273', '1', '1', '0', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('274', '1', '2', '1', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('275', '1', '3', '2', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('276', '1', '4', '3', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('277', '1', '5', '4', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('278', '1', '6', '0', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('279', '1', '7', '1', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('280', '1', '8', '2', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('281', '1', '9', '3', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('282', '1', '10', '0', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('283', '1', '11', '1', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('284', '1', '12', '2', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('285', '1', '13', '3', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('286', '1', '14', '0', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('287', '1', '15', '1', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('288', '1', '16', '2', '2017-02-23 16:39:36', null);
-INSERT INTO `t_pei` VALUES ('289', '4', '1', '2', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('290', '4', '2', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('291', '4', '3', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('292', '4', '4', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('293', '4', '5', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('294', '4', '6', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('295', '4', '7', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('296', '4', '8', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('297', '4', '9', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('298', '4', '10', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('299', '4', '11', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('300', '4', '12', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('301', '4', '13', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('302', '4', '14', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('303', '4', '15', '0', '2017-02-23 16:39:47', null);
-INSERT INTO `t_pei` VALUES ('304', '4', '16', '0', '2017-02-23 16:39:47', null);
+INSERT INTO `t_good_user` VALUES ('1', 'cuipeng1', '1212', null, '崔朋', '15001338253', '22@qq.com', null, '11', '1', '10', '100', '0', '', '', '', '', '2017-02-21 18:18:47', '2017-02-22 17:40:05');
+INSERT INTO `t_good_user` VALUES ('2', 'cuipeng2', '121', null, 'da', '12121', '22@qq.com', null, '11', '212', '2121', '212', '2121', '', '', '', '', '2017-02-22 14:27:04', '2017-02-22 14:27:07');
+INSERT INTO `t_good_user` VALUES ('3', 'cuipeng3', '321', null, 'dddd', '434343', '22@qq.com', null, '32', '121', '54', '53', '21', '', '', '', '', '2017-02-22 14:27:44', '2017-02-22 14:27:47');
+INSERT INTO `t_good_user` VALUES ('4', 'cuipeng4', '44', null, 'ss', '12121', '22@qq.com', null, '44', '43', '45', '424', '42543', '', '', '', '', '2017-02-22 14:28:28', '2017-02-22 14:28:31');
 
 -- ----------------------------
 -- Table structure for `t_permission`
@@ -747,7 +465,7 @@ CREATE TABLE `t_permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of t_permission
@@ -769,151 +487,9 @@ INSERT INTO `t_permission` VALUES ('21', '权限管理--删除', '2', null, 'per
 INSERT INTO `t_permission` VALUES ('22', '权限管理--查看', '2', null, 'permission:view', '10', '权限管理', null, null, '0', '', '2017-02-15 15:29:10', '2017-02-15 15:29:10');
 INSERT INTO `t_permission` VALUES ('31', '角色管理--修改', '2', null, 'role:update', '9', '角色管理', null, null, '0', '', '2017-02-17 13:39:20', '2017-02-17 13:39:20');
 INSERT INTO `t_permission` VALUES ('32', '管理员管理--禁用|启用', '2', null, 'user:status', '3', '管理员管理', null, null, '0', '', '2017-02-17 15:57:15', '2017-02-17 15:57:15');
-INSERT INTO `t_permission` VALUES ('34', '资讯管理', '0', null, null, '0', null, null, null, '6', '', '2017-02-21 11:35:04', '2017-02-21 11:35:04');
-INSERT INTO `t_permission` VALUES ('35', '资讯管理列表', '1', '/admin/article/list', 'article:list', '34', '资讯管理', null, null, '1', '', '2017-02-21 11:37:17', '2017-02-21 11:37:17');
-INSERT INTO `t_permission` VALUES ('36', '资讯类别列表', '1', '/admin/articletype/list', 'articletype:list', '34', '资讯管理', null, null, '8', '', '2017-02-21 11:40:15', '2017-02-21 11:40:15');
-INSERT INTO `t_permission` VALUES ('37', '推荐管理', '0', null, null, '0', null, null, null, '12', '', '2017-02-21 11:42:02', '2017-02-21 11:42:02');
-INSERT INTO `t_permission` VALUES ('38', '推荐位列表', '1', '/admin/recommend/list', 'recommend:list', '37', '推荐管理', null, null, '0', '', '2017-02-21 11:42:40', '2017-02-21 11:42:40');
-INSERT INTO `t_permission` VALUES ('39', '结算管理', '0', null, null, '0', null, null, null, '12', '', '2017-02-21 11:43:02', '2017-02-23 17:00:37');
-INSERT INTO `t_permission` VALUES ('40', '项目管理', '0', null, null, '0', null, null, '&#xe620;', '1', '', '2017-02-21 12:05:07', '2017-02-21 12:05:07');
-INSERT INTO `t_permission` VALUES ('41', '项目列表', '1', '/admin/project/projectList', 'project:list', '40', '项目管理', null, null, '1', '', '2017-02-21 12:05:52', '2017-02-21 12:05:52');
-INSERT INTO `t_permission` VALUES ('42', '项目待打分列表', '1', '/admin/project/projectCheckScoreList', 'projectCheckScoreList:wait', '40', '项目管理', null, null, '2', '', '2017-02-21 12:06:36', '2017-02-21 12:06:36');
-INSERT INTO `t_permission` VALUES ('43', '项目待打分列表', '1', '/admin/project/projectCheckScoreList?flag=1', 'projectCheckScoreList:ok', '40', '项目管理', null, null, '3', '', '2017-02-21 12:07:21', '2017-02-21 12:07:21');
-INSERT INTO `t_permission` VALUES ('44', '捐款列表', '1', '/admin/paystream/list', 'pay:list', '39', '支付管理', null, null, '2', '', '2017-02-21 14:06:45', '2017-02-23 17:00:52');
 INSERT INTO `t_permission` VALUES ('45', '用户管理', '0', null, null, '0', null, null, '&#xe60d;', '1', '', '2017-02-21 17:23:45', '2017-02-21 17:23:45');
-INSERT INTO `t_permission` VALUES ('46', '用户列表', '1', '/admin/good', 'good:list', '45', '用户管理', null, null, '0', '', '2017-02-21 17:26:54', '2017-02-21 17:45:35');
-INSERT INTO `t_permission` VALUES ('47', '提现列表', '1', '/admin/withdraw/list', 'withdraw:list', '39', '支付管理', null, null, '2', '', '2017-02-22 10:09:21', '2017-02-22 10:09:21');
 INSERT INTO `t_permission` VALUES ('48', '认证管理', '1', '/admin/authentication-info', 'authentication-info:list', '45', '用户管理', null, null, '3', '', '2017-02-22 11:38:58', '2017-02-22 15:53:48');
 INSERT INTO `t_permission` VALUES ('50', '敏感词管理', '1', '/admin/sensitiveword/list', 'sensitiveword:list', '1', '系统管理', null, null, '100', '', '2017-02-22 14:24:54', '2017-02-22 14:24:54');
-INSERT INTO `t_permission` VALUES ('52', 'ooo', '0', null, null, '0', null, null, null, '0', '', '2017-02-24 11:07:24', '2017-02-24 11:07:24');
-
--- ----------------------------
--- Table structure for `t_project`
--- ----------------------------
-DROP TABLE IF EXISTS `t_project`;
-CREATE TABLE `t_project` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT COMMENT '项目名称',
-  `project_name` varchar(255) DEFAULT NULL COMMENT '项目名称',
-  `project_picture` varchar(255) DEFAULT NULL COMMENT '项目图片',
-  `project_lead` varchar(255) DEFAULT NULL COMMENT '项目导语',
-  `project_partner` varchar(255) DEFAULT NULL COMMENT '合作伙伴  最多3个，用;隔开',
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  `status` int(10) DEFAULT NULL COMMENT '   0:未审核，1：审核失败（驳回） 2：审核成功(募款中), 3:终止项目(前台用户控制)',
-  `project_number` varchar(18) DEFAULT NULL,
-  `admin_status` int(10) DEFAULT '0' COMMENT '0:启用中  1：禁用中',
-  `industry_id` bigint(10) DEFAULT NULL,
-  `score` double(20,0) DEFAULT NULL COMMENT '分数',
-  `sort` int(10) DEFAULT NULL COMMENT '排序，默认999',
-  `project_capital` bigint(20) DEFAULT '0' COMMENT '项目需求资金',
-  `raised_funds` bigint(20) DEFAULT '0' COMMENT '已筹资金',
-  `cash_withdrawal` bigint(20) DEFAULT '0' COMMENT '已提现资金',
-  `fail_reasion` varchar(255) DEFAULT NULL COMMENT '审核失败原因',
-  `earnings` bigint(10) DEFAULT NULL COMMENT '预计收益人数',
-  `begin_time` datetime DEFAULT NULL COMMENT '项目周期:开始时间',
-  `end_time` datetime DEFAULT NULL COMMENT '项目周期:结束日期',
-  `income_group_description` varchar(255) DEFAULT NULL COMMENT '收益群体描述',
-  `project_requiredment_analysis` varchar(500) DEFAULT NULL COMMENT '项目需求分析',
-  `full_time_number` bigint(10) DEFAULT NULL COMMENT '全职人数',
-  `part_time_number` bigint(10) DEFAULT NULL COMMENT '兼职人数',
-  `volunteer_number` bigint(10) DEFAULT NULL COMMENT '志愿者人数',
-  `project_objectives` varchar(500) DEFAULT NULL COMMENT '项目目标',
-  `project_design_road_one` varchar(500) DEFAULT NULL COMMENT '项目设计路径1',
-  `project_design_road_two` varchar(500) DEFAULT NULL COMMENT '项目设计路径2',
-  `project_design_road_three` varchar(500) DEFAULT NULL COMMENT '项目设计路径3',
-  `expected_results_one` varchar(500) DEFAULT NULL,
-  `expected_results_two` varchar(500) DEFAULT NULL COMMENT '预期成果2',
-  `expected_results_three` varchar(500) DEFAULT NULL,
-  `project_type` int(10) DEFAULT NULL COMMENT '1：个人项目  2：企业项目',
-  `is_score` int(10) DEFAULT '0' COMMENT '0：未打分  1：已打分',
-  `good_user_id` bigint(10) DEFAULT NULL COMMENT '用户id',
-  `city_id` bigint(10) DEFAULT NULL COMMENT '关联城市表',
-  `user_name` varchar(50) DEFAULT NULL COMMENT '账户名',
-  `authentication_name` varchar(50) DEFAULT NULL COMMENT '机构/个人名称',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_project
--- ----------------------------
-INSERT INTO `t_project` VALUES ('1', '56893333', '/upload/images?filename=16d6e8cf-c9dc-4b14-ab82-6652e18e4f3c.jpg', '导语1', '伙伴1', '2017-02-08 00:00:00', '2017-02-24 09:28:41', '0', '111111111', '0', '1', '25', '999', '100', '1', '1', '1', '122', '2017-02-01 00:00:00', '2017-02-28 00:00:00', '123', '2', '333', '121', '12', '213213', '12', 'xzcxzc', 'as', 'sadsasa', 'wdsax', 'qws', '1', '1', '1', '36', '100', '名称1');
-INSERT INTO `t_project` VALUES ('2', '项目22', '图片2', '导语22', '伙伴2', '2017-02-16 00:00:00', '2017-02-14 16:31:05', '0', '111111112', '0', '3', '2', '999', '555555', '0', '0', '2121', '12213213', '2017-02-02 00:00:00', '2017-02-10 00:00:00', '11111111111111111111111111111111111111111111111111111111111111111111111111111111', '222222222222222222222', '121', '12121', '121', '213213', '21321', 'xzcxz12', 'sazx21的2', 'das23饿1额2', 'wsax额2饿1', 'tgb213we', '1', '1', '2', '36', 'ding199309@qq.com', '名称2');
-INSERT INTO `t_project` VALUES ('3', '项目312', '/upload/images?filename=f52944a9-f515-4c69-ab57-fa62a5cdd019.jpg', '导语312', '伙伴3', '2017-02-07 00:00:00', '2017-02-21 15:50:58', '0', '111111113', '0', '1', '5', '999', '3', '0', '0', null, '12321321', '2017-02-01 00:00:00', '2017-02-10 00:00:00', '1', '2', '2113', '12', '21', '123213123', '3213', 'xzcx', 'zx', 'asddc', 'wsax', 'ghhnhm', '1', '1', '3', '35', 'ding199309@qq.com', '名称3');
-INSERT INTO `t_project` VALUES ('4', '项目4', '图片4', '导语4', '伙伴4', '2017-02-08 00:00:00', '2017-02-14 15:58:27', '0', '111111114', '0', '1', '2', '999', '4', '0', '0', 'yyy', '111111', '2017-02-10 00:00:00', '2017-02-08 00:00:00', '1', '22222222222222222222222222222222', '331', '111', '12', '12321', '21321', 'vcxv', 'zx', 'wdscx', 'wsax', 'ggvb', '1', '1', '4', '36', 'ding199309@qq.com', '名称4');
-INSERT INTO `t_project` VALUES ('5', '项目5', '/upload/images?filename=ea7cf662-1669-4812-ba61-7fb959e9d77a.png', '导语5', '伙伴5', '2017-02-08 00:00:00', '2017-02-23 19:15:28', '0', '111111115', '0', '1', '0', '999', '500', '0', '0', '通过', '45647', '2017-02-14 00:00:00', '2017-02-23 00:00:00', '1', '2', '11', '111', '12', '321321', '321', 'cxqw', 'g', 'erfg', 'wsaxz', 'vbdf', '1', '0', '0', '35', 'ding199309@qq.com', '名称5');
-INSERT INTO `t_project` VALUES ('6', '项目6', '/upload/images?filename=4af773d2-ca6e-4335-9a2d-71e4912bdab8.gif', '导语6', '伙伴6', '2017-02-03 00:00:00', '2017-02-21 16:30:52', '0', '111111116', '0', '2', '0', '999', '6', '0', '0', null, '12321312', '2017-02-22 00:00:00', '2017-02-24 00:00:00', '1', '2', '1221', '21234', '12', '321321', '321ewd', 'sadas', 'xz', 'cv', 'wsax', 'vbnm', '2', '0', null, '75', 'ding199309@qq.com', '名称6');
-INSERT INTO `t_project` VALUES ('7', '项目7', '图片7', '导语7', '伙伴7', '2017-02-06 00:00:00', '2017-02-22 11:05:34', '0', '111111117', '0', '2', '0', '999', '7', '0', '0', '7777', '312312321', '2017-02-08 00:00:00', '2017-02-24 00:00:00', '1', '2', '3123', '45', '12', '321321', 'scxczxcd', 'sxz', 'xz', 'thgbn', 'rfgvgc', 'wedscx', '2', '0', '0', '22', 'ding199309@qq.com', '名称7');
-INSERT INTO `t_project` VALUES ('8', '项目28', '图片8', '导语8', '伙伴8', '2017-02-04 00:00:00', '2017-02-14 16:19:58', '0', '111111118', '0', '2', '0', '999', '8', '0', '0', null, '3313425', '2017-02-08 00:00:00', '2017-02-24 00:00:00', '1', '2', '1212', '565', '21', '12312', 'das', 'qasd', 'xzz', 'yhjn', 'rgfd', 'yhjhuj', '2', '0', null, '55', 'ding199309@qq.com', '名称8');
-INSERT INTO `t_project` VALUES ('9', '项目9', '图片9', '导语9', '伙伴9', '2017-02-13 00:00:00', '2017-02-14 16:20:05', '0', '111111119', '0', '2', '0', '999', '9', '0', '0', null, '13432512', '2017-02-07 00:00:00', '2017-02-03 00:00:00', '1', '2', '1212', '7687', '12', '21321', 'asdsa', 'asdxzc', 'uu', 'ukj', 'tyghb', 'rfdv', '2', '0', null, '44', 'ding199309@qq.com', '名称9');
-INSERT INTO `t_project` VALUES ('12', '项目12', '图片12', '导语12', '伙伴11', '2017-02-08 00:00:00', '2017-02-08 00:00:00', '0', '111111122', '0', '11', '0', '999', '12', '0', '0', null, '536578', null, null, '1', '2', '1212', '343', '1', '123213', 'asdsa', 'asxz', 'g', 'ol.', 'ergf', 'rrefdv', '2', '0', null, '96', 'ding199309@qq.com', '名称10');
-
--- ----------------------------
--- Table structure for `t_project_milepost`
--- ----------------------------
-DROP TABLE IF EXISTS `t_project_milepost`;
-CREATE TABLE `t_project_milepost` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(10) DEFAULT NULL COMMENT '项目编号',
-  `project_number` varchar(20) DEFAULT NULL,
-  `project_name` varchar(255) DEFAULT NULL COMMENT '项目名称',
-  `img_codes` varchar(500) DEFAULT NULL COMMENT '图片组',
-  `contents` varchar(255) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `title` varchar(100) DEFAULT NULL COMMENT '标题',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_project_milepost
--- ----------------------------
-INSERT INTO `t_project_milepost` VALUES ('1', '1', '111111111', '5689', '/upload/images?filename=5eb5737f-390b-4dd7-b92a-b213d65e263e.jpg;/upload/images?filename=5eb5737f-390b-4dd7-b92a-b213d65e263e.jpg;/upload/images?filename=5eb5737f-390b-4dd7-b92a-b213d65e263e.jpg', '1217-02-22 16:29:46.373 [http-nio-90-exec-8] INFO  c.j.c.admin.ProjectController -查询所有行业信息成功！ industryList = [com.jk.model.Industry@570f7ac9, com.jk.model.Industry@3f487c09, com.jk.model.Industry@17532a11, com.jk.model.Industry@79c57a7c, com.jk.model.Indu', '2017-02-07 16:15:12', '2017-02-22 16:15:15', 'title1');
-INSERT INTO `t_project_milepost` VALUES ('3', '1', '111111111', '5689', '/upload/images?filename=051eb73d-e424-4a2b-b33f-a846716f8bcd.jpg', '1221', '2017-02-01 16:17:22', null, 'title2');
-INSERT INTO `t_project_milepost` VALUES ('4', '1', '111111111', '5689', '/upload/images?filename=051eb73d-e424-4a2b-b33f-a846716f8bcd.jpg', '213213', '2017-02-02 16:17:26', null, 'title3');
-INSERT INTO `t_project_milepost` VALUES ('5', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', '12321', '2017-02-03 16:17:29', null, 'title4');
-INSERT INTO `t_project_milepost` VALUES ('7', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', 'sadxz', '2017-02-03 16:17:36', null, 'title5');
-INSERT INTO `t_project_milepost` VALUES ('8', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', 'zxz', '2017-02-03 16:17:39', null, 'title6');
-INSERT INTO `t_project_milepost` VALUES ('9', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', 'xsc', '2017-02-03 16:17:41', null, 'title7');
-INSERT INTO `t_project_milepost` VALUES ('10', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', 'xc', '2017-02-03 16:17:46', null, 'title8');
-INSERT INTO `t_project_milepost` VALUES ('11', '1', '111111111', '5689', '/upload/images?filename=f4f8a687-902f-4209-a34a-ae1459b4d4e6.png', 'as', '2017-02-03 16:17:49', null, 'title9');
-INSERT INTO `t_project_milepost` VALUES ('14', '1', '111111111', '5689', null, 'as', '2017-02-03 16:17:58', null, 'title10');
-INSERT INTO `t_project_milepost` VALUES ('16', '1', '111111111', '5689', null, 'xzc', '2017-02-03 16:18:07', null, 'title11');
-INSERT INTO `t_project_milepost` VALUES ('17', '1', '111111111', '5689', null, 'xzc', '2017-02-03 16:18:12', null, 'title12');
-INSERT INTO `t_project_milepost` VALUES ('18', '1', '111111111', '5689', null, 'zxc', '2017-02-03 16:18:15', null, 'title13');
-INSERT INTO `t_project_milepost` VALUES ('19', '1', '111111111', '5689', null, 'a', '2017-02-03 16:18:18', null, 'title14');
-INSERT INTO `t_project_milepost` VALUES ('20', '1', '111111111', '5689', null, 'zxca', '2017-02-03 16:18:21', null, 'title15');
-INSERT INTO `t_project_milepost` VALUES ('21', '1', '111111111', '5689', null, 'zxc', '2017-02-03 16:18:24', null, 'title16');
-INSERT INTO `t_project_milepost` VALUES ('22', '1', '111111111', '5689', null, 'zxc', '2017-01-31 16:18:31', null, 'title17');
-INSERT INTO `t_project_milepost` VALUES ('23', '1', '111111111', '5689', null, 'zxc', '2017-02-01 16:18:35', null, 'title18');
-INSERT INTO `t_project_milepost` VALUES ('26', '1', '111111111', '5689', null, 'zc', '2017-02-02 16:18:49', null, 'title19');
-
--- ----------------------------
--- Table structure for `t_recommend`
--- ----------------------------
-DROP TABLE IF EXISTS `t_recommend`;
-CREATE TABLE `t_recommend` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `type` int(11) DEFAULT NULL COMMENT '0：首页-项目推荐位，1：子页-项目推荐位，2：榜单-企业排行',
-  `recommend_id` bigint(10) DEFAULT NULL,
-  `image_filename` varchar(255) DEFAULT NULL,
-  `order_number` int(10) DEFAULT NULL,
-  `company_logo` varchar(255) DEFAULT NULL,
-  `company_name` varchar(255) DEFAULT NULL,
-  `company_p_number` int(5) DEFAULT NULL,
-  `company_p_amount` bigint(15) DEFAULT NULL,
-  `is_use` int(10) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
-  `modify_time` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_recommend
--- ----------------------------
-INSERT INTO `t_recommend` VALUES ('13', '0', '5', '/upload/images?filename=f07e9d9d-da12-4275-a538-3dc3e421cf68.png', '5', null, null, null, null, '1', '2017-02-23 16:33:05', '2017-02-23 16:58:25');
-INSERT INTO `t_recommend` VALUES ('14', '1', '5', null, '6', null, null, null, null, '1', '2017-02-23 16:40:22', '2017-02-23 16:58:45');
-INSERT INTO `t_recommend` VALUES ('17', '2', null, null, '0', null, null, null, null, '1', '2017-02-23 16:45:11', '2017-02-23 16:45:11');
-INSERT INTO `t_recommend` VALUES ('18', '2', null, null, '6', '/upload/images?filename=b913040d-26a2-4eed-9acc-c819b531b022.jpg', '666', '666', '666', '0', '2017-02-23 16:47:07', '2017-02-23 16:59:52');
 
 -- ----------------------------
 -- Table structure for `t_role`
@@ -927,12 +503,12 @@ CREATE TABLE `t_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of t_role
 -- ----------------------------
-INSERT INTO `t_role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-02-23 18:51:44');
+INSERT INTO `t_role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-02-22 14:25:07');
 INSERT INTO `t_role` VALUES ('3', '管理员', '我是管理员', null, '2017-02-08 17:13:50', '2017-02-09 10:10:01');
 INSERT INTO `t_role` VALUES ('8', '普通用户', '我是普通用户', 'ROLE_SIMPLE', '2017-02-17 10:39:35', '2017-02-21 12:08:11');
 
@@ -947,7 +523,7 @@ CREATE TABLE `t_role_permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=623 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=588 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
 
 -- ----------------------------
 -- Records of t_role_permission
@@ -963,39 +539,26 @@ INSERT INTO `t_role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', 
 INSERT INTO `t_role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `t_role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `t_role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `t_role_permission` VALUES ('589', '1', '1', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('590', '1', '3', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('591', '1', '11', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('592', '1', '12', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('593', '1', '13', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('594', '1', '14', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('595', '1', '32', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('596', '1', '9', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('597', '1', '15', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('598', '1', '17', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('599', '1', '18', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('600', '1', '31', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('601', '1', '10', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('602', '1', '19', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('603', '1', '20', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('604', '1', '21', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('605', '1', '22', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('606', '1', '50', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('607', '1', '34', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('608', '1', '35', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('609', '1', '36', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('610', '1', '37', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('611', '1', '38', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('612', '1', '39', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('613', '1', '44', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('614', '1', '47', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('615', '1', '40', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('616', '1', '41', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('617', '1', '42', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('618', '1', '43', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('619', '1', '45', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('620', '1', '46', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
-INSERT INTO `t_role_permission` VALUES ('621', '1', '48', '2017-02-23 18:51:44', '2017-02-23 18:51:44');
+INSERT INTO `t_role_permission` VALUES ('555', '1', '1', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('556', '1', '3', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('557', '1', '11', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('558', '1', '12', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('559', '1', '13', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('560', '1', '14', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('561', '1', '32', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('562', '1', '9', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('563', '1', '15', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('564', '1', '31', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('565', '1', '17', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('566', '1', '18', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('567', '1', '10', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('568', '1', '19', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('569', '1', '20', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('570', '1', '21', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('571', '1', '22', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('572', '1', '50', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('585', '1', '45', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `t_role_permission` VALUES ('587', '1', '48', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
 
 -- ----------------------------
 -- Table structure for `t_sensitive_word`
@@ -1046,37 +609,19 @@ CREATE TABLE `t_user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('83', 'admin', '202cb962ac59075b964b07152d234b70', '202cb962ac59075b964b07152d234b70', '崔朋', '', '18568820939', '228727120@qq.com', '', '', '', null, '2017-02-07 11:45:57', '2017-02-20 16:45:07');
 INSERT INTO `t_user` VALUES ('144', 'cuiuiuiui', '202cb962ac59075b964b07152d234b70', null, null, '', '8484887878787', '228@qq.com', '', '', '', '2017-02-22 18:23:48', '2017-02-13 14:47:27', '2017-02-22 18:23:48');
-INSERT INTO `t_user` VALUES ('209', 'ssss', '202cb962ac59075b964b07152d234b70', null, null, '', '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-27 10:31:27', '2017-02-27 10:31:27');
-INSERT INTO `t_user` VALUES ('210', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-03-03 11:55:29', '2017-03-03 11:55:29');
-
--- ----------------------------
--- Table structure for `t_user_comment`
--- ----------------------------
-DROP TABLE IF EXISTS `t_user_comment`;
-CREATE TABLE `t_user_comment` (
-  `id` bigint(15) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(15) DEFAULT NULL COMMENT '项目id',
-  `user_id` bigint(15) DEFAULT NULL COMMENT '会员id',
-  `project_number` varchar(255) DEFAULT NULL COMMENT '项目编号',
-  `project_name` varchar(255) DEFAULT NULL COMMENT '项目名称',
-  `user_name` varchar(255) DEFAULT NULL COMMENT '会员称呼',
-  `contents` varchar(500) DEFAULT NULL,
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_user_comment
--- ----------------------------
-INSERT INTO `t_user_comment` VALUES ('1', '1', '83', '111111112', '5689', 'admin', '112', null, null);
+INSERT INTO `t_user` VALUES ('203', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:08:12', '2017-02-22 18:08:12');
+INSERT INTO `t_user` VALUES ('204', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:09:24', '2017-02-22 18:09:24');
+INSERT INTO `t_user` VALUES ('205', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:11:45', '2017-02-22 18:11:45');
+INSERT INTO `t_user` VALUES ('206', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:14:21', '2017-02-22 18:14:21');
+INSERT INTO `t_user` VALUES ('207', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:21:42', '2017-02-22 18:21:42');
+INSERT INTO `t_user` VALUES ('208', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:23:48', '2017-02-22 18:23:48');
 
 -- ----------------------------
 -- Table structure for `t_user_role`
@@ -1089,7 +634,7 @@ CREATE TABLE `t_user_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='用户和角色中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户和角色中间表';
 
 -- ----------------------------
 -- Records of t_user_role
@@ -1106,54 +651,6 @@ INSERT INTO `t_user_role` VALUES ('11', '202', '8', '2017-02-20 17:56:10', '2017
 INSERT INTO `t_user_role` VALUES ('12', '203', '1', '2017-02-22 18:08:12', '2017-02-22 18:08:12');
 INSERT INTO `t_user_role` VALUES ('13', '204', '1', '2017-02-22 18:09:24', '2017-02-22 18:09:24');
 INSERT INTO `t_user_role` VALUES ('14', '205', '1', '2017-02-22 18:11:45', '2017-02-22 18:11:45');
-INSERT INTO `t_user_role` VALUES ('15', '206', '8', '2017-02-22 18:14:21', '2017-02-24 11:10:03');
+INSERT INTO `t_user_role` VALUES ('15', '206', '1', '2017-02-22 18:14:21', '2017-02-22 18:14:21');
 INSERT INTO `t_user_role` VALUES ('16', '207', '1', '2017-02-22 18:21:42', '2017-02-22 18:21:42');
 INSERT INTO `t_user_role` VALUES ('17', '208', '1', '2017-02-22 18:23:48', '2017-02-22 18:23:48');
-INSERT INTO `t_user_role` VALUES ('18', '209', '8', '2017-02-27 10:31:27', '2017-02-27 10:31:27');
-INSERT INTO `t_user_role` VALUES ('19', '210', '1', '2017-03-03 11:55:29', '2017-03-03 11:55:29');
-
--- ----------------------------
--- Table structure for `t_withdrawcash`
--- ----------------------------
-DROP TABLE IF EXISTS `t_withdrawcash`;
-CREATE TABLE `t_withdrawcash` (
-  `id` bigint(10) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(10) DEFAULT NULL,
-  `project_name` varchar(255) DEFAULT NULL,
-  `user_id` bigint(10) DEFAULT NULL,
-  `user_name` varchar(255) DEFAULT NULL,
-  `withdraw_amount` bigint(10) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL COMMENT '1:申请提现 2:正在提现 3:提现成功 4:提现拒绝 5:提现取消',
-  `refuse_reason` varchar(255) DEFAULT NULL,
-  `create_time` timestamp NULL DEFAULT NULL,
-  `modify_time` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of t_withdrawcash
--- ----------------------------
-INSERT INTO `t_withdrawcash` VALUES ('1', '4', '项目1', '6', '丁发展', '5', '3', null, '2017-02-22 11:20:54', '2017-02-22 11:21:26');
-INSERT INTO `t_withdrawcash` VALUES ('2', '5', '项目2', '7', '杨帆', '10', '4', null, '2017-02-22 11:20:54', '2017-02-22 11:23:47');
-INSERT INTO `t_withdrawcash` VALUES ('3', '6', '金恪1', '8', '崔朋', '15', '3', null, '2017-02-22 11:20:54', '2017-02-22 11:27:39');
-INSERT INTO `t_withdrawcash` VALUES ('4', '7', '项目1', '9', '丁发展', '20', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:32:42');
-INSERT INTO `t_withdrawcash` VALUES ('5', '8', '项目2', '10', '杨帆', '25', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:34:05');
-INSERT INTO `t_withdrawcash` VALUES ('6', '9', '金恪1', '11', '崔朋', '30', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:34:31');
-INSERT INTO `t_withdrawcash` VALUES ('7', '10', '项目1', '12', '丁发展', '35', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:35:03');
-INSERT INTO `t_withdrawcash` VALUES ('8', '11', '项目2', '13', '杨帆', '40', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:35:41');
-INSERT INTO `t_withdrawcash` VALUES ('9', '12', '金恪1', '14', '崔朋', '45', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:36:15');
-INSERT INTO `t_withdrawcash` VALUES ('10', '13', '项目1', '15', '丁发展', '50', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:37:04');
-INSERT INTO `t_withdrawcash` VALUES ('11', '14', '项目2', '16', '杨帆', '55', '4', null, '2017-02-22 11:20:55', '2017-02-22 11:37:09');
-INSERT INTO `t_withdrawcash` VALUES ('12', '15', '金恪1', '17', '崔朋', '60', '3', null, '2017-02-22 11:20:55', '2017-02-22 11:37:13');
-INSERT INTO `t_withdrawcash` VALUES ('13', '16', '项目1', '18', '丁发展', '65', '4', null, '2017-02-22 11:20:55', '2017-02-22 11:37:16');
-INSERT INTO `t_withdrawcash` VALUES ('14', '17', '项目2', '19', '杨帆', '70', '3', null, '2017-02-22 11:20:55', '2017-02-22 17:19:41');
-INSERT INTO `t_withdrawcash` VALUES ('15', '18', '金恪1', '20', '崔朋', '75', '4', null, '2017-02-22 11:20:55', '2017-02-22 17:19:50');
-INSERT INTO `t_withdrawcash` VALUES ('16', '19', '项目1', '21', '丁发展', '80', '3', null, '2017-02-22 11:20:55', '2017-02-22 17:19:53');
-INSERT INTO `t_withdrawcash` VALUES ('17', '20', '项目2', '22', '杨帆', '85', '4', '不行', '2017-02-22 11:20:55', '2017-02-23 17:31:54');
-INSERT INTO `t_withdrawcash` VALUES ('18', '21', '金恪1', '23', '崔朋', '90', '3', null, '2017-02-22 11:20:55', '2017-02-23 17:42:56');
-INSERT INTO `t_withdrawcash` VALUES ('19', '22', '项目2', '24', '崔朋', '95', '4', '傻逼', '2017-02-22 11:20:55', '2017-02-23 17:43:15');
-INSERT INTO `t_withdrawcash` VALUES ('20', '23', '项目2', '25', '崔朋', '100', '4', '内容不符222', '2017-02-22 11:20:55', '2017-02-23 17:44:24');
-INSERT INTO `t_withdrawcash` VALUES ('21', '23', '项目3', '26', '崔朋', '105', '4', '陈22', '2017-02-22 11:20:55', '2017-02-23 17:44:51');
-INSERT INTO `t_withdrawcash` VALUES ('22', '23', '项目4', '27', '崔朋', '110', '1', null, '2017-02-22 11:20:55', '2017-02-22 11:20:55');
-INSERT INTO `t_withdrawcash` VALUES ('23', '23', '项目5', '28', '崔朋', '115', '1', null, '2017-02-22 11:20:55', '2017-02-22 11:20:55');
-INSERT INTO `t_withdrawcash` VALUES ('24', '23', '项目6', '29', '崔朋', '120', '1', null, '2017-02-22 11:20:55', '2017-02-22 11:20:55');
