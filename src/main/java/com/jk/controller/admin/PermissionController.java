@@ -5,6 +5,7 @@ import com.jk.controller.BaseController;
 import com.jk.model.Permission;
 import com.jk.service.PermissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -55,6 +56,7 @@ public class PermissionController extends BaseController{
      * @param id
      * @return
      */
+    @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
@@ -95,6 +97,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:create")
     @ResponseBody
     @PostMapping

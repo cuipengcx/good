@@ -9,6 +9,7 @@ import com.jk.service.RoleService;
 import com.jk.vo.TreeNode;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -163,6 +164,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
+    @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("role:update")
     @ResponseBody
     @PutMapping(value = "/{id}")

@@ -42,12 +42,23 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="600"/>
 
+    <!--授权信息-->
     <cache name="authorizationCache"
            maxElementsInMemory="10000"
            timeToIdleSeconds="3600"
            timeToLiveSeconds="86400"
            eternal="false"
            overflowToDisk="true" />
+
+    <!--菜单-->
+    <cache name="menuListCache"
+           maxElementsInMemory="10000"
+           overflowToDisk="true"
+           eternal="true"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="600"/>
 
 
     <!-- 登录记录缓存锁定10分钟 -->
