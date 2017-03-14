@@ -197,7 +197,7 @@
                 <version>3.5.1</version>
                 <configuration>
                     <source>${java.version}</source>
-                    <target>>${java.version}</target>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
