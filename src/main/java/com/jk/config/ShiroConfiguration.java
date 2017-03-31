@@ -18,13 +18,17 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,6 +38,36 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfiguration {
+
+    /**
+     * 注册DelegatingFilterProxy（Shiro）
+     * 集成Shiro有2种方法：
+     * 1. 按这个方法自己组装一个FilterRegistrationBean（这种方法更为灵活，可以自己定义UrlPattern，
+     * 在项目使用中你可能会因为一些很但疼的问题最后采用它， 想使用它你可能需要看官网或者已经很了解Shiro的处理原理了）
+     * 2. 直接使用ShiroFilterFactoryBean（这种方法比较简单，其内部对ShiroFilter做了组装工作，无法自己定义UrlPattern，
+     * 默认拦截 /*）
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean delegatingFilterProxy(){
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+
+        //filter
+        DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy();
+        shiroFilter.setTargetBeanName("shiroFilter");
+        //该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
+        shiroFilter.setTargetFilterLifecycle(true);
+        filterRegistrationBean.setFilter(shiroFilter);
+
+        //filter-mapping
+        List<String> urlPatterns=new ArrayList<String>();
+        urlPatterns.add("/admin/*");//拦截路径，可以添加多个
+        // 可以自己灵活的定义很多，避免一些根本不需要被Shiro处理的请求被包含进来
+        filterRegistrationBean.setUrlPatterns(urlPatterns);
+        filterRegistrationBean.setName("shiroFilter");
+        return filterRegistrationBean;
+    }
 
     /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。
