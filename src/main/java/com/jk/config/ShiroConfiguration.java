@@ -55,8 +55,9 @@ public class ShiroConfiguration {
 
         //filter
         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        proxy.setTargetBeanName("shiroFilter");
-        //该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
+        //如果filter-name 和Spring中配置的bean的name相同不需要配置这个
+//        proxy.setTargetBeanName("shiroFilter");
+        //该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理,保留Filter原有的init，destroy方法的调用
         proxy.setTargetFilterLifecycle(true);
         filterRegistrationBean.setFilter(proxy);
 
@@ -65,6 +66,8 @@ public class ShiroConfiguration {
         urlPatterns.add("/admin/*");//拦截路径，可以添加多个
         // 可以自己灵活的定义很多，避免一些根本不需要被Shiro处理的请求被包含进来
         filterRegistrationBean.setUrlPatterns(urlPatterns);
+
+        //filter-name
         filterRegistrationBean.setName("shiroFilter");
         return filterRegistrationBean;
     }
