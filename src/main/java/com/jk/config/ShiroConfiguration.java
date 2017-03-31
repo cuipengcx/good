@@ -54,11 +54,11 @@ public class ShiroConfiguration {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
 
         //filter
-        DelegatingFilterProxy shiroFilter = new DelegatingFilterProxy();
-        shiroFilter.setTargetBeanName("shiroFilter");
+        DelegatingFilterProxy proxy = new DelegatingFilterProxy();
+        proxy.setTargetBeanName("shiroFilter");
         //该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
-        shiroFilter.setTargetFilterLifecycle(true);
-        filterRegistrationBean.setFilter(shiroFilter);
+        proxy.setTargetFilterLifecycle(true);
+        filterRegistrationBean.setFilter(proxy);
 
         //filter-mapping
         List<String> urlPatterns=new ArrayList<String>();
