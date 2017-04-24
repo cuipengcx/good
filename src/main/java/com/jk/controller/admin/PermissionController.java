@@ -177,6 +177,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:update")
     @ResponseBody
     @PutMapping(value = "/{id}")
