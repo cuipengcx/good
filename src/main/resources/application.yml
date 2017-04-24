@@ -1,6 +1,6 @@
 #服务
 server:
-    port: 80
+    port: 90
     context-path: /
 #    session:
 #      timeout: 3600

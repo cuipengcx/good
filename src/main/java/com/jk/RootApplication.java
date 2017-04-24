@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.MultipartConfigElement;
@@ -18,6 +19,7 @@ import java.io.File;
 @SpringBootApplication
 @EnableTransactionManagement // 开启注解事务管理，等同于xml配置文件中的 <tx:annotation-driven />
 @MapperScan(basePackages = "com.jk.mapper", markerInterface = MyMapper.class)
+@EnableScheduling
 public class RootApplication {
     public static final String MAX_FILE_SIZE = "1MB";
     public static final String MAX_REQUEST_SIZE = "1MB";
