@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>编辑内容</title>
+</head>
+
+<body>
+
+<article class="page-container">
+    <form class="form form-horizontal" id="form-content-edit">
+
+        <input type="hidden" th:name="id" th:value="${content?.id}"/>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>内容分类：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${contentCat?.name}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>内容标题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入内容标题" th:id="title" th:name="title" th:value="${content?.title}"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span>内容子标题：</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="请输入内容子标题" id="subTitle" name="subTitle" th:value="${content?.subTitle}"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span><span>标题描述：</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea id="titleDesc" name="titleDesc" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入10个字符" onKeyUp="$.Huitextarealength(this,500)">[[${content?.titleDesc}]]</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/500</p>
+            </div>
+        </div>
+        <div class="row cl" id="div_ctime">
+            <label class="form-label col-xs-4 col-sm-2"><span id="span_ctime">时间：</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" id="time" name="time" class="input-text Wdate" style="width:220px;" th:value="${#dates.format(content?.time,'yyyy-MM-dd HH:mm:ss')}" />
+            </div>
+        </div>
+        <!--<div class="row cl">-->
+        <!--<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序值：</label>-->
+        <!--<div class="formControls col-xs-8 col-sm-9">-->
+        <!--<input type="text" class="input-text" value="0" placeholder="" id="order_number" name="order_number" />-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span>内容正文：</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea id="content" name="content" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入100个字符" onKeyUp="$.Huitextarealength(this,1000)">[[${content?.content}]]</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/1000</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span>图片上传：</span></label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <img id="editImage2" name="editImage2" width="100" height="100" th:src="${content?.img}"/>
+                <div id="filePicker"><input type="file" name="imgFile" id="imgFile2" onchange="uploadImage('imgFile2','editImage2');"></div>
+                <input type="hidden" name="img" id="img" th:value="${content?.img}" />
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存并提交</button>
+                <!-- 				<button onClick="article_save();" class="btn btn-secondary radius" type="button"><i class="Hui-iconfont">&#xe632;</i> 保存草稿</button> -->
+                <button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+<div th:replace="admin/footer :: footer"></div>
+
+<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/ajaxfileupload.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/content/content-edit.js}"></script>
+<script th:inline="javascript">
+    /**
+     * 上传图片
+     * @param fileElementId
+     * @param imageElementId
+     */
+    function uploadImage(fileElementId, imageElementId) {
+        var path = $("#" + fileElementId).val();
+
+        if(path == "") {
+            alert("请选择上传的图片");
+            return;
+        }
+        if (!isImageFile(path)) {
+            alert("请上传图片");
+            return;
+        }
+        jQuery.ajaxFileUpload({
+            url : "/upload/uploadimage",
+            secureuri : false,
+            fileElementId : fileElementId,
+            dataType : 'text',
+            success : function(data) {
+                var data = eval('(' + data + ')');
+
+                if (data.error > 0) {
+                    $("#" + imageElementId).attr("src", "");
+                    $("#img").val("");
+                    alert(data.message);
+                    return;
+                }
+                $("#" + imageElementId).attr("src", data.dataurl);
+                $("#img").val(data.dataurl);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("上传图片失败!");
+            }
+        })
+    }
+
+
+    /**
+     * 根据扩展名判断是否为图片
+     */
+    function isImageFile(path) {
+
+        if (path.length == 0) {
+            return false;
+        }
+        var lowerPath = path.toLowerCase();
+        var number = lowerPath.lastIndexOf(".");
+        if(number == -1)
+            return false;
+        var checkKey = lowerPath.substring(number+1,lowerPath.length);
+        if(checkKey == "jpg" || checkKey =="jpeg"  || checkKey =="png" || checkKey == "gif" ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 取消
+     */
+    function removeIframe(){
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>
+</body>
+</html>

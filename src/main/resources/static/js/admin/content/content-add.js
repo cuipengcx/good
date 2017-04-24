@@ -1,13 +1,24 @@
 $(function () {
-
-    $("#form-change-password").validate({
+    $("#form-content-add").validate({
         rules:{
-            password:{
-                required:true
-            },
-            password2:{
+            title:{
                 required:true,
-                equalTo: "#password"
+                minlength:5,
+                maxlength:200
+            },
+            titleDesc:{
+                required:true,
+                minlength:10,
+                maxlength:500
+            },
+            textarea:{
+                minlength:100,
+                maxlength:1000
+            }
+        },
+        messages : {
+            username : {
+                remote: "该用户名已经被注册！"
             }
         },
         onkeyup:false,
@@ -16,8 +27,8 @@ $(function () {
         submitHandler:function(form){
             $(form).find(":submit").attr("disabled", true);
             $(form).ajaxSubmit({
-                type: 'PUT',
-                url: "/admin/good/update-password/"+$("#guId").val(),
+                type: 'post',
+                url: "/admin/content/save",
                 dataType:"json",
                 success: function(data){
                     if(data.status == "success"){
@@ -34,5 +45,4 @@ $(function () {
             return false; // 非常重要，如果是false，则表明是不跳转，在本页上处理，也就是ajax，如果是非false，则传统的form跳转。
         }
     });
-
 });

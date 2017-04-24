@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50132
 File Encoding         : 65001
 
-Date: 2017-03-13 16:39:51
+Date: 2017-04-24 11:15:12
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -377,74 +377,52 @@ INSERT INTO `area` VALUES ('344', '33', '香港', '0');
 INSERT INTO `area` VALUES ('345', '34', '澳门', '0');
 
 -- ----------------------------
--- Table structure for `authentication_info`
+-- Table structure for `content`
 -- ----------------------------
-DROP TABLE IF EXISTS `authentication_info`;
-CREATE TABLE `authentication_info` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
-  `good_user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
-  `auth_user_name` varchar(168) DEFAULT NULL COMMENT '个人姓名',
-  `id_card` varchar(168) DEFAULT NULL COMMENT '身份证号',
-  `id_card_face` varchar(255) DEFAULT NULL COMMENT '身份证正面',
-  `id_card_back` varchar(255) DEFAULT NULL COMMENT '身份证背面',
-  `type` int(11) DEFAULT NULL COMMENT '用户认证类型 1 个人 2 机构',
-  `auth_legal_user_name` varchar(168) DEFAULT NULL COMMENT '法人代表姓名',
-  `business_licence` varchar(255) DEFAULT NULL COMMENT '三证合一的证件',
-  `company_name` varchar(168) DEFAULT NULL COMMENT '公司姓名',
-  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
-  `register_address` varchar(255) DEFAULT NULL COMMENT '注册登记地址',
-  `company_introduce` varchar(255) DEFAULT NULL COMMENT '公司简介',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `check_time` datetime DEFAULT NULL COMMENT '审核时间',
-  `check_status` int(11) DEFAULT NULL COMMENT '审核状态 0.待审核 1.通过 2.拒绝',
-  `remark` varchar(255) DEFAULT NULL COMMENT '审核理由',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户认证表';
-
--- ----------------------------
--- Records of authentication_info
--- ----------------------------
-INSERT INTO `authentication_info` VALUES ('1', '1', '好项目基金会', '1212121212121', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:20:43', '金高路2355号', null, '2017-02-22 14:20:56', '2017-02-22 14:20:58', '2017-02-22 14:21:00', '0', '1');
-INSERT INTO `authentication_info` VALUES ('2', '2', '好项目基金会', '3323232', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:29:17', '金高路2355号', null, '2017-02-22 14:29:27', '2017-02-22 14:29:30', '2017-02-22 14:29:32', '1', '12121');
-INSERT INTO `authentication_info` VALUES ('3', '3', '好项目基金会', '1', '1', '121', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:04', '金高路2355号', null, '2017-02-22 14:29:51', '2017-02-22 14:29:49', '2017-02-22 14:29:46', '1', '1212');
-INSERT INTO `authentication_info` VALUES ('4', '4', '好项目基金会', '32', '1', '1', '1', '1', '1', '弘毅基金会', '2017-02-22 14:30:49', '金高路2355号', null, '2017-02-22 14:31:03', '2017-02-22 14:31:06', '2017-02-22 14:31:08', '1', '1212');
-INSERT INTO `authentication_info` VALUES ('5', '1', '', '121', '1', '1', '2', '1', '1', '弘毅基金会', '2017-02-22 14:34:09', '金高路2355号', null, '2017-02-22 14:34:32', '2017-02-22 14:34:34', '2017-02-22 14:34:37', '1', '121');
-
--- ----------------------------
--- Table structure for `good_user`
--- ----------------------------
-DROP TABLE IF EXISTS `good_user`;
-CREATE TABLE `good_user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(168) DEFAULT NULL COMMENT '个人/机构名',
-  `password` varchar(168) DEFAULT NULL COMMENT '密码',
-  `salt` varchar(168) DEFAULT NULL COMMENT '加密密码的盐',
-  `real_name` varchar(168) DEFAULT NULL COMMENT '真实姓名',
-  `mobile_phone` varchar(168) DEFAULT NULL COMMENT '手机号',
-  `email` varchar(168) DEFAULT NULL COMMENT '邮箱',
-  `is_accept_email` bit(1) DEFAULT NULL COMMENT '是否接受系统邮件',
-  `start_number` int(11) DEFAULT NULL COMMENT '发起的项目数量',
-  `keep_number` int(11) DEFAULT NULL COMMENT '收藏的项目数量',
-  `support_number` int(11) DEFAULT NULL COMMENT '支持的项目数量',
-  `get_price` bigint(20) DEFAULT NULL COMMENT '募集的金额  单位为：分，避免四舍五入换算精度问题',
-  `pay_price` bigint(20) DEFAULT NULL COMMENT '支持的金额  单位为：分，避免四舍五入换算精度问题',
-  `is_person_authed` bit(1) DEFAULT NULL COMMENT '个人权益是否认证通过',
-  `is_team_authed` bit(1) DEFAULT NULL COMMENT '机构权益是否认证通过',
-  `is_lock` bit(1) DEFAULT NULL COMMENT '是否禁用  true禁用  false 启用',
-  `is_del` bit(1) DEFAULT NULL COMMENT '是否删除 true 删除 false 未删除',
+DROP TABLE IF EXISTS `content`;
+CREATE TABLE `content` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content_cat_id` bigint(20) DEFAULT NULL COMMENT '内容分类ID',
+  `img` varchar(300) DEFAULT NULL COMMENT '图片地址',
+  `title` varchar(200) DEFAULT NULL COMMENT '内容标题',
+  `sub_title` varchar(200) DEFAULT NULL COMMENT '子标题',
+  `title_desc` varchar(2000) DEFAULT NULL COMMENT '标题描述',
+  `content` text COMMENT '内容',
+  `url` varchar(500) DEFAULT NULL COMMENT '链接地址',
+  `time` datetime DEFAULT NULL COMMENT '时间',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='前台用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of good_user
+-- Records of content
 -- ----------------------------
-INSERT INTO `good_user` VALUES ('1', 'cuipeng1', '1212', null, '崔朋', '15001338253', '22@qq.com', null, '11', '1', '10', '100', '0', '', '', '', '', '2017-02-21 18:18:47', '2017-02-22 17:40:05');
-INSERT INTO `good_user` VALUES ('2', 'cuipeng2', '121', null, 'da', '12121', '22@qq.com', null, '11', '212', '2121', '212', '2121', '', '', '', '', '2017-02-22 14:27:04', '2017-02-22 14:27:07');
-INSERT INTO `good_user` VALUES ('3', 'cuipeng3', '321', null, 'dddd', '434343', '22@qq.com', null, '32', '121', '54', '53', '21', '', '', '', '', '2017-02-22 14:27:44', '2017-02-22 14:27:47');
-INSERT INTO `good_user` VALUES ('4', 'cuipeng4', '44', null, 'ss', '12121', '22@qq.com', null, '44', '43', '45', '424', '42543', '', '', '', '', '2017-02-22 14:28:28', '2017-02-22 14:28:31');
+
+-- ----------------------------
+-- Table structure for `content_cat`
+-- ----------------------------
+DROP TABLE IF EXISTS `content_cat`;
+CREATE TABLE `content_cat` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键编号',
+  `name` varchar(168) DEFAULT NULL COMMENT '分类名称',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父分类ID,ID=0时，代表的是一级的类目',
+  `parent_name` varchar(168) DEFAULT NULL COMMENT '父分类的名称',
+  `sort` int(11) DEFAULT NULL COMMENT '排列序号,表示同级分类的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数',
+  `is_parent` bit(1) DEFAULT NULL COMMENT '该分类是否为父类目，1为true，0为false',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of content_cat
+-- ----------------------------
+INSERT INTO `content_cat` VALUES ('1', '翰锐', '0', null, '1', '', '2017-04-20 09:17:49', '2017-04-20 09:17:51');
+INSERT INTO `content_cat` VALUES ('2', '新闻中心', '1', '翰锐', '1', '', '2017-04-20 09:19:51', '2017-04-20 09:19:53');
+INSERT INTO `content_cat` VALUES ('3', '最新资讯', '2', '新闻中心', '1', '', '2017-04-20 09:20:58', '2017-04-20 09:21:01');
+INSERT INTO `content_cat` VALUES ('4', '媒体报道', '2', '新闻中心', '2', '', '2017-04-20 09:21:22', '2017-04-20 09:21:24');
+INSERT INTO `content_cat` VALUES ('5', '新闻专题', '2', '新闻中心', '3', '', '2017-04-20 09:21:43', '2017-04-20 09:21:45');
 
 -- ----------------------------
 -- Table structure for `permission`
@@ -465,12 +443,12 @@ CREATE TABLE `permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of permission
 -- ----------------------------
-INSERT INTO `permission` VALUES ('1', '系统管理', '0', null, '', '0', null, '0/', '&#xe62d;', '0', '', '2017-02-09 10:34:50', '2017-02-20 14:31:49');
+INSERT INTO `permission` VALUES ('1', '系统管理', '0', null, '', '0', null, '0/', '&#xe62d;', '0', '', '2017-02-09 10:34:50', '2017-04-24 11:14:08');
 INSERT INTO `permission` VALUES ('3', '管理员管理', '1', '/admin/manager/user', 'user:list', '1', '系统管理', '1/', null, '1', '', '2017-02-13 12:08:50', '2017-02-15 15:23:54');
 INSERT INTO `permission` VALUES ('9', '角色管理', '1', '/admin/role', 'role:list', '1', '系统管理', null, null, '0', '', '2017-02-15 14:07:21', '2017-02-15 15:24:03');
 INSERT INTO `permission` VALUES ('10', '权限管理', '1', '/admin/permission', 'permission:list', '1', '系统管理', null, null, '0', '', '2017-02-15 14:08:24', '2017-02-15 15:23:44');
@@ -487,16 +465,16 @@ INSERT INTO `permission` VALUES ('21', '权限管理--删除', '2', null, 'permi
 INSERT INTO `permission` VALUES ('22', '权限管理--查看', '2', null, 'permission:view', '10', '权限管理', null, null, '0', '', '2017-02-15 15:29:10', '2017-02-15 15:29:10');
 INSERT INTO `permission` VALUES ('31', '角色管理--修改', '2', null, 'role:update', '9', '角色管理', null, null, '0', '', '2017-02-17 13:39:20', '2017-02-17 13:39:20');
 INSERT INTO `permission` VALUES ('32', '管理员管理--禁用|启用', '2', null, 'user:status', '3', '管理员管理', null, null, '0', '', '2017-02-17 15:57:15', '2017-02-17 15:57:15');
-INSERT INTO `permission` VALUES ('45', '用户管理', '0', null, null, '0', null, null, '&#xe60d;', '1', '', '2017-02-21 17:23:45', '2017-02-21 17:23:45');
-INSERT INTO `permission` VALUES ('48', '认证管理', '1', '/admin/authentication-info', 'authentication-info:list', '45', '用户管理', null, null, '3', '', '2017-02-22 11:38:58', '2017-02-22 15:53:48');
 INSERT INTO `permission` VALUES ('50', '敏感词管理', '1', '/admin/sensitiveword/list', 'sensitiveword:list', '1', '系统管理', null, null, '100', '', '2017-02-22 14:24:54', '2017-02-22 14:24:54');
-INSERT INTO `permission` VALUES ('51', '内容管理', '0', null, null, '0', null, null, null, '0', '', '2017-04-19 11:16:42', '2017-04-19 11:16:42');
+INSERT INTO `permission` VALUES ('51', '内容管理', '0', null, null, '0', null, null, '&#xe616;', '0', '', '2017-04-19 11:16:42', '2017-04-24 11:14:27');
 INSERT INTO `permission` VALUES ('52', '内容分类', '1', '/admin/content/cat', 'content-cat:list', '51', '内容管理', null, null, '0', '', '2017-04-19 11:17:50', '2017-04-21 16:08:14');
 INSERT INTO `permission` VALUES ('53', '内容列表', '1', '/admin/content', 'content:list', '51', '内容管理', null, null, '1', '', '2017-04-19 11:21:28', '2017-04-19 11:21:28');
 INSERT INTO `permission` VALUES ('54', '内容列表--删除', '2', null, 'content:delete', '53', '内容列表', null, null, '0', '', '2017-04-20 17:14:31', '2017-04-20 17:14:31');
 INSERT INTO `permission` VALUES ('55', '内容列表--添加', '2', null, 'content:create', '53', '内容列表', null, null, '0', '', '2017-04-20 17:14:52', '2017-04-20 17:14:52');
 INSERT INTO `permission` VALUES ('56', '内容修改', '2', null, 'content:update', '53', '内容列表', null, null, '0', '', '2017-04-20 17:15:18', '2017-04-20 17:15:18');
-
+INSERT INTO `permission` VALUES ('57', '内容分类--添加', '2', null, 'content-cat:create', '52', '内容分类', null, null, '1', '', '2017-04-24 11:04:12', '2017-04-24 11:04:12');
+INSERT INTO `permission` VALUES ('58', '内容分类--修改', '2', null, 'content-cat:update', '52', '内容分类', null, null, '2', '', '2017-04-24 11:04:40', '2017-04-24 11:04:40');
+INSERT INTO `permission` VALUES ('59', '内容分类--删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -515,7 +493,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-02-22 14:25:07');
+INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-04-24 11:05:11');
 INSERT INTO `role` VALUES ('3', '管理员', '我是管理员', null, '2017-02-08 17:13:50', '2017-02-09 10:10:01');
 INSERT INTO `role` VALUES ('8', '普通用户', '我是普通用户', 'ROLE_SIMPLE', '2017-02-17 10:39:35', '2017-02-21 12:08:11');
 
@@ -530,7 +508,7 @@ CREATE TABLE `role_permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=588 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=641 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
 
 -- ----------------------------
 -- Records of role_permission
@@ -546,26 +524,33 @@ INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('555', '1', '1', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('556', '1', '3', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('557', '1', '11', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('558', '1', '12', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('559', '1', '13', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('560', '1', '14', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('561', '1', '32', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('562', '1', '9', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('563', '1', '15', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('564', '1', '31', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('565', '1', '17', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('566', '1', '18', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('567', '1', '10', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('568', '1', '19', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('569', '1', '20', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('570', '1', '21', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('571', '1', '22', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('572', '1', '50', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('585', '1', '45', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
-INSERT INTO `role_permission` VALUES ('587', '1', '48', '2017-02-22 14:25:07', '2017-02-22 14:25:07');
+INSERT INTO `role_permission` VALUES ('614', '1', '1', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('615', '1', '3', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('616', '1', '11', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('617', '1', '12', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('618', '1', '13', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('619', '1', '14', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('620', '1', '32', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('621', '1', '9', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('622', '1', '15', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('623', '1', '17', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('624', '1', '18', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('625', '1', '31', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('626', '1', '10', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('627', '1', '19', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('628', '1', '20', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('629', '1', '21', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('630', '1', '22', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('631', '1', '50', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('632', '1', '51', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('633', '1', '52', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('634', '1', '57', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('635', '1', '58', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('636', '1', '59', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('637', '1', '53', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('638', '1', '54', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('639', '1', '55', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('640', '1', '56', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 
 -- ----------------------------
 -- Table structure for `sensitive_word`
@@ -622,13 +607,6 @@ CREATE TABLE `user` (
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('83', 'admin', '202cb962ac59075b964b07152d234b70', '202cb962ac59075b964b07152d234b70', '崔朋', '', '18568820939', '228727120@qq.com', '', '', '', null, '2017-02-07 11:45:57', '2017-02-20 16:45:07');
-INSERT INTO `user` VALUES ('144', 'cuiuiuiui', '202cb962ac59075b964b07152d234b70', null, null, '', '8484887878787', '228@qq.com', '', '', '', '2017-02-22 18:23:48', '2017-02-13 14:47:27', '2017-02-22 18:23:48');
-INSERT INTO `user` VALUES ('203', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:08:12', '2017-02-22 18:08:12');
-INSERT INTO `user` VALUES ('204', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:09:24', '2017-02-22 18:09:24');
-INSERT INTO `user` VALUES ('205', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:11:45', '2017-02-22 18:11:45');
-INSERT INTO `user` VALUES ('206', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:14:21', '2017-02-22 18:14:21');
-INSERT INTO `user` VALUES ('207', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:21:42', '2017-02-22 18:21:42');
-INSERT INTO `user` VALUES ('208', '小三', 'd9b1d7db4cd6e70935368a1efb10e377', null, null, null, '15001338253', '228727120@qq.com', '', '', '', null, '2017-02-22 18:23:48', '2017-02-22 18:23:48');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -647,65 +625,3 @@ CREATE TABLE `user_role` (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '83', '1', '2017-02-13 11:02:06', '2017-02-13 11:02:08');
-INSERT INTO `user_role` VALUES ('2', '144', '8', '2017-02-13 14:47:27', '2017-02-17 13:47:35');
-INSERT INTO `user_role` VALUES ('5', '196', '1', '2017-02-14 16:22:16', '2017-02-14 16:22:16');
-INSERT INTO `user_role` VALUES ('6', '197', '1', '2017-02-14 16:48:06', '2017-02-14 16:48:06');
-INSERT INTO `user_role` VALUES ('7', '198', '8', '2017-02-20 10:27:58', '2017-02-20 10:27:58');
-INSERT INTO `user_role` VALUES ('8', '199', '8', '2017-02-20 10:45:07', '2017-02-20 10:45:07');
-INSERT INTO `user_role` VALUES ('9', '200', '8', '2017-02-20 17:26:26', '2017-02-20 17:26:26');
-INSERT INTO `user_role` VALUES ('10', '201', '8', '2017-02-20 17:28:22', '2017-02-20 17:28:22');
-INSERT INTO `user_role` VALUES ('11', '202', '8', '2017-02-20 17:56:10', '2017-02-20 17:56:10');
-INSERT INTO `user_role` VALUES ('12', '203', '1', '2017-02-22 18:08:12', '2017-02-22 18:08:12');
-INSERT INTO `user_role` VALUES ('13', '204', '1', '2017-02-22 18:09:24', '2017-02-22 18:09:24');
-INSERT INTO `user_role` VALUES ('14', '205', '1', '2017-02-22 18:11:45', '2017-02-22 18:11:45');
-INSERT INTO `user_role` VALUES ('15', '206', '1', '2017-02-22 18:14:21', '2017-02-22 18:14:21');
-INSERT INTO `user_role` VALUES ('16', '207', '1', '2017-02-22 18:21:42', '2017-02-22 18:21:42');
-INSERT INTO `user_role` VALUES ('17', '208', '1', '2017-02-22 18:23:48', '2017-02-22 18:23:48');
-
--- ----------------------------
--- Table structure for `content`
--- ----------------------------
-DROP TABLE IF EXISTS `content`;
-CREATE TABLE `content` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `content_cat_id` bigint(20) DEFAULT NULL COMMENT '内容分类ID',
-  `img` varchar(300) DEFAULT NULL COMMENT '图片地址',
-  `title` varchar(200) DEFAULT NULL COMMENT '内容标题',
-  `sub_title` varchar(200) DEFAULT NULL COMMENT '子标题',
-  `title_desc` varchar(2000) DEFAULT NULL COMMENT '标题描述',
-  `content` text COMMENT '内容',
-  `url` varchar(500) DEFAULT NULL COMMENT '链接地址',
-  `time` datetime DEFAULT NULL COMMENT '时间',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of content
--- ----------------------------
-
--- ----------------------------
--- Table structure for `content_cat`
--- ----------------------------
-DROP TABLE IF EXISTS `content_cat`;
-CREATE TABLE `content_cat` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键编号',
-  `name` varchar(168) DEFAULT NULL COMMENT '分类名称',
-  `parent_id` bigint(20) DEFAULT NULL COMMENT '父分类ID,ID=0时，代表的是一级的类目',
-  `parent_name` varchar(168) DEFAULT NULL COMMENT '父分类的名称',
-  `sort` int(11) DEFAULT NULL COMMENT '排列序号,表示同级分类的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数',
-  `is_parent` bit(1) DEFAULT NULL COMMENT '该分类是否为父类目，1为true，0为false',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of content_cat
--- ----------------------------
-INSERT INTO `content_cat` VALUES ('1', '翰锐', '0', null, '1', '', '2017-04-20 09:17:49', '2017-04-20 09:17:51');
-INSERT INTO `content_cat` VALUES ('2', '新闻中心', '1', '翰锐', '1', '', '2017-04-20 09:19:51', '2017-04-20 09:19:53');
-INSERT INTO `content_cat` VALUES ('3', '最新资讯', '2', '新闻中心', '1', '', '2017-04-20 09:20:58', '2017-04-20 09:21:01');
-INSERT INTO `content_cat` VALUES ('4', '媒体报道', '2', '新闻中心', '2', '', '2017-04-20 09:21:22', '2017-04-20 09:21:24');
-INSERT INTO `content_cat` VALUES ('5', '新闻专题', '2', '新闻中心', '3', '', '2017-04-20 09:21:43', '2017-04-20 09:21:45');

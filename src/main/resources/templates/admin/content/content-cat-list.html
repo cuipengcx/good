@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="admin/header :: css">
+    <title>内容分类列表</title>
+</head>
+
+<style type="text/css">
+    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+    div#rMenu ul li{
+        margin: 1px 0;
+        padding: 0 5px;
+        cursor: pointer;
+        list-style: none outside none;
+        background-color: #DFDFDF;
+    }
+</style>
+
+<body class="pos-r">
+
+    <div class="pos-a">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+
+    <div id="rMenu">
+        <ul>
+            <li id="m_add" onclick="addTreeNode();">增加节点</li>
+            <li id="m_edit" onclick="editTreeNode();">修改节点</li>
+            <li id="m_del" onclick="removeTreeNode();">删除节点</li>
+        </ul>
+    </div>
+
+<div th:replace="admin/footer :: footer"></div>
+<link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
+<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/content/content-cat-list.js}"></script>
+<script th:inline="javascript">
+    var zTree, rMenu;
+    $(document).ready(function(){
+        inintTree();
+        rMenu = $("#rMenu");
+    });
+</script>
+</body>
+</html>
