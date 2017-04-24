@@ -490,6 +490,13 @@ INSERT INTO `permission` VALUES ('32', '管理员管理--禁用|启用', '2', nu
 INSERT INTO `permission` VALUES ('45', '用户管理', '0', null, null, '0', null, null, '&#xe60d;', '1', '', '2017-02-21 17:23:45', '2017-02-21 17:23:45');
 INSERT INTO `permission` VALUES ('48', '认证管理', '1', '/admin/authentication-info', 'authentication-info:list', '45', '用户管理', null, null, '3', '', '2017-02-22 11:38:58', '2017-02-22 15:53:48');
 INSERT INTO `permission` VALUES ('50', '敏感词管理', '1', '/admin/sensitiveword/list', 'sensitiveword:list', '1', '系统管理', null, null, '100', '', '2017-02-22 14:24:54', '2017-02-22 14:24:54');
+INSERT INTO `permission` VALUES ('51', '内容管理', '0', null, null, '0', null, null, null, '0', '', '2017-04-19 11:16:42', '2017-04-19 11:16:42');
+INSERT INTO `permission` VALUES ('52', '内容分类', '1', '/admin/content/cat', 'content-cat:list', '51', '内容管理', null, null, '0', '', '2017-04-19 11:17:50', '2017-04-21 16:08:14');
+INSERT INTO `permission` VALUES ('53', '内容列表', '1', '/admin/content', 'content:list', '51', '内容管理', null, null, '1', '', '2017-04-19 11:21:28', '2017-04-19 11:21:28');
+INSERT INTO `permission` VALUES ('54', '内容列表--删除', '2', null, 'content:delete', '53', '内容列表', null, null, '0', '', '2017-04-20 17:14:31', '2017-04-20 17:14:31');
+INSERT INTO `permission` VALUES ('55', '内容列表--添加', '2', null, 'content:create', '53', '内容列表', null, null, '0', '', '2017-04-20 17:14:52', '2017-04-20 17:14:52');
+INSERT INTO `permission` VALUES ('56', '内容修改', '2', null, 'content:update', '53', '内容列表', null, null, '0', '', '2017-04-20 17:15:18', '2017-04-20 17:15:18');
+
 
 -- ----------------------------
 -- Table structure for `role`
@@ -654,3 +661,51 @@ INSERT INTO `user_role` VALUES ('14', '205', '1', '2017-02-22 18:11:45', '2017-0
 INSERT INTO `user_role` VALUES ('15', '206', '1', '2017-02-22 18:14:21', '2017-02-22 18:14:21');
 INSERT INTO `user_role` VALUES ('16', '207', '1', '2017-02-22 18:21:42', '2017-02-22 18:21:42');
 INSERT INTO `user_role` VALUES ('17', '208', '1', '2017-02-22 18:23:48', '2017-02-22 18:23:48');
+
+-- ----------------------------
+-- Table structure for `content`
+-- ----------------------------
+DROP TABLE IF EXISTS `content`;
+CREATE TABLE `content` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `content_cat_id` bigint(20) DEFAULT NULL COMMENT '内容分类ID',
+  `img` varchar(300) DEFAULT NULL COMMENT '图片地址',
+  `title` varchar(200) DEFAULT NULL COMMENT '内容标题',
+  `sub_title` varchar(200) DEFAULT NULL COMMENT '子标题',
+  `title_desc` varchar(2000) DEFAULT NULL COMMENT '标题描述',
+  `content` text COMMENT '内容',
+  `url` varchar(500) DEFAULT NULL COMMENT '链接地址',
+  `time` datetime DEFAULT NULL COMMENT '时间',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of content
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `content_cat`
+-- ----------------------------
+DROP TABLE IF EXISTS `content_cat`;
+CREATE TABLE `content_cat` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键编号',
+  `name` varchar(168) DEFAULT NULL COMMENT '分类名称',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父分类ID,ID=0时，代表的是一级的类目',
+  `parent_name` varchar(168) DEFAULT NULL COMMENT '父分类的名称',
+  `sort` int(11) DEFAULT NULL COMMENT '排列序号,表示同级分类的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数',
+  `is_parent` bit(1) DEFAULT NULL COMMENT '该分类是否为父类目，1为true，0为false',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of content_cat
+-- ----------------------------
+INSERT INTO `content_cat` VALUES ('1', '翰锐', '0', null, '1', '', '2017-04-20 09:17:49', '2017-04-20 09:17:51');
+INSERT INTO `content_cat` VALUES ('2', '新闻中心', '1', '翰锐', '1', '', '2017-04-20 09:19:51', '2017-04-20 09:19:53');
+INSERT INTO `content_cat` VALUES ('3', '最新资讯', '2', '新闻中心', '1', '', '2017-04-20 09:20:58', '2017-04-20 09:21:01');
+INSERT INTO `content_cat` VALUES ('4', '媒体报道', '2', '新闻中心', '2', '', '2017-04-20 09:21:22', '2017-04-20 09:21:24');
+INSERT INTO `content_cat` VALUES ('5', '新闻专题', '2', '新闻中心', '3', '', '2017-04-20 09:21:43', '2017-04-20 09:21:45');
