@@ -15,7 +15,7 @@ public class GlobalErrorController implements ErrorController {
 
     @RequestMapping(value=ERROR_PATH)
     public String handleError(){
-        return "admin/404";
+        return "admin/common/404";
     }
 
     @Override

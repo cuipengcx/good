@@ -1,8 +1,12 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>修改角色</title>
+</head>
 
-<body>
+<body layout:fragment="content">
 <article class="page-container">
 	<form action="" method="post" class="form form-horizontal" id="form-admin-role-edit" th:object="${model}">
 		<input type="hidden" th:value="*{id}" th:id="rid"/>
@@ -36,7 +40,7 @@
 		</div>
 	</form>
 </article>
-<div th:replace="admin/footer :: footer"></div>
+
 <link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>

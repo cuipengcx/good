@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+</head>
+
+<body>
+    <aside class="Hui-aside" th:fragment="left">
+        <input runat="server" id="divScrollValue" type="hidden" value="" />
+        <div class="menu_dropdown bk_2">
+
+            <dl th:each="model : ${menuList}" th:if="${model.type} == '0'">
+                <dt>
+                    <i class="Hui-iconfont" th:if="${#strings.isEmpty(model.icon)}">&#xe616;</i>
+                    <i class="Hui-iconfont" th:unless="${#strings.isEmpty(model.icon)}" th:utext="${model.icon}">&#xe616;</i>
+                    <span th:text="${model.name}"></span>
+                    <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i>
+                </dt>
+                <dd>
+                    <ul>
+                        <li th:each="child : ${menuList}" th:if="${child.parentId} == ${model.id}">
+                            <a data-href="/admin/article/list" data-title="资讯列表" href="javascript:void(0)" th:attr="data-href=${child.url},data-title=${child.name}" th:text="${child.name}">资讯列表</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+    </aside>
+</body>
+</html>

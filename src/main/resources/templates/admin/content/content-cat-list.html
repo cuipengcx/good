@@ -1,21 +1,22 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
     <title>内容分类列表</title>
+    <style type="text/css">
+        div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
+        div#rMenu ul li{
+            margin: 1px 0;
+            padding: 0 5px;
+            cursor: pointer;
+            list-style: none outside none;
+            background-color: #DFDFDF;
+        }
+    </style>
 </head>
 
-<style type="text/css">
-    div#rMenu {position:absolute; visibility:hidden; top:0; background-color: #555;text-align: left;padding: 2px;}
-    div#rMenu ul li{
-        margin: 1px 0;
-        padding: 0 5px;
-        cursor: pointer;
-        list-style: none outside none;
-        background-color: #DFDFDF;
-    }
-</style>
-
-<body class="pos-r">
+<body class="pos-r" layout:fragment="content">
 
     <div class="pos-a">
         <ul id="treeDemo" class="ztree"></ul>
@@ -29,7 +30,6 @@
         </ul>
     </div>
 
-<div th:replace="admin/footer :: footer"></div>
 <link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>

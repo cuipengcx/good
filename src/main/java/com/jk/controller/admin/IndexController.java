@@ -61,6 +61,6 @@ public class IndexController extends BaseController{
     @RequestMapping(value = "/403")
     public String unauthorized(){
         log.info("------没有权限-------");
-        return BASE_PATH+"403";
+        return BASE_PATH+"common/403";
     }
 }

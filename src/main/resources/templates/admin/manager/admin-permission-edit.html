@@ -1,8 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>修改权限</title>
+</head>
 
-<body>
+<body layout:fragment="content">
 <article class="page-container">
 	<form class="form form-horizontal" id="form-admin-permission-edit" th:object="${model}">
         <input type="hidden" th:name="parentName" th:id="parentName" th:value="*{parentName}"/>
@@ -72,7 +76,7 @@
 		</div>
 	</form>
 </article>
-<div th:replace="admin/footer :: footer"></div>
+
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-permission-edit.js}"></script>
 </body>
 </html>

@@ -1,9 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
-    <title>敏感词编辑</title>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>修改敏感词</title>
 </head>
-<body>
+
+<body layout:fragment="content">
 <article class="page-container">
 	<form class="form form-horizontal" id="form-sw-edit" action="#">
 		<input type="hidden" name="id" id="id" th:value="${sw.id}" >
@@ -22,10 +25,6 @@
 		</div>
 	</form>
 </article>
-
-<div th:replace="admin/footer :: footer"></div>
-
-<!--请在下方写此页面业务相关的脚本-->
 
 <script type="text/javascript">
 
@@ -92,6 +91,5 @@ function removeIframe(){
 }
 
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
 </body>
 </html>

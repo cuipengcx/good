@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
     <title>添加内容</title>
 </head>
 
-<body>
+<body layout:fragment="content">
 
 <article class="page-container">
     <form class="form form-horizontal" id="form-content-add">
@@ -71,8 +73,6 @@
         </div>
     </form>
 </article>
-
-<div th:replace="admin/footer :: footer"></div>
 
 <script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/kindeditor-4.1.7/kindeditor-min.js}"></script>
 <script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/kindeditor-4.1.7/lang/zh_CN.js}"></script>

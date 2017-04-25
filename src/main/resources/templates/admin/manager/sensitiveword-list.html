@@ -1,9 +1,12 @@
 ﻿<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
-    <title>支付列表</title>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>敏感词列表</title>
 </head>
-<body>
+
+<body layout:fragment="content">
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 支付管理 <span class="c-gray en">&gt;</span> 提现列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <form id="form-article-list" action="/admin/sensitiveword/list" >
 <input type="hidden" id="pageNum" name="pageNum" th:value="${pageNum}"/>
@@ -36,14 +39,12 @@
 				</tr>
 			</tbody>
 		</table>
-		<div th:replace="admin/page :: page"></div>
+		<div th:replace="admin/common/page :: page"></div>
 	</div>
 </div>
 <div style="margin-top:15px; text-align:center;" id="page11"></div>
-<div th:replace="admin/footer :: footer"></div>
 </form>
 
-<!--请在下方写此页面业务相关的脚本-->
 <script type="text/javascript" th:src="@{/h-ui/lib/My97DatePicker/4.8/WdatePicker.js}"></script> 
 <script type="text/javascript">
 

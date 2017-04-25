@@ -1,9 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
     <title>管理员列表</title>
 </head>
-<body>
+
+<body layout:fragment="content">
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i>
     首页
@@ -70,10 +73,10 @@
             </tr>
             </tbody>
         </table>
-        <div th:replace="admin/page :: page"></div>
+        <div th:replace="admin/common/page :: page"></div>
     </div>
 </form>
-<div th:replace="admin/footer :: footer"></div>
+
 <script type="text/javascript" th:src="@{/js/page.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-list.js}"></script>
 <script th:inline="javascript">

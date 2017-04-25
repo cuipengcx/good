@@ -1,7 +1,11 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css"></head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>添加管理员 - 管理员管理</title>
+</head>
+<body layout:fragment="content">
 <article class="page-container">
 	<form class="form form-horizontal" id="form-admin-add" >
 	<div class="row cl">
@@ -71,7 +75,7 @@
 	</div>
 	</form>
 </article>
-<div th:replace="admin/footer :: footer"></div>
+
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-add.js}"></script>
 </body>
 </html>

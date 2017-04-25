@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:include="admin/header :: css">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
     <title>内容列表</title>
 </head>
 
-<body class="pos-r">
+<body class="pos-r" layout:fragment="content">
 <div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
     <ul id="treeDemo" class="ztree"></ul>
 </div>
@@ -68,12 +70,12 @@
                 </tr>
                 </tbody>
             </table>
+            <div th:replace="admin/common/page :: page"></div>
         </div>
     </div>
     </form>
 </div>
 
-<div th:replace="admin/footer :: footer"></div>
 <link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>
