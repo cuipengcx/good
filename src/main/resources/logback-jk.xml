@@ -45,8 +45,23 @@
         </filter>
     </appender>
 
-    <logger name="org.springframework.web" level="INFO" />
-    <logger name="com.jk" level="DEBUG" />
+    <!--生产环境-->
+    <springProfile name="dev">
+        <logger name="org.springframework.web" level="INFO" />
+        <logger name="com.jk" level="DEBUG" />
+    </springProfile>
+
+    <!-- 测试环境-->
+    <springProfile name="test">
+        <logger name="org.springframework.web" level="INFO" />
+        <logger name="com.jk" level="INFO" />
+    </springProfile>
+
+    <!-- 生产环境-->
+    <springProfile name="pro">
+        <logger name="org.springframework.web" level="ERROR" />
+        <logger name="com.jk" level="ERROR" />
+    </springProfile>
     <!--<logger name="org.mybatis">-->
         <!--<level value="TRACE"/>-->
     <!--</logger>-->
