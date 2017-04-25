@@ -51,8 +51,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span>内容正文：</span></label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea id="content" name="content" cols="" rows="" class="textarea"  placeholder="说点什么...最少输入100个字符" onKeyUp="$.Huitextarealength(this,1000)">[[${content?.content}]]</textarea>
-                <p class="textarea-numberbar"><em class="textarea-length">0</em>/1000</p>
+                <textarea id="content" name="content">[[${content?.content}]]</textarea>
             </div>
         </div>
         <div class="row cl">
@@ -78,6 +77,21 @@
 <script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/ajaxfileupload.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/content/content-edit.js}"></script>
 <script th:inline="javascript">
+
+    //富文本kindeditor初始化
+    var editor;
+    KindEditor.ready(function(K) {
+        editor = K.create('#content', {
+            cssPath :"@{/h-ui/lib/kindeditor-4.1.7/plugins/code/prettify.css}",
+            uploadJson : '/upload/kindeditorimage',
+            allowFileManager : true,
+            allowUpload: true,
+            width:"900px",
+            height:"350px",
+            afterBlur: function(){this.sync();}
+        });
+    });
+
     /**
      * 上传图片
      * @param fileElementId
