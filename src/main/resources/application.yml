@@ -44,7 +44,7 @@ spring:
   #thymeleaf模版
   thymeleaf:
     cache: false
-    mode: HTML5
+    mode: HTML
     encoding: UTF-8
     content-type: text/html
 
