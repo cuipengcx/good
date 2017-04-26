@@ -176,15 +176,34 @@
         </filter>
     </appender>
 
-    <!--<logger name="org.springframework.web" level="info"/>-->
+    <logger name="org.springframework.web" level="info"/>
+    <logger name="com.jk" level="debug"/>
 
-    <root level="${logging.level}">
-        <!--root我们这里不输出，目的是不希望有其他类的日志被采集到。-->
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="DEBUG_FILE" />
-        <appender-ref ref="INFO_FILE" />
-        <appender-ref ref="WARN_FILE" />
-        <appender-ref ref="ERROR_FILE" />
-    </root>
+    <!--开发环境:打印控制台-->
+    <springProfile name="dev">
+        <root level="info">
+            <appender-ref ref="CONSOLE" />
+            <!--<appender-ref ref="DEBUG_FILE" />-->
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="WARN_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+        </root>
+    </springProfile>
+
+    <!--测试环境:打印控制台和输出到文件-->
+    <springProfile name="test">
+        <root level="info">
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="WARN_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+        </root>
+    </springProfile>
+
+    <!--生产环境:输出到文件-->
+    <springProfile name="pro">
+        <root level="error">
+            <appender-ref ref="ERROR_FILE" />
+        </root>
+    </springProfile>
 
 </configuration>

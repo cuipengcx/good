@@ -83,9 +83,6 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: D:\\log
-  level:
-     root: info
-     com.jk: debug
 
 
 ---
@@ -104,9 +101,6 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: log
-  level:
-    root: info
-    com.jk: info
 
 
 ---
@@ -125,6 +119,3 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: log
-  level:
-    root: error
-    com.jk: error
