@@ -17,7 +17,7 @@
 		<input type="text" name="findtext" id="findtext" placeholder="敏感词关键字" style="width:250px" class="input-text" th:value="${findtext}"/>
 		<button name="" onclick="javascript:list();" class="btn btn-success" type="button"><i class="Hui-iconfont">&#xe665;</i> 检索</button>
 	</div>
-	<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"> <a class="btn btn-primary radius" data-title="添加敏感词" onclick="sw_add('添加敏感词','/admin/sensitiveword/addSwInit')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加敏感词</a></span><span class="r" >共有数据：<strong th:text="${pageInfo.total}">54</strong> 条</span> </div>
+	<div class="cl pd-5 bg-1 bk-gray mt-20"><span class="l"> <a class="btn btn-primary radius" data-title="添加敏感词" onclick="sw_add('添加敏感词','/admin/sensitiveword/addSwInit')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加敏感词</a></span><span class="r" >共有数据：<strong th:text="${pageInfo?.total}">54</strong> 条</span> </div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort">
 			<thead>
@@ -28,7 +28,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-c" th:each="model:${pageInfo.list}" th:object="${model}">
+				<tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
 					<td th:text="*{id}">1</td>
 					<td th:text="*{word}">100</td>
 					<td class="f-14 td-manage">
