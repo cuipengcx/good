@@ -9,7 +9,6 @@ spring:
     active: dev
  #数据源
   datasource:
-    name: test
     driverClassName: com.mysql.jdbc.Driver
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
@@ -84,9 +83,9 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: D:\\log
-#  level:
-#     root: debug
-#     com.jk: debug
+  level:
+     root: info
+     com.jk: debug
 
 
 ---
@@ -105,9 +104,9 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: log
-#  level:
-  # root: info
-  # com.jk: debug
+  level:
+    root: info
+    com.jk: info
 
 
 ---
@@ -126,6 +125,6 @@ spring:
 logging:
   config: classpath:logback-jk.xml
   path: log
-#  level:
-#    root: error
-#    com.jk: error
+  level:
+    root: error
+    com.jk: error
