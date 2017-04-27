@@ -3,31 +3,32 @@ package com.jk.aop;
 import com.jk.annotation.OperationLog;
 import com.jk.model.Log;
 import com.jk.service.LogService;
+import com.jk.util.ShiroUtils;
+import com.xiaoleilu.hutool.http.HttpUtil;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * 使用aop实现系统操作日志
  * author : cuiP
  */
 @Aspect
-@Service
+@Component
 public class OperationLogAspect {
 
     /**
@@ -35,6 +36,11 @@ public class OperationLogAspect {
      */
     @Resource
     private LogService logService;
+    @Resource
+    private HttpServletRequest request; //这里可以获取到request
+    @Resource
+    private HttpServletResponse response;//这里可以获取到response
+
 
     //本地异常日志记录对象
     private static final Logger logger = LoggerFactory.getLogger(OperationLogAspect.class);
@@ -43,7 +49,7 @@ public class OperationLogAspect {
      * 定义日志切入点
      */
     @Pointcut("@annotation(com.jk.annotation.OperationLog)")
-    public void serviceAspect(){
+    public void logPointCut(){
     }
 
     /**
@@ -51,65 +57,38 @@ public class OperationLogAspect {
      *
      * @param joinPoint 切点
      */
-    @After("serviceAspect()")
+    @After("logPointCut()")
     public void doAfter(JoinPoint joinPoint) {
         try {
-            //*========控制台输出=========*//
-            // System.out.println("=====后置通知开始=====");
-            // System.out.println("请求方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            // System.out.println("方法描述:" + getServiceMethodDescription(joinPoint));
-
-            // 获取注入点方法中的参数(HttpSaasRequest request, HttpSaasResponse response)
-            HttpServletRequest request = (HttpServletRequest)joinPoint.getArgs()[0];
-            String uri = request.getRequestURI();
-            String path = request.getContextPath();
-            // 获取客户端IP
-            String ip = request.getRemoteAddr();
-
-            // 从请求中获取参数列表
-//            Set<String> parameterNames = request.getParameterNames();
-            Map<String, String[]> requestParams = request.getParameterMap();
-
-            // 读取session，获取用户信息
-            // String user = (String) session.getAttribute(WebConstants.CURRENT_USER);
-            String user = "admin";
-            // System.out.println("请求参数:" + GsonUtil.toJson(requestParams));
-            // System.out.println("请求uri:" + uri);
-            // System.out.println("请求path:" + path);
-            // System.out.println("请求IP:" + ip);
-
-            // 获取response
-            HttpServletResponse saasResponse = (HttpServletResponse)joinPoint.getArgs()[1];
-            String status = saasResponse.getStatus()+"";
-            //TODO 响应内容
-            String content = "";
-            // System.out.println("请求返回状态:"+status);
-            // System.out.println("请求返回值:"+content);
+            //请求的参数
+            Object[] args = joinPoint.getArgs();
 
             //*========数据库日志=========*//
             Log log = new Log();
             log.setAppName("");
-            log.setUser(user);
+            log.setUser(ShiroUtils.getUserEntity().getUsername());
             log.setLogType(0);
-            log.setMethodName((joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            log.setRequestParams(JSONUtil.toJsonStr(requestParams));
-            log.setMethodDescription(getServiceMethodDescription(joinPoint));
+            log.setMethodName(getFullMethodName(joinPoint));
+            log.setRequestMethod(request.getMethod());
+            //TODO
+            log.setRequestParams(JSONUtil.toJsonStr(args));
 
-            log.setRequestIp(ip);
-            log.setRequestUri(uri);
-            log.setRequestPath(path);
+            log.setMethodDescription(getMethodDescription(joinPoint));
+
+            log.setRequestIp(HttpUtil.getClientIP(request));
+            log.setRequestUri(request.getRequestURI());
+            //TODO
+            log.setRequestPath(request.getContextPath());
 
             log.setExceptionCode(null);
             log.setExceptionDetail(null);
 
-            log.setStatus(status);
-            log.setContent(content);
+            log.setStatus(response.getStatus()+"");
+            //TODO
+            log.setContent("");
 
-            log.setCreateTime(Calendar.getInstance().getTime());
             // 保存数据库
             logService.save(log);
-//            String result = soaClient.requestPlatform("/logService/save",GsonUtil.toJson(log));
-            // System.out.println("=====后置通知结束=====");
         }  catch (Exception e) {
             //记录本地异常日志
             logger.error("==后置通知异常==");
@@ -123,105 +102,82 @@ public class OperationLogAspect {
      * @param joinPoint
      * @param e
      */
-    @AfterThrowing(pointcut = "serviceAspect()", throwing = "e")
+    @AfterThrowing(pointcut = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         Map<String,String[]> requestParams = new HashMap<>();
         try {
-            /*========控制台输出=========*/
-
-            // System.out.println("=====异常通知开始=====");
-            // System.out.println("异常代码:" + e.getClass().getName());
-            // System.out.println("异常信息:" + e.getMessage());
-            // System.out.println("异常方法:" + (joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            // System.out.println("方法描述:" + getServiceMethodDescription(joinPoint));
-
-            // 获取注入点方法中的参数(HttpSaasRequest request, HttpSaasResponse response)
-            HttpServletRequest saasRequest = (HttpServletRequest)joinPoint.getArgs()[0];
-            String uri = saasRequest.getRequestURI();
-            String path = saasRequest.getContextPath();
-            // 获取客户端IP
-            String ip = saasRequest.getRemoteAddr();
-
-            // 从请求中获取参数列表
-            requestParams = saasRequest.getParameterMap();
-            // System.out.println("请求参数:" + GsonUtil.toJson(requestParams));
-
-            // 读取session，获取用户信息
-            // String user = (String) session.getAttribute(WebConstants.CURRENT_USER);
-            String user = "admin";
-            // System.out.println("请求参数:" + GsonUtil.toJson(requestParams));
-            // System.out.println("请求uri:" + uri);
-            // System.out.println("请求path:" + path);
-            // System.out.println("请求IP:" + ip);
-
-            // 获取response
-            HttpServletResponse saasResponse = (HttpServletResponse)joinPoint.getArgs()[1];
-            String status = saasResponse.getStatus()+"";
-            //TODO 响应内容
-            String content = "";
-            // System.out.println("请求返回状态:"+status);
-            // System.out.println("请求返回值:"+content);
+            //请求的参数
+            Object[] args = joinPoint.getArgs();
 
             /*==========数据库日志=========*/
             Log log = new Log();
             log.setAppName("");
-            log.setUser(user);
+            log.setUser(ShiroUtils.getUserEntity().getUsername());
             log.setLogType(1);
-            log.setMethodName((joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"));
-            log.setRequestParams(JSONUtil.toJsonStr(requestParams));
-            log.setMethodDescription(getServiceMethodDescription(joinPoint));
+            log.setMethodName(getFullMethodName(joinPoint));
+            log.setRequestMethod(request.getMethod());
+            //TODO
+            log.setRequestParams(JSONUtil.toJsonStr(args));
 
-            log.setRequestIp(ip);
-            log.setRequestUri(uri);
-            log.setRequestPath(path);
+            log.setMethodDescription(getMethodDescription(joinPoint));
+
+            log.setRequestIp(HttpUtil.getClientIP(request));
+            log.setRequestUri(request.getRequestURI());
+            //TODO
+            log.setRequestPath(request.getContextPath());
 
             log.setExceptionCode(e.getClass().getName());
             log.setExceptionDetail(e.getMessage());
 
-            log.setStatus(status);
-            log.setContent(content);
+            log.setStatus(response.getStatus()+"");
+            //TODO
+            log.setContent("");
 
-            log.setCreateTime(Calendar.getInstance().getTime());
             //保存数据库
             logService.save(log);
-//            String result = soaClient.requestPlatform("/logService/save",GsonUtil.toJson(log));
-            // System.out.println("=====异常通知结束=====");
         }  catch (Exception ex) {
             //记录本地异常日志
             logger.error("==异常通知异常==");
             logger.error("异常信息:{}", ex.getMessage());
         }
          /*==========记录本地异常日志==========*/
-        logger.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), GsonUtil.toJson(requestParams));
-
+        logger.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), JSONUtil.toJsonStr(requestParams));
     }
 
 
+
     /**
-     * 获取注解中对方法的描述信息 用于service层注解
+     * 获取注解中对方法的描述信息
      *
      * @param joinPoint 切点
      * @return 方法描述
      * @throws Exception
      */
-    private static String getServiceMethodDescription(JoinPoint joinPoint)
+    private static String getMethodDescription(JoinPoint joinPoint)
             throws Exception {
-        String targetName = joinPoint.getTarget().getClass().getName();
-        String methodName = joinPoint.getSignature().getName();
-        Object[] arguments = joinPoint.getArgs();
-        Class targetClass = Class.forName(targetName);
-        Method[] methods = targetClass.getMethods();
         String description = "";
-        for (Method method : methods) {
-            if (method.getName().equals(methodName)) {
-                Class[] clazzs = method.getParameterTypes();
-                if (clazzs.length == arguments.length) {
-                    description = method.getAnnotation(OperationLog.class).value();
-                    break;
-                }
-            }
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+
+        OperationLog operationLog = method.getAnnotation(OperationLog.class);
+        if(null != operationLog){
+            description = operationLog.value();
         }
         return description;
     }
 
+    /**
+     * 获取请求的方法名全路径
+     * @param joinPoint
+     * @return
+     */
+    private static String getFullMethodName(JoinPoint joinPoint){
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+
+        //请求的方法名全路径
+        String className = joinPoint.getTarget().getClass().getName();
+        String methodName = signature.getName();
+
+        return className + "." + methodName + "()";
+    }
 }

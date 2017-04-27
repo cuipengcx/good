@@ -28,6 +28,10 @@ public class Log extends BaseEntity{
      */
     private String methodName;
     /**
+     * 请求方式(GET,POST,DELETE,PUT)
+     */
+    private String requestMethod;
+    /**
      * 请求参数
      */
     private String requestParams;
@@ -62,5 +66,7 @@ public class Log extends BaseEntity{
     /**
      * 请求响应内容
      */
-    private String content;    
+    private String content;
+
+    //TODO 	耗时,是否异常，客户端信息
 }

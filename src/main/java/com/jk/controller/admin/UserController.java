@@ -1,6 +1,7 @@
 package com.jk.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Role;
 import com.jk.model.User;
@@ -41,6 +42,7 @@ public class UserController extends BaseController {
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "分页查询管理员列表")
     @RequiresPermissions("user:list")
     @GetMapping(value = "/user")
     public String list(
