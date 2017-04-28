@@ -637,21 +637,18 @@ CREATE TABLE `log` (
   `log_type` int(11) DEFAULT NULL COMMENT '日志类型，0为操作日志，1为异常日志',
   `user` varchar(100) DEFAULT NULL COMMENT '访问者/请求者',
   `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
-  `request_method`  varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)' ,
+  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)',
   `request_params` varchar(500) DEFAULT NULL COMMENT '请求参数',
   `method_description` varchar(100) DEFAULT NULL COMMENT '方法描述',
   `request_ip` varchar(50) DEFAULT NULL COMMENT '访问者IP',
   `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
-  `request_path` varchar(200) DEFAULT NULL COMMENT '请求PATH',
   `exception_code` varchar(100) DEFAULT NULL COMMENT '异常码',
-  `exception_detail` varchar(100) DEFAULT NULL COMMENT '异常描述',
+  `exception_detail` varchar(2000) DEFAULT NULL COMMENT '异常描述',
   `status` varchar(200) DEFAULT NULL COMMENT '请求返回状态',
-  `content` longtext COMMENT '请求返回内容',
+  `resp_content` longtext COMMENT '请求返回内容',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `time_consuming` bigint(20) DEFAULT NULL COMMENT '请求耗时',
+  `user_agent` varchar(500) DEFAULT NULL COMMENT '客户端信息',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统日志表';
-
--- ----------------------------
--- Records of log
--- ----------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
