@@ -7,10 +7,7 @@ import com.jk.util.ShiroUtils;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +28,13 @@ import java.util.Map;
 @Component
 public class OperationLogAspect {
 
+
+    //本地异常日志记录对象
+    private static final Logger logger = LoggerFactory.getLogger(OperationLogAspect.class);
+    private ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+
+    private ThreadLocal<Log> localLog = new ThreadLocal<Log>();
+
     /**
      * 注入soaClient用于把日志保存数据库
      */
@@ -41,9 +45,6 @@ public class OperationLogAspect {
     @Resource
     private HttpServletResponse response;//这里可以获取到response
 
-
-    //本地异常日志记录对象
-    private static final Logger logger = LoggerFactory.getLogger(OperationLogAspect.class);
 
     /**
      * 定义日志切入点
@@ -57,9 +58,12 @@ public class OperationLogAspect {
      *
      * @param joinPoint 切点
      */
-    @After("logPointCut()")
-    public void doAfter(JoinPoint joinPoint) {
+    @Before("logPointCut()")
+    public void doBefore(JoinPoint joinPoint) {
         try {
+            //记录请求开始时间
+            startTime.set(System.currentTimeMillis());
+
             //请求的参数
             Object[] args = joinPoint.getArgs();
 
@@ -70,30 +74,40 @@ public class OperationLogAspect {
             log.setLogType(0);
             log.setMethodName(getFullMethodName(joinPoint));
             log.setRequestMethod(request.getMethod());
-            //TODO
             log.setRequestParams(JSONUtil.toJsonStr(args));
-
             log.setMethodDescription(getMethodDescription(joinPoint));
-
             log.setRequestIp(HttpUtil.getClientIP(request));
             log.setRequestUri(request.getRequestURI());
-            //TODO
-            log.setRequestPath(request.getContextPath());
+            log.setUserAgent(request.getHeader("User-Agent"));
 
             log.setExceptionCode(null);
             log.setExceptionDetail(null);
 
             log.setStatus(response.getStatus()+"");
-            //TODO
-            log.setContent("");
 
-            // 保存数据库
-            logService.save(log);
+            localLog.set(log);
         }  catch (Exception e) {
             //记录本地异常日志
             logger.error("==后置通知异常==");
             logger.error("异常信息:{}", e.getMessage());
         }
+    }
+
+    /**
+     * 切入点return内容之后切入内容（可以用来对处理返回值做一些加工处理）
+     * @param ret
+     * @throws Throwable
+     */
+    @AfterReturning(returning = "ret", pointcut = "logPointCut()")
+    public void doAfterReturning(Object ret) throws Throwable {
+        // 处理完请求，返回内容
+
+        Log log = localLog.get();
+        log.setTimeConsuming(System.currentTimeMillis() - startTime.get());
+        log.setRespContent(ret.toString());
+
+        // 保存数据库
+        logService.save(log);
     }
 
     /**
@@ -116,22 +130,18 @@ public class OperationLogAspect {
             log.setLogType(1);
             log.setMethodName(getFullMethodName(joinPoint));
             log.setRequestMethod(request.getMethod());
-            //TODO
-            log.setRequestParams(JSONUtil.toJsonStr(args));
-
+//            log.setRequestParams(JSONUtil.toJsonStr(args));
             log.setMethodDescription(getMethodDescription(joinPoint));
-
             log.setRequestIp(HttpUtil.getClientIP(request));
             log.setRequestUri(request.getRequestURI());
-            //TODO
-            log.setRequestPath(request.getContextPath());
+            log.setUserAgent(request.getHeader("User-Agent"));
 
             log.setExceptionCode(e.getClass().getName());
             log.setExceptionDetail(e.getMessage());
 
             log.setStatus(response.getStatus()+"");
             //TODO
-            log.setContent("");
+            log.setRespContent("");
 
             //保存数据库
             logService.save(log);

@@ -48,10 +48,6 @@ public class Log extends BaseEntity{
      */
     private String requestUri;
     /**
-     * 请求path
-     */
-    private String requestPath;
-    /**
      * 异常编码
      */
     private String exceptionCode;
@@ -66,7 +62,15 @@ public class Log extends BaseEntity{
     /**
      * 请求响应内容
      */
-    private String content;
+    private String respContent;
+    /**
+     * 耗时
+     */
+    private Long timeConsuming;
+    /**
+     * 客户端信息
+     */
+    private String userAgent;
 
-    //TODO 	耗时,是否异常，客户端信息
+    //TODO 是否异常
 }
