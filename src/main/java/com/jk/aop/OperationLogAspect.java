@@ -83,8 +83,6 @@ public class OperationLogAspect {
             log.setExceptionCode(null);
             log.setExceptionDetail(null);
 
-            log.setStatus(response.getStatus()+"");
-
             localLog.set(log);
         }  catch (Exception e) {
             //记录本地异常日志
@@ -104,6 +102,8 @@ public class OperationLogAspect {
 
         Log log = localLog.get();
         log.setTimeConsuming(System.currentTimeMillis() - startTime.get());
+
+        log.setStatus(response.getStatus()+"");
         log.setRespContent(ret.toString());
 
         // 保存数据库
@@ -119,39 +119,27 @@ public class OperationLogAspect {
     @AfterThrowing(pointcut = "logPointCut()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         Map<String,String[]> requestParams = new HashMap<>();
-        try {
-            //请求的参数
-            Object[] args = joinPoint.getArgs();
+        //请求的参数
+        Object[] args = joinPoint.getArgs();
 
+        try {
             /*==========数据库日志=========*/
-            Log log = new Log();
-            log.setAppName("");
-            log.setUser(ShiroUtils.getUserEntity().getUsername());
+            Log log = localLog.get();
+
             log.setLogType(1);
-            log.setMethodName(getFullMethodName(joinPoint));
-            log.setRequestMethod(request.getMethod());
-//            log.setRequestParams(JSONUtil.toJsonStr(args));
-            log.setMethodDescription(getMethodDescription(joinPoint));
-            log.setRequestIp(HttpUtil.getClientIP(request));
-            log.setRequestUri(request.getRequestURI());
-            log.setUserAgent(request.getHeader("User-Agent"));
 
             log.setExceptionCode(e.getClass().getName());
             log.setExceptionDetail(e.getMessage());
 
             log.setStatus(response.getStatus()+"");
-            //TODO
-            log.setRespContent("");
+            log.setRespContent(e.getMessage());
 
             //保存数据库
             logService.save(log);
         }  catch (Exception ex) {
             //记录本地异常日志
-            logger.error("==异常通知异常==");
-            logger.error("异常信息:{}", ex.getMessage());
+            logger.error("异常方法全路径:{},异常信息:{},请求参数:{}", getFullMethodName(joinPoint), e.getMessage(), JSONUtil.toJsonStr(args));
         }
-         /*==========记录本地异常日志==========*/
-        logger.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), JSONUtil.toJsonStr(requestParams));
     }
 
 
