@@ -1,6 +1,7 @@
 package com.jk.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Role;
 import com.jk.service.PermissionService;
@@ -42,6 +43,7 @@ public class RoleController extends BaseController{
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "分页查询角色列表")
     @RequiresPermissions("role:list")
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -62,6 +64,7 @@ public class RoleController extends BaseController{
      * @param id
      * @return
      */
+    @OperationLog(value = "根据主键ID删除角色")
     @RequiresPermissions("role:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
@@ -89,6 +92,7 @@ public class RoleController extends BaseController{
      * 跳转到角色添加页面
      * @return
      */
+    @OperationLog(value = "跳转到角色添加页面")
     @RequiresPermissions("role:create")
     @GetMapping(value = "/add")
     public String add(ModelMap modelMap){
@@ -103,6 +107,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
+    @OperationLog(value = "添加角色并分配权限")
     @RequiresPermissions("role:create")
     @ResponseBody
     @PostMapping
@@ -135,6 +140,7 @@ public class RoleController extends BaseController{
      * 跳转到角色编辑页面
      * @return
      */
+    @OperationLog(value = "跳转到角色编辑页面")
     @RequiresPermissions("role:update")
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
@@ -164,6 +170,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
+    @OperationLog(value = "更新角色信息")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("role:update")
     @ResponseBody

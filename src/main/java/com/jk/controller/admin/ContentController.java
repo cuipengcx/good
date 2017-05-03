@@ -1,6 +1,7 @@
 package com.jk.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Content;
 import com.jk.model.ContentCat;
@@ -39,6 +40,7 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "分页查询内容列表")
     @RequiresPermissions("content:list")
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -72,6 +74,7 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "跳转到添加内容页面")
     @RequiresPermissions("content:create")
     @GetMapping("/add")
     public String add(Long catId, ModelMap modelMap) {
@@ -85,6 +88,7 @@ public class ContentController extends BaseController {
      * @param content
      * @return
      */
+    @OperationLog(value = "保存内容")
     @RequiresPermissions("content:create")
     @ResponseBody
     @PostMapping("/save")
@@ -108,6 +112,7 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "跳转到编辑内容页面")
     @RequiresPermissions("content:update")
     @GetMapping("/edit")
     public String edit(Long id, ModelMap modelMap) {
@@ -122,6 +127,12 @@ public class ContentController extends BaseController {
         return BASE_PATH + "content-edit";
     }
 
+    /**
+     * 更新内容
+     * @param content
+     * @return
+     */
+    @OperationLog(value = "更新内容")
     @RequiresPermissions("content:update")
     @ResponseBody
     @PostMapping("/update")
@@ -145,6 +156,7 @@ public class ContentController extends BaseController {
      * @param id
      * @return
      */
+    @OperationLog(value = "根据主键ID删除内容")
     @RequiresPermissions("content:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {

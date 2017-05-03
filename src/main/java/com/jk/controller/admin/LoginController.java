@@ -1,5 +1,6 @@
 package com.jk.controller.admin;
 
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.User;
 import com.jk.service.UserService;
@@ -96,6 +97,7 @@ public class LoginController extends BaseController {
      * 跳转到修改密码页面
      * @return
      */
+    @OperationLog(value = "跳转到修改密码页面")
     @GetMapping(value = "/password")
     public String password(){
         log.info("跳转到修改密码页面成功!");
@@ -106,6 +108,7 @@ public class LoginController extends BaseController {
      * 修改密码
      * @return
      */
+    @OperationLog(value = "修改密码")
     @ResponseBody
     @PostMapping(value = "/password")
     public ModelMap updatePassword(String oldPassword, String newPassword){

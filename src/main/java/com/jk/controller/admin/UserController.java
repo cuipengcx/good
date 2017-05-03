@@ -68,6 +68,7 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
+    @OperationLog(value = "根据主键ID删除管理员")
     @RequiresPermissions("user:delete")
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
@@ -100,6 +101,7 @@ public class UserController extends BaseController {
      * @param ids
      * @return
      */
+    @OperationLog(value = "批量删除管理员")
     @DeleteMapping(value = "/user/batch/{ids}")
     public ResponseEntity<Void> deleteBatch(@PathVariable("ids") List<Object> ids) {
         try {
@@ -124,6 +126,7 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
+    @OperationLog(value = "禁用|启用管理员")
     @RequiresPermissions("user:status")
     @PutMapping(value = "/user/status/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable("id") Long id){
@@ -157,6 +160,7 @@ public class UserController extends BaseController {
      * 跳转到管理员添加页面
      * @return
      */
+    @OperationLog(value = "跳转到管理员添加页面")
     @RequiresPermissions("user:create")
     @GetMapping(value = "/user/add")
     public String add(ModelMap modelMap){
@@ -172,6 +176,7 @@ public class UserController extends BaseController {
      * @param roleId  角色ID
      * @return
      */
+    @OperationLog(value = "添加管理员")
     @RequiresPermissions("user:create")
     @ResponseBody
     @PostMapping(value = "/user")
@@ -202,6 +207,7 @@ public class UserController extends BaseController {
      * 跳转到管理员修改页面
      * @return
      */
+    @OperationLog(value = "跳转到管理员修改页面")
     @RequiresPermissions("user:update")
     @GetMapping(value = "/user/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
@@ -224,6 +230,7 @@ public class UserController extends BaseController {
      * @param roleId     角色ID
      * @return
      */
+    @OperationLog(value = "更新管理员信息")
     @RequiresPermissions("user:update")
     @ResponseBody
     @PutMapping(value = "/user/{id}")

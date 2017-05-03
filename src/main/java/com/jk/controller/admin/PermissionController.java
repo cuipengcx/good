@@ -1,6 +1,7 @@
 package com.jk.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Permission;
 import com.jk.service.PermissionService;
@@ -34,6 +35,7 @@ public class PermissionController extends BaseController{
      * @param modelMap
      * @return
      */
+    @OperationLog(value = "分页查询权限列表")
     @RequiresPermissions("permission:list")
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -56,6 +58,7 @@ public class PermissionController extends BaseController{
      * @param id
      * @return
      */
+    @OperationLog(value = "根据主键ID删除权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:delete")
     @DeleteMapping(value = "/{id}")
@@ -85,6 +88,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限添加页面
      * @return
      */
+    @OperationLog(value = "跳转到权限添加页面")
     @RequiresPermissions("permission:create")
     @GetMapping("/add")
     public String add(){
@@ -97,6 +101,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @OperationLog(value = "添加权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:create")
     @ResponseBody
@@ -152,6 +157,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限编辑页面
      * @return
      */
+    @OperationLog(value = "跳转到权限编辑页面")
     @RequiresPermissions("permission:update")
     @GetMapping(value = "/edit/{id}/{type}")
     public String edit(@PathVariable("id") Long id, @PathVariable("type") String type, ModelMap modelMap){
@@ -177,6 +183,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @OperationLog(value = "更新权限信息")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:update")
     @ResponseBody

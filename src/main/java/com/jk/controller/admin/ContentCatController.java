@@ -1,5 +1,6 @@
 package com.jk.controller.admin;
 
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.service.ContentCatService;
 import com.jk.vo.TreeNode;
@@ -36,6 +37,7 @@ public class ContentCatController extends BaseController {
      *
      * @return
      */
+    @OperationLog(value = "内容分类树")
     @GetMapping("/tree")
     public ResponseEntity<List<TreeNode>> getTreeList() {
         try {

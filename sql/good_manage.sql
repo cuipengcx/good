@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50132
-Source Host           : localhost:3306
+Source Server Version : 50716
+Source Host           : 127.0.0.1:3306
 Source Database       : good_manage
 
 Target Server Type    : MYSQL
-Target Server Version : 50132
+Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2017-04-24 11:15:12
+Date: 2017-05-03 22:48:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -425,6 +425,34 @@ INSERT INTO `content_cat` VALUES ('4', '媒体报道', '2', '新闻中心', '2',
 INSERT INTO `content_cat` VALUES ('5', '新闻专题', '2', '新闻中心', '3', '', '2017-04-20 09:21:43', '2017-04-20 09:21:45');
 
 -- ----------------------------
+-- Table structure for `log`
+-- ----------------------------
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE `log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `app_name` char(36) NOT NULL COMMENT '所属应用',
+  `log_type` int(11) DEFAULT NULL COMMENT '日志类型，0为操作日志，1为异常日志',
+  `user` varchar(100) DEFAULT NULL COMMENT '访问者/请求者',
+  `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
+  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)',
+  `request_params` varchar(500) DEFAULT NULL COMMENT '请求参数',
+  `method_description` varchar(100) DEFAULT NULL COMMENT '方法描述',
+  `request_ip` varchar(50) DEFAULT NULL COMMENT '访问者IP',
+  `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
+  `exception_code` varchar(100) DEFAULT NULL COMMENT '异常码',
+  `exception_detail` varchar(2000) DEFAULT NULL COMMENT '异常描述',
+  `time_consuming` bigint(20) DEFAULT NULL COMMENT '请求耗时',
+  `user_agent` varchar(500) DEFAULT NULL COMMENT '客户端信息',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
+
+-- ----------------------------
+-- Records of log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `permission`
 -- ----------------------------
 DROP TABLE IF EXISTS `permission`;
@@ -465,7 +493,6 @@ INSERT INTO `permission` VALUES ('21', '权限管理--删除', '2', null, 'permi
 INSERT INTO `permission` VALUES ('22', '权限管理--查看', '2', null, 'permission:view', '10', '权限管理', null, null, '0', '', '2017-02-15 15:29:10', '2017-02-15 15:29:10');
 INSERT INTO `permission` VALUES ('31', '角色管理--修改', '2', null, 'role:update', '9', '角色管理', null, null, '0', '', '2017-02-17 13:39:20', '2017-02-17 13:39:20');
 INSERT INTO `permission` VALUES ('32', '管理员管理--禁用|启用', '2', null, 'user:status', '3', '管理员管理', null, null, '0', '', '2017-02-17 15:57:15', '2017-02-17 15:57:15');
-INSERT INTO `permission` VALUES ('50', '敏感词管理', '1', '/admin/sensitiveword/list', 'sensitiveword:list', '1', '系统管理', null, null, '100', '', '2017-02-22 14:24:54', '2017-02-22 14:24:54');
 INSERT INTO `permission` VALUES ('51', '内容管理', '0', null, null, '0', null, null, '&#xe616;', '0', '', '2017-04-19 11:16:42', '2017-04-24 11:14:27');
 INSERT INTO `permission` VALUES ('52', '内容分类', '1', '/admin/content/cat', 'content-cat:list', '51', '内容管理', null, null, '0', '', '2017-04-19 11:17:50', '2017-04-21 16:08:14');
 INSERT INTO `permission` VALUES ('53', '内容列表', '1', '/admin/content', 'content:list', '51', '内容管理', null, null, '1', '', '2017-04-19 11:21:28', '2017-04-19 11:21:28');
@@ -541,7 +568,6 @@ INSERT INTO `role_permission` VALUES ('627', '1', '19', '2017-04-24 11:05:11', '
 INSERT INTO `role_permission` VALUES ('628', '1', '20', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('629', '1', '21', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('630', '1', '22', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('631', '1', '50', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('632', '1', '51', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('633', '1', '52', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('634', '1', '57', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
@@ -551,35 +577,6 @@ INSERT INTO `role_permission` VALUES ('637', '1', '53', '2017-04-24 11:05:11', '
 INSERT INTO `role_permission` VALUES ('638', '1', '54', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('639', '1', '55', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
 INSERT INTO `role_permission` VALUES ('640', '1', '56', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-
--- ----------------------------
--- Table structure for `sensitive_word`
--- ----------------------------
-DROP TABLE IF EXISTS `sensitive_word`;
-CREATE TABLE `sensitive_word` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime DEFAULT NULL,
-  `modify_time` datetime DEFAULT NULL,
-  `version` bigint(20) NOT NULL,
-  `word` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sensitive_word
--- ----------------------------
-INSERT INTO `sensitive_word` VALUES ('19', '2016-10-20 15:01:56', '2017-02-22 16:49:55', '2', '擦尼玛');
-INSERT INTO `sensitive_word` VALUES ('20', '2016-10-20 15:02:03', '2016-10-20 15:02:03', '0', '滚蛋');
-INSERT INTO `sensitive_word` VALUES ('22', '2016-10-20 15:02:20', '2016-10-20 15:02:20', '0', '妈的');
-INSERT INTO `sensitive_word` VALUES ('25', '2016-10-20 15:02:43', '2016-10-20 15:02:43', '0', '坑爹');
-INSERT INTO `sensitive_word` VALUES ('26', '2016-10-20 15:02:49', '2016-10-20 15:02:49', '0', '孙子');
-INSERT INTO `sensitive_word` VALUES ('27', '2016-10-20 15:02:56', '2016-10-20 15:02:56', '0', '呵呵');
-INSERT INTO `sensitive_word` VALUES ('28', '2016-10-20 15:03:02', '2016-10-20 15:03:02', '0', '嗯嗯');
-INSERT INTO `sensitive_word` VALUES ('29', '2016-10-20 15:03:09', '2016-10-20 15:03:09', '0', '哦哦');
-INSERT INTO `sensitive_word` VALUES ('30', '2016-10-20 15:06:35', '2016-10-20 15:06:35', '0', '国民党');
-INSERT INTO `sensitive_word` VALUES ('31', '2016-10-20 15:56:54', '2017-02-22 16:50:28', '6', '习近平');
-INSERT INTO `sensitive_word` VALUES ('32', '2016-10-26 17:14:41', '2016-10-26 17:14:41', '0', '江泽民');
-INSERT INTO `sensitive_word` VALUES ('37', '2017-02-22 16:43:34', '2017-02-22 16:43:34', '0', '鸟人');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -601,7 +598,7 @@ CREATE TABLE `user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=209 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of user
@@ -619,38 +616,9 @@ CREATE TABLE `user_role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='用户和角色中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户和角色中间表';
 
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '83', '1', '2017-02-13 11:02:06', '2017-02-13 11:02:08');
-
-
--- ----------------------------
--- Table structure for `log`
--- ----------------------------
-DROP TABLE IF EXISTS `log`;
-CREATE TABLE `log` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `app_name` char(36) NOT NULL COMMENT '所属应用',
-  `log_type` int(11) DEFAULT NULL COMMENT '日志类型，0为操作日志，1为异常日志',
-  `user` varchar(100) DEFAULT NULL COMMENT '访问者/请求者',
-  `method_name` varchar(100) DEFAULT NULL COMMENT '方法名',
-  `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)',
-  `request_params` varchar(500) DEFAULT NULL COMMENT '请求参数',
-  `method_description` varchar(100) DEFAULT NULL COMMENT '方法描述',
-  `request_ip` varchar(50) DEFAULT NULL COMMENT '访问者IP',
-  `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
-  `exception_code` varchar(100) DEFAULT NULL COMMENT '异常码',
-  `exception_detail` varchar(2000) DEFAULT NULL COMMENT '异常描述',
-  `time_consuming` bigint(20) DEFAULT NULL COMMENT '请求耗时',
-  `user_agent` varchar(500) DEFAULT NULL COMMENT '客户端信息',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
-
--- ----------------------------
--- Records of log
--- ----------------------------
