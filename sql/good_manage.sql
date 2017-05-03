@@ -644,11 +644,13 @@ CREATE TABLE `log` (
   `request_uri` varchar(200) DEFAULT NULL COMMENT '请求URI',
   `exception_code` varchar(100) DEFAULT NULL COMMENT '异常码',
   `exception_detail` varchar(2000) DEFAULT NULL COMMENT '异常描述',
-  `status` varchar(200) DEFAULT NULL COMMENT '请求返回状态',
-  `resp_content` longtext COMMENT '请求返回内容',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   `time_consuming` bigint(20) DEFAULT NULL COMMENT '请求耗时',
   `user_agent` varchar(500) DEFAULT NULL COMMENT '客户端信息',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
+
+-- ----------------------------
+-- Records of log
+-- ----------------------------

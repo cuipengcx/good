@@ -103,9 +103,6 @@ public class OperationLogAspect {
         Log log = localLog.get();
         log.setTimeConsuming(System.currentTimeMillis() - startTime.get());
 
-        log.setStatus(response.getStatus()+"");
-        log.setRespContent(ret.toString());
-
         // 保存数据库
         logService.save(log);
     }
@@ -130,9 +127,6 @@ public class OperationLogAspect {
 
             log.setExceptionCode(e.getClass().getName());
             log.setExceptionDetail(e.getMessage());
-
-            log.setStatus(response.getStatus()+"");
-            log.setRespContent(e.getMessage());
 
             //保存数据库
             logService.save(log);

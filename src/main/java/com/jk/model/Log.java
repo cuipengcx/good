@@ -56,14 +56,6 @@ public class Log extends BaseEntity{
      */
     private String exceptionDetail;
     /**
-     * 请求响应状态
-     */
-    private String status;
-    /**
-     * 请求响应内容
-     */
-    private String respContent;
-    /**
      * 耗时
      */
     private Long timeConsuming;
@@ -71,6 +63,4 @@ public class Log extends BaseEntity{
      * 客户端信息
      */
     private String userAgent;
-
-    //TODO 是否异常
 }
