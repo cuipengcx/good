@@ -1,7 +1,10 @@
 package com.jk.model;
 
+import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.Map;
 
 /**
  * 系统日志
@@ -63,4 +66,19 @@ public class Log extends BaseEntity{
      * 客户端信息
      */
     private String userAgent;
+
+    public void setParams(Map<String, String[]> paramMap) {
+        if (paramMap == null) {
+            return;
+        }
+        StringBuilder params = new StringBuilder();
+        for (Map.Entry<String, String[]> param : paramMap.entrySet()) {
+            params.append("".equals(params.toString()) ? "" : "&").append(param.getKey()).append("=");
+            String paramValue = (param.getValue() != null
+                    && param.getValue().length > 0 ? param.getValue()[0] : "");
+            params.append(StrUtil.subPre(StrUtil.endWithIgnoreCase(
+                    param.getKey(), "password") ? "" : paramValue, 100));
+        }
+        this.requestParams = params.toString();
+    }
 }

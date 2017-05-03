@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +41,6 @@ public class OperationLogAspect {
     private LogService logService;
     @Resource
     private HttpServletRequest request; //这里可以获取到request
-    @Resource
-    private HttpServletResponse response;//这里可以获取到response
 
 
     /**
@@ -74,7 +71,7 @@ public class OperationLogAspect {
             log.setLogType(0);
             log.setMethodName(getFullMethodName(joinPoint));
             log.setRequestMethod(request.getMethod());
-            log.setRequestParams(JSONUtil.toJsonStr(args));
+            log.setParams(request.getParameterMap());
             log.setMethodDescription(getMethodDescription(joinPoint));
             log.setRequestIp(HttpUtil.getClientIP(request));
             log.setRequestUri(request.getRequestURI());
@@ -135,6 +132,31 @@ public class OperationLogAspect {
             logger.error("异常方法全路径:{},异常信息:{},请求参数:{}", getFullMethodName(joinPoint), e.getMessage(), JSONUtil.toJsonStr(args));
         }
     }
+
+//    /**
+//     * 环绕通知实现
+//     * @param pjp
+//     * @return
+//     * @throws Throwable
+//     */
+//    @Around("@annotation(com.jk.annotation.OperationLog)")
+//    public Object aroundLog(ProceedingJoinPoint pjp) throws Throwable {
+//        // 获取切入的 Method
+//        MethodSignature joinPointObject = (MethodSignature) pjp.getSignature();
+//        Method method = joinPointObject.getMethod();
+//        OperationLog annotation = method.getAnnotation(OperationLog.class);
+//        //获得日志标识
+//        String logCode = annotation.value();
+//
+//        //执行实际方法
+//        Object resBody =  pjp.proceed();
+//
+//        //获得返回结果
+//        String resStr=String.valueOf(resBody);
+//        //异步保存请求日志
+//
+//        return resStr;
+//    }
 
 
 
