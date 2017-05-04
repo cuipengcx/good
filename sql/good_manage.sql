@@ -622,3 +622,30 @@ CREATE TABLE `user_role` (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '83', '1', '2017-02-13 11:02:06', '2017-02-13 11:02:08');
+
+
+-- ----------------------------
+-- Table structure for `schedul_job`
+-- ----------------------------
+DROP TABLE IF EXISTS `schedul_job`;
+CREATE TABLE `schedul_job` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
+  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
+  `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_by` bigint(20) DEFAULT NULL COMMENT '修改者',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
+  `status` char(1) DEFAULT NULL COMMENT '任务状态 0禁用 1启用',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度';
+
+-- ----------------------------
+-- Records of schedul_job
+-- ----------------------------
+
