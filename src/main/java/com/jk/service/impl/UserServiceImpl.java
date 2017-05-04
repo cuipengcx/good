@@ -29,11 +29,11 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
-    @Resource
+    @Autowired
     private UserRoleMapper userRoleMapper;
-    @Resource
+    @Autowired
     private RoleMapper roleMapper;
 
     @Transactional(readOnly=true)
