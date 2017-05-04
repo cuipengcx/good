@@ -59,7 +59,7 @@ public class Log extends BaseEntity{
      */
     private String exceptionDetail;
     /**
-     * 耗时
+     * 耗时(单位：毫秒)
      */
     private Long timeConsuming;
     /**

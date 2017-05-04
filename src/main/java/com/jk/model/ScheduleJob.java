@@ -22,38 +22,52 @@ public class ScheduleJob extends BaseEntity {
 	 * 任务名称
      */
 	private String jobName;
+
 	/**
 	 * 任务分组
      */
 	private String jobGroup;
+
 	/**
 	 *  cron表达式
      */
 	private String cron;
+
 	/**
 	 * 任务执行时调用哪个类的方法 包名+类名
      */
 	private String beanClass;
+
+	/**
+	 * 任务调用的方法名
+	 */
+	private String methodName;
+
+	/**
+	 * 参数
+	 */
+	private String params;
+
 	/**
 	 * 是否同步  0否 1是
      */
 	private String isConcurrent;
-	/**
-	 * 任务调用的方法名
-     */
-	private String methodName = "run";
+
 	/**
 	 * 任务状态 0禁用 1启用
      */
 	private String status;
+
 	/**
 	 * 描述
      */
 	private String remarks;
+
 	/**
 	 * 创建者
      */
 	private Long createBy;
+
 	/**
 	 * 修改者
      */

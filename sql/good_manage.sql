@@ -634,8 +634,9 @@ CREATE TABLE `schedul_job` (
   `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
   `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
-  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
   `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
+  `params` varchar(500) DEFAULT NULL COMMENT '参数',
+  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_by` bigint(20) DEFAULT NULL COMMENT '修改者',
@@ -649,3 +650,32 @@ CREATE TABLE `schedul_job` (
 -- Records of schedul_job
 -- ----------------------------
 
+
+-- ----------------------------
+-- Table structure for `schedul_job_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `schedul_job_log`;
+CREATE TABLE `schedul_job_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `job_id` bigint(20) DEFAULT NULL COMMENT '任务ID',
+  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
+  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
+  `params` varchar(500) DEFAULT NULL COMMENT '参数',
+  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `job_create_by` bigint(20) DEFAULT NULL COMMENT '任务创建者',
+  `job_create_time` datetime DEFAULT NULL COMMENT '任务创建时间',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
+  `status` char(1) DEFAULT NULL COMMENT '任务状态 0失败 1成功',
+  `error` varchar(500) DEFAULT NULL COMMENT '失败信息',
+  `times` bigint(20) DEFAULT NULL COMMENT '耗时(单位：毫秒)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度执行日志';
+
+-- ----------------------------
+-- Records of schedul_job_log
+-- ----------------------------
