@@ -67,6 +67,13 @@ public interface BaseService<T extends BaseEntity> {
     public Integer saveSelective(T record);
 
     /**
+     * 批量保存，返回保存的条数
+     * @param list
+     * @return
+     */
+    public int saveList(List<T> list);
+
+    /**
      * 修改数据，返回成功的条数
      *
      * @param record

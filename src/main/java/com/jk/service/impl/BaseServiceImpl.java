@@ -110,6 +110,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 		return this.mapper.insertSelective(record);
 	}
 
+	@Override
+	public int saveList(List<T> list) {
+		return this.mapper.insertList(list);
+	}
+
 	/**
 	 * 修改数据，返回成功的条数
 	 * 
