@@ -5,11 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.jk.model.BaseEntity;
 import com.jk.service.BaseService;
 import com.jk.util.MyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
-	@Autowired
+	@Resource
 	private MyMapper<T> mapper;
 
 	/**

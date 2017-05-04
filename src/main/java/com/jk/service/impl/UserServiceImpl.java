@@ -18,20 +18,22 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
+ *
  * Created by JK on 2017/1/19.
  */
 @Transactional
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
 
     @Transactional(readOnly=true)
