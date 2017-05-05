@@ -67,12 +67,12 @@ public class OperationLogAspect {
             //*========数据库日志=========*//
             Log log = new Log();
             log.setAppName("");
-            log.setUser(ShiroUtils.getUserEntity().getUsername());
+            log.setUsername(ShiroUtils.getUserEntity().getUsername());
             log.setLogType(0);
             log.setMethodName(getFullMethodName(joinPoint));
             log.setRequestMethod(request.getMethod());
             log.setParams(request.getParameterMap());
-            log.setMethodDescription(getMethodDescription(joinPoint));
+            log.setOperation(getMethodDescription(joinPoint));
             log.setRequestIp(HttpUtil.getClientIP(request));
             log.setRequestUri(request.getRequestURI());
             log.setUserAgent(request.getHeader("User-Agent"));

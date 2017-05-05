@@ -43,7 +43,6 @@ public class RoleController extends BaseController{
      * @param modelMap
      * @return
      */
-    @OperationLog(value = "分页查询角色列表")
     @RequiresPermissions("role:list")
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -64,7 +63,7 @@ public class RoleController extends BaseController{
      * @param id
      * @return
      */
-    @OperationLog(value = "根据主键ID删除角色")
+    @OperationLog(value = "删除角色")
     @RequiresPermissions("role:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
@@ -92,7 +91,7 @@ public class RoleController extends BaseController{
      * 跳转到角色添加页面
      * @return
      */
-    @OperationLog(value = "跳转到角色添加页面")
+    @OperationLog(value = "添加角色")
     @RequiresPermissions("role:create")
     @GetMapping(value = "/add")
     public String add(ModelMap modelMap){
@@ -107,7 +106,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
-    @OperationLog(value = "添加角色并分配权限")
+    @OperationLog(value = "添加角色成功")
     @RequiresPermissions("role:create")
     @ResponseBody
     @PostMapping
@@ -140,7 +139,7 @@ public class RoleController extends BaseController{
      * 跳转到角色编辑页面
      * @return
      */
-    @OperationLog(value = "跳转到角色编辑页面")
+    @OperationLog(value = "编辑角色")
     @RequiresPermissions("role:update")
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
@@ -170,7 +169,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
-    @OperationLog(value = "更新角色信息")
+    @OperationLog(value = "编辑角色成功")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("role:update")
     @ResponseBody
@@ -178,7 +177,7 @@ public class RoleController extends BaseController{
     public ModelMap updateRole(@PathVariable("id") Long id, Long[] permissionIds, Role role){
         ModelMap messagesMap = new ModelMap();
         try {
-            log.debug("修改角色参数! id= {}, permissionIds= {}, role = {}", id, permissionIds, role);
+            log.debug("编辑角色参数! id= {}, permissionIds= {}, role = {}", id, permissionIds, role);
 
             if(null == id){
                 messagesMap.put("status",FAILURE);
@@ -188,19 +187,19 @@ public class RoleController extends BaseController{
 
             boolean flag = roleService.updateRoleAndRolePermission(role, permissionIds);
             if(flag){
-                log.info("修改角色成功! id= {}, permissionIds = {}, role = {}", id, permissionIds, role);
+                log.info("编辑角色成功! id= {}, permissionIds = {}, role = {}", id, permissionIds, role);
                 messagesMap.put("status",SUCCESS);
-                messagesMap.put("message","修改成功!");
+                messagesMap.put("message","编辑成功!");
                 return messagesMap;
             }
-            log.info("修改角色失败，但没有抛出异常! id= {}, permissionIds = {}, role = {}", id, permissionIds, role);
+            log.info("编辑角色失败，但没有抛出异常! id= {}, permissionIds = {}, role = {}", id, permissionIds, role);
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","修改失败!");
+            messagesMap.put("message","编辑失败!");
             return messagesMap;
         } catch (Exception e) {
-            log.error("修改角色失败! id = {}, permissionIds= {}, role = {}, e = {}", id, permissionIds, role, e);
+            log.error("编辑角色失败! id = {}, permissionIds= {}, role = {}, e = {}", id, permissionIds, role, e);
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","修改角色失败!");
+            messagesMap.put("message","编辑角色失败!");
             return messagesMap;
         }
     }

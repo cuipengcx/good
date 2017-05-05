@@ -35,7 +35,6 @@ public class PermissionController extends BaseController{
      * @param modelMap
      * @return
      */
-    @OperationLog(value = "分页查询权限列表")
     @RequiresPermissions("permission:list")
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -58,7 +57,7 @@ public class PermissionController extends BaseController{
      * @param id
      * @return
      */
-    @OperationLog(value = "根据主键ID删除权限")
+    @OperationLog(value = "删除权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:delete")
     @DeleteMapping(value = "/{id}")
@@ -88,7 +87,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限添加页面
      * @return
      */
-    @OperationLog(value = "跳转到权限添加页面")
+    @OperationLog(value = "添加权限")
     @RequiresPermissions("permission:create")
     @GetMapping("/add")
     public String add(){
@@ -101,7 +100,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
-    @OperationLog(value = "添加权限")
+    @OperationLog(value = "添加权限成功")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:create")
     @ResponseBody
@@ -157,7 +156,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限编辑页面
      * @return
      */
-    @OperationLog(value = "跳转到权限编辑页面")
+    @OperationLog(value = "编辑权限")
     @RequiresPermissions("permission:update")
     @GetMapping(value = "/edit/{id}/{type}")
     public String edit(@PathVariable("id") Long id, @PathVariable("type") String type, ModelMap modelMap){
@@ -183,7 +182,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
-    @OperationLog(value = "更新权限信息")
+    @OperationLog(value = "编辑权限成功")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:update")
     @ResponseBody
@@ -191,7 +190,7 @@ public class PermissionController extends BaseController{
     public ModelMap updateRole(@PathVariable("id") Long id, Permission permission){
         ModelMap messagesMap = new ModelMap();
         try {
-            log.debug("修改权限参数! id= {}, permission = {}", id, permission);
+            log.debug("编辑权限参数! id= {}, permission = {}", id, permission);
 
             if(null == id){
                 messagesMap.put("status",FAILURE);
@@ -200,14 +199,14 @@ public class PermissionController extends BaseController{
             }
 
             permissionService.updateSelective(permission);
-            log.info("修改权限成功! id= {}, permission = {}", id, permission);
+            log.info("编辑权限成功! id= {}, permission = {}", id, permission);
             messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","修改成功!");
+            messagesMap.put("message","编辑成功!");
             return messagesMap;
         } catch (Exception e) {
-            log.error("修改权限失败! id = {}, permission = {}, e = {}", id, permission, e);
+            log.error("编辑权限失败! id = {}, permission = {}, e = {}", id, permission, e);
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","修改失败!");
+            messagesMap.put("message","编辑失败!");
             return messagesMap;
         }
     }

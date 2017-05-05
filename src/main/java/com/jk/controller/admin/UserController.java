@@ -42,7 +42,6 @@ public class UserController extends BaseController {
      * @param modelMap
      * @return
      */
-    @OperationLog(value = "分页查询管理员列表")
     @RequiresPermissions("user:list")
     @GetMapping(value = "/user")
     public String list(
@@ -68,7 +67,7 @@ public class UserController extends BaseController {
      * @param id
      * @return
      */
-    @OperationLog(value = "根据主键ID删除管理员")
+    @OperationLog(value = "删除管理员")
     @RequiresPermissions("user:delete")
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
@@ -160,7 +159,7 @@ public class UserController extends BaseController {
      * 跳转到管理员添加页面
      * @return
      */
-    @OperationLog(value = "跳转到管理员添加页面")
+    @OperationLog(value = "添加管理员")
     @RequiresPermissions("user:create")
     @GetMapping(value = "/user/add")
     public String add(ModelMap modelMap){
@@ -176,7 +175,7 @@ public class UserController extends BaseController {
      * @param roleId  角色ID
      * @return
      */
-    @OperationLog(value = "添加管理员")
+    @OperationLog(value = "添加管理员成功")
     @RequiresPermissions("user:create")
     @ResponseBody
     @PostMapping(value = "/user")
@@ -204,10 +203,10 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 跳转到管理员修改页面
+     * 跳转到管理员编辑页面
      * @return
      */
-    @OperationLog(value = "跳转到管理员修改页面")
+    @OperationLog(value = "编辑管理员")
     @RequiresPermissions("user:update")
     @GetMapping(value = "/user/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
@@ -215,7 +214,7 @@ public class UserController extends BaseController {
         List<Role> roleList = roleService.findAll();
         Role role = roleService.findByUserId(user.getId());
 
-        log.info("跳转到管理员修改页面！id = {}", id);
+        log.info("跳转到管理员编辑页面！id = {}", id);
         modelMap.put("model", user);
         modelMap.put("roleList", roleList);
         modelMap.put("role", role);
@@ -230,14 +229,14 @@ public class UserController extends BaseController {
      * @param roleId     角色ID
      * @return
      */
-    @OperationLog(value = "更新管理员信息")
+    @OperationLog(value = "编辑管理员成功")
     @RequiresPermissions("user:update")
     @ResponseBody
     @PutMapping(value = "/user/{id}")
     public ModelMap updateUser(@PathVariable("id") Long id, User user, Long oldRoleId, Long roleId){
         ModelMap messagesMap = new ModelMap();
         try {
-            log.debug("修改管理员参数! id= {}, user = {}", id, user);
+            log.debug("编辑管理员参数! id= {}, user = {}", id, user);
             if(null == id){
                 messagesMap.put("status",FAILURE);
                 messagesMap.put("message","ID不能为空!");
@@ -246,19 +245,19 @@ public class UserController extends BaseController {
 
             Boolean flag = userService.updateUserAndUserRole(user, oldRoleId, roleId);
             if(flag){
-                log.info("修改管理员成功! id= {}, user = {}", id, user);
+                log.info("编辑管理员成功! id= {}, user = {}", id, user);
                 messagesMap.put("status",SUCCESS);
-                messagesMap.put("message","修改成功!");
+                messagesMap.put("message","编辑成功!");
                 return messagesMap;
             }
-            log.info("修改管理员失败,但没有抛出异常 ! id= {}, user = {}", id, user);
+            log.info("编辑管理员失败,但没有抛出异常 ! id= {}, user = {}", id, user);
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","修改失败!");
+            messagesMap.put("message","编辑失败!");
             return messagesMap;
         } catch (Exception e) {
-            log.error("修改管理失败! id = {}, user = {}, e = {}", id, user, e);
+            log.error("编辑管理失败! id = {}, user = {}, e = {}", id, user, e);
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","修改管理失败!");
+            messagesMap.put("message","编辑管理失败!");
             return messagesMap;
         }
     }

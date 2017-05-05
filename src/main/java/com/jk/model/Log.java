@@ -25,9 +25,13 @@ public class Log extends BaseEntity{
     /**
      * 操作人
      */
-    private String user;
+    private String username;
     /**
-     * 方法名称
+     * 用户操作
+     */
+    private String operation;
+    /**
+     * 方法名称(全路径)
      */
     private String methodName;
     /**
@@ -38,10 +42,6 @@ public class Log extends BaseEntity{
      * 请求参数
      */
     private String requestParams;
-    /**
-     * 方法描述
-     */
-    private String methodDescription;
     /**
      * 访问者ip
      */
