@@ -31,7 +31,7 @@
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+                <!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
                 <a href="javascript:;" th:onclick="'javascript:job_add(\'添加任务\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加任务</a>
             </span>
             <span class="r">共有数据：<strong th:text="${pageInfo?.total}" id="total">54</strong> 条</span>
@@ -39,7 +39,7 @@
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="11">任务调度列表</th>
+                <th scope="col" colspan="12">任务调度列表</th>
             </tr>
             <tr class="text-c">
                 <th width="25"><input type="checkbox" name="" value=""/></th>
@@ -47,7 +47,8 @@
                 <th>任务分组</th>
                 <th>cron表达式</th>
                 <th>任务状态</th>
-                <th>执行方法</th>
+                <th>执行类名称</th>
+                <th>执行方法名称</th>
                 <th>参数</th>
                 <th>描述</th>
                 <th>创建时间</th>
@@ -65,6 +66,7 @@
                     <span class="label radius label-danger" th:if="*{status} == '0'">禁用</span>
                     <span class="label radius label-success" th:unless="*{status} == '0'">启用</span>
                 </td>
+                <td th:text="*{beanClass}"></td>
                 <td th:text="*{methodName}"></td>
                 <td th:text="*{params}"></td>
                 <td th:text="*{remarks}"></td>

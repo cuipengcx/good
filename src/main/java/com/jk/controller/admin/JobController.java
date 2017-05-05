@@ -1,17 +1,18 @@
 package com.jk.controller.admin;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.ScheduleJob;
 import com.jk.service.ScheduleJobService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+
+import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
 
 /**
  * @author cuiP
@@ -55,4 +56,43 @@ public class JobController extends BaseController{
         return BASE_PATH + "job-list";
     }
 
+    /**
+     * 跳转到任务调度添加页面
+     * @return
+     */
+    @OperationLog(value = "添加任务调度")
+    @RequiresPermissions("job:create")
+    @GetMapping(value = "/add")
+    public String add(ModelMap modelMap){
+        log.info("跳转到任务调度添加页面!");
+        return BASE_PATH+"job-add";
+    }
+
+    /**
+     * 添加任务调度
+     * @param scheduleJob
+     * @return
+     */
+    @OperationLog(value = "添加任务调度成功")
+    @RequiresPermissions("job:create")
+    @ResponseBody
+    @PostMapping
+    public ModelMap saveJob(ScheduleJob scheduleJob){
+        ModelMap messagesMap = new ModelMap();
+        try {
+            log.debug("添加任务调度参数! scheduleJob = {}", scheduleJob);
+
+            scheduleJobService.save(scheduleJob);
+
+            log.info("添加任务调度成功! jobId = {}", scheduleJob.getId());
+            messagesMap.put("status",SUCCESS);
+            messagesMap.put("message","添加成功!");
+            return messagesMap;
+        } catch (Exception e) {
+            log.error("添加任务调度失败! user = {}, e = {}", user, e);
+            messagesMap.put("status",FAILURE);
+            messagesMap.put("message","添加失败!");
+            return messagesMap;
+        }
+    }
 }

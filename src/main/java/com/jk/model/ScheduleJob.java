@@ -34,12 +34,12 @@ public class ScheduleJob extends BaseEntity {
 	private String cron;
 
 	/**
-	 * 任务执行时调用哪个类的方法 包名+类名
+	 * 执行类名称 包名+类名
      */
 	private String beanClass;
 
 	/**
-	 * 任务调用的方法名
+	 * 执行方法名称
 	 */
 	private String methodName;
 
