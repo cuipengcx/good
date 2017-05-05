@@ -5,13 +5,14 @@ import com.jk.controller.BaseController;
 import com.jk.model.Log;
 import com.jk.service.LogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  *
@@ -58,5 +59,53 @@ public class LogController extends BaseController {
     }
 
 
+    /**
+     * 根据主键ID删除管理员
+     *
+     * @param id
+     * @return
+     */
+//    @OperationLog(value = "删除日志")
+    @RequiresPermissions("log:delete")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        try {
+            log.debug("删除日志! id = {}", id);
+
+            logService.deleteById(id);
+            log.info("删除日志成功! id = {}", id);
+
+            return ResponseEntity.ok("已删除!");
+        } catch (Exception e) {
+            log.error("删除日志失败! id = {}, e = {}", id, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    /**
+     * 批量删除日志
+     * @param ids
+     * @return
+     */
+//    @OperationLog(value = "批量删除日志")
+    @RequiresPermissions("log:delete")
+    @DeleteMapping(value = "/batch/{ids}")
+    public ResponseEntity<String> deleteBatch(@PathVariable("ids") List<Object> ids) {
+        try {
+            log.debug("批量删除日志! ids = {}", ids);
+
+            if (null == ids) {
+                log.info("批量删除日志不存在! ids = {}", ids);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            logService.deleteByIds(Log.class, "id", ids);
+            log.info("批量删除日志成功! ids = {}", ids);
+
+            return ResponseEntity.ok("已删除!");
+        } catch (Exception e) {
+            log.error("批量删除日志失败! ids = {}, e = {}", ids, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }

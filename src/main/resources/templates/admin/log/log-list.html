@@ -31,7 +31,7 @@
         </div>
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
-                <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+                <a href="javascript:;" onclick="datadel()" th:onclick="'javascript:log_batch_del();'" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
                 <!--<a href="javascript:;" th:onclick="'javascript:admin_add(\'添加管理员\',\'/admin/manager/user/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a>-->
             </span>
             <span class="r">共有数据：<strong th:text="${pageInfo?.total}" id="total">54</strong> 条</span>
@@ -58,7 +58,7 @@
             </thead>
             <tbody>
             <tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
-                <td><input type="checkbox" value="2" name=""/></td>
+                <td><input type="checkbox" th:value="*{id}" id=""/></td>
                 <td th:text="${((pageInfo?.pageNum - 1) * pageInfo?.pageSize) + modelStat.count}">d</td>
                 <td th:text="*{username}">2</td>
                 <td th:text="*{operation}">3</td>
@@ -66,7 +66,7 @@
                 <td th:text="*{requestUri}"></td>
                 <td th:text="*{requestMethod}"></td>
                 <td>
-                    <span class="label radius label-secondary" th:text="*{timeConsuming}">10ms</span>
+                    <span class="label radius label-secondary" th:text="*{timeConsuming}">10</span>
                 </td>
                 <td class="td-status">
                     <span class="label radius label-success" th:if="*{logType} == 0">正常</span>
