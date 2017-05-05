@@ -1,8 +1,7 @@
 package com.jk.service;
 
+import com.github.pagehelper.PageInfo;
 import com.jk.model.ScheduleJob;
-
-import java.util.List;
 
 /**
  * @author cuiP
@@ -14,12 +13,16 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
      * 根据ID，查询定时任务
      */
     ScheduleJob findScheduleJobById(Long jobId);
-
     /**
-     * 查询定时任务列表
+     * 分页查询任务调度列表
+     * @param pageNum
+     * @param pageSize
+     * @param username
+     * @param startTime
+     * @param endTime
+     * @return
      */
-    List<ScheduleJob> findPage();
-
+    PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime);
     /**
      * 保存定时任务
      */
@@ -54,5 +57,4 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
      * 恢复运行
      */
     void resume(Long[] jobIds);
-    
 }
