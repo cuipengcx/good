@@ -39,10 +39,10 @@
         <table class="table table-border table-bordered table-bg">
             <thead>
             <tr>
-                <th scope="col" colspan="12">任务调度列表</th>
+                <th scope="col" colspan="11">任务调度列表</th>
             </tr>
             <tr class="text-c">
-                <th width="25"><input type="checkbox" name="" value=""/></th>
+                <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
                 <th>任务名称</th>
                 <th>任务分组</th>
                 <th>cron表达式</th>
@@ -58,7 +58,7 @@
             </thead>
             <tbody>
             <tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
-                <td><input type="checkbox" th:value="*{id}" name=""/></td>
+                <!--<td><input type="checkbox" th:value="*{id}" name=""/></td>-->
                 <td th:text="*{jobName}">d</td>
                 <td th:text="*{jobGroup}">2</td>
                 <td th:text="*{cron}">3</td>
