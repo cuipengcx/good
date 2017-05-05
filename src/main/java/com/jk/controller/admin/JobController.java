@@ -30,7 +30,7 @@ public class JobController extends BaseController{
      * 分页查询任务调度列表
      *
      * @param pageNum   当前页码
-     * @param username  用户名
+     * @param jobName  用户名
      * @param startTime 开始时间
      * @param endTime   结束时间
      * @param modelMap
