@@ -30,7 +30,10 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService{
         }if(startTime != null && endTime != null){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
+        //倒序
+        example.orderBy("createTime").desc();
 
+        //分页
         PageHelper.startPage(pageNum,pageSize);
         List<Log> logList = this.selectByExample(example);
 
