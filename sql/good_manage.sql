@@ -434,7 +434,7 @@ CREATE TABLE `log` (
   `log_type` int(11) DEFAULT NULL COMMENT '日志类型，0为操作日志，1为异常日志',
   `username` varchar(100) DEFAULT NULL COMMENT '访问者/请求者',
   `operation` varchar(100) DEFAULT NULL COMMENT '用户操作',
-  `method_name` varchar(100) DEFAULT NULL COMMENT '方法名称(全路径)',
+  `method_name` varchar(100) DEFAULT NULL COMMENT '请求方法名称(全路径)',
   `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)',
   `request_params` varchar(500) DEFAULT NULL COMMENT '请求参数',
   `request_ip` varchar(50) DEFAULT NULL COMMENT '访问者IP',

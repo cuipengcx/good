@@ -78,3 +78,14 @@ function log_batch_del() {
         });
     });
 }
+
+/**
+ * 查看日志详情
+ * @param title
+ * @param url
+ * @param w
+ * @param h
+ */
+function log_view(title,url,w,h) {
+    layer_show(title,url,w,h);
+}

@@ -108,4 +108,18 @@ public class LogController extends BaseController {
         }
     }
 
+    /**
+     * 查询日志详情
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("log:view")
+    @GetMapping("/{id}")
+    public String view(@PathVariable("id")Long id, ModelMap modelMap){
+        Log log = logService.findById(id);
+
+        modelMap.put("model", log);
+        return BASE_PATH + "log-view";
+    }
+
 }

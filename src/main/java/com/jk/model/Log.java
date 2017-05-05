@@ -31,7 +31,7 @@ public class Log extends BaseEntity{
      */
     private String operation;
     /**
-     * 方法名称(全路径)
+     * 请求方法名称(全路径)
      */
     private String methodName;
     /**

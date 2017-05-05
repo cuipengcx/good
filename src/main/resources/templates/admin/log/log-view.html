@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{admin/common/common}">
+<head>
+    <title>查看日志详情</title>
+</head>
+
+<body layout:fragment="content">
+<article class="page-container">
+    <form class="form form-horizontal" id="form-good-view" th:object="${model}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">用户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{username}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">用户操作：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{operation}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">请求方法：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{methodName}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">请求地址：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{requestUri}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">请求参数：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{requestParams}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">请求方式：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{requestMethod}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">耗时(ms)：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{timeConsuming}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">操作IP ：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{requestIp}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">操作时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:if="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">是否异常 ：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:if="*{logType} == 0">正常</span>
+                <span th:unless="*{logType} == 0">异常</span>
+            </div>
+        </div>
+        <th:block th:if="*{logType} == 1">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3">异常编码：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:if="*{exceptionCode}">404</span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3">异常详情：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:if="*{exceptionDetail}">未认证</span>
+                </div>
+            </div>
+        </th:block>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">客户端信息：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="*{userAgent}">未认证</span>
+            </div>
+        </div>
+    </form>
+</article>
+
+</body>
+</html>
