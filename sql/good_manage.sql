@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50132
 File Encoding         : 65001
 
-Date: 2017-05-05 15:36:08
+Date: 2017-05-05 16:44:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -446,7 +446,7 @@ CREATE TABLE `log` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=176 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
 
 -- ----------------------------
 -- Records of log
@@ -463,6 +463,12 @@ INSERT INTO `log` VALUES ('172', '', '0', 'admin', '编辑角色', 'com.jk.contr
 INSERT INTO `log` VALUES ('173', '', '0', 'admin', '编辑角色成功', 'com.jk.controller.admin.RoleController.updateRole()', 'PUT', 'permissionIds=1,3,11,12,13,14,32,9,15,17,18,31,10,19,20,21,22,60,61,62,63,64,51,52,57,58,59,53,54,55,56&name=超级管理员&perms=ROEL_ADMIN&remark=我是超级管理员&admin-role-save=', '10.20.20.39', '/admin/role/1', null, null, '108', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
 INSERT INTO `log` VALUES ('174', '', '0', 'admin', '编辑权限', 'com.jk.controller.admin.PermissionController.edit()', 'GET', '', '10.20.20.39', '/admin/permission/edit/64/1', null, null, '8', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:33:42', '2017-05-05 15:33:42');
 INSERT INTO `log` VALUES ('175', '', '0', 'admin', '编辑权限成功', 'com.jk.controller.admin.PermissionController.updateRole()', 'PUT', 'parentName=系统管理&type=1&name=SQL监控&parentId=1&url=/druid/sql.html&perms=sql:list&sort=7&icon=', '10.20.20.39', '/admin/permission/64', null, null, '91', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:33:46', '2017-05-05 15:33:46');
+INSERT INTO `log` VALUES ('176', '', '0', 'admin', '添加权限', 'com.jk.controller.admin.PermissionController.add()', 'GET', '', '10.20.20.39', '/admin/permission/add', null, null, '6', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:19:11', '2017-05-05 16:19:11');
+INSERT INTO `log` VALUES ('177', '', '0', 'admin', '添加权限成功', 'com.jk.controller.admin.PermissionController.savePermission()', 'POST', 'parentName=任务调度&type=2&name=任务调度--添加&parentId=63&url=&perms=job:create&sort=0&icon=', '10.20.20.39', '/admin/permission', null, null, '92', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:19:30', '2017-05-05 16:19:30');
+INSERT INTO `log` VALUES ('178', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/1', null, null, '37', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:43:54', '2017-05-05 16:43:54');
+INSERT INTO `log` VALUES ('179', '', '0', 'admin', '编辑角色成功', 'com.jk.controller.admin.RoleController.updateRole()', 'PUT', 'permissionIds=1,3,11,12,13,14,32,9,15,17,18,31,10,19,20,21,22,60,61,62,63,65,64,51,52,57,58,59,53,54,55,56&name=超级管理员&perms=ROEL_ADMIN&remark=我是超级管理员&admin-role-save=', '10.20.20.39', '/admin/role/1', null, null, '125', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:43:58', '2017-05-05 16:43:58');
+INSERT INTO `log` VALUES ('180', '', '0', 'admin', '添加任务调度', 'com.jk.controller.admin.JobController.add()', 'GET', '', '10.20.20.39', '/admin/job/add', null, null, '1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:44:06', '2017-05-05 16:44:06');
+INSERT INTO `log` VALUES ('181', '', '0', 'admin', '添加任务调度', 'com.jk.controller.admin.JobController.add()', 'GET', '', '10.20.20.39', '/admin/job/add', null, null, '1', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 16:44:23', '2017-05-05 16:44:23');
 
 -- ----------------------------
 -- Table structure for `permission`
@@ -483,7 +489,7 @@ CREATE TABLE `permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of permission
@@ -519,6 +525,7 @@ INSERT INTO `permission` VALUES ('61', '日志管理--删除', '2', null, 'log:d
 INSERT INTO `permission` VALUES ('62', '日志管理--查看', '2', null, 'log:view', '60', '日志管理', null, null, '0', '', '2017-05-05 14:13:13', '2017-05-05 14:13:39');
 INSERT INTO `permission` VALUES ('63', '任务调度', '1', '/admin/job', 'job:list', '1', '系统管理', null, null, '5', '', '2017-05-05 14:48:34', '2017-05-05 14:48:34');
 INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, null, '7', '', '2017-05-05 15:31:41', '2017-05-05 15:33:46');
+INSERT INTO `permission` VALUES ('65', '任务调度--添加', '2', null, 'job:create', '63', '任务调度', null, null, '0', '', '2017-05-05 16:19:30', '2017-05-05 16:19:30');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -537,7 +544,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-05-05 15:31:48');
+INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-05-05 16:43:57');
 INSERT INTO `role` VALUES ('3', '管理员', '我是管理员', 'ROLE_GLY', '2017-02-08 17:13:50', '2017-05-05 15:26:19');
 INSERT INTO `role` VALUES ('8', '普通用户', '我是普通用户', 'ROLE_SIMPLE', '2017-02-17 10:39:35', '2017-02-21 12:08:11');
 
@@ -552,7 +559,7 @@ CREATE TABLE `role_permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=786 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=818 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
 
 -- ----------------------------
 -- Records of role_permission
@@ -561,37 +568,38 @@ INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('755', '1', '1', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('756', '1', '3', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('757', '1', '11', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('758', '1', '12', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('759', '1', '13', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('760', '1', '14', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('761', '1', '32', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('762', '1', '9', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('763', '1', '15', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('764', '1', '17', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('765', '1', '18', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('766', '1', '31', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('767', '1', '10', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('768', '1', '19', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('769', '1', '20', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('770', '1', '21', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('771', '1', '22', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('772', '1', '60', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('773', '1', '61', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('774', '1', '62', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('775', '1', '63', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('776', '1', '64', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('777', '1', '51', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('778', '1', '52', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('779', '1', '57', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('780', '1', '58', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('781', '1', '59', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('782', '1', '53', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('783', '1', '54', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('784', '1', '55', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
-INSERT INTO `role_permission` VALUES ('785', '1', '56', '2017-05-05 15:31:48', '2017-05-05 15:31:48');
+INSERT INTO `role_permission` VALUES ('786', '1', '1', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('787', '1', '3', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('788', '1', '11', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('789', '1', '12', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('790', '1', '13', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('791', '1', '14', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('792', '1', '32', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('793', '1', '9', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('794', '1', '15', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('795', '1', '17', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('796', '1', '18', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('797', '1', '31', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('798', '1', '10', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('799', '1', '19', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('800', '1', '20', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('801', '1', '21', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('802', '1', '22', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('803', '1', '60', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('804', '1', '61', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('805', '1', '62', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('806', '1', '63', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('807', '1', '65', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('808', '1', '64', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('809', '1', '51', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('810', '1', '52', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('811', '1', '57', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('812', '1', '58', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('813', '1', '59', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('814', '1', '53', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('815', '1', '54', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('816', '1', '55', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('817', '1', '56', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
 
 -- ----------------------------
 -- Table structure for `schedule_job`
