@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : 127.0.0.1
-Source Server Version : 50716
-Source Host           : 127.0.0.1:3306
+Source Server Version : 50132
+Source Host           : localhost:3306
 Source Database       : good_manage
 
 Target Server Type    : MYSQL
-Target Server Version : 50716
+Target Server Version : 50132
 File Encoding         : 65001
 
-Date: 2017-05-03 22:48:50
+Date: 2017-05-05 15:26:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -433,7 +433,7 @@ CREATE TABLE `log` (
   `app_name` char(36) NOT NULL COMMENT '所属应用',
   `log_type` int(11) DEFAULT NULL COMMENT '日志类型，0为操作日志，1为异常日志',
   `username` varchar(100) DEFAULT NULL COMMENT '访问者/请求者',
-  `operation` varchar(100) DEFAULT NULL COMMENT '用户操作',
+  `operation` varchar(100) DEFAULT NULL COMMENT '方法描述',
   `method_name` varchar(100) DEFAULT NULL COMMENT '请求方法名称(全路径)',
   `request_method` varchar(20) DEFAULT NULL COMMENT '请求方式(GET,POST,DELETE,PUT)',
   `request_params` varchar(500) DEFAULT NULL COMMENT '请求参数',
@@ -446,11 +446,17 @@ CREATE TABLE `log` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8 COMMENT='系统日志表';
 
 -- ----------------------------
 -- Records of log
 -- ----------------------------
+INSERT INTO `log` VALUES ('164', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/3', null, null, '39', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:23:49', '2017-05-05 15:23:49');
+INSERT INTO `log` VALUES ('165', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/1', null, null, '17', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:24:08', '2017-05-05 15:24:08');
+INSERT INTO `log` VALUES ('166', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/8', null, null, '16', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:24:26', '2017-05-05 15:24:26');
+INSERT INTO `log` VALUES ('167', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/1', null, null, '15', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:25:38', '2017-05-05 15:25:38');
+INSERT INTO `log` VALUES ('168', '', '0', 'admin', '编辑角色', 'com.jk.controller.admin.RoleController.edit()', 'GET', '', '10.20.20.39', '/admin/role/edit/3', null, null, '18', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:25:43', '2017-05-05 15:25:43');
+INSERT INTO `log` VALUES ('169', '', '0', 'admin', '编辑角色成功', 'com.jk.controller.admin.RoleController.updateRole()', 'PUT', 'permissionIds=&name=管理员&perms=ROLE_GLY&remark=我是管理员&admin-role-save=', '10.20.20.39', '/admin/role/3', null, null, '186', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36', '2017-05-05 15:26:19', '2017-05-05 15:26:19');
 
 -- ----------------------------
 -- Table structure for `permission`
@@ -471,7 +477,7 @@ CREATE TABLE `permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Records of permission
@@ -502,6 +508,10 @@ INSERT INTO `permission` VALUES ('56', '内容修改', '2', null, 'content:updat
 INSERT INTO `permission` VALUES ('57', '内容分类--添加', '2', null, 'content-cat:create', '52', '内容分类', null, null, '1', '', '2017-04-24 11:04:12', '2017-04-24 11:04:12');
 INSERT INTO `permission` VALUES ('58', '内容分类--修改', '2', null, 'content-cat:update', '52', '内容分类', null, null, '2', '', '2017-04-24 11:04:40', '2017-04-24 11:04:40');
 INSERT INTO `permission` VALUES ('59', '内容分类--删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
+INSERT INTO `permission` VALUES ('60', '日志管理', '1', '/admin/log', 'log:list', '1', '系统管理', null, null, '4', '', '2017-05-05 10:54:52', '2017-05-05 10:54:52');
+INSERT INTO `permission` VALUES ('61', '日志管理--删除', '2', null, 'log:delete', '60', '日志管理', null, null, '0', '', '2017-05-05 12:59:59', '2017-05-05 12:59:59');
+INSERT INTO `permission` VALUES ('62', '日志管理--查看', '2', null, 'log:view', '60', '日志管理', null, null, '0', '', '2017-05-05 14:13:13', '2017-05-05 14:13:39');
+INSERT INTO `permission` VALUES ('63', '任务调度', '1', '/admin/job', 'job:list', '1', '系统管理', null, null, '5', '', '2017-05-05 14:48:34', '2017-05-05 14:48:34');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -515,13 +525,13 @@ CREATE TABLE `role` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-04-24 11:05:11');
-INSERT INTO `role` VALUES ('3', '管理员', '我是管理员', null, '2017-02-08 17:13:50', '2017-02-09 10:10:01');
+INSERT INTO `role` VALUES ('1', '超级管理员', '我是超级管理员', 'ROEL_ADMIN', '2017-02-08 16:03:57', '2017-05-05 14:48:41');
+INSERT INTO `role` VALUES ('3', '管理员', '我是管理员', 'ROLE_GLY', '2017-02-08 17:13:50', '2017-05-05 15:26:19');
 INSERT INTO `role` VALUES ('8', '普通用户', '我是普通用户', 'ROLE_SIMPLE', '2017-02-17 10:39:35', '2017-02-21 12:08:11');
 
 -- ----------------------------
@@ -535,48 +545,101 @@ CREATE TABLE `role_permission` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=641 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
+) ENGINE=InnoDB AUTO_INCREMENT=755 DEFAULT CHARSET=utf8 COMMENT='角色和权限中间表';
 
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES ('287', '9', '1', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('288', '9', '3', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('289', '9', '11', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('290', '9', '12', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('291', '9', '13', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('292', '9', '14', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
-INSERT INTO `role_permission` VALUES ('293', '9', '32', '2017-02-20 18:08:21', '2017-02-20 18:08:21');
 INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('614', '1', '1', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('615', '1', '3', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('616', '1', '11', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('617', '1', '12', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('618', '1', '13', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('619', '1', '14', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('620', '1', '32', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('621', '1', '9', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('622', '1', '15', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('623', '1', '17', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('624', '1', '18', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('625', '1', '31', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('626', '1', '10', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('627', '1', '19', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('628', '1', '20', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('629', '1', '21', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('630', '1', '22', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('632', '1', '51', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('633', '1', '52', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('634', '1', '57', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('635', '1', '58', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('636', '1', '59', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('637', '1', '53', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('638', '1', '54', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('639', '1', '55', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
-INSERT INTO `role_permission` VALUES ('640', '1', '56', '2017-04-24 11:05:11', '2017-04-24 11:05:11');
+INSERT INTO `role_permission` VALUES ('725', '1', '1', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('726', '1', '3', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('727', '1', '11', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('728', '1', '12', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('729', '1', '13', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('730', '1', '14', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('731', '1', '32', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('732', '1', '9', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('733', '1', '15', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('734', '1', '17', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('735', '1', '18', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('736', '1', '31', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('737', '1', '10', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('738', '1', '19', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('739', '1', '20', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('740', '1', '21', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('741', '1', '22', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('742', '1', '60', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('743', '1', '61', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('744', '1', '62', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('745', '1', '63', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('746', '1', '51', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('747', '1', '52', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('748', '1', '57', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('749', '1', '58', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('750', '1', '59', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('751', '1', '53', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('752', '1', '54', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('753', '1', '55', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+INSERT INTO `role_permission` VALUES ('754', '1', '56', '2017-05-05 14:48:41', '2017-05-05 14:48:41');
+
+-- ----------------------------
+-- Table structure for `schedule_job`
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule_job`;
+CREATE TABLE `schedule_job` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
+  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
+  `params` varchar(500) DEFAULT NULL COMMENT '参数',
+  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_by` bigint(20) DEFAULT NULL COMMENT '修改者',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
+  `status` char(1) DEFAULT NULL COMMENT '任务状态 0禁用 1启用',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度';
+
+-- ----------------------------
+-- Records of schedule_job
+-- ----------------------------
+INSERT INTO `schedule_job` VALUES ('1', 'd', 'd', 'd', 'd', 'd', 'd', '1', null, '2017-05-05 15:11:04', null, '2017-05-05 15:11:07', 'da', '1');
+
+-- ----------------------------
+-- Table structure for `schedule_job_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule_job_log`;
+CREATE TABLE `schedule_job_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `job_id` bigint(20) DEFAULT NULL COMMENT '任务ID',
+  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
+  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
+  `params` varchar(500) DEFAULT NULL COMMENT '参数',
+  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `job_create_by` bigint(20) DEFAULT NULL COMMENT '任务创建者',
+  `job_create_time` datetime DEFAULT NULL COMMENT '任务创建时间',
+  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
+  `status` char(1) DEFAULT NULL COMMENT '任务状态 0失败 1成功',
+  `error` varchar(500) DEFAULT NULL COMMENT '失败信息',
+  `times` bigint(20) DEFAULT NULL COMMENT '耗时(单位：毫秒)',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度执行日志';
+
+-- ----------------------------
+-- Records of schedule_job_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `user`
@@ -622,60 +685,3 @@ CREATE TABLE `user_role` (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '83', '1', '2017-02-13 11:02:06', '2017-02-13 11:02:08');
-
-
--- ----------------------------
--- Table structure for `schedul_job`
--- ----------------------------
-DROP TABLE IF EXISTS `schedul_job`;
-CREATE TABLE `schedul_job` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
-  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
-  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
-  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
-  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
-  `params` varchar(500) DEFAULT NULL COMMENT '参数',
-  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
-  `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_by` bigint(20) DEFAULT NULL COMMENT '修改者',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
-  `status` char(1) DEFAULT NULL COMMENT '任务状态 0禁用 1启用',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度';
-
--- ----------------------------
--- Records of schedul_job
--- ----------------------------
-
-
--- ----------------------------
--- Table structure for `schedul_job_log`
--- ----------------------------
-DROP TABLE IF EXISTS `schedul_job_log`;
-CREATE TABLE `schedul_job_log` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `job_id` bigint(20) DEFAULT NULL COMMENT '任务ID',
-  `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
-  `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
-  `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
-  `bean_class` varchar(500) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
-  `method_name` varchar(200) DEFAULT NULL COMMENT '任务调用的方法名',
-  `params` varchar(500) DEFAULT NULL COMMENT '参数',
-  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
-  `job_create_by` bigint(20) DEFAULT NULL COMMENT '任务创建者',
-  `job_create_time` datetime DEFAULT NULL COMMENT '任务创建时间',
-  `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
-  `status` char(1) DEFAULT NULL COMMENT '任务状态 0失败 1成功',
-  `error` varchar(500) DEFAULT NULL COMMENT '失败信息',
-  `times` bigint(20) DEFAULT NULL COMMENT '耗时(单位：毫秒)',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度执行日志';
-
--- ----------------------------
--- Records of schedul_job_log
--- ----------------------------
