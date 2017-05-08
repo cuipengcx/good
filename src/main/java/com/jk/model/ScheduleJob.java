@@ -15,8 +15,9 @@ public class ScheduleJob extends BaseEntity {
 
 	public static final String STATUS_RUNNING = "1";
 	public static final String STATUS_NOT_RUNNING = "0";
-	public static final String CONCURRENT_IS = "1";
-	public static final String CONCURRENT_NOT = "0";
+
+	/** 任务调度的参数key */
+	public static final String JOB_PARAM_KEY    = "jobParam";
 
 	/**
 	 * 任务名称
@@ -44,14 +45,19 @@ public class ScheduleJob extends BaseEntity {
 	private String methodName;
 
 	/**
+	 * 触发器
+     */
+	private String jobTrigger;
+
+	/**
 	 * 参数
 	 */
 	private String params;
 
 	/**
-	 * 是否同步  0否 1是
+	 * 是否异步  0否 1是
      */
-	private String isConcurrent;
+	private Boolean isSync;
 
 	/**
 	 * 任务状态 0禁用 1启用

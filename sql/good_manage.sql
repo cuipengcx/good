@@ -612,8 +612,9 @@ CREATE TABLE `schedule_job` (
   `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
+  `job_trigger` varchar(255) DEFAULT NULL COMMENT '触发器',
   `params` varchar(500) DEFAULT NULL COMMENT '参数',
-  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `is_sync` bit(1) DEFAULT NULL COMMENT '是否异步  0否 1是',
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_by` bigint(20) DEFAULT NULL COMMENT '修改者',
@@ -626,7 +627,7 @@ CREATE TABLE `schedule_job` (
 -- ----------------------------
 -- Records of schedule_job
 -- ----------------------------
-INSERT INTO `schedule_job` VALUES ('1', 'd', 'd', 'd', 'd', 'd', 'd', '1', null, '2017-05-05 15:11:04', null, '2017-05-05 15:11:07', 'da', '1');
+INSERT INTO `schedule_job` VALUES ('1', 'd', 'd', 'd', 'd', 'd', 'd', 1, null, '2017-05-05 15:11:04', null, '2017-05-05 15:11:07', 'da', '1');
 
 -- ----------------------------
 -- Table structure for `schedule_job_log`
@@ -640,8 +641,9 @@ CREATE TABLE `schedule_job_log` (
   `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
+  `job_trigger` varchar(255) DEFAULT NULL COMMENT '触发器',
   `params` varchar(500) DEFAULT NULL COMMENT '参数',
-  `is_concurrent` char(1) DEFAULT NULL COMMENT '是否同步  0否 1是',
+  `is_sync` bit(1) DEFAULT NULL COMMENT '是否异步  0否 1是',
   `job_create_by` bigint(20) DEFAULT NULL COMMENT '任务创建者',
   `job_create_time` datetime DEFAULT NULL COMMENT '任务创建时间',
   `remarks` varchar(200) DEFAULT NULL COMMENT '描述',

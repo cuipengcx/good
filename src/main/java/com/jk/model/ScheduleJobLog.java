@@ -50,9 +50,9 @@ public class ScheduleJobLog extends BaseEntity{
     private String params;
 
     /**
-     * 是否同步  0否 1是
+     * 是否异步  0否 1是
      */
-    private String isConcurrent;
+    private Boolean isSync;
 
     /**
      * 任务状态 0失败 1成功
