@@ -5,6 +5,7 @@ import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Permission;
 import com.jk.service.PermissionService;
+import com.jk.util.xss.XssHttpServletRequestWrapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -105,11 +107,15 @@ public class PermissionController extends BaseController{
     @RequiresPermissions("permission:create")
     @ResponseBody
     @PostMapping
-    public ModelMap savePermission(Permission permission){
+    public ModelMap savePermission(HttpServletRequest request, Permission permission){
         ModelMap messagesMap = new ModelMap();
         try {
             log.debug("添加权限参数! permission = {}", permission);
 
+            //获取不进行xss过滤的request对象
+            HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+
+            permission.setIcon(orgRequest.getParameter("icon"));
             permission.setIsLock(false);
             permission.setParentId(permission.getParentId() == null ? 0 : permission.getParentId());
             permissionService.save(permission);
@@ -187,7 +193,7 @@ public class PermissionController extends BaseController{
     @RequiresPermissions("permission:update")
     @ResponseBody
     @PutMapping(value = "/{id}")
-    public ModelMap updateRole(@PathVariable("id") Long id, Permission permission){
+    public ModelMap updatePermission(HttpServletRequest request, @PathVariable("id") Long id, Permission permission){
         ModelMap messagesMap = new ModelMap();
         try {
             log.debug("编辑权限参数! id= {}, permission = {}", id, permission);
@@ -197,6 +203,11 @@ public class PermissionController extends BaseController{
                 messagesMap.put("message","ID不能为空!");
                 return messagesMap;
             }
+
+            //获取不进行xss过滤的request对象
+            HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+
+            permission.setIcon(orgRequest.getParameter("icon"));
 
             permissionService.updateSelective(permission);
             log.info("编辑权限成功! id= {}, permission = {}", id, permission);
