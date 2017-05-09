@@ -5,7 +5,10 @@ import com.jk.model.ScheduleJob;
 import com.jk.task.AsyncJobFactory;
 import com.jk.task.SyncJobFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
+
+import java.lang.reflect.Method;
 
 /**
  * author : fengjing
@@ -235,5 +238,49 @@ public class ScheduleUtils {
             log.error("删除定时任务失败", e);
             throw new MyException("删除定时任务失败");
         }
+    }
+
+
+
+    /**
+     * 通过反射调用scheduleJob中定义的方法
+     *
+     * @param scheduleJob
+     */
+    public static void invokMethod(ScheduleJob scheduleJob) {
+        Object object = null;
+        Class<?> clazz = null;
+        if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
+            try {
+                clazz = Class.forName(scheduleJob.getBeanClass());
+                object = clazz.newInstance();
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+
+        }
+        if (object == null) {
+            log.error("任务名称 = [" + scheduleJob.getJobName()
+                    + "]---------------未启动成功，请检查是否配置正确！！！");
+            return;
+        }
+        clazz = object.getClass();
+        Method method = null;
+        try {
+            method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
+        } catch (NoSuchMethodException e) {
+            log.error("任务名称 = [" + scheduleJob.getJobName()
+                    + "]---------------未启动成功，方法名设置错误！！！");
+        } catch (SecurityException e) {
+            log.error(e.getMessage(), e);
+        }
+        if (method != null) {
+            try {
+                method.invoke(object);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        log.debug("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
     }
 }

@@ -523,9 +523,11 @@ INSERT INTO `permission` VALUES ('59', '内容分类--删除', '2', null, 'conte
 INSERT INTO `permission` VALUES ('60', '日志管理', '1', '/admin/log', 'log:list', '1', '系统管理', null, null, '4', '', '2017-05-05 10:54:52', '2017-05-05 10:54:52');
 INSERT INTO `permission` VALUES ('61', '日志管理--删除', '2', null, 'log:delete', '60', '日志管理', null, null, '0', '', '2017-05-05 12:59:59', '2017-05-05 12:59:59');
 INSERT INTO `permission` VALUES ('62', '日志管理--查看', '2', null, 'log:view', '60', '日志管理', null, null, '0', '', '2017-05-05 14:13:13', '2017-05-05 14:13:39');
-INSERT INTO `permission` VALUES ('63', '任务调度', '1', '/admin/job', 'job:list', '1', '系统管理', null, null, '5', '', '2017-05-05 14:48:34', '2017-05-05 14:48:34');
 INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, null, '7', '', '2017-05-05 15:31:41', '2017-05-05 15:33:46');
-INSERT INTO `permission` VALUES ('65', '任务调度--添加', '2', null, 'job:create', '63', '任务调度', null, null, '0', '', '2017-05-05 16:19:30', '2017-05-05 16:19:30');
+INSERT INTO `permission` VALUES ('66', '任务调度管理', '0', null, null, '0', null, null, '&amp;#xe637;', '0', '', '2017-05-09 15:22:11', '2017-05-09 16:28:44');
+INSERT INTO `permission` VALUES ('67', '任务列表', '1', '/admin/job', 'job:list', '66', '任务调度管理', null, null, '0', '', '2017-05-09 15:22:37', '2017-05-09 15:22:37');
+INSERT INTO `permission` VALUES ('68', '任务列表--添加', '2', null, 'job:create', '67', '任务列表', null, null, '0', '', '2017-05-09 15:23:22', '2017-05-09 15:23:22');
+
 
 -- ----------------------------
 -- Table structure for `role`
@@ -600,6 +602,9 @@ INSERT INTO `role_permission` VALUES ('814', '1', '53', '2017-05-05 16:43:57', '
 INSERT INTO `role_permission` VALUES ('815', '1', '54', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
 INSERT INTO `role_permission` VALUES ('816', '1', '55', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
 INSERT INTO `role_permission` VALUES ('817', '1', '56', '2017-05-05 16:43:57', '2017-05-05 16:43:57');
+INSERT INTO `role_permission` VALUES ('848', '1', '66', '2017-05-09 15:23:33', '2017-05-09 15:23:33');
+INSERT INTO `role_permission` VALUES ('849', '1', '67', '2017-05-09 15:23:33', '2017-05-09 15:23:33');
+INSERT INTO `role_permission` VALUES ('850', '1', '68', '2017-05-09 15:23:33', '2017-05-09 15:23:33');
 
 -- ----------------------------
 -- Table structure for `schedule_job`

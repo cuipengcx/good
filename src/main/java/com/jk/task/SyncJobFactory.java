@@ -1,6 +1,7 @@
 package com.jk.task;
 
 import com.jk.model.ScheduleJob;
+import com.jk.util.ScheduleUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
@@ -20,8 +21,9 @@ public class SyncJobFactory extends QuartzJobBean {
 	@Override
 	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		log.info("SyncJobFactory execute");
-		ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get("scheduleJob");
-		TaskUtils.invokMethod(scheduleJob);
+		ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
+		ScheduleUtils.invokMethod(scheduleJob);
+		log.info("jobName: {} " + scheduleJob);
 	}
 
 }

@@ -2,9 +2,10 @@ package com.jk.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import java.io.IOException;
+import javax.sql.DataSource;
 
 /**
  * 定时任务配置
@@ -14,44 +15,13 @@ import java.io.IOException;
 public class ScheduleConfig {
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() {
-
+    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
-        factory.setOverwriteExistingJobs(true);
+        factory.setDataSource(dataSource);
 
-        // 延时启动
-        factory.setStartupDelay(20);
-
-        // 加载quartz数据源配置
-//        factory.setQuartzProperties(quartzProperties());
-
-        // 自定义Job Factory，用于Spring注入
-//        factory.setJobFactory(myJobFactory);
-        return new SchedulerFactoryBean();
-    }
-
-    /**
-     * 加载quartz数据源配置
-     *
-     * @return
-     * @throws IOException
-     */
-//    @Bean
-//    public Properties quartzProperties() throws IOException {
-//        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-//        propertiesFactoryBean.setLocation(new ClassPathResource("/quartz.properties"));
-//        propertiesFactoryBean.afterPropertiesSet();
-//        return propertiesFactoryBean.getObject();
-//    }
-
-//    @Bean
-//    public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
-//        SchedulerFactoryBean factory = new SchedulerFactoryBean();
-//        factory.setDataSource(dataSource);
-//
-//        //quartz参数
+        //quartz参数
 //        Properties prop = new Properties();
-//        prop.put("org.quartz.scheduler.instanceName", "GoodScheduler");
+//        prop.put("org.quartz.scheduler.instanceName", "ClusterScheduler");
 //        prop.put("org.quartz.scheduler.instanceId", "AUTO");
 //        //线程池配置
 //        prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
@@ -67,16 +37,17 @@ public class ScheduleConfig {
 //        prop.put("org.quartz.jobStore.misfireThreshold", "12000");
 //        prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
 //        factory.setQuartzProperties(prop);
-//
-//        factory.setSchedulerName("GoodScheduler");
-//        //延时启动
-//        factory.setStartupDelay(30);
-//        factory.setApplicationContextSchedulerContextKey("applicationContextKey");
-//        //可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了
-//        factory.setOverwriteExistingJobs(true);
-//        //设置自动启动，默认为true
-//        factory.setAutoStartup(true);
-//
-//        return factory;
-//    }
+        factory.setConfigLocation(new ClassPathResource("/quartz.properties"));
+
+        factory.setSchedulerName("ClusterScheduler");
+        //延时启动
+        factory.setStartupDelay(30);
+        factory.setApplicationContextSchedulerContextKey("applicationContextKey");
+        //可选，QuartzScheduler 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了
+        factory.setOverwriteExistingJobs(true);
+        //设置自动启动，默认为true
+        factory.setAutoStartup(true);
+
+        return factory;
+    }
 }

@@ -10,6 +10,11 @@ import com.jk.model.ScheduleJob;
 public interface ScheduleJobService extends BaseService<ScheduleJob>{
 
     /**
+     * 初始化定时任务
+     */
+    void initScheduleJob();
+
+    /**
      * 根据ID，查询定时任务
      */
     ScheduleJob findScheduleJobById(Long jobId);

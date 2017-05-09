@@ -23,7 +23,7 @@
 
         <!--数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.1.238:3306/iqc_app"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/good_manage"
                         userId="root"
                         password="123456">
         </jdbcConnection>

@@ -1,6 +1,7 @@
 package com.jk.task;
 
 import com.jk.model.ScheduleJob;
+import com.jk.util.ScheduleUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -17,6 +18,7 @@ public class AsyncJobFactory extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		log.info("AsyncJobFactory execute");
 		ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
-		TaskUtils.invokMethod(scheduleJob);
+		ScheduleUtils.invokMethod(scheduleJob);
+		log.info("jobName: {} " + scheduleJob);
 	}
 }
