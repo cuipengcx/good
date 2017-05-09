@@ -29,15 +29,10 @@ Good权限管理系统是作者学习springboot时基于springboot开发的一�
      - 角色管理(已完成)
      - 权限管理(已完成)
      - 组织机构(未完成)
-     - 任务调度(未完成)
+     - 日志管理(已完成)
      - 字典管理(未完成)
-
-2. 日志管理(未完成)
-     - 操作日志
-     - 登录日志
-
-3. 系统监控(未完成)
-    - 连接池监控
+     - SQL监控(已完成)
+2. 任务调度(未完成)
     
 ## 开发环境
 
@@ -90,6 +85,8 @@ Good权限管理系统是作者学习springboot时基于springboot开发的一�
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/112633_3a416d99_798427.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/112642_bf3f3e2a_798427.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/112651_b3408011_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0509/092029_b941c4d5_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0509/092029_b941c4d5_798427.png "在这里输入图片标题")
 
 ## 特别说明
 

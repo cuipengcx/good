@@ -627,7 +627,6 @@ CREATE TABLE `schedule_job` (
 -- ----------------------------
 -- Records of schedule_job
 -- ----------------------------
-INSERT INTO `schedule_job` VALUES ('1', 'd', 'd', 'd', 'd', 'd', 'd', 1, null, '2017-05-05 15:11:04', null, '2017-05-05 15:11:07', 'da', '1');
 
 -- ----------------------------
 -- Table structure for `schedule_job_log`
