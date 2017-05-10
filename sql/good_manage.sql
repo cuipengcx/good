@@ -524,7 +524,7 @@ INSERT INTO `permission` VALUES ('60', '日志管理', '1', '/admin/log', 'log:l
 INSERT INTO `permission` VALUES ('61', '日志管理--删除', '2', null, 'log:delete', '60', '日志管理', null, null, '0', '', '2017-05-05 12:59:59', '2017-05-05 12:59:59');
 INSERT INTO `permission` VALUES ('62', '日志管理--查看', '2', null, 'log:view', '60', '日志管理', null, null, '0', '', '2017-05-05 14:13:13', '2017-05-05 14:13:39');
 INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, null, '7', '', '2017-05-05 15:31:41', '2017-05-05 15:33:46');
-INSERT INTO `permission` VALUES ('66', '调度管理', '0', null, null, '0', null, null, '&amp;#xe637;', '0', '', '2017-05-09 15:22:11', '2017-05-09 16:28:44');
+INSERT INTO `permission` VALUES ('66', '调度管理', '0', null, null, '0', null, null, '&#xe637;', '0', '', '2017-05-09 15:22:11', '2017-05-09 16:28:44');
 INSERT INTO `permission` VALUES ('67', '任务列表', '1', '/admin/job', 'job:list', '66', '调度管理', null, null, '0', '', '2017-05-09 15:22:37', '2017-05-09 15:22:37');
 INSERT INTO `permission` VALUES ('68', '任务列表--添加', '2', null, 'job:create', '67', '任务列表', null, null, '0', '', '2017-05-09 15:23:22', '2017-05-09 15:23:22');
 
