@@ -237,9 +237,19 @@ public class UserController extends BaseController {
         ModelMap messagesMap = new ModelMap();
         try {
             log.debug("编辑管理员参数! id= {}, user = {}", id, user);
-            if(null == id){
+
+            User u = userService.findById(id);
+            if (null == u) {
+                log.info("编辑管理员不存在! id = {}", id);
                 messagesMap.put("status",FAILURE);
-                messagesMap.put("message","ID不能为空!");
+                messagesMap.put("message","管理员不存在!");
+                return messagesMap;
+            }
+
+            if(u.getIsAdmin()){
+                log.info("编辑管理员失败, 超级管理员不允许操作! id = {}", id);
+                messagesMap.put("status",FAILURE);
+                messagesMap.put("message","超级管理员不允许操作!");
                 return messagesMap;
             }
 
