@@ -236,11 +236,12 @@
                         <!--<version>1.2.5.RELEASE</version>-->
                     <!--</dependency>-->
                 <!--</dependencies>-->
-                <!--<configuration>-->
-                    <!--<jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>-->
-                    <!--<executable>true</executable>-->
-                    <!--<fork>true</fork>-->
-                <!--</configuration>-->
+                <configuration>
+                    <mainClass>com.jk.RootApplication</mainClass>
+                    <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                    <executable>true</executable>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
