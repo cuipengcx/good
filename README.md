@@ -4,7 +4,7 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 以后来项目的时候就可以直接基于此平台进行开发，减少重复工作量.
 目前还有好多功能未实现，后续会陆续完成并全部开源！
 
-访问地址: [http://localhost/admin/index](http://localhost/admin/index)
+访问地址: [http://localhost:8081/admin/index](http://localhost:8081/admin/index)
 用户名: admin
 密码: 123
 
