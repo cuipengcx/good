@@ -78,13 +78,13 @@
 		FROM
 		user_role ur
 		WHERE
-		ur.user_id = #{userId} order by p.sort desc
+		ur.user_id = #{userId}
 		)
-		);
+		) order by p.sort asc;
 	</select>
 
 	<!--返回树列表-->
 	<select id="findTreeList" resultMap="treeMap">
-		SELECT id,parent_id,name FROM permission
+		SELECT id,parent_id,name FROM permission p  order by p.sort asc
 	</select>
 </mapper>
