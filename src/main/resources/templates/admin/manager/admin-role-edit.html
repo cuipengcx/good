@@ -102,12 +102,23 @@
 		var zTreeObj = $.fn.zTree.getZTreeObj("tree");  //获取tree对象
 		var zTree = zTreeObj.getCheckedNodes(false);    //获取未被选中的tree节点集合
 		var pid = $("#permissionIds").val(); /**此处数据前后必须拼接,*/
+		var pidArray = pid.split(",");
+
 		for (var i = 0; i < zTree.length; i++) {
-			if (pid.indexOf(zTree[i].id) != -1) {
-				zTreeObj.expandNode(zTree[i], true); //展开选中的
-				zTreeObj.checkNode(zTree[i], true);  //勾选
+			for (var j = 0; j < pidArray.length; j++){
+				if(zTree[i].id == pidArray[j]){
+					zTreeObj.expandNode(zTree[i], true); //展开选中的
+					zTreeObj.checkNode(zTree[i], true);  //勾选
+				}
 			}
 		}
+//
+//		for (var i = 0; i < zTree.length; i++) {
+//			if (pid.indexOf(zTree[i].id) != -1) {
+//				zTreeObj.expandNode(zTree[i], true); //展开选中的
+//				zTreeObj.checkNode(zTree[i], true);  //勾选
+//			}
+//		}
 	});
 
 </script>
