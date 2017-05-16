@@ -60,7 +60,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">操作时间：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <span th:if="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+                <span th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
             </div>
         </div>
         <div class="row cl">
@@ -74,13 +74,13 @@
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3">异常编码：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <span th:if="*{exceptionCode}">404</span>
+                    <span th:text="*{exceptionCode}">404</span>
                 </div>
             </div>
             <div class="row cl">
                 <label class="form-label col-xs-4 col-sm-3">异常详情：</label>
                 <div class="formControls col-xs-8 col-sm-9">
-                    <span th:if="*{exceptionDetail}">未认证</span>
+                    <span th:text="*{exceptionDetail}">未认证</span>
                 </div>
             </div>
         </th:block>

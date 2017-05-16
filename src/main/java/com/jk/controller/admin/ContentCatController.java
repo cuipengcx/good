@@ -3,7 +3,6 @@ package com.jk.controller.admin;
 import com.jk.controller.BaseController;
 import com.jk.service.ContentCatService;
 import com.jk.vo.TreeNode;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +37,7 @@ public class ContentCatController extends BaseController {
      */
     @GetMapping("/tree")
     public ResponseEntity<List<TreeNode>> getTreeList() {
-        try {
-            List<TreeNode> treeNodeList = contentCatService.findTreeList();
-            return ResponseEntity.ok(treeNodeList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        List<TreeNode> treeNodeList = contentCatService.findTreeList();
+        return ResponseEntity.ok(treeNodeList);
     }
 }

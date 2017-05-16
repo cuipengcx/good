@@ -42,16 +42,12 @@ public class PermissionController extends BaseController{
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Permission model,
                        ModelMap modelMap){
-        try {
-            log.debug("分页查询权限列表参数! pageNum = {}, name = {}", pageNum, model.getName());
-            PageInfo<Permission> pageInfo = permissionService.findPage(pageNum, PAGESIZE, model.getName());
-            log.info("分页查询权限列表结果！ pageInfo = {}", pageInfo);
-            modelMap.put("pageInfo", pageInfo);
-            modelMap.put("model", model);
-        } catch (Exception e) {
-            log.error("分页查询权限列表失败! pageNum = {}, name = {}, e = {}", pageNum, model.getName(), e);
-        }
-        return BASE_PATH+"admin-permission";
+        log.debug("分页查询权限列表参数! pageNum = {}, name = {}", pageNum, model.getName());
+        PageInfo<Permission> pageInfo = permissionService.findPage(pageNum, PAGESIZE, model.getName());
+        log.info("分页查询权限列表结果！ pageInfo = {}", pageInfo);
+        modelMap.put("pageInfo", pageInfo);
+        modelMap.put("model", model);
+        return BASE_PATH + "admin-permission";
     }
 
     /**
@@ -64,37 +60,31 @@ public class PermissionController extends BaseController{
     @RequiresPermissions("permission:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        try {
-            log.debug("删除权限! id = {}", id);
-            if (null == id) {
-                log.info("删除权限不存在! id = {}", id);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除权限不存在!");
-            }
-
-            Boolean flag = permissionService.deletePermissionAndRolePermissionByPermissionId(id);
-            if(flag){
-                log.info("删除权限成功! id = {}", id);
-                return ResponseEntity.ok("删除成功！");
-            }
-
-            log.info("删除权限失败，但没有抛出异常! id = {}", id);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        } catch (Exception e) {
-            log.error("删除权限失败! id = {}, e = {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        log.debug("删除权限! id = {}", id);
+        if (null == id) {
+            log.info("删除权限不存在! id = {}", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除权限不存在!");
         }
+
+        Boolean flag = permissionService.deletePermissionAndRolePermissionByPermissionId(id);
+        if(flag){
+            log.info("删除权限成功! id = {}", id);
+            return ResponseEntity.ok("删除成功！");
+        }
+
+        log.info("删除权限失败，但没有抛出异常! id = {}", id);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     /**
      * 跳转到权限添加页面
      * @return
      */
-    @OperationLog(value = "添加权限")
     @RequiresPermissions("permission:create")
     @GetMapping("/add")
     public String add(){
         log.info("跳转到权限添加页面!");
-        return BASE_PATH+"admin-permission-add";
+        return BASE_PATH + "admin-permission-add";
     }
 
     /**
@@ -102,33 +92,26 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
-    @OperationLog(value = "添加权限成功")
+    @OperationLog(value = "添加权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:create")
     @ResponseBody
     @PostMapping
     public ModelMap savePermission(HttpServletRequest request, Permission permission){
         ModelMap messagesMap = new ModelMap();
-        try {
-            log.debug("添加权限参数! permission = {}", permission);
+        log.debug("添加权限参数! permission = {}", permission);
 
-            //获取不进行xss过滤的request对象
-            HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+        //获取不进行xss过滤的request对象
+        HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
 
-            permission.setIcon(orgRequest.getParameter("icon"));
-            permission.setIsLock(false);
-            permission.setParentId(permission.getParentId() == null ? 0 : permission.getParentId());
-            permissionService.save(permission);
-            log.info("添加权限成功! permissionId = {}", permission.getId());
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","添加成功!");
-            return messagesMap;
-        } catch (Exception e) {
-            log.error("添加权限失败! permission = {}, e = {}", permission, e);
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","添加失败!");
-            return messagesMap;
-        }
+        permission.setIcon(orgRequest.getParameter("icon"));
+        permission.setIsLock(false);
+        permission.setParentId(permission.getParentId() == null ? 0 : permission.getParentId());
+        permissionService.save(permission);
+        log.info("添加权限成功! permissionId = {}", permission.getId());
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","添加成功!");
+        return messagesMap;
     }
 
     /**
@@ -140,29 +123,20 @@ public class PermissionController extends BaseController{
     @GetMapping("/getPermissionList")
     public ModelMap getPermissionList(String type){
         ModelMap messagesMap = new ModelMap();
-        try {
-            log.debug("根据资源类型获取权限列表，类型type = {}", type);
-            List<Permission> permissionList = permissionService.findListByType(type);
-            log.info("根据资源类型获取权限成功! permissionList = {}", permissionList);
+        log.debug("根据资源类型获取权限列表，类型type = {}", type);
+        List<Permission> permissionList = permissionService.findListByType(type);
+        log.info("根据资源类型获取权限成功! permissionList = {}", permissionList);
 
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","获取成功!");
-            messagesMap.put("permissionList", permissionList);
-            return messagesMap;
-        } catch (Exception e) {
-            //e.printStackTrace();
-            log.error("根据资源类型获取权限列表失败! type = {}, e = {}", type, e);
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","获取失败!");
-            return messagesMap;
-        }
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","获取成功!");
+        messagesMap.put("permissionList", permissionList);
+        return messagesMap;
     }
 
     /**
      * 跳转到权限编辑页面
      * @return
      */
-    @OperationLog(value = "编辑权限")
     @RequiresPermissions("permission:update")
     @GetMapping(value = "/edit/{id}/{type}")
     public String edit(@PathVariable("id") Long id, @PathVariable("type") String type, ModelMap modelMap){
@@ -179,7 +153,7 @@ public class PermissionController extends BaseController{
 
         modelMap.put("model", permission);
         modelMap.put("permissionList", permissionList);
-        return BASE_PATH+"admin-permission-edit";
+        return BASE_PATH + "admin-permission-edit";
     }
 
     /**
@@ -188,38 +162,31 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
-    @OperationLog(value = "编辑权限成功")
+    @OperationLog(value = "编辑权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:update")
     @ResponseBody
     @PutMapping(value = "/{id}")
     public ModelMap updatePermission(HttpServletRequest request, @PathVariable("id") Long id, Permission permission){
         ModelMap messagesMap = new ModelMap();
-        try {
-            log.debug("编辑权限参数! id= {}, permission = {}", id, permission);
+        log.debug("编辑权限参数! id= {}, permission = {}", id, permission);
 
-            if(null == id){
-                messagesMap.put("status",FAILURE);
-                messagesMap.put("message","ID不能为空!");
-                return messagesMap;
-            }
-
-            //获取不进行xss过滤的request对象
-            HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
-
-            permission.setIcon(orgRequest.getParameter("icon"));
-
-            permissionService.updateSelective(permission);
-            log.info("编辑权限成功! id= {}, permission = {}", id, permission);
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","编辑成功!");
-            return messagesMap;
-        } catch (Exception e) {
-            log.error("编辑权限失败! id = {}, permission = {}, e = {}", id, permission, e);
+        if(null == id){
             messagesMap.put("status",FAILURE);
-            messagesMap.put("message","编辑失败!");
+            messagesMap.put("message","ID不能为空!");
             return messagesMap;
         }
+
+        //获取不进行xss过滤的request对象
+        HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+
+        permission.setIcon(orgRequest.getParameter("icon"));
+
+        permissionService.updateSelective(permission);
+        log.info("编辑权限成功! id= {}, permission = {}", id, permission);
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","编辑成功!");
+        return messagesMap;
     }
 
 }

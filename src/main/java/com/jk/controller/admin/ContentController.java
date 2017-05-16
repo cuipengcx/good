@@ -45,24 +45,20 @@ public class ContentController extends BaseController {
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Long catId,
                        ModelMap modelMap) {
-        try {
-            log.debug("分页查询内容列表参数! pageNum = {}", pageNum);
+        log.debug("分页查询内容列表参数! pageNum = {}", pageNum);
 
-            ContentCat contentCat = contentCatService.findById(catId);
+        ContentCat contentCat = contentCatService.findById(catId);
 
-            if (null != catId) {
-                Content content = new Content();
-                content.setContentCatId(catId);
-                PageInfo<Content> pageInfo = contentService.findPageListByWhere(pageNum, PAGESIZE, content);
-                log.info("分页查询内容列表结果！ pageInfo = {}", pageInfo);
+        if (null != catId) {
+            Content content = new Content();
+            content.setContentCatId(catId);
+            PageInfo<Content> pageInfo = contentService.findPageListByWhere(pageNum, PAGESIZE, content);
+            log.info("分页查询内容列表结果！ pageInfo = {}", pageInfo);
 
-                modelMap.put("pageInfo", pageInfo);
-            }
-
-            modelMap.put("contentCat", contentCat);
-        } catch (Exception e) {
-            log.error("分页查询内容列表失败! e = {}", e);
+            modelMap.put("pageInfo", pageInfo);
         }
+
+        modelMap.put("contentCat", contentCat);
         return BASE_PATH + "content-list";
     }
 
@@ -73,7 +69,6 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
-    @OperationLog(value = "添加内容")
     @RequiresPermissions("content:create")
     @GetMapping("/add")
     public String add(Long catId, ModelMap modelMap) {
@@ -87,22 +82,16 @@ public class ContentController extends BaseController {
      * @param content
      * @return
      */
-    @OperationLog(value = "添加内容成功")
+    @OperationLog(value = "添加内容")
     @RequiresPermissions("content:create")
     @ResponseBody
     @PostMapping("/save")
     public ModelMap saveContent(Content content){
         ModelMap messagesMap = new ModelMap();
-        try {
-            contentService.save(content);
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","添加成功!");
-            return messagesMap;
-        } catch (Exception e) {
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","添加失败!");
-            return messagesMap;
-        }
+        contentService.save(content);
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","添加成功!");
+        return messagesMap;
     }
 
     /**
@@ -111,7 +100,6 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
-    @OperationLog(value = "编辑内容")
     @RequiresPermissions("content:update")
     @GetMapping("/edit")
     public String edit(Long id, ModelMap modelMap) {
@@ -131,22 +119,16 @@ public class ContentController extends BaseController {
      * @param content
      * @return
      */
-    @OperationLog(value = "编辑内容成功")
+    @OperationLog(value = "编辑内容")
     @RequiresPermissions("content:update")
     @ResponseBody
     @PostMapping("/update")
     public ModelMap updateContent(Content content){
         ModelMap messagesMap = new ModelMap();
-        try {
-            contentService.updateSelective(content);
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","编辑成功!");
-            return messagesMap;
-        } catch (Exception e) {
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","编辑失败!");
-            return messagesMap;
-        }
+        contentService.updateSelective(content);
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","编辑成功!");
+        return messagesMap;
     }
 
 
@@ -159,19 +141,14 @@ public class ContentController extends BaseController {
     @RequiresPermissions("content:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-        try {
-            log.debug("删除内容! id = {}", id);
-            if (null == id) {
-                log.info("删除内容不存在! id = {}", id);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除内容不存在!");
-            }
-
-            contentService.deleteById(id);
-            log.info("删除内容成功! id = {}", id);
-            return ResponseEntity.ok("删除成功!");
-        } catch (Exception e) {
-            log.error("删除内容失败! id = {}, e = {}", id, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        log.debug("删除内容! id = {}", id);
+        if (null == id) {
+            log.info("删除内容不存在! id = {}", id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除内容不存在!");
         }
+
+        contentService.deleteById(id);
+        log.info("删除内容成功! id = {}", id);
+        return ResponseEntity.ok("删除成功!");
     }
 }

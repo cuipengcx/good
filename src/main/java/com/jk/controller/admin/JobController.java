@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
-import static org.apache.shiro.web.filter.mgt.DefaultFilter.user;
-
 /**
  * @author cuiP
  * Created by JK on 2017/5/5.
@@ -42,17 +40,13 @@ public class JobController extends BaseController{
     public String list(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             String jobName, String startTime, String endTime, ModelMap modelMap) {
-        try {
-            log.debug("分页查询任务调度列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, jobName, startTime, endTime);
-            PageInfo<ScheduleJob> pageInfo = scheduleJobService.findPage(pageNum, PAGESIZE, jobName, startTime, endTime);
-            log.info("分页查询任务调度列表结果！ pageInfo = {}", pageInfo);
-            modelMap.put("pageInfo", pageInfo);
-            modelMap.put("jobName", jobName);
-            modelMap.put("startTime", startTime);
-            modelMap.put("endTime", endTime);
-        } catch (Exception e) {
-            log.error("分页查询任务调度列表失败! e = {}", e);
-        }
+        log.debug("分页查询任务调度列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, jobName, startTime, endTime);
+        PageInfo<ScheduleJob> pageInfo = scheduleJobService.findPage(pageNum, PAGESIZE, jobName, startTime, endTime);
+        log.info("分页查询任务调度列表结果！ pageInfo = {}", pageInfo);
+        modelMap.put("pageInfo", pageInfo);
+        modelMap.put("jobName", jobName);
+        modelMap.put("startTime", startTime);
+        modelMap.put("endTime", endTime);
         return BASE_PATH + "job-list";
     }
 
@@ -60,12 +54,11 @@ public class JobController extends BaseController{
      * 跳转到任务调度添加页面
      * @return
      */
-    @OperationLog(value = "添加任务调度")
     @RequiresPermissions("job:create")
     @GetMapping(value = "/add")
     public String add(ModelMap modelMap){
         log.info("跳转到任务调度添加页面!");
-        return BASE_PATH+"job-add";
+        return BASE_PATH + "job-add";
     }
 
     /**
@@ -73,26 +66,20 @@ public class JobController extends BaseController{
      * @param scheduleJob
      * @return
      */
-    @OperationLog(value = "添加任务调度成功")
+    @OperationLog(value = "添加任务调度")
     @RequiresPermissions("job:create")
     @ResponseBody
     @PostMapping
     public ModelMap saveJob(ScheduleJob scheduleJob){
         ModelMap messagesMap = new ModelMap();
-        try {
-            log.debug("添加任务调度参数! scheduleJob = {}", scheduleJob);
 
-            scheduleJobService.save(scheduleJob);
+        log.debug("添加任务调度参数! scheduleJob = {}", scheduleJob);
 
-            log.info("添加任务调度成功! jobId = {}", scheduleJob.getId());
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","添加成功!");
-            return messagesMap;
-        } catch (Exception e) {
-            log.error("添加任务调度失败! user = {}, e = {}", user, e);
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","添加失败!");
-            return messagesMap;
-        }
+        scheduleJobService.save(scheduleJob);
+
+        log.info("添加任务调度成功! jobId = {}", scheduleJob.getId());
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","添加成功!");
+        return messagesMap;
     }
 }

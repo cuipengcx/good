@@ -120,6 +120,7 @@ public class OperationLogAspect {
             /*==========数据库日志=========*/
             Log log = localLog.get();
 
+            log.setTimeConsuming(System.currentTimeMillis() - startTime.get());
             log.setLogType(1);
 
             log.setExceptionCode(e.getClass().getName());
