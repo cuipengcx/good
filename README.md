@@ -93,8 +93,9 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 ## 特别说明
 
 因为本人能力有限，如果系统中存在任何Bug或者缺陷，欢迎大家及时告知我，希望于大家共同学习！
-QQ：228727120@qq.com
-Email：nbdash@163.com
+
+## QQ交流群[641213116](http://shang.qq.com/wpa/qunwpa?idkey=b047cee4542e383ad5a476bbf021c898fdad18311939d4dc365fa6c8349901ee "Good通用后台交流")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0516/091125_f9478acc_798427.png "在这里输入图片标题")
 
 ## 特别鸣谢
 
