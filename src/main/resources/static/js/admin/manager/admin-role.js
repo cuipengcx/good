@@ -32,6 +32,9 @@ function admin_role_del(obj, url){
                     $("#total").text(parseInt(total)-1);
                     succeedMessage(data.responseText);
                 },
+                403: function () {
+                    errorMessage("该角色下有用户存在，不允许删除!");
+                },
                 404 : function(data){
                     errorMessage(data.responseText);
                 },

@@ -4,9 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Role;
+import com.jk.model.UserRole;
 import com.jk.service.PermissionService;
 import com.jk.service.RolePermissionService;
 import com.jk.service.RoleService;
+import com.jk.service.UserRoleService;
 import com.jk.vo.TreeNode;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -36,6 +38,8 @@ public class RoleController extends BaseController{
     private PermissionService permissionService;
     @Resource
     private RolePermissionService rolePermissionService;
+    @Resource
+    private UserRoleService userRoleService;
 
     /**
      * 分页查询角色列表
@@ -63,12 +67,21 @@ public class RoleController extends BaseController{
     @RequiresPermissions("role:delete")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+
         log.debug("删除管理员! id = {}", id);
+
         if (null == id) {
             log.info("删除角色不存在! id = {}", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除角色不存在!");
         }
-//            roleService.deleteById(id);
+
+        //判断该角色下是否绑定了用户 若有，则不允许删除
+        UserRole userRole = userRoleService.findByUserIdAndRoleId(null, id);
+        if(null != userRole){
+            log.info("删除角色失败，该角色下有用户存在，不允许删除! id = {}", id);
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         Boolean flag =  roleService.deleteRoleAndRolePermissionByRoleId(id);
         if(flag){
             log.info("删除角色成功! id = {}", id);
