@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jk.mapper.ScheduleJobMapper;
 import com.jk.model.ScheduleJob;
+import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
 import com.jk.util.ScheduleUtils;
 import com.xiaoleilu.hutool.date.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -53,10 +54,10 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
     }
 
-    @Override
-    public ScheduleJob findScheduleJobById(Long jobId) {
-        return null;
-    }
+//    @Override
+//    public ScheduleJob findScheduleJobById(Long jobId) {
+//        return null;
+//    }
 
     @Override
     public PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime) {
@@ -80,12 +81,35 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
     @Override
     public void saveScheduleJob(ScheduleJob scheduleJob) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        //创建调度任务
+        ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
+        //保存到数据库
+        scheduleJob.setId(null);
+        scheduleJob.setStatus("0");
+        scheduleJob.setCreateBy(user.getId());
+        super.save(scheduleJob);
     }
 
     @Override
     public void updateScheduleJob(ScheduleJob scheduleJob) {
+        //更新调度任务
+        ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+
+        scheduleJob.setModifyBy(user.getId());
+        super.updateSelective(scheduleJob);
+    }
+
+    @Override
+    public void deleteScheduleJob(Long jobId) {
+        ScheduleJob scheduleJob = super.findById(jobId);
+        //删除运行的任务
+        ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        //删除数据
+        super.deleteById(jobId);
     }
 
     @Override

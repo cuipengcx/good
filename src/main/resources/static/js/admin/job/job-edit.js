@@ -5,7 +5,7 @@ $(function () {
         increaseArea: '20%'
     });
 
-    $("#form-job-add").validate({
+    $("#form-job-edit").validate({
         rules:{
             jobName:{
                 required:true
@@ -37,8 +37,8 @@ $(function () {
         submitHandler:function(form){
             $(form).find(":submit").attr("disabled", true);
             $(form).ajaxSubmit({
-                type: 'post',
-                url: "/admin/job",
+                type: 'PUT',
+                url: "/admin/job/"+$("#id").val(),
                 dataType:"json",
                 success: function(data){
                     if(data.status == "success"){
@@ -75,7 +75,6 @@ $(function () {
  */
 function initValidate(value) {
     if (value == '0') {
-        //隐藏显示Div
         $("#beanClassDiv").hide();
         $("#methodNameDiv").hide();
         $("#remoteUrlDiv").show();
@@ -83,7 +82,6 @@ function initValidate(value) {
         $("#beanClass").val("").rules("remove");
         $("#methodName").val("").rules("remove");
         $("#remoteUrl").rules("add",{required: true,url: true});
-        //去除隐藏Div下表单元素的值
     } else if(value == '1'){
         $("#beanClassDiv").show();
         $("#methodNameDiv").show();

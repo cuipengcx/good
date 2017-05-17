@@ -3,15 +3,15 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/common/common}">
 <head>
-    <title>任务调度列表</title>
+    <title>调度列表</title>
 </head>
 
 <body layout:fragment="content">
 <nav class="breadcrumb">
     <i class="Hui-iconfont">&#xe67f;</i>
     首页
-    <span class="c-gray en">&gt;</span>系统管理 <span class="c-gray en">&gt;</span>
-    任务调度列表
+    <span class="c-gray en">&gt;</span>调度管理 <span class="c-gray en">&gt;</span>
+    调度列表
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
@@ -32,25 +32,26 @@
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
                 <!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
-                <a href="javascript:;" th:onclick="'javascript:job_add(\'添加任务\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加任务</a>
+                <a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加调度</a>
             </span>
             <span class="r">共有数据：<strong th:text="${pageInfo?.total}" id="total">54</strong> 条</span>
         </div>
         <table class="table table-border table-bordered table-bg table-hover">
             <thead>
             <tr>
-                <th scope="col" colspan="11">任务调度列表</th>
+                <th scope="col" colspan="11">调度列表</th>
             </tr>
             <tr class="text-c">
                 <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
                 <th>任务名称</th>
                 <th>任务分组</th>
-                <th>cron表达式</th>
-                <th>任务状态</th>
                 <th>执行类名称</th>
                 <th>执行方法名称</th>
+                <th>cron表达式</th>
                 <th>参数</th>
-                <th>描述</th>
+                <!--<th>描述</th>-->
+                <th>是否异步</th>
+                <th>任务状态</th>
                 <th>创建时间</th>
                 <th>修改时间</th>
                 <th width="100">操作</th>
@@ -61,22 +62,27 @@
                 <!--<td><input type="checkbox" th:value="*{id}" name=""/></td>-->
                 <td th:text="*{jobName}">d</td>
                 <td th:text="*{jobGroup}">2</td>
-                <td th:text="*{cron}">3</td>
-                <td class="td-status">
-                    <span class="label radius label-danger" th:if="*{status} == '0'">禁用</span>
-                    <span class="label radius label-success" th:unless="*{status} == '0'">启用</span>
-                </td>
                 <td th:text="*{beanClass}"></td>
                 <td th:text="*{methodName}"></td>
+                <td th:text="*{cron}">3</td>
                 <td th:text="*{params}"></td>
-                <td th:text="*{remarks}"></td>
+                <!--<td th:text="*{remarks}"></td>-->
+                <td>
+                    <span th:if="*{isSync} eq false">否</span>
+                    <span th:if="*{isSync} eq true">是</span>
+                </td>
+                <td class="td-status">
+                    <span class="label radius label-danger" th:if="*{status} == '0'">禁用</span>
+                    <span class="label radius label-success" th:if="*{status} == '1'">启用</span>
+                </td>
                 <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>
                 <td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>
                 <td class="td-manage">
+                    <!--启动,暂停，恢复，运行一次，编辑，删除-->
                     <!--<a style="text-decoration:none" th:onclick="'javascript:admin_status(this, \'/admin/manager/user/status/'+*{id}+'\',\''+*{!isLock}+'\');'" href="javascript:;" title="启用" th:if="*{isLock}"><i class="Hui-iconfont">&#xe615;</i></a>-->
                     <!--<a style="text-decoration:none" th:onclick="'javascript:admin_status(this, \'/admin/manager/user/status/'+*{id}+'\',\''+*{!isLock}+'\');'" href="javascript:;" title="禁用" th:unless="*{isLock}"><i class="Hui-iconfont">&#xe631;</i></a>-->
-                    <!--<a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:admin_edit(\'管理员编辑\',\'/admin/manager/user/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>-->
-                    <!--<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:admin_del(this, \'/admin/manager/user/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
+                    <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
                 </td>
             </tr>
             </tbody>

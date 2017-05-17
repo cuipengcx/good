@@ -3,6 +3,8 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.persistence.Transient;
+
 /**
  * 任务调度
  * 
@@ -35,6 +37,16 @@ public class ScheduleJob extends BaseEntity {
 	private String cron;
 
 	/**
+	 * 是否本地执行
+     */
+	private Boolean isLocal;
+
+	/**
+	 * 远程执行url
+     */
+	private String remoteUrl;
+
+	/**
 	 * 执行类名称 包名+类名
      */
 	private String beanClass;
@@ -47,6 +59,7 @@ public class ScheduleJob extends BaseEntity {
 	/**
 	 * 触发器
      */
+	@Transient
 	private String jobTrigger;
 
 	/**

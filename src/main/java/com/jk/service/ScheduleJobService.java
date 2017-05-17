@@ -14,15 +14,15 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
      */
     void initScheduleJob();
 
-    /**
-     * 根据ID，查询定时任务
-     */
-    ScheduleJob findScheduleJobById(Long jobId);
+//    /**
+//     * 根据ID，查询定时任务
+//     */
+//    ScheduleJob findScheduleJobById(Long jobId);
     /**
      * 分页查询任务调度列表
      * @param pageNum
      * @param pageSize
-     * @param username
+     * @param jobName
      * @param startTime
      * @param endTime
      * @return
@@ -37,6 +37,12 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
      * 更新定时任务
      */
     void updateScheduleJob(ScheduleJob scheduleJob);
+
+    /**
+     * 删除
+     * @param jobId
+     */
+    void deleteScheduleJob(Long jobId);
 
     /**
      * 批量删除定时任务

@@ -35,6 +35,16 @@ public class ScheduleJobLog extends BaseEntity{
     private String cron;
 
     /**
+     * 是否本地执行
+     */
+    private Boolean isLocal;
+
+    /**
+     * 远程执行url
+     */
+    private String remoteUrl;
+
+    /**
      * 任务执行时调用哪个类的方法 包名+类名
      */
     private String beanClass;

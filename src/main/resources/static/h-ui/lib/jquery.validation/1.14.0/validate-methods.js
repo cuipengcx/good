@@ -194,11 +194,17 @@ $(function(){
         return this.optional(element) || value!=0;       
     }, "请选择类别"); 
     
-//	//车牌号校验
-//	jQuery.validator.addMethod("isPlateNo", function(value, element) {
-//		var reg = /^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
-//		return this.optional(element) || (tel.test(value)); 
-//	},"请输入正确车牌号");
+	//车牌号校验
+	jQuery.validator.addMethod("isPlateNo", function(value, element) {
+		var reg = /^[\u4e00-\u9fa5]{1}[A-Z]{1}[A-Z_0-9]{5}$/;
+		return this.optional(element) || (reg.test(value));
+	},"请输入正确车牌号");
+
+    // 必须以特定字符串开头验证
+    jQuery.validator.addMethod("begin", function(value, element, param) {
+        var begin = new RegExp("^" + param);
+        return this.optional(element) || (begin.test(value));
+    }, "必须以{0}开头");
 });
 //身份证号码的验证规则
 function isIdCardNo(num){ 

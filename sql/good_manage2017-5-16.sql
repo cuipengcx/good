@@ -504,12 +504,14 @@ INSERT INTO `permission` VALUES ('58', '内容分类--修改', '2', null, 'conte
 INSERT INTO `permission` VALUES ('59', '内容分类--删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
 INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, '', '5', '', '2017-05-05 15:31:41', '2017-05-16 23:19:19');
 INSERT INTO `permission` VALUES ('66', '调度管理', '0', null, null, '0', null, null, '&#xe637;', '2', '', '2017-05-09 15:22:11', '2017-05-16 23:13:42');
-INSERT INTO `permission` VALUES ('67', '任务列表', '1', '/admin/job', 'job:list', '66', '调度管理', null, '', '1', '', '2017-05-09 15:22:37', '2017-05-16 23:19:40');
-INSERT INTO `permission` VALUES ('68', '任务列表--添加', '2', null, 'job:create', '67', '任务列表', null, '', '1', '', '2017-05-09 15:23:22', '2017-05-16 23:19:43');
+INSERT INTO `permission` VALUES ('67', '调度列表', '1', '/admin/job', 'job:list', '66', '调度管理', null, '', '1', '', '2017-05-09 15:22:37', '2017-05-16 23:19:40');
+INSERT INTO `permission` VALUES ('68', '调度列表--添加', '2', null, 'job:create', '67', '调度列表', null, '', '1', '', '2017-05-09 15:23:22', '2017-05-16 23:19:43');
 INSERT INTO `permission` VALUES ('69', '日志管理', '0', null, null, '0', null, null, '&#xe623;', '4', '', '2017-05-16 23:22:15', '2017-05-16 23:26:13');
 INSERT INTO `permission` VALUES ('70', '操作日志', '1', '/admin/log', 'log:list', '69', '日志管理', null, '', '1', '', '2017-05-16 23:23:57', '2017-05-16 23:23:57');
 INSERT INTO `permission` VALUES ('71', '删除', '2', null, 'log:delete', '70', '操作日志', null, '', '1', '', '2017-05-16 23:24:26', '2017-05-16 23:24:26');
 INSERT INTO `permission` VALUES ('72', '查看', '2', null, 'log:view', '70', '操作日志', null, '', '2', '', '2017-05-16 23:24:39', '2017-05-16 23:24:39');
+INSERT INTO `permission` VALUES ('73', '调度列表--修改', '2', null, 'job:update', '67', '调度列表', null, '', '2', '', '2017-05-17 15:40:42', '2017-05-17 15:40:42');
+INSERT INTO `permission` VALUES ('74', '调度列表--删除', '2', null, 'job:delete', '67', '调度列表', null, '', '3', '', '2017-05-17 16:04:48', '2017-05-17 16:04:48');
 
 
 -- ----------------------------
@@ -553,40 +555,42 @@ INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('851', '1', '1', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('852', '1', '3', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('853', '1', '11', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('854', '1', '12', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('855', '1', '13', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('856', '1', '14', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('857', '1', '32', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('858', '1', '9', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('859', '1', '15', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('860', '1', '31', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('861', '1', '17', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('862', '1', '18', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('863', '1', '10', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('864', '1', '19', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('865', '1', '20', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('866', '1', '21', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('867', '1', '22', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('868', '1', '64', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('869', '1', '66', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('870', '1', '67', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('871', '1', '68', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('872', '1', '51', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('873', '1', '52', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('874', '1', '57', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('875', '1', '58', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('876', '1', '59', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('877', '1', '53', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('878', '1', '55', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('879', '1', '56', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('880', '1', '54', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('881', '1', '69', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('882', '1', '70', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('883', '1', '71', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
-INSERT INTO `role_permission` VALUES ('884', '1', '72', '2017-05-16 23:24:48', '2017-05-16 23:24:48');
+INSERT INTO `role_permission` VALUES ('920', '1', '1', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('921', '1', '3', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('922', '1', '11', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('923', '1', '12', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('924', '1', '13', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('925', '1', '14', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('926', '1', '32', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('927', '1', '9', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('928', '1', '15', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('929', '1', '31', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('930', '1', '17', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('931', '1', '18', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('932', '1', '10', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('933', '1', '19', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('934', '1', '20', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('935', '1', '21', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('936', '1', '22', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('937', '1', '64', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('938', '1', '66', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('939', '1', '67', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('940', '1', '68', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('941', '1', '73', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('942', '1', '74', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('943', '1', '51', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('944', '1', '52', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('945', '1', '57', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('946', '1', '58', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('947', '1', '59', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('948', '1', '53', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('949', '1', '55', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('950', '1', '56', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('951', '1', '54', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('952', '1', '69', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('953', '1', '70', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('954', '1', '71', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('955', '1', '72', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
 
 -- ----------------------------
 -- Table structure for `schedule_job`
@@ -597,9 +601,10 @@ CREATE TABLE `schedule_job` (
   `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
   `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
   `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `is_local` bit(1) DEFAULT NULL COMMENT '是否本地执行',
+  `remote_url` varchar(200) DEFAULT NULL COMMENT '远程执行url',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
-  `job_trigger` varchar(255) DEFAULT NULL COMMENT '触发器',
   `params` varchar(500) DEFAULT NULL COMMENT '参数',
   `is_sync` bit(1) DEFAULT NULL COMMENT '是否异步  0否 1是',
   `create_by` bigint(20) DEFAULT NULL COMMENT '创建者',
@@ -609,7 +614,7 @@ CREATE TABLE `schedule_job` (
   `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
   `status` char(1) DEFAULT NULL COMMENT '任务状态 0禁用 1启用',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='任务调度';
 
 -- ----------------------------
 -- Records of schedule_job
@@ -625,6 +630,8 @@ CREATE TABLE `schedule_job_log` (
   `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
   `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
   `cron` varchar(200) DEFAULT NULL COMMENT 'cron表达式',
+  `is_local` bit(1) DEFAULT NULL COMMENT '是否本地执行',
+  `remote_url` varchar(200) DEFAULT NULL COMMENT '远程执行url',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
   `job_trigger` varchar(255) DEFAULT NULL COMMENT '触发器',
