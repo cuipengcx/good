@@ -67,7 +67,7 @@ public class ScheduleJobLog extends BaseEntity{
     /**
      * 任务状态 0失败 1成功
      */
-    private String status;
+    private Integer status;
 
     /**
      * 描述

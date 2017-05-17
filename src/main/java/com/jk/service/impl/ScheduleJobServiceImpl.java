@@ -42,7 +42,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
 
         for (ScheduleJob scheduleJob : scheduleJobList) {
-            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
+            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup(), scheduleJob.getId());
 
             //不存在，创建一个
             if (cronTrigger == null) {
@@ -87,7 +87,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
         //保存到数据库
         scheduleJob.setId(null);
-        scheduleJob.setStatus("0");
+        scheduleJob.setStatus(1);
         scheduleJob.setCreateBy(user.getId());
         super.save(scheduleJob);
     }
@@ -107,7 +107,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
     public void deleteScheduleJob(Long jobId) {
         ScheduleJob scheduleJob = super.findById(jobId);
         //删除运行的任务
-        ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup(), jobId);
         //删除数据
         super.deleteById(jobId);
     }

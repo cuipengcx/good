@@ -75,7 +75,7 @@ public class ScheduleJob extends BaseEntity {
 	/**
 	 * 任务状态 0禁用 1启用
      */
-	private String status;
+	private Integer status;
 
 	/**
 	 * 描述
