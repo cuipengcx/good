@@ -5,6 +5,7 @@ import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.ScheduleJob;
 import com.jk.service.ScheduleJobService;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,6 +78,14 @@ public class JobController extends BaseController{
 
         log.debug("添加任务调度参数! scheduleJob = {}", scheduleJob);
 
+        //判断任务是否已经存在相同的jobName和jobGroup
+        ScheduleJob record = scheduleJobService.findByJobNameAndJobGroup(scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        if(null != record){
+            messagesMap.put("status",FAILURE);
+            messagesMap.put("message","该任务已经被注册!");
+            return messagesMap;
+        }
+
         scheduleJobService.saveScheduleJob(scheduleJob);
 
         log.info("添加任务调度成功! jobId = {}", scheduleJob.getId());
@@ -94,6 +103,7 @@ public class JobController extends BaseController{
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
         log.debug("跳转到编辑调度页面参数! id = {}", id);
 
+        //TODO
         ScheduleJob model = scheduleJobService.findById(id);
 
         log.info("跳转到编辑调度信息页面成功!, id = {}", id);
@@ -153,6 +163,28 @@ public class JobController extends BaseController{
 
         log.info("删除角色成功! id = {}", id);
         return ResponseEntity.ok("删除成功!");
+    }
+
+
+    /**
+     * 检验任务是否存在
+     * @param jobName
+     * @param jobGroup
+     * @return
+     */
+    @ResponseBody
+    @GetMapping(value = "/isExist")
+    public Boolean isExist(Long id, String jobName, String jobGroup) throws Exception {
+        boolean flag = true;
+        log.debug("检验任务是否存在参数! id= {}, jobName= {}, jobGroup= {}", id, jobName, jobGroup);
+        if(StrUtil.isNotEmpty(jobName) && StrUtil.isNotEmpty(jobGroup)){
+            ScheduleJob record = scheduleJobService.findByJobNameAndJobGroup(jobName, jobGroup);
+            if (null != record && !record.getId().equals(id)) {
+                flag = false;
+            }
+        }
+        log.info("检验任务是否存在结果! flag = {}", flag);
+        return flag;
     }
 
 }

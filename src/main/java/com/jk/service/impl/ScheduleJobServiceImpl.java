@@ -42,7 +42,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
 
         for (ScheduleJob scheduleJob : scheduleJobList) {
-            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup(), scheduleJob.getId());
+            CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
 
             //不存在，创建一个
             if (cronTrigger == null) {
@@ -89,11 +89,18 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         scheduleJob.setId(null);
         scheduleJob.setStatus(1);
         scheduleJob.setCreateBy(user.getId());
+        if(scheduleJob.getIsLocal()){
+            scheduleJob.setRemoteUrl(null);
+        }else {
+            scheduleJob.setJobName(null);
+            scheduleJob.setJobGroup(null);
+        }
         super.save(scheduleJob);
     }
 
     @Override
     public void updateScheduleJob(ScheduleJob scheduleJob) {
+        //TODO
         //更新调度任务
         ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
@@ -107,7 +114,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
     public void deleteScheduleJob(Long jobId) {
         ScheduleJob scheduleJob = super.findById(jobId);
         //删除运行的任务
-        ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup(), jobId);
+        ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
         //删除数据
         super.deleteById(jobId);
     }
@@ -135,5 +142,14 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
     @Override
     public void resume(Long[] jobIds) {
 
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ScheduleJob findByJobNameAndJobGroup(String jobName, String jobGroup) {
+        ScheduleJob scheduleJob = new ScheduleJob();
+        scheduleJob.setJobName(jobName);
+        scheduleJob.setJobGroup(jobGroup);
+        return super.findOne(scheduleJob);
     }
 }

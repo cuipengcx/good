@@ -7,11 +7,41 @@ $(function () {
 
     $("#form-job-edit").validate({
         rules:{
-            jobName:{
-                required:true
-            },
             jobGroup:{
-                required:true
+                required:true,
+                remote: {
+                    url: "/admin/job/isExist",
+                    type: "get",
+                    data: {
+                        jobName: function () {
+                            return $("#jobName").val();
+                        },
+                        jobGroup: function () {
+                            return $("#jobGroup").val();
+                        },
+                        id: function () {
+                            return $("#id").val();
+                        }
+                    }
+                }
+            },
+            jobName:{
+                required:true,
+                remote: {
+                    url: "/admin/job/isExist",
+                    type: "get",
+                    data: {
+                        jobName: function () {
+                            return $("#jobName").val();
+                        },
+                        jobGroup: function () {
+                            return $("#jobGroup").val();
+                        },
+                        id: function () {
+                            return $("#id").val();
+                        }
+                    }
+                }
             },
             cron:{
                 required:true
@@ -27,9 +57,12 @@ $(function () {
             }
         },
         messages : {
-            // jobName : {
-            //     remote: "该任务名称已经被注册！"
-            // }
+            jobName : {
+                remote: "该任务名称已经被注册！"
+            },
+            jobGroup: {
+                remote: "该任务分组已经被注册！"
+            }
         },
         onkeyup:false,
         focusCleanup:true,

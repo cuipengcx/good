@@ -26,9 +26,9 @@ public class ScheduleUtils {
      * @param jobGroup
      * @return
      */
-    public static TriggerKey getTriggerKey(String jobName, String jobGroup, Long jobId) {
+    public static TriggerKey getTriggerKey(String jobName, String jobGroup) {
 
-        return TriggerKey.triggerKey(jobName +"_"+ jobId, jobGroup);
+        return TriggerKey.triggerKey(jobName , jobGroup);
     }
 
     /**
@@ -38,9 +38,9 @@ public class ScheduleUtils {
      * @param jobGroup the job group
      * @return the job key
      */
-    public static JobKey getJobKey(String jobName, String jobGroup, Long jobId) {
+    public static JobKey getJobKey(String jobName, String jobGroup) {
 
-        return JobKey.jobKey(jobName +"_"+ jobId, jobGroup);
+        return JobKey.jobKey(jobName, jobGroup);
     }
 
     /**
@@ -51,10 +51,10 @@ public class ScheduleUtils {
      * @param jobGroup the job group
      * @return cron trigger
      */
-    public static CronTrigger getCronTrigger(Scheduler scheduler, String jobName, String jobGroup, Long jobId) {
+    public static CronTrigger getCronTrigger(Scheduler scheduler, String jobName, String jobGroup) {
 
         try {
-            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup, jobId);
+            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup);
             return (CronTrigger) scheduler.getTrigger(triggerKey);
         } catch (SchedulerException e) {
             log.error("获取定时任务CronTrigger出现异常", e);
@@ -85,23 +85,21 @@ public class ScheduleUtils {
      */
     public static void createScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
                                          String cronExpression, Boolean isSync, Object param) {
-
-        ScheduleJob scheduleJob = (ScheduleJob)param;
-
         //同步或异步
         Class<? extends Job> jobClass = isSync ? AsyncJobFactory.class : SyncJobFactory.class;
 
         //构建job信息
-        JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName +"_"+ scheduleJob.getId(), jobGroup).build();
+        JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName , jobGroup).build();
 
         //表达式调度构建器
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
 
         //按新的cronExpression表达式构建一个新的trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName +"_"+ scheduleJob.getId(), jobGroup).withSchedule(scheduleBuilder).build();
+        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder).build();
 
         String jobTrigger = trigger.getKey().getName();
 
+        ScheduleJob scheduleJob = (ScheduleJob)param;
         scheduleJob.setJobTrigger(jobTrigger);
 
         //放入参数，运行时的方法可以获取
@@ -122,8 +120,8 @@ public class ScheduleUtils {
      * @param jobName
      * @param jobGroup
      */
-    public static void runOnce(Scheduler scheduler, String jobName, String jobGroup, Long jobId) {
-        JobKey jobKey = getJobKey(jobName, jobGroup, jobId);
+    public static void runOnce(Scheduler scheduler, String jobName, String jobGroup) {
+        JobKey jobKey = getJobKey(jobName, jobGroup);
         try {
             scheduler.triggerJob(jobKey);
         } catch (SchedulerException e) {
@@ -139,9 +137,9 @@ public class ScheduleUtils {
      * @param jobName
      * @param jobGroup
      */
-    public static void pauseJob(Scheduler scheduler, String jobName, String jobGroup, Long jobId) {
+    public static void pauseJob(Scheduler scheduler, String jobName, String jobGroup) {
 
-        JobKey jobKey = getJobKey(jobName, jobGroup, jobId);
+        JobKey jobKey = getJobKey(jobName, jobGroup);
         try {
             scheduler.pauseJob(jobKey);
         } catch (SchedulerException e) {
@@ -157,9 +155,9 @@ public class ScheduleUtils {
      * @param jobName
      * @param jobGroup
      */
-    public static void resumeJob(Scheduler scheduler, String jobName, String jobGroup, Long jobId) {
+    public static void resumeJob(Scheduler scheduler, String jobName, String jobGroup) {
 
-        JobKey jobKey = getJobKey(jobName, jobGroup, jobId);
+        JobKey jobKey = getJobKey(jobName, jobGroup);
         try {
             scheduler.resumeJob(jobKey);
         } catch (SchedulerException e) {
@@ -206,9 +204,7 @@ public class ScheduleUtils {
 //            jobDataMap.put(ScheduleJobVo.JOB_PARAM_KEY, param);
 //            jobDetail.getJobBuilder().usingJobData(jobDataMap);
 
-            ScheduleJob scheduleJob = (ScheduleJob) param;
-
-            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup, scheduleJob.getId());
+            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup);
 
             //表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
@@ -236,9 +232,9 @@ public class ScheduleUtils {
      * @param jobName
      * @param jobGroup
      */
-    public static void deleteScheduleJob(Scheduler scheduler, String jobName, String jobGroup, Long jobId) {
+    public static void deleteScheduleJob(Scheduler scheduler, String jobName, String jobGroup) {
         try {
-            scheduler.deleteJob(getJobKey(jobName, jobGroup, jobId));
+            scheduler.deleteJob(getJobKey(jobName, jobGroup));
         } catch (SchedulerException e) {
             log.error("删除定时任务失败", e);
             throw new MyException("删除定时任务失败");

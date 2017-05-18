@@ -68,4 +68,12 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
      * 恢复运行
      */
     void resume(Long[] jobIds);
+
+    /**
+     * 根据任务名称和任务分组查询任务
+     * @param jobName
+     * @param jobGroup
+     * @return
+     */
+    ScheduleJob findByJobNameAndJobGroup(String jobName, String jobGroup);
 }

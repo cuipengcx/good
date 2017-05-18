@@ -7,11 +7,35 @@ $(function () {
 
     $("#form-job-add").validate({
         rules:{
-            jobName:{
-                required:true
-            },
             jobGroup:{
-                required:true
+                required:true,
+                remote: {
+                    url: "/admin/job/isExist",
+                    type: "get",
+                    data: {
+                        jobName: function () {
+                            return $("#jobName").val();
+                        },
+                        jobGroup: function () {
+                            return $("#jobGroup").val();
+                        }
+                    }
+                }
+            },
+            jobName:{
+                required:true,
+                remote: {
+                    url: "/admin/job/isExist",
+                    type: "get",
+                    data: {
+                        jobName: function () {
+                            return $("#jobName").val();
+                        },
+                        jobGroup: function () {
+                            return $("#jobGroup").val();
+                        }
+                    }
+                }
             },
             cron:{
                 required:true
@@ -27,9 +51,12 @@ $(function () {
             }
         },
         messages : {
-            // jobName : {
-            //     remote: "该任务名称已经被注册！"
-            // }
+            jobName : {
+                remote: "该任务名称已经被注册！"
+            },
+            jobGroup: {
+                remote: "该任务分组已经被注册！"
+            }
         },
         onkeyup:false,
         focusCleanup:true,
@@ -80,8 +107,8 @@ function initValidate(value) {
         $("#methodNameDiv").hide();
         $("#remoteUrlDiv").show();
         //动态改变验证规则
-        $("#beanClass").val("").rules("remove");
-        $("#methodName").val("").rules("remove");
+        $("#beanClass").rules("remove");
+        $("#methodName").rules("remove");
         $("#remoteUrl").rules("add",{required: true,url: true});
         //去除隐藏Div下表单元素的值
     } else if(value == '1'){
@@ -91,6 +118,6 @@ function initValidate(value) {
         //动态改变验证规则
         $("#beanClass").rules("add",{required: true});
         $("#methodName").rules("add",{required: true});
-        $("#remoteUrl").val("").rules("remove");
+        $("#remoteUrl").rules("remove");
     }
 }

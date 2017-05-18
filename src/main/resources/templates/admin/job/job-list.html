@@ -43,8 +43,8 @@
             </tr>
             <tr class="text-c">
                 <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
-                <th>任务名称</th>
                 <th>任务分组</th>
+                <th>任务名称</th>
                 <th>执行类名称</th>
                 <th>执行方法名称</th>
                 <th>cron表达式</th>
@@ -60,8 +60,8 @@
             <tbody>
             <tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
                 <!--<td><input type="checkbox" th:value="*{id}" name=""/></td>-->
-                <td th:text="*{jobName}">d</td>
                 <td th:text="*{jobGroup}">2</td>
+                <td th:text="*{jobName}">d</td>
                 <td th:text="*{beanClass}"></td>
                 <td th:text="*{methodName}"></td>
                 <td th:text="*{cron}">3</td>
