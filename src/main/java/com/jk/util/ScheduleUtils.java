@@ -1,5 +1,6 @@
 package com.jk.util;
 
+import com.jk.common.Constant.JobStatus;
 import com.jk.exception.MyException;
 import com.jk.model.ScheduleJob;
 import com.jk.task.AsyncJobFactory;
@@ -85,28 +86,33 @@ public class ScheduleUtils {
      */
     public static void createScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
                                          String cronExpression, Boolean isSync, Object param) {
-        //同步或异步
-        Class<? extends Job> jobClass = isSync ? AsyncJobFactory.class : SyncJobFactory.class;
-
-        //构建job信息
-        JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName , jobGroup).build();
-
-        //表达式调度构建器
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
-
-        //按新的cronExpression表达式构建一个新的trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder).build();
-
-        String jobTrigger = trigger.getKey().getName();
-
-        ScheduleJob scheduleJob = (ScheduleJob)param;
-        scheduleJob.setJobTrigger(jobTrigger);
-
-        //放入参数，运行时的方法可以获取
-        jobDetail.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, scheduleJob);
-
         try {
+            //同步或异步
+            Class<? extends Job> jobClass = isSync ? AsyncJobFactory.class : SyncJobFactory.class;
+
+            //构建job信息
+            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName , jobGroup).build();
+
+            //表达式调度构建器
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
+
+            //按新的cronExpression表达式构建一个新的trigger
+            CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder).build();
+
+            String jobTrigger = trigger.getKey().getName();
+
+            ScheduleJob scheduleJob = (ScheduleJob)param;
+            scheduleJob.setJobTrigger(jobTrigger);
+
+            //放入参数，运行时的方法可以获取
+            jobDetail.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, scheduleJob);
+
             scheduler.scheduleJob(jobDetail, trigger);
+
+            //暂停任务 (如果修改修改任务时，选择先删除再创建，保持原来的任务状态)
+            if(JobStatus.PAUSE.getValue() == scheduleJob.getStatus()){
+                pauseJob(scheduler, scheduleJob.getJobName(), scheduleJob.getJobGroup());
+            }
         } catch (SchedulerException e) {
             log.error("创建定时任务失败", e);
             throw new MyException("创建定时任务失败");

@@ -103,7 +103,6 @@ public class JobController extends BaseController{
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
         log.debug("跳转到编辑调度页面参数! id = {}", id);
 
-        //TODO
         ScheduleJob model = scheduleJobService.findById(id);
 
         log.info("跳转到编辑调度信息页面成功!, id = {}", id);

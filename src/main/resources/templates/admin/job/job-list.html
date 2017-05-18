@@ -78,10 +78,11 @@
                 <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>
                 <td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>
                 <td class="td-manage">
-                    <!--启动,暂停，恢复，运行一次，编辑，删除-->
-                    <!--<a style="text-decoration:none" th:onclick="'javascript:admin_status(this, \'/admin/manager/user/status/'+*{id}+'\',\''+*{!isLock}+'\');'" href="javascript:;" title="启用" th:if="*{isLock}"><i class="Hui-iconfont">&#xe615;</i></a>-->
-                    <!--<a style="text-decoration:none" th:onclick="'javascript:admin_status(this, \'/admin/manager/user/status/'+*{id}+'\',\''+*{!isLock}+'\');'" href="javascript:;" title="禁用" th:unless="*{isLock}"><i class="Hui-iconfont">&#xe631;</i></a>-->
-                    <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                    <!--暂停，恢复，运行一次，编辑，删除-->
+                    <a style="text-decoration:none" th:onclick="'javascript:job_status(this, \'/admin/job/status/'+*{id}+'\',\''+*{status}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>
+                    <a style="text-decoration:none" th:onclick="'javascript:job_status(this, \'/admin/job/status/'+*{id}+'\',\''+*{status}+'\');'" href="javascript:;" title="恢复" th:if="*{status} == 0"><i class="Hui-iconfont">&#xe66b;</i></a>
+                    <a style="text-decoration:none" th:onclick="'javascript:job_status(this, \'/admin/job/status/'+*{id}+'\',\''+*{status}+'\');'" href="javascript:;" title="暂停" th:if="*{status} == 1"><i class="Hui-iconfont">&#xe6e5;</i></a>
+                    <a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                     <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
                 </td>
             </tr>

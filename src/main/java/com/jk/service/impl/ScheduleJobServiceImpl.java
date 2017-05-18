@@ -2,6 +2,7 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jk.common.Constant.JobStatus;
 import com.jk.mapper.ScheduleJobMapper;
 import com.jk.model.ScheduleJob;
 import com.jk.model.User;
@@ -81,11 +82,13 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
     @Override
     public void saveScheduleJob(ScheduleJob scheduleJob) {
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        scheduleJob.setStatus(JobStatus.NORMAL.getValue());
         //创建调度任务
         ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
         //保存到数据库
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+
         scheduleJob.setId(null);
         scheduleJob.setStatus(1);
         scheduleJob.setCreateBy(user.getId());
@@ -100,13 +103,38 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
     @Override
     public void updateScheduleJob(ScheduleJob scheduleJob) {
-        //TODO
-        //更新调度任务
-        ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
+        //根据ID获取修改前的任务记录
+        ScheduleJob record = super.findById(scheduleJob.getId());
+
+        //判断任务名+任务分组更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
+        if(record.getJobName().equals(scheduleJob.getJobName()) && record.getJobGroup().equals(scheduleJob.getJobGroup())){
+            //删除旧的任务
+            ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
+            //创建新的任务
+            scheduleJob.setStatus(record.getStatus());
+            ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
+        }else if(record.getIsSync() != scheduleJob.getIsSync()){ //判断isSync更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
+            //删除旧的任务
+            ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
+            //创建新的任务
+            scheduleJob.setStatus(record.getStatus());
+            ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
+        }else {
+            //更新调度任务
+            ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
+        }
+
+        //更新数据库
         User user = (User) SecurityUtils.getSubject().getPrincipal();
 
         scheduleJob.setModifyBy(user.getId());
+        if(scheduleJob.getIsLocal()){
+            scheduleJob.setRemoteUrl(null);
+        }else {
+            scheduleJob.setJobName(null);
+            scheduleJob.setJobGroup(null);
+        }
         super.updateSelective(scheduleJob);
     }
 

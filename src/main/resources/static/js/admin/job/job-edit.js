@@ -112,8 +112,8 @@ function initValidate(value) {
         $("#methodNameDiv").hide();
         $("#remoteUrlDiv").show();
         //动态改变验证规则
-        $("#beanClass").val("").rules("remove");
-        $("#methodName").val("").rules("remove");
+        $("#beanClass").rules("remove");
+        $("#methodName").rules("remove");
         $("#remoteUrl").rules("add",{required: true,url: true});
     } else if(value == '1'){
         $("#beanClassDiv").show();
@@ -122,6 +122,6 @@ function initValidate(value) {
         //动态改变验证规则
         $("#beanClass").rules("add",{required: true});
         $("#methodName").rules("add",{required: true});
-        $("#remoteUrl").val("").rules("remove");
+        $("#remoteUrl").rules("remove");
     }
 }
