@@ -55,10 +55,10 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
     }
 
-//    @Override
-//    public ScheduleJob findScheduleJobById(Long jobId) {
-//        return null;
-//    }
+    @Override
+    public ScheduleJob findScheduleJobById(Long jobId) {
+        return null;
+    }
 
     @Override
     public PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime) {
@@ -78,7 +78,6 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
         return new PageInfo<ScheduleJob>(jobList);
     }
-
 
     @Override
     public void saveScheduleJob(ScheduleJob scheduleJob) {
@@ -148,28 +147,34 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
     }
 
     @Override
-    public void deleteBatchScheduleJob(Long[] jobIds) {
-
+    public void pauseJob(Long jobId) {
+        ScheduleJob scheduleJob = super.findById(jobId);
+        //暂停正在运行的调度任务
+        ScheduleUtils.pauseJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        //更新数据库状态为 禁用 0
+        ScheduleJob model = new ScheduleJob();
+        model.setId(jobId);
+        model.setStatus(0);
+        super.updateSelective(model);
     }
 
     @Override
-    public int updateBatchScheduleJob(Long[] jobIds, int status) {
-        return 0;
+    public void resumeJob(Long jobId) {
+        ScheduleJob scheduleJob = super.findById(jobId);
+        //恢复处于暂停中的调度任务
+        ScheduleUtils.resumeJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        //更新数据库状态 启用 1
+        ScheduleJob model = new ScheduleJob();
+        model.setId(jobId);
+        model.setStatus(1);
+        super.updateSelective(model);
     }
 
     @Override
-    public void run(Long[] jobIds) {
-
-    }
-
-    @Override
-    public void pause(Long[] jobIds) {
-
-    }
-
-    @Override
-    public void resume(Long[] jobIds) {
-
+    public void runOnce(Long jobId) {
+        ScheduleJob scheduleJob = super.findById(jobId);
+        //运行一次
+        ScheduleUtils.runOnce(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
     }
 
     @Transactional(readOnly = true)

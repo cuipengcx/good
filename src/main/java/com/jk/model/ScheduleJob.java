@@ -15,9 +15,6 @@ import javax.persistence.Transient;
 @EqualsAndHashCode(callSuper = false)
 public class ScheduleJob extends BaseEntity {
 
-	public static final String STATUS_RUNNING = "1";
-	public static final String STATUS_NOT_RUNNING = "0";
-
 	/** 任务调度的参数key */
 	public static final String JOB_PARAM_KEY    = "jobParam";
 

@@ -482,38 +482,41 @@ INSERT INTO `permission` VALUES ('1', '系统管理', '0', null, '', '0', null, 
 INSERT INTO `permission` VALUES ('3', '管理员管理', '1', '/admin/manager/user', 'user:list', '1', '系统管理', '1/', null, '1', '', '2017-02-13 12:08:50', '2017-02-15 15:23:54');
 INSERT INTO `permission` VALUES ('9', '角色管理', '1', '/admin/role', 'role:list', '1', '系统管理', null, '', '2', '', '2017-02-15 14:07:21', '2017-05-16 23:10:17');
 INSERT INTO `permission` VALUES ('10', '权限管理', '1', '/admin/permission', 'permission:list', '1', '系统管理', null, '', '3', '', '2017-02-15 14:08:24', '2017-05-16 23:10:23');
-INSERT INTO `permission` VALUES ('11', '管理员管理--新增', '2', null, 'user:create', '3', '管理员管理', null, '', '1', '', '2017-02-15 14:25:22', '2017-05-16 23:11:10');
-INSERT INTO `permission` VALUES ('12', '管理员管理--修改', '2', null, 'user:update', '3', '管理员管理', null, '', '2', '', '2017-02-15 14:26:03', '2017-05-16 23:11:19');
-INSERT INTO `permission` VALUES ('13', '管理员管理--删除', '2', null, 'user:delete', '3', '管理员管理', null, '', '3', '', '2017-02-15 14:27:29', '2017-05-16 23:11:25');
-INSERT INTO `permission` VALUES ('14', '管理员管理--查看', '2', null, 'user:view', '3', '管理员管理', null, '', '4', '', '2017-02-15 15:22:47', '2017-05-16 23:11:30');
-INSERT INTO `permission` VALUES ('15', '角色管理--新增', '2', null, 'role:create', '9', '角色管理', null, '', '1', '', '2017-02-15 15:23:21', '2017-05-16 23:11:46');
-INSERT INTO `permission` VALUES ('17', '角色管理--删除', '2', null, 'role:delete', '9', '角色管理', null, '', '3', '', '2017-02-15 15:25:48', '2017-05-16 23:12:09');
-INSERT INTO `permission` VALUES ('18', '角色管理--查看', '2', null, 'role:view', '9', '角色管理', null, '', '4', '', '2017-02-15 15:26:24', '2017-05-16 23:12:16');
-INSERT INTO `permission` VALUES ('19', '权限管理--新增', '2', null, 'permission:create', '10', '权限管理', null, '', '1', '', '2017-02-15 15:27:53', '2017-05-16 23:12:28');
-INSERT INTO `permission` VALUES ('20', '权限管理--修改', '2', null, 'permission:update', '10', '权限管理', null, '', '2', '', '2017-02-15 15:28:24', '2017-05-16 23:12:32');
-INSERT INTO `permission` VALUES ('21', '权限管理--删除', '2', null, 'permission:delete', '10', '权限管理', null, '', '3', '', '2017-02-15 15:28:51', '2017-05-16 23:12:37');
-INSERT INTO `permission` VALUES ('22', '权限管理--查看', '2', null, 'permission:view', '10', '权限管理', null, '', '4', '', '2017-02-15 15:29:10', '2017-05-16 23:12:42');
-INSERT INTO `permission` VALUES ('31', '角色管理--修改', '2', null, 'role:update', '9', '角色管理', null, '', '2', '', '2017-02-17 13:39:20', '2017-05-16 23:12:01');
-INSERT INTO `permission` VALUES ('32', '管理员管理--禁用|启用', '2', null, 'user:status', '3', '管理员管理', null, '', '5', '', '2017-02-17 15:57:15', '2017-05-16 23:13:00');
+INSERT INTO `permission` VALUES ('11', '新增', '2', null, 'user:create', '3', '管理员管理', null, '', '1', '', '2017-02-15 14:25:22', '2017-05-16 23:11:10');
+INSERT INTO `permission` VALUES ('12', '修改', '2', null, 'user:update', '3', '管理员管理', null, '', '2', '', '2017-02-15 14:26:03', '2017-05-16 23:11:19');
+INSERT INTO `permission` VALUES ('13', '删除', '2', null, 'user:delete', '3', '管理员管理', null, '', '3', '', '2017-02-15 14:27:29', '2017-05-16 23:11:25');
+INSERT INTO `permission` VALUES ('14', '查看', '2', null, 'user:view', '3', '管理员管理', null, '', '4', '', '2017-02-15 15:22:47', '2017-05-16 23:11:30');
+INSERT INTO `permission` VALUES ('15', '新增', '2', null, 'role:create', '9', '角色管理', null, '', '1', '', '2017-02-15 15:23:21', '2017-05-16 23:11:46');
+INSERT INTO `permission` VALUES ('17', '删除', '2', null, 'role:delete', '9', '角色管理', null, '', '3', '', '2017-02-15 15:25:48', '2017-05-16 23:12:09');
+INSERT INTO `permission` VALUES ('18', '查看', '2', null, 'role:view', '9', '角色管理', null, '', '4', '', '2017-02-15 15:26:24', '2017-05-16 23:12:16');
+INSERT INTO `permission` VALUES ('19', '新增', '2', null, 'permission:create', '10', '权限管理', null, '', '1', '', '2017-02-15 15:27:53', '2017-05-16 23:12:28');
+INSERT INTO `permission` VALUES ('20', '修改', '2', null, 'permission:update', '10', '权限管理', null, '', '2', '', '2017-02-15 15:28:24', '2017-05-16 23:12:32');
+INSERT INTO `permission` VALUES ('21', '删除', '2', null, 'permission:delete', '10', '权限管理', null, '', '3', '', '2017-02-15 15:28:51', '2017-05-16 23:12:37');
+INSERT INTO `permission` VALUES ('22', '查看', '2', null, 'permission:view', '10', '权限管理', null, '', '4', '', '2017-02-15 15:29:10', '2017-05-16 23:12:42');
+INSERT INTO `permission` VALUES ('31', '修改', '2', null, 'role:update', '9', '角色管理', null, '', '2', '', '2017-02-17 13:39:20', '2017-05-16 23:12:01');
+INSERT INTO `permission` VALUES ('32', '禁用|启用', '2', null, 'user:status', '3', '管理员管理', null, '', '5', '', '2017-02-17 15:57:15', '2017-05-16 23:13:00');
 INSERT INTO `permission` VALUES ('51', '内容管理', '0', null, null, '0', null, null, '&#xe616;', '3', '', '2017-04-19 11:16:42', '2017-05-16 23:13:30');
 INSERT INTO `permission` VALUES ('52', '内容分类', '1', '/admin/content/cat', 'content-cat:list', '51', '内容管理', null, '', '1', '', '2017-04-19 11:17:50', '2017-05-16 23:16:17');
 INSERT INTO `permission` VALUES ('53', '内容列表', '1', '/admin/content', 'content:list', '51', '内容管理', null, '', '2', '', '2017-04-19 11:21:28', '2017-05-16 23:16:33');
-INSERT INTO `permission` VALUES ('54', '内容列表--删除', '2', null, 'content:delete', '53', '内容列表', null, '', '3', '', '2017-04-20 17:14:31', '2017-05-16 23:17:51');
-INSERT INTO `permission` VALUES ('55', '内容列表--添加', '2', null, 'content:create', '53', '内容列表', null, '', '1', '', '2017-04-20 17:14:52', '2017-05-16 23:17:12');
-INSERT INTO `permission` VALUES ('56', '内容列表--修改', '2', null, 'content:update', '53', '内容列表', null, '', '2', '', '2017-04-20 17:15:18', '2017-05-16 23:18:02');
-INSERT INTO `permission` VALUES ('57', '内容分类--添加', '2', null, 'content-cat:create', '52', '内容分类', null, null, '1', '', '2017-04-24 11:04:12', '2017-04-24 11:04:12');
-INSERT INTO `permission` VALUES ('58', '内容分类--修改', '2', null, 'content-cat:update', '52', '内容分类', null, null, '2', '', '2017-04-24 11:04:40', '2017-04-24 11:04:40');
-INSERT INTO `permission` VALUES ('59', '内容分类--删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
+INSERT INTO `permission` VALUES ('54', '删除', '2', null, 'content:delete', '53', '内容列表', null, '', '3', '', '2017-04-20 17:14:31', '2017-05-16 23:17:51');
+INSERT INTO `permission` VALUES ('55', '添加', '2', null, 'content:create', '53', '内容列表', null, '', '1', '', '2017-04-20 17:14:52', '2017-05-16 23:17:12');
+INSERT INTO `permission` VALUES ('56', '修改', '2', null, 'content:update', '53', '内容列表', null, '', '2', '', '2017-04-20 17:15:18', '2017-05-16 23:18:02');
+INSERT INTO `permission` VALUES ('57', '添加', '2', null, 'content-cat:create', '52', '内容分类', null, null, '1', '', '2017-04-24 11:04:12', '2017-04-24 11:04:12');
+INSERT INTO `permission` VALUES ('58', '修改', '2', null, 'content-cat:update', '52', '内容分类', null, null, '2', '', '2017-04-24 11:04:40', '2017-04-24 11:04:40');
+INSERT INTO `permission` VALUES ('59', '删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
 INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, '', '5', '', '2017-05-05 15:31:41', '2017-05-16 23:19:19');
 INSERT INTO `permission` VALUES ('66', '调度管理', '0', null, null, '0', null, null, '&#xe637;', '2', '', '2017-05-09 15:22:11', '2017-05-16 23:13:42');
 INSERT INTO `permission` VALUES ('67', '调度列表', '1', '/admin/job', 'job:list', '66', '调度管理', null, '', '1', '', '2017-05-09 15:22:37', '2017-05-16 23:19:40');
-INSERT INTO `permission` VALUES ('68', '调度列表--添加', '2', null, 'job:create', '67', '调度列表', null, '', '1', '', '2017-05-09 15:23:22', '2017-05-16 23:19:43');
+INSERT INTO `permission` VALUES ('68', '添加', '2', null, 'job:create', '67', '调度列表', null, '', '1', '', '2017-05-09 15:23:22', '2017-05-16 23:19:43');
 INSERT INTO `permission` VALUES ('69', '日志管理', '0', null, null, '0', null, null, '&#xe623;', '4', '', '2017-05-16 23:22:15', '2017-05-16 23:26:13');
 INSERT INTO `permission` VALUES ('70', '操作日志', '1', '/admin/log', 'log:list', '69', '日志管理', null, '', '1', '', '2017-05-16 23:23:57', '2017-05-16 23:23:57');
 INSERT INTO `permission` VALUES ('71', '删除', '2', null, 'log:delete', '70', '操作日志', null, '', '1', '', '2017-05-16 23:24:26', '2017-05-16 23:24:26');
 INSERT INTO `permission` VALUES ('72', '查看', '2', null, 'log:view', '70', '操作日志', null, '', '2', '', '2017-05-16 23:24:39', '2017-05-16 23:24:39');
-INSERT INTO `permission` VALUES ('73', '调度列表--修改', '2', null, 'job:update', '67', '调度列表', null, '', '2', '', '2017-05-17 15:40:42', '2017-05-17 15:40:42');
-INSERT INTO `permission` VALUES ('74', '调度列表--删除', '2', null, 'job:delete', '67', '调度列表', null, '', '3', '', '2017-05-17 16:04:48', '2017-05-17 16:04:48');
+INSERT INTO `permission` VALUES ('73', '修改', '2', null, 'job:update', '67', '调度列表', null, '', '2', '', '2017-05-17 15:40:42', '2017-05-17 15:40:42');
+INSERT INTO `permission` VALUES ('74', '删除', '2', null, 'job:delete', '67', '调度列表', null, '', '3', '', '2017-05-17 16:04:48', '2017-05-17 16:04:48');
+INSERT INTO `permission` VALUES ('75', '暂停', '2', null, 'job:pause', '67', '调度列表', null, '', '4', '', '2017-05-19 12:43:12', '2017-05-19 12:43:12');
+INSERT INTO `permission` VALUES ('76', '恢复', '2', null, 'job:resume', '67', '调度列表', null, '', '5', '', '2017-05-19 12:46:22', '2017-05-19 12:46:22');
+INSERT INTO `permission` VALUES ('77', '运行一次', '2', null, 'job:run', '67', '调度列表', null, '', '6', '', '2017-05-19 12:48:10', '2017-05-19 12:48:10');
 
 -- ----------------------------
 -- Table structure for `qrtz_blob_triggers`
@@ -796,42 +799,45 @@ INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('920', '1', '1', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('921', '1', '3', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('922', '1', '11', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('923', '1', '12', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('924', '1', '13', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('925', '1', '14', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('926', '1', '32', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('927', '1', '9', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('928', '1', '15', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('929', '1', '31', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('930', '1', '17', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('931', '1', '18', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('932', '1', '10', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('933', '1', '19', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('934', '1', '20', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('935', '1', '21', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('936', '1', '22', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('937', '1', '64', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('938', '1', '66', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('939', '1', '67', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('940', '1', '68', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('941', '1', '73', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('942', '1', '74', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('943', '1', '51', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('944', '1', '52', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('945', '1', '57', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('946', '1', '58', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('947', '1', '59', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('948', '1', '53', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('949', '1', '55', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('950', '1', '56', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('951', '1', '54', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('952', '1', '69', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('953', '1', '70', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('954', '1', '71', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
-INSERT INTO `role_permission` VALUES ('955', '1', '72', '2017-05-17 16:04:54', '2017-05-17 16:04:54');
+INSERT INTO `role_permission` VALUES ('956', '1', '1', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('957', '1', '3', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('958', '1', '11', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('959', '1', '12', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('960', '1', '13', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('961', '1', '14', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('962', '1', '32', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('963', '1', '9', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('964', '1', '15', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('965', '1', '31', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('966', '1', '17', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('967', '1', '18', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('968', '1', '10', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('969', '1', '19', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('970', '1', '20', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('971', '1', '21', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('972', '1', '22', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('973', '1', '64', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('974', '1', '66', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('975', '1', '67', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('976', '1', '68', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('977', '1', '73', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('978', '1', '74', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('979', '1', '75', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('980', '1', '76', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('981', '1', '77', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('982', '1', '51', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('983', '1', '52', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('984', '1', '57', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('985', '1', '58', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('986', '1', '59', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('987', '1', '53', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('988', '1', '55', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('989', '1', '56', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('990', '1', '54', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('991', '1', '69', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('992', '1', '70', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('993', '1', '71', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('994', '1', '72', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
 
 -- ----------------------------
 -- Table structure for `schedule_job`
@@ -860,6 +866,7 @@ CREATE TABLE `schedule_job` (
 -- ----------------------------
 -- Records of schedule_job
 -- ----------------------------
+INSERT INTO `schedule_job` VALUES ('14', '测试1', '测试组1', '0/30 * * * * ?', '', null, 'com.jk.task.TaskTest', 'run', null, '', '83', '2017-05-19 14:28:27', '83', '2017-05-19 17:00:34', null, '0');
 
 -- ----------------------------
 -- Table structure for `schedule_job_log`
