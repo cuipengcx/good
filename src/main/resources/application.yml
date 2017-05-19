@@ -76,7 +76,7 @@ spring:
   profiles: dev
   #数据源
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: 123456
 #日志
@@ -94,7 +94,7 @@ spring:
   profiles: test
   #数据源
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: 123456
   #thymeleaf模版
@@ -115,7 +115,7 @@ spring:
   profiles: pro
   #数据源
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true
+    url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: 123456
   #thymeleaf模版
