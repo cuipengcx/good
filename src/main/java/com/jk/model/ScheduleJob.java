@@ -67,7 +67,7 @@ public class ScheduleJob extends BaseEntity {
 	/**
 	 * 是否异步  0否 1是
      */
-	private Boolean isSync;
+	private Boolean isAsync;
 
 	/**
 	 * 任务状态 0禁用 1启用

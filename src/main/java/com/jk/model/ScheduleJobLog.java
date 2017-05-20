@@ -3,8 +3,6 @@ package com.jk.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
-
 /**
  * 任务调度执行日志
  * @author cuiP
@@ -62,7 +60,7 @@ public class ScheduleJobLog extends BaseEntity{
     /**
      * 是否异步  0否 1是
      */
-    private Boolean isSync;
+    private Boolean isAsync;
 
     /**
      * 任务状态 0失败 1成功
@@ -83,14 +81,4 @@ public class ScheduleJobLog extends BaseEntity{
      * 耗时(单位：毫秒)
      */
     private Long times;
-
-    /**
-     * 任务创建者
-     */
-    private Long jobCreateBy;
-
-    /**
-     * 任务创建时间
-     */
-    private Date jobCreateTime;
 }
