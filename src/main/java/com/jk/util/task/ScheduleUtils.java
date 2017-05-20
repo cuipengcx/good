@@ -1,4 +1,4 @@
-package com.jk.util.schedule;
+package com.jk.util.task;
 
 import com.jk.common.Constant.JobStatus;
 import com.jk.exception.MyException;
@@ -73,7 +73,7 @@ public class ScheduleUtils {
      */
     public static void createScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         createScheduleJob(scheduler, scheduleJob.getJobName(), scheduleJob.getJobGroup(),
-            scheduleJob.getCron(), scheduleJob.getIsSync(), scheduleJob);
+            scheduleJob.getCron(), scheduleJob.getIsAsync(), scheduleJob);
     }
 
     /**
@@ -83,14 +83,14 @@ public class ScheduleUtils {
      * @param jobName the job name
      * @param jobGroup the job group
      * @param cronExpression the cron expression
-     * @param isSync the is sync
+     * @param isAsync the is isAsync
      * @param param the param
      */
     public static void createScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
-                                         String cronExpression, Boolean isSync, Object param) {
+                                         String cronExpression, Boolean isAsync, Object param) {
         try {
             //同步或异步
-            Class<? extends Job> jobClass = isSync ? AsyncJobFactory.class : SyncJobFactory.class;
+            Class<? extends Job> jobClass = isAsync ? AsyncJobFactory.class : SyncJobFactory.class;
 
             //构建job信息
             JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName , jobGroup).build();
@@ -183,7 +183,7 @@ public class ScheduleUtils {
      */
     public static void updateScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         updateScheduleJob(scheduler, scheduleJob.getJobName(), scheduleJob.getJobGroup(),
-            scheduleJob.getCron(), scheduleJob.getIsSync(), scheduleJob);
+            scheduleJob.getCron(), scheduleJob.getIsAsync(), scheduleJob);
     }
 
     /**
@@ -193,14 +193,14 @@ public class ScheduleUtils {
      * @param jobName the job name
      * @param jobGroup the job group
      * @param cronExpression the cron expression
-     * @param isSync the is sync
+     * @param isAsync the is isAsync
      * @param param the param
      */
     public static void updateScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
-                                         String cronExpression, boolean isSync, Object param) {
+                                         String cronExpression, Boolean isAsync, Object param) {
 
         //同步或异步
-//        Class<? extends Job> jobClass = isSync ? AsyncJobFactory.class : SyncJobFactory.class;
+//        Class<? extends Job> jobClass = isAsync ? AsyncJobFactory.class : SyncJobFactory.class;
 
         try {
 //            JobDetail jobDetail = scheduler.getJobDetail(getJobKey(jobName, jobGroup));
