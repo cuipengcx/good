@@ -1,4 +1,5 @@
 *.class
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -6,12 +7,20 @@
 *.jar
 *.war
 *.ear
+/target/
 
 # IDE
 .idea
 *.iml
+
+#eclipse
+.settings
 .classpath
 .project
-target
+
+#log
 *.log
 *.log.*
+logs/
+
+*velocity.log*

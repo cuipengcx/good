@@ -1,13 +1,15 @@
-package com.jk.util;
+package com.jk.util.schedule;
 
 import com.jk.common.Constant.JobStatus;
 import com.jk.exception.MyException;
 import com.jk.model.ScheduleJob;
-import com.jk.task.AsyncJobFactory;
-import com.jk.task.SyncJobFactory;
+import com.jk.config.task.AsyncJobFactory;
+import com.jk.config.task.SyncJobFactory;
+import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 
@@ -247,8 +249,6 @@ public class ScheduleUtils {
         }
     }
 
-
-
     /**
      * 通过反射调用scheduleJob中定义的方法
      *
@@ -271,23 +271,38 @@ public class ScheduleUtils {
                     + "]---------------未启动成功，请检查是否配置正确！！！");
             return;
         }
+
+
         clazz = object.getClass();
         Method method = null;
         try {
-            method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
+            if(StrUtil.isNotBlank(scheduleJob.getParams())){
+                method = clazz.getDeclaredMethod(scheduleJob.getMethodName(), String.class);
+            }else{
+                method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
+            }
+
         } catch (NoSuchMethodException e) {
             log.error("任务名称 = [" + scheduleJob.getJobName()
                     + "]---------------未启动成功，方法名设置错误！！！");
         } catch (SecurityException e) {
             log.error(e.getMessage(), e);
         }
+
+
         if (method != null) {
             try {
-                method.invoke(object);
+                ReflectionUtils.makeAccessible(method);
+                if(StringUtils.isNotBlank(scheduleJob.getParams())){
+                    method.invoke(object, scheduleJob.getParams());
+                }else{
+                    method.invoke(object);
+                }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
         }
         log.debug("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
     }
+
 }

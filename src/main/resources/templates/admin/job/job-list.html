@@ -74,7 +74,7 @@
                     <span th:if="*{isSync} eq false">否</span>
                     <span th:if="*{isSync} eq true">是</span>
                 </td>
-                <td class="td-status">
+                <td class="td-status" th:attrappend="id=*{'status'+id}">
                     <span class="label radius label-danger" th:if="*{status} == 0">禁用</span>
                     <span class="label radius label-success" th:if="*{status} == 1">启用</span>
                 </td>

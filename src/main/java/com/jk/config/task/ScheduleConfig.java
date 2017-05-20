@@ -1,4 +1,4 @@
-package com.jk.config;
+package com.jk.config.task;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

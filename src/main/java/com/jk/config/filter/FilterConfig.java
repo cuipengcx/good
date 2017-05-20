@@ -1,4 +1,4 @@
-package com.jk.config;
+package com.jk.config.filter;
 
 import com.jk.util.xss.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

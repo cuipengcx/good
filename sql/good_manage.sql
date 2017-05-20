@@ -866,7 +866,10 @@ CREATE TABLE `schedule_job` (
 -- ----------------------------
 -- Records of schedule_job
 -- ----------------------------
-INSERT INTO `schedule_job` VALUES ('14', '测试1', '测试组1', '0/30 * * * * ?', '', null, 'com.jk.task.TaskTest', 'run', null, '', '83', '2017-05-19 14:28:27', '83', '2017-05-19 17:00:34', null, '0');
+INSERT INTO `schedule_job` VALUES ('14', '测试组', '测试无参数的本地调度任务', '0/8 * * * * ?', '', null, 'com.jk.task.TaskTest', 'run1', null, '', '83', '2017-05-19 14:28:27', '83', '2017-05-20 16:08:23', '测试无参数的本地调度任务', '1');
+INSERT INTO `schedule_job` VALUES ('15', '测试组', '测试带参数的本地调度任务', '0/8 * * * * ?', '', null, 'com.jk.task.TaskTest', 'run2', '100,200', '', '83', '2017-05-20 13:28:35', '83', '2017-05-20 16:08:14', '测试带参数的本地调度任务', '1');
+INSERT INTO `schedule_job` VALUES ('16', '测试组', '测试同步异步有效性的本地调度任务', '0/8 * * * * ?', '', null, 'com.jk.task.TaskTest', 'run3', null, '', '83', '2017-05-20 16:07:43', null, '2017-05-20 16:07:43', '测试同步异步有效性的本地调度任务', '1');
+
 
 -- ----------------------------
 -- Table structure for `schedule_job_log`

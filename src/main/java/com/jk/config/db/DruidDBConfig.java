@@ -1,4 +1,4 @@
-package com.jk.config;
+package com.jk.config.db;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;

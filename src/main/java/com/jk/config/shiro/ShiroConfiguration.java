@@ -1,4 +1,4 @@
-package com.jk.config;
+package com.jk.config.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.jk.shiro.AuthenticationRealm;

@@ -1,4 +1,4 @@
-package com.jk.config;
+package com.jk.config.cache;
 
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
