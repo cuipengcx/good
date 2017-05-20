@@ -7,7 +7,7 @@ import com.jk.mapper.ScheduleJobMapper;
 import com.jk.model.ScheduleJob;
 import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
-import com.jk.util.ScheduleUtils;
+import com.jk.util.schedule.ScheduleUtils;
 import com.xiaoleilu.hutool.date.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -106,8 +106,8 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         //根据ID获取修改前的任务记录
         ScheduleJob record = super.findById(scheduleJob.getId());
 
-        //判断任务名+任务分组更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
-        if(record.getJobName().equals(scheduleJob.getJobName()) && record.getJobGroup().equals(scheduleJob.getJobGroup())){
+        //判断任务名和任务分组更新前后是任意一个否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
+        if(!record.getJobName().equals(scheduleJob.getJobName()) || !record.getJobGroup().equals(scheduleJob.getJobGroup())){
             //删除旧的任务
             ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
             //创建新的任务
@@ -127,14 +127,25 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         //更新数据库
         User user = (User) SecurityUtils.getSubject().getPrincipal();
 
-        scheduleJob.setModifyBy(user.getId());
+        record.setJobName(scheduleJob.getJobName());
+        record.setJobGroup(scheduleJob.getJobGroup());
+        record.setCron(scheduleJob.getCron());
+        record.setParams(scheduleJob.getParams());
+        record.setIsSync(scheduleJob.getIsSync());
+        record.setRemarks(scheduleJob.getRemarks());
+        record.setModifyBy(user.getId());
         if(scheduleJob.getIsLocal()){
-            scheduleJob.setRemoteUrl(null);
+            record.setIsLocal(true);
+            record.setBeanClass(scheduleJob.getBeanClass());
+            record.setMethodName(scheduleJob.getMethodName());
+            record.setRemoteUrl(null);
         }else {
-            scheduleJob.setJobName(null);
-            scheduleJob.setJobGroup(null);
+            record.setIsLocal(false);
+            record.setRemoteUrl(scheduleJob.getRemoteUrl());
+            record.setBeanClass(null);
+            record.setMethodName(null);
         }
-        super.updateSelective(scheduleJob);
+        super.update(record);
     }
 
     @Override
