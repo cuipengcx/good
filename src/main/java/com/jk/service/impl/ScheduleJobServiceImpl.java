@@ -7,7 +7,7 @@ import com.jk.mapper.ScheduleJobMapper;
 import com.jk.model.ScheduleJob;
 import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
-import com.jk.util.schedule.ScheduleUtils;
+import com.jk.util.task.ScheduleUtils;
 import com.xiaoleilu.hutool.date.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -113,7 +113,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
             //创建新的任务
             scheduleJob.setStatus(record.getStatus());
             ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
-        }else if(record.getIsSync() != scheduleJob.getIsSync()){ //判断isSync更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
+        }else if(record.getIsAsync() != scheduleJob.getIsAsync()){ //判断isAsync更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
             //删除旧的任务
             ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
             //创建新的任务
@@ -131,7 +131,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         record.setJobGroup(scheduleJob.getJobGroup());
         record.setCron(scheduleJob.getCron());
         record.setParams(scheduleJob.getParams());
-        record.setIsSync(scheduleJob.getIsSync());
+        record.setIsAsync(scheduleJob.getIsAsync());
         record.setRemarks(scheduleJob.getRemarks());
         record.setModifyBy(user.getId());
         if(scheduleJob.getIsLocal()){
