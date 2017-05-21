@@ -9,6 +9,7 @@ import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
 import com.jk.util.task.ScheduleUtils;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.BeanUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -93,9 +94,10 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         scheduleJob.setCreateBy(user.getId());
         if(scheduleJob.getIsLocal()){
             scheduleJob.setRemoteUrl(null);
+            scheduleJob.setRemoteRequestMethod(null);
         }else {
-            scheduleJob.setJobName(null);
-            scheduleJob.setJobGroup(null);
+            scheduleJob.setBeanClass(null);
+            scheduleJob.setMethodName(null);
         }
         super.save(scheduleJob);
     }
@@ -106,45 +108,49 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         //根据ID获取修改前的任务记录
         ScheduleJob record = super.findById(scheduleJob.getId());
 
-        //判断任务名和任务分组更新前后是任意一个否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
-        if(!record.getJobName().equals(scheduleJob.getJobName()) || !record.getJobGroup().equals(scheduleJob.getJobGroup())){
-            //删除旧的任务
-            ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
-            //创建新的任务
-            scheduleJob.setStatus(record.getStatus());
-            ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
-        }else if(record.getIsAsync() != scheduleJob.getIsAsync()){ //判断isAsync更新前后是否一致，若一致，则直接更新现有任务；否则先删除现有任务再重新创建一个新的任务
-            //删除旧的任务
-            ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
-            //创建新的任务
-            scheduleJob.setStatus(record.getStatus());
-            ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
-        }else {
-            //更新调度任务
-            ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
-        }
+        //复制一份数据库中的原始数据
+        ScheduleJob recordCopy = new ScheduleJob();
+        BeanUtil.copyProperties(record, recordCopy);
 
-        //更新数据库
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
-
+        //参数赋值
         record.setJobName(scheduleJob.getJobName());
         record.setJobGroup(scheduleJob.getJobGroup());
         record.setCron(scheduleJob.getCron());
         record.setParams(scheduleJob.getParams());
         record.setIsAsync(scheduleJob.getIsAsync());
         record.setRemarks(scheduleJob.getRemarks());
-        record.setModifyBy(user.getId());
         if(scheduleJob.getIsLocal()){
             record.setIsLocal(true);
             record.setBeanClass(scheduleJob.getBeanClass());
             record.setMethodName(scheduleJob.getMethodName());
             record.setRemoteUrl(null);
+            record.setRemoteRequestMethod(null);
         }else {
             record.setIsLocal(false);
             record.setRemoteUrl(scheduleJob.getRemoteUrl());
+            record.setRemoteRequestMethod(scheduleJob.getRemoteRequestMethod());
             record.setBeanClass(null);
             record.setMethodName(null);
         }
+
+        //因为Quartz只能更新cron表达式，当更改了cron表达式以外的属性时，执行的逻辑是：先删除旧的再创建新的。注:equals排除了cron属性
+        if(!recordCopy.equals(record)){
+            //删除旧的任务
+            ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
+            //创建新的任务
+            scheduleJob.setStatus(record.getStatus());
+            ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
+        }else {
+            //当cron表达式和原来不一致才做更新
+            if(!recordCopy.getCron().equals(record.getCron())){
+                //更新调度任务
+                ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
+            }
+        }
+
+        //更新数据库
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        record.setModifyBy(user.getId());
         super.update(record);
     }
 
