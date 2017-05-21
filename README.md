@@ -21,7 +21,7 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 1. 权限: 使用Shiro进行权限控制，灵活的可控制到页面或按钮，满足绝大部分的权限需求.
 2. 数据库: 使用Druid数据库连接池，可以监控数据库访问性能，SQL执行效率进行SQL优化，同时使用多环境配置方式可以动态切换到开发环境、测试环境、生产环境. 
 3. 日志：使用Logback进行日志输出，使用多环境配置方式可以动态切换到开发环境、测试环境、生产环境,同时基于时间和文件大小分割日志文件并进行归档.
-4. 任务调度: 使用Spring+quartz，支持本地和远程分布式调度，支持动态增加、删除、修改任务支持本地和远程分布式调度，支持动态增加、删除、修改任务、暂停|恢复、立即执行一次、查看执行记录.
+4. 任务调度: 使用Spring+Quartz，基于数据库的分布式定时任务，既可以通过Http的方式调用其它项目的RESTFull接口，也可以执行自己本地的调度任务，支持动态增加、删除、修改任务、暂停|恢复、立即执行一次、查看执行记录，无需重启.
 
 ## 内置功能
 
@@ -32,10 +32,7 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
      - 组织机构(未完成)
      - 字典管理(未完成)
      - SQL监控(已完成)
-2. 调度管理(未完成)
-    - 编辑调度任务
-    - 实现远程调用 支持 get post put delete方法
-    - 暂停，恢复，立即执行
+2. 调度管理(完成)
 3. 内容管理(未完成)
 4. 日志管理(已完成)
     
@@ -56,12 +53,12 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 * 核心框架：Spring Boot 1.4.3
 * 视图框架：Spring MVC 4.3.5
 * 安全框架：Apache Shiro 1.3.2
-* 任务调度：Spring+quartz 
+* 任务调度：Spring+Quartz 2.x 
 * 持久层框架：Mybatis 3.4.2 + 通用Mapper 3.3.9
 * 服务端验证：Hibernate validator 5.2.4
 * API生成工具: Swagger2
 * 单元测试：Junit 4.12
-* 网络客户端：OKHttp + OKGO
+* 网络客户端：Spring RestTemplate(OKGO) + OKHttp
 * Email客户端：Spring + JavaMail
 * 模板引擎：Thymeleaf 3.0.0
 * 数据库连接池：Alibaba Druid 1.0.18
@@ -93,6 +90,11 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0424/112651_b3408011_798427.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0509/092341_07ee27ba_798427.jpeg "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0509/092401_a151ffcf_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210630_7ef7a3a8_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210653_bfbd06e2_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210707_508cad83_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210720_3ac69a9d_798427.png "在这里输入图片标题")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210733_c4f35d0e_798427.png "在这里输入图片标题")
 
 ## 特别说明
 

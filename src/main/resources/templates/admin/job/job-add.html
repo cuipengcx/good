@@ -57,6 +57,18 @@
                 <input type="text" class="input-text" value="" placeholder="请输入远程执行地址" id="remoteUrl" th:name="remoteUrl"/>
             </div>
         </div>
+        <!--<div class="row cl" id="remoteRequestMethodDiv">-->
+            <!--<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>请求方式：</label>-->
+            <!--<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">-->
+			<!--<select class="select" id="remoteRequestMethod" size="1" th:name="remoteRequestMethod">-->
+				<!--<option value="GET" selected="selected">GET</option>-->
+				<!--<option value="POST">POST</option>-->
+				<!--<option value="PUT">PUT</option>-->
+				<!--<option value="DELETE">DELETE</option>-->
+			<!--</select>-->
+			<!--</span>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">参数：</label>
             <div class="formControls col-xs-8 col-sm-9">
@@ -64,9 +76,9 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">是否异步：</label>
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否异步：</label>
             <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="isAsync" size="1" th:name="isAsync">
+			<select class="select" id="isAsync" size="1" th:name="isAsync">
 				<option value="1" selected="selected">是</option>
 				<option value="0">否</option>
 			</select>

@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Transient;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 用户
@@ -63,7 +62,4 @@ public class User extends BaseEntity {
 
     @Transient
     private String roleName;
-
-    @Transient
-    private List<Permission> menus;// 菜单
 }

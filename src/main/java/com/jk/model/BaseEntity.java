@@ -25,7 +25,6 @@
 package com.jk.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -40,7 +39,6 @@ import java.util.Date;
  * @since 2016-01-31 21:42
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public abstract class BaseEntity implements java.io.Serializable{
     @Id
     @Column(name = "Id")

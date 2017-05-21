@@ -1,17 +1,12 @@
 package com.jk.util.task;
 
 import com.jk.common.Constant.JobStatus;
-import com.jk.exception.MyException;
-import com.jk.model.ScheduleJob;
 import com.jk.config.task.AsyncJobFactory;
 import com.jk.config.task.SyncJobFactory;
-import com.xiaoleilu.hutool.util.StrUtil;
+import com.jk.exception.MyException;
+import com.jk.model.ScheduleJob;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
-import org.springframework.util.ReflectionUtils;
-
-import java.lang.reflect.Method;
 
 /**
  * author : fengjing
@@ -92,7 +87,7 @@ public class ScheduleUtils {
             //同步或异步
             Class<? extends Job> jobClass = isAsync ? AsyncJobFactory.class : SyncJobFactory.class;
 
-            //构建job信息
+            //构建job信息 (任务名，任务组，任务执行类)
             JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(jobName , jobGroup).build();
 
             //表达式调度构建器
@@ -176,41 +171,29 @@ public class ScheduleUtils {
 
 
     /**
-     * 更新定时任务
+     * 更新定时任务的cron表达式
      *
      * @param scheduler the scheduler
      * @param scheduleJob the schedule job
      */
     public static void updateScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
         updateScheduleJob(scheduler, scheduleJob.getJobName(), scheduleJob.getJobGroup(),
-            scheduleJob.getCron(), scheduleJob.getIsAsync(), scheduleJob);
+            scheduleJob.getCron());
     }
 
     /**
-     * 更新定时任务
+     * 更新定时任务的cron表达式
      *
      * @param scheduler the scheduler
      * @param jobName the job name
      * @param jobGroup the job group
      * @param cronExpression the cron expression
-     * @param isAsync the is isAsync
-     * @param param the param
      */
     public static void updateScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
-                                         String cronExpression, Boolean isAsync, Object param) {
+                                         String cronExpression) {
 
-        //同步或异步
-//        Class<? extends Job> jobClass = isAsync ? AsyncJobFactory.class : SyncJobFactory.class;
 
         try {
-//            JobDetail jobDetail = scheduler.getJobDetail(getJobKey(jobName, jobGroup));
-
-//            jobDetail = jobDetail.getJobBuilder().ofType(jobClass).build();
-
-            //更新参数 实际测试中发现无法更新
-//            JobDataMap jobDataMap = jobDetail.getJobDataMap();
-//            jobDataMap.put(ScheduleJobVo.JOB_PARAM_KEY, param);
-//            jobDetail.getJobBuilder().usingJobData(jobDataMap);
 
             TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup);
 
@@ -248,61 +231,4 @@ public class ScheduleUtils {
             throw new MyException("删除定时任务失败");
         }
     }
-
-    /**
-     * 通过反射调用scheduleJob中定义的方法
-     *
-     * @param scheduleJob
-     */
-    public static void invokMethod(ScheduleJob scheduleJob) {
-        Object object = null;
-        Class<?> clazz = null;
-        if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
-            try {
-                clazz = Class.forName(scheduleJob.getBeanClass());
-                object = clazz.newInstance();
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-
-        }
-        if (object == null) {
-            log.error("任务名称 = [" + scheduleJob.getJobName()
-                    + "]---------------未启动成功，请检查是否配置正确！！！");
-            return;
-        }
-
-
-        clazz = object.getClass();
-        Method method = null;
-        try {
-            if(StrUtil.isNotBlank(scheduleJob.getParams())){
-                method = clazz.getDeclaredMethod(scheduleJob.getMethodName(), String.class);
-            }else{
-                method = clazz.getDeclaredMethod(scheduleJob.getMethodName());
-            }
-
-        } catch (NoSuchMethodException e) {
-            log.error("任务名称 = [" + scheduleJob.getJobName()
-                    + "]---------------未启动成功，方法名设置错误！！！");
-        } catch (SecurityException e) {
-            log.error(e.getMessage(), e);
-        }
-
-
-        if (method != null) {
-            try {
-                ReflectionUtils.makeAccessible(method);
-                if(StringUtils.isNotBlank(scheduleJob.getParams())){
-                    method.invoke(object, scheduleJob.getParams());
-                }else{
-                    method.invoke(object);
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-            }
-        }
-        log.debug("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
-    }
-
 }

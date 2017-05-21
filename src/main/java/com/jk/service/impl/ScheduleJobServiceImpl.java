@@ -98,6 +98,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }else {
             scheduleJob.setBeanClass(null);
             scheduleJob.setMethodName(null);
+            scheduleJob.setRemoteRequestMethod("POST"); //默认只支持post
         }
         super.save(scheduleJob);
     }
@@ -128,7 +129,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }else {
             record.setIsLocal(false);
             record.setRemoteUrl(scheduleJob.getRemoteUrl());
-            record.setRemoteRequestMethod(scheduleJob.getRemoteRequestMethod());
+            record.setRemoteRequestMethod("POST"); //默认只支持post
             record.setBeanClass(null);
             record.setMethodName(null);
         }

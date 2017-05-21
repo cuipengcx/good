@@ -11,7 +11,7 @@ import java.util.Map;
  * author : cuiP
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class Log extends BaseEntity{
 
     /**

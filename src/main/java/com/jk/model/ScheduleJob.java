@@ -12,7 +12,7 @@ import javax.persistence.Transient;
  * @version 1.0
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true, exclude = {"cron"})
 public class ScheduleJob extends BaseEntity {
 
 	/** 任务调度的参数key */
@@ -29,7 +29,7 @@ public class ScheduleJob extends BaseEntity {
 	private String jobGroup;
 
 	/**
-	 *  cron表达式
+	 * 执行计划
      */
 	private String cron;
 
@@ -37,6 +37,11 @@ public class ScheduleJob extends BaseEntity {
 	 * 是否本地执行
      */
 	private Boolean isLocal;
+
+	/**
+	 * 远程请求方式 (GET,POST,DELETE,PUT)
+     */
+	private String remoteRequestMethod;
 
 	/**
 	 * 远程执行url
@@ -88,4 +93,6 @@ public class ScheduleJob extends BaseEntity {
 	 * 修改者
      */
 	private Long modifyBy;
+
+
 }

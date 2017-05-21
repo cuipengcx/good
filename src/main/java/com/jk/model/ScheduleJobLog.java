@@ -28,7 +28,7 @@ public class ScheduleJobLog extends BaseEntity{
     private String jobGroup;
 
     /**
-     *  cron表达式
+     * 执行计划
      */
     private String cron;
 
@@ -36,6 +36,11 @@ public class ScheduleJobLog extends BaseEntity{
      * 是否本地执行
      */
     private Boolean isLocal;
+
+    /**
+     * 远程请求方式 (GET,POST,DELETE,PUT)
+     */
+    private String remoteRequestMethod;
 
     /**
      * 远程执行url

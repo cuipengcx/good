@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by JK on 2017/4/19.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class Content extends BaseEntity {
 
     /**

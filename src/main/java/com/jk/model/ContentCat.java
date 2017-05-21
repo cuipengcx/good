@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  * Created by JK on 2017/4/19.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ContentCat extends BaseEntity {
 
     /**

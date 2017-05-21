@@ -1,7 +1,7 @@
 package com.jk.config.task;
 
 import com.jk.model.ScheduleJob;
-import com.jk.util.schedule.ScheduleUtils;
+import com.jk.util.task.ScheduleExecute;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,19 +18,8 @@ public class AsyncJobFactory extends QuartzJobBean {
 	protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
 		log.info("AsyncJobFactory execute");
 		ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
-		log.info("jobName: {} , jobGroup: {}" , scheduleJob.getJobName(), scheduleJob.getJobGroup());
 
-		try {
-			//本地通过反射调度
-			if(scheduleJob.getIsLocal()){
-				ScheduleUtils.invokMethod(scheduleJob);
-			}else { //远程http请求调度
-//				RestTemplate restTemplate = SpringUtils.getBean(RestTemplate.class);
-//				JSONObject result = restTemplate.getForEntity(scheduleJob.getRemoteUrl(), JSONObject.class).getBody();
-//				log.info("result:" + result.toString());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//执行调度任务
+		ScheduleExecute.execute(scheduleJob);
 	}
 }

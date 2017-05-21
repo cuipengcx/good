@@ -54,6 +54,9 @@ $(function () {
             },
             methodName:{
                 required:true
+            },
+            isAsync: {
+                required:true
             }
         },
         messages : {
@@ -106,22 +109,26 @@ $(function () {
 /**
  * 根据条件初始化校验规则
  */
-function initValidate(value) {
+function initValidate(value) { //远程调度
     if (value == '0') {
         $("#beanClassDiv").hide();
         $("#methodNameDiv").hide();
         $("#remoteUrlDiv").show();
+        // $("#remoteRequestMethodDiv").show();
         //动态改变验证规则
         $("#beanClass").rules("remove");
         $("#methodName").rules("remove");
         $("#remoteUrl").rules("add",{required: true,url: true});
-    } else if(value == '1'){
+        // $("#remoteRequestMethod").rules("add",{required: true});
+    } else if(value == '1'){  //本地调度
         $("#beanClassDiv").show();
         $("#methodNameDiv").show();
         $("#remoteUrlDiv").hide();
+        // $("#remoteRequestMethodDiv").hide();
         //动态改变验证规则
         $("#beanClass").rules("add",{required: true});
         $("#methodName").rules("add",{required: true});
         $("#remoteUrl").rules("remove");
+        // $("#remoteRequestMethod").rules("remove");
     }
 }

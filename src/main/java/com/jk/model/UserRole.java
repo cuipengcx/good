@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  * Created by JK on 2017/2/13.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class UserRole extends BaseEntity{
     private Long userId;
     private Long roleId;

@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  * Created by cuiP on 2017/2/8.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class Permission extends BaseEntity{
     /**
      * 资源名称

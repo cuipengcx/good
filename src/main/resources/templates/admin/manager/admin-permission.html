@@ -49,7 +49,9 @@
 					<!--<td><input type="checkbox" value="1" name=""></td>-->
 					<td th:text="*{name}">权限名称</td>
 					<td th:text="*{parentName}">父节点名称</td>
-					<td th:text="*{icon}">图标</td>
+					<td>
+						<i class="Hui-iconfont" th:utext="*{icon}">&#xe6df;</i>
+					</td>
 					<td th:text="*{url}">访问URL</td>
 					<td th:text="*{perms}">权限标识</td>
 					<td>

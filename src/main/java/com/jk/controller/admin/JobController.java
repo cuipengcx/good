@@ -5,6 +5,7 @@ import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.ScheduleJob;
 import com.jk.service.ScheduleJobService;
+import com.jk.util.xss.XssHttpServletRequestWrapper;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author cuiP
@@ -66,6 +68,7 @@ public class JobController extends BaseController{
 
     /**
      * 添加调度任务
+     *
      * @param scheduleJob
      * @return
      */
@@ -73,24 +76,29 @@ public class JobController extends BaseController{
     @RequiresPermissions("job:create")
     @ResponseBody
     @PostMapping
-    public ModelMap saveJob(ScheduleJob scheduleJob){
+    public ModelMap saveJob(HttpServletRequest request, ScheduleJob scheduleJob) {
+
+        //获取不进行xss过滤的request对象
+        HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+
         ModelMap messagesMap = new ModelMap();
 
         log.debug("添加调度任务参数! scheduleJob = {}", scheduleJob);
 
         //判断任务是否已经存在相同的jobName和jobGroup
         ScheduleJob record = scheduleJobService.findByJobNameAndJobGroup(scheduleJob.getJobName(), scheduleJob.getJobGroup());
-        if(null != record){
-            messagesMap.put("status",FAILURE);
-            messagesMap.put("message","该调度任务已经被注册!");
+        if (null != record) {
+            messagesMap.put("status", FAILURE);
+            messagesMap.put("message", "该调度任务已经被注册!");
             return messagesMap;
         }
 
+        scheduleJob.setRemoteUrl(orgRequest.getParameter("remoteUrl"));
         scheduleJobService.saveScheduleJob(scheduleJob);
 
         log.info("添加调度任务成功! jobId = {}", scheduleJob.getId());
-        messagesMap.put("status",SUCCESS);
-        messagesMap.put("message","添加成功!");
+        messagesMap.put("status", SUCCESS);
+        messagesMap.put("message", "添加成功!");
         return messagesMap;
     }
 
@@ -120,7 +128,11 @@ public class JobController extends BaseController{
     @RequiresPermissions("job:update")
     @ResponseBody
     @PutMapping(value = "/{id}")
-    public ModelMap updateJob(@PathVariable("id") Long id, ScheduleJob scheduleJob){
+    public ModelMap updateJob(HttpServletRequest request, @PathVariable("id") Long id, ScheduleJob scheduleJob){
+
+        //获取不进行xss过滤的request对象
+        HttpServletRequest orgRequest = XssHttpServletRequestWrapper.getOrgRequest(request);
+
         ModelMap messagesMap = new ModelMap();
 
         log.debug("编辑调度任务参数! id= {}, scheduleJob = {}", id, scheduleJob);
@@ -132,6 +144,7 @@ public class JobController extends BaseController{
         }
 
         scheduleJob.setId(id);
+        scheduleJob.setRemoteUrl(orgRequest.getParameter("remoteUrl"));
         scheduleJobService.updateScheduleJob(scheduleJob);
 
         log.info("编辑调度任务成功! id= {}, scheduleJob = {}", id, scheduleJob);

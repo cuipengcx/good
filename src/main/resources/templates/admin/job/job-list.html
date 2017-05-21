@@ -42,22 +42,23 @@
         <table class="table table-border table-bordered table-bg table-hover">
             <thead>
             <tr>
-                <th scope="col" colspan="11">调度列表</th>
+                <th scope="col" colspan="12">调度列表</th>
             </tr>
             <tr class="text-c">
                 <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
                 <th>任务分组</th>
                 <th>任务名称</th>
+                <th>调度方式</th>
+                <th>URL</th>
                 <th>执行类名称</th>
                 <th>执行方法名称</th>
-                <th>cron表达式</th>
+                <th>执行计划</th>
                 <th>参数</th>
-                <!--<th>描述</th>-->
                 <th>是否异步</th>
                 <th>任务状态</th>
                 <th>创建时间</th>
                 <!--<th>修改时间</th>-->
-                <th width="100">操作</th>
+                <th width="120">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -65,11 +66,28 @@
                 <!--<td><input type="checkbox" th:value="*{id}" name=""/></td>-->
                 <td th:text="*{jobGroup}">2</td>
                 <td th:text="*{jobName}">d</td>
-                <td th:text="*{beanClass}"></td>
+                <td>
+                    <th:block th:if="*{isLocal} eq true">
+                        本地
+                    </th:block>
+                    <th:block th:if="*{isLocal} eq false">
+                        远程
+                    </th:block>
+                </td>
+                <td th:title="*{remoteUrl}">
+                    <th:block th:if="*{remoteUrl != null && #strings.length(remoteUrl) > 15}" th:text="*{#strings.substring(remoteUrl, 0, 15)+'...'}">1</th:block>
+                    <th:block th:unless="*{remoteUrl != null && #strings.length(remoteUrl) > 15}" th:text="*{remoteUrl}">1</th:block>
+                </td>
+                <td th:title="*{beanClass}">
+                    <th:block th:if="*{beanClass != null && #strings.length(beanClass) > 15}" th:text="*{#strings.substring(beanClass, 0, 15)+'...'}">1</th:block>
+                    <th:block th:unless="*{beanClass != null && #strings.length(beanClass) > 15}" th:text="*{beanClass}">1</th:block>
+                </td>
                 <td th:text="*{methodName}"></td>
                 <td th:text="*{cron}">3</td>
-                <td th:text="*{params}"></td>
-                <!--<td th:text="*{remarks}"></td>-->
+                <td th:title="*{params}">
+                    <th:block th:if="*{params != null && #strings.length(params) > 15}" th:text="*{#strings.substring(params, 0, 15)+'...'}">1</th:block>
+                    <th:block th:unless="*{params != null && #strings.length(params) > 15}" th:text="*{params}">1</th:block>
+                </td>
                 <td>
                     <span th:if="*{isAsync} eq false">否</span>
                     <span th:if="*{isAsync} eq true">是</span>
@@ -78,15 +96,17 @@
                     <span class="label radius label-danger" th:if="*{status} == 0">禁用</span>
                     <span class="label radius label-success" th:if="*{status} == 1">启用</span>
                 </td>
-                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>
+                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
                 <!--<td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>-->
                 <td class="td-manage">
                     <!--暂停，恢复，运行一次，编辑，删除-->
                     <a style="text-decoration:none" th:onclick="'javascript:job_run(this, \'/admin/job/run/'+*{id}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>
                     <a style="text-decoration:none" th:onclick="'javascript:job_resume(this, \'/admin/job/resume/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="恢复" th:if="*{status} == 0"><i class="Hui-iconfont">&#xe66b;</i></a>
                     <a style="text-decoration:none" th:onclick="'javascript:job_pause(this, \'/admin/job/pause/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="暂停" th:if="*{status} == 1"><i class="Hui-iconfont">&#xe6e5;</i></a>
+                    <a title="详情" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_view(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
                     <a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                     <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                    <a title="历史" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_history(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
                 </td>
             </tr>
             </tbody>
