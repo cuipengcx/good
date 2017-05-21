@@ -120,6 +120,9 @@ function initValidate(value) { //远程调度
         $("#methodName").rules("remove");
         $("#remoteUrl").rules("add",{required: true,url: true});
         // $("#remoteRequestMethod").rules("add",{required: true});
+
+        //动态改变placeholder
+        $("#params").attr("placeholder", "请输入参数 如: key1=100,key2=200,key3=300");
     } else if(value == '1'){  //本地调度
         $("#beanClassDiv").show();
         $("#methodNameDiv").show();
@@ -130,5 +133,8 @@ function initValidate(value) { //远程调度
         $("#methodName").rules("add",{required: true});
         $("#remoteUrl").rules("remove");
         // $("#remoteRequestMethod").rules("remove");
+
+        //动态改变placeholder
+        $("#params").attr("placeholder", "请输入参数");
     }
 }
