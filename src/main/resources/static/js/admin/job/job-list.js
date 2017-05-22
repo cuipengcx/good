@@ -165,7 +165,7 @@ function job_view(title, url, w, h) {
  * @param title
  * @param url
  */
-function job_history(title, url) {
+function job_log(title, url) {
     var index = layer.open({
         type: 2,
         title: title,

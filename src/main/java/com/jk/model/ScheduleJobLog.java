@@ -68,7 +68,7 @@ public class ScheduleJobLog extends BaseEntity{
     private Boolean isAsync;
 
     /**
-     * 任务状态 0失败 1成功
+     * 执行状态 0失败 1成功
      */
     private Integer status;
 

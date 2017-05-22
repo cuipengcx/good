@@ -618,7 +618,7 @@ INSERT INTO `permission` VALUES ('75', '暂停', '2', null, 'job:pause', '67', '
 INSERT INTO `permission` VALUES ('76', '恢复', '2', null, 'job:resume', '67', '调度列表', null, '', '5', '', '2017-05-19 12:46:22', '2017-05-19 12:46:22');
 INSERT INTO `permission` VALUES ('77', '运行一次', '2', null, 'job:run', '67', '调度列表', null, '', '6', '', '2017-05-19 12:48:10', '2017-05-19 12:48:10');
 INSERT INTO `permission` VALUES ('78', '查看详情', '2', null, 'job:view', '67', '调度列表', null, '', '7', '', '2017-05-22 16:28:28', '2017-05-22 16:28:28');
-INSERT INTO `permission` VALUES ('79', '调度历史', '2', null, 'job:history', '67', '调度列表', null, '', '8', '', '2017-05-22 16:28:54', '2017-05-22 16:28:54');
+INSERT INTO `permission` VALUES ('79', '调度日志', '2', null, 'job:history', '67', '调度列表', null, '', '8', '', '2017-05-22 16:28:54', '2017-05-22 16:28:54');
 
 -- ----------------------------
 -- Table structure for `qrtz_blob_triggers`
@@ -1018,7 +1018,7 @@ CREATE TABLE `schedule_job_log` (
   `params` varchar(500) DEFAULT NULL COMMENT '参数',
   `is_async` bit(1) DEFAULT NULL COMMENT '是否异步  0否 1是',
   `remarks` varchar(200) DEFAULT NULL COMMENT '描述',
-  `status` int(11) DEFAULT NULL COMMENT '任务状态 0失败 1成功',
+  `status` int(11) DEFAULT NULL COMMENT '执行状态 0失败 1成功',
   `error` varchar(500) DEFAULT NULL COMMENT '失败信息',
   `times` bigint(20) DEFAULT NULL COMMENT '耗时(单位：毫秒)',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',

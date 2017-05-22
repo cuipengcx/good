@@ -19,8 +19,8 @@ import javax.annotation.Resource;
  * Created by JK on 2017/5/22.
  */
 @Controller
-@RequestMapping("/admin/job/history")
-public class JobHistoryController extends BaseController{
+@RequestMapping("/admin/job/log")
+public class JobLogController extends BaseController{
 
     private static final String BASE_PATH = "admin/job/";
 
@@ -37,7 +37,7 @@ public class JobHistoryController extends BaseController{
      * @param modelMap
      * @return
      */
-    @RequiresPermissions("job:history")
+    @RequiresPermissions("job:log")
     @GetMapping("/{jobId}")
     public String list(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -51,6 +51,6 @@ public class JobHistoryController extends BaseController{
         modelMap.put("jobName", jobName);
         modelMap.put("startTime", startTime);
         modelMap.put("endTime", endTime);
-        return BASE_PATH + "job-history";
+        return BASE_PATH + "job-log";
     }
 }

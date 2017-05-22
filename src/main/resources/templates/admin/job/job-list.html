@@ -109,7 +109,7 @@
                     <a title="详情" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_view(\'查看调度任务详情\', \'/admin/job/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
                     <a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
                     <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                    <a title="历史" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_history(\'调度历史\', \'/admin/job/history/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
+                    <a title="日志" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_log(\'调度日志\', \'/admin/job/log/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
                 </td>
             </tr>
             </tbody>

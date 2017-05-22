@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/common/common}">
 <head>
-    <title>调度历史列表</title>
+    <title>调度日志列表</title>
 </head>
 
 <body layout:fragment="content">
@@ -12,12 +12,12 @@
     首页
     <span class="c-gray en">&gt;</span>调度管理 <span class="c-gray en">&gt;</span>
     调度列表<span class="c-gray en">&gt;</span>
-    调度历史列表
+    调度日志列表
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 </nav>
-<form id="myForm" th:action="@{/admin/job/history/{jobId}(jobId=${jobId})}" th:method="get">
+<form id="myForm" th:action="@{/admin/job/log/{jobId}(jobId=${jobId})}" th:method="get">
     <div class="page-container">
         <div class="text-c">
             日期范围：
@@ -43,7 +43,7 @@
         <table class="table table-border table-bordered table-bg table-hover">
             <thead>
             <tr>
-                <th scope="col" colspan="12">调度历史列表</th>
+                <th scope="col" colspan="12">调度日志列表</th>
             </tr>
             <tr class="text-c">
                 <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
@@ -56,10 +56,9 @@
                 <th>执行计划</th>
                 <th>参数</th>
                 <th>是否异步</th>
-                <th>任务状态</th>
-                <th>创建时间</th>
-                <!--<th>修改时间</th>-->
-                <th width="120">操作</th>
+                <th>执行状态</th>
+                <th>耗时(单位：毫秒)</th>
+                <th>执行时间</th>
             </tr>
             </thead>
             <tbody>
@@ -97,21 +96,11 @@
                     <span th:if="*{isAsync} eq true">是</span>
                 </td>
                 <td class="td-status" th:attrappend="id=*{'status'+id}">
-                    <span class="label radius label-danger" th:if="*{status} == 0">禁用</span>
-                    <span class="label radius label-success" th:if="*{status} == 1">启用</span>
+                    <span class="label radius label-danger" th:if="*{status} == 0">失败</span>
+                    <span class="label radius label-success" th:if="*{status} == 1">成功</span>
                 </td>
+                <td th:text="*{times}"></td>
                 <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
-                <!--<td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>-->
-                <td class="td-manage">
-                    <!--暂停，恢复，运行一次，编辑，删除-->
-                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_run(this, \'/admin/job/run/'+*{id}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>-->
-                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_resume(this, \'/admin/job/resume/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="恢复" th:if="*{status} == 0"><i class="Hui-iconfont">&#xe66b;</i></a>-->
-                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_pause(this, \'/admin/job/pause/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="暂停" th:if="*{status} == 1"><i class="Hui-iconfont">&#xe6e5;</i></a>-->
-                    <!--<a title="详情" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_view(\'查看调度任务详情\', \'/admin/job/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>-->
-                    <!--<a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>-->
-                    <!--<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
-                    <!--<a title="历史" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_history(\'调度历史\', \'/admin/job/history/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>-->
-                </td>
             </tr>
             </tbody>
         </table>
@@ -120,7 +109,7 @@
 </form>
 
 <script type="text/javascript" th:src="@{/js/page.js}"></script>
-<script type="text/javascript" th:src="@{/js/admin/job/job-history.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/job/job-log.js}"></script>
 <script th:inline="javascript">
 
 </script>

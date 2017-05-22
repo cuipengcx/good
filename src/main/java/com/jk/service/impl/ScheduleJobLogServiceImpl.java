@@ -25,6 +25,8 @@ public class ScheduleJobLogServiceImpl extends BaseServiceImpl<ScheduleJobLog> i
     public PageInfo<ScheduleJobLog> findPage(Integer pageNum, Integer pageSize, Long jobId, String jobName, String startTime, String endTime) {
         Example example = new Example(ScheduleJobLog.class);
         Example.Criteria criteria = example.createCriteria();
+
+        criteria.andEqualTo("jobId", jobId);
         if(StringUtils.isNotEmpty(jobName)){
             criteria.andLike("jobName", "%"+jobName+"%");
         }if(startTime != null && endTime != null){
