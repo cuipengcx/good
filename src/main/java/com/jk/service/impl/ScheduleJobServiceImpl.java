@@ -56,10 +56,6 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
     }
 
-    @Override
-    public ScheduleJob findScheduleJobById(Long jobId) {
-        return null;
-    }
 
     @Override
     public PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime) {

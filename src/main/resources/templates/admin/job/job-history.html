@@ -3,7 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/common/common}">
 <head>
-    <title>调度列表</title>
+    <title>调度历史列表</title>
 </head>
 
 <body layout:fragment="content">
@@ -11,12 +11,13 @@
     <i class="Hui-iconfont">&#xe67f;</i>
     首页
     <span class="c-gray en">&gt;</span>调度管理 <span class="c-gray en">&gt;</span>
-    调度列表
+    调度列表<span class="c-gray en">&gt;</span>
+    调度历史列表
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
         <i class="Hui-iconfont">&#xe68f;</i>
     </a>
 </nav>
-<form id="myForm" th:action="@{/admin/job}" th:method="get">
+<form id="myForm" th:action="@{/admin/job/history/{jobId}(jobId=${jobId})}" th:method="get">
     <div class="page-container">
         <div class="text-c">
             日期范围：
@@ -32,7 +33,7 @@
         <div class="cl pd-5 bg-1 bk-gray mt-20">
             <span class="l">
                 <!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
-                <a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加调度</a>
+                <!--<a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加调度</a>-->
                 <!--<a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6e6;</i> 运行一次</a>-->
                 <!--<a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6e5;</i> 全部暂停</a>-->
                 <!--<a href="javascript:;" th:onclick="'javascript:job_add(\'添加调度\',\'/admin/job/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe66b;</i> 全部恢复</a>-->
@@ -42,7 +43,7 @@
         <table class="table table-border table-bordered table-bg table-hover">
             <thead>
             <tr>
-                <th scope="col" colspan="12">调度列表</th>
+                <th scope="col" colspan="12">调度历史列表</th>
             </tr>
             <tr class="text-c">
                 <!--<th width="25"><input type="checkbox" name="" value=""/></th>-->
@@ -103,13 +104,13 @@
                 <!--<td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>-->
                 <td class="td-manage">
                     <!--暂停，恢复，运行一次，编辑，删除-->
-                    <a style="text-decoration:none" th:onclick="'javascript:job_run(this, \'/admin/job/run/'+*{id}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>
-                    <a style="text-decoration:none" th:onclick="'javascript:job_resume(this, \'/admin/job/resume/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="恢复" th:if="*{status} == 0"><i class="Hui-iconfont">&#xe66b;</i></a>
-                    <a style="text-decoration:none" th:onclick="'javascript:job_pause(this, \'/admin/job/pause/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="暂停" th:if="*{status} == 1"><i class="Hui-iconfont">&#xe6e5;</i></a>
-                    <a title="详情" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_view(\'查看调度任务详情\', \'/admin/job/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
-                    <a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                    <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                    <a title="历史" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_history(\'调度历史\', \'/admin/job/history/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
+                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_run(this, \'/admin/job/run/'+*{id}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>-->
+                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_resume(this, \'/admin/job/resume/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="恢复" th:if="*{status} == 0"><i class="Hui-iconfont">&#xe66b;</i></a>-->
+                    <!--<a style="text-decoration:none" th:onclick="'javascript:job_pause(this, \'/admin/job/pause/'+*{id}+'\',\''+*{id}+'\');'" href="javascript:;" title="暂停" th:if="*{status} == 1"><i class="Hui-iconfont">&#xe6e5;</i></a>-->
+                    <!--<a title="详情" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_view(\'查看调度任务详情\', \'/admin/job/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>-->
+                    <!--<a  title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','admin-add.html','2','800','500')" th:onclick="'javascript:job_edit(\'调度编辑\',\'/admin/job/edit/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>-->
+                    <!--<a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_del(this, \'/admin/job/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>-->
+                    <!--<a title="历史" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:job_history(\'调度历史\', \'/admin/job/history/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>-->
                 </td>
             </tr>
             </tbody>
@@ -119,7 +120,7 @@
 </form>
 
 <script type="text/javascript" th:src="@{/js/page.js}"></script>
-<script type="text/javascript" th:src="@{/js/admin/job/job-list.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/job/job-history.js}"></script>
 <script th:inline="javascript">
 
 </script>

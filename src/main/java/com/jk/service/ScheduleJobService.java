@@ -15,11 +15,6 @@ public interface ScheduleJobService extends BaseService<ScheduleJob>{
     void initScheduleJob();
 
     /**
-     * 根据ID，查询定时任务
-     */
-    ScheduleJob findScheduleJobById(Long jobId);
-
-    /**
      * 分页查询任务调度列表
      * @param pageNum
      * @param pageSize
