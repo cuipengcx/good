@@ -96,10 +96,8 @@ public class ScheduleUtils {
             //按新的cronExpression表达式构建一个新的trigger
             CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, jobGroup).withSchedule(scheduleBuilder).build();
 
-            String jobTrigger = trigger.getKey().getName();
 
             ScheduleJob scheduleJob = (ScheduleJob)param;
-            scheduleJob.setJobTrigger(jobTrigger);
 
             //放入参数，运行时的方法可以获取
             jobDetail.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, scheduleJob);

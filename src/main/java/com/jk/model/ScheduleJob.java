@@ -59,12 +59,6 @@ public class ScheduleJob extends BaseEntity {
 	private String methodName;
 
 	/**
-	 * 触发器
-     */
-	@Transient
-	private String jobTrigger;
-
-	/**
 	 * 参数
 	 */
 	private String params;
