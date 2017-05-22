@@ -148,3 +148,28 @@ function job_run(obj, url) {
         });
     });
 }
+
+/**
+ * 查看调度任务详情
+ * @param title
+ * @param url
+ * @param w
+ * @param h
+ */
+function job_view(title, url, w, h) {
+    layer_show(title,url,w,h);
+}
+
+/**
+ * 调度历史
+ * @param title
+ * @param url
+ */
+function job_history(title, url) {
+    var index = layer.open({
+        type: 2,
+        title: title,
+        content: url
+    });
+    layer.full(index);
+}

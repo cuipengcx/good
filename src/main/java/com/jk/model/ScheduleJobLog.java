@@ -33,12 +33,12 @@ public class ScheduleJobLog extends BaseEntity{
     private String cron;
 
     /**
-     * 是否本地执行
+     * 调度方式 false 远程 true 本地
      */
     private Boolean isLocal;
 
     /**
-     * 远程请求方式 (GET,POST,DELETE,PUT)
+     * 远程请求方式 只支持POST
      */
     private String remoteRequestMethod;
 

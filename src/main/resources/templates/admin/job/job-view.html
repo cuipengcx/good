@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
+    <title>查看调度任务详情</title>
+</head>
+
+<body layout:fragment="content">
+<article class="page-container">
+    <form class="form form-horizontal" id="form-job-view">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务分组：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.jobGroup}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.jobName}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>执行计划：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.cron}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>调度方式：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:if="${model?.isLocal} eq true">本地</span>
+                <span th:if="${model?.isLocal} eq false">远程</span>
+            </div>
+        </div>
+        <th:block th:if="${model?.isLocal} eq true">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>执行类名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:text="${model?.beanClass}"></span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>执行方法名称：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:text="${model?.methodName}"></span>
+                </div>
+            </div>
+        </th:block>
+        <th:block th:if="${model?.isLocal} eq false">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>远程请求方式：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:text="${model?.remoteRequestMethod}"></span>
+                </div>
+            </div>
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>远程执行url：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <span th:text="${model?.remoteUrl}"></span>
+                </div>
+            </div>
+        </th:block>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">参数：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.params}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>是否异步：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:if="${model?.isAsync} eq true">是</span>
+                <span th:if="${model?.isAsync} eq false">否</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">任务状态：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span class="label radius label-danger" th:if="${model?.status} == 0">禁用</span>
+                <span class="label radius label-success" th:unless="${model?.status} == 0">启用</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">描述：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.remarks}"></span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">创建者：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.createByName}">未认证</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">创建时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${#dates.format(model?.createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+            </div>
+        </div>
+        <div class="row cl" th:if="${not #strings.isEmpty(model?.modifyByName)}">
+            <label class="form-label col-xs-4 col-sm-3">修改者：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${model?.modifyByName}">未认证</span>
+            </div>
+        </div>
+        <div class="row cl" th:if="${model?.modifyByName != null}">
+            <label class="form-label col-xs-4 col-sm-3">修改时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <span th:text="${#dates.format(model?.modifyTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+            </div>
+        </div>
+    </form>
+</article>
+
+</body>
+</html>

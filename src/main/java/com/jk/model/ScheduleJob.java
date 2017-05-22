@@ -34,12 +34,12 @@ public class ScheduleJob extends BaseEntity {
 	private String cron;
 
 	/**
-	 * 是否本地执行
+	 * 调度方式 false 远程 true 本地
      */
 	private Boolean isLocal;
 
 	/**
-	 * 远程请求方式 (GET,POST,DELETE,PUT)
+	 * 远程请求方式 只支持POST
      */
 	private String remoteRequestMethod;
 
@@ -94,5 +94,16 @@ public class ScheduleJob extends BaseEntity {
      */
 	private Long modifyBy;
 
+	/**
+	 * 创建者姓名
+     */
+	@Transient
+	private String createByName;
+
+	/**
+	 * 修改者姓名
+	 */
+	@Transient
+	private String modifyByName;
 
 }

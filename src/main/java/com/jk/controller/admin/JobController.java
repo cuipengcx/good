@@ -4,7 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.ScheduleJob;
+import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
+import com.jk.service.UserService;
 import com.jk.util.xss.XssHttpServletRequestWrapper;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +31,8 @@ public class JobController extends BaseController{
 
     @Resource
     private ScheduleJobService scheduleJobService;
+    @Resource
+    private UserService userService;
 
     /**
      * 分页查询调度任务列表
@@ -244,6 +248,32 @@ public class JobController extends BaseController{
 
         log.info("运行一次调度任务成功! id = {}", id);
         return ResponseEntity.ok("运行成功!");
+    }
+
+    /**
+     * 查看调度任务详情信息
+     * @param id
+     * @param modelMap
+     * @return
+     */
+    @RequiresPermissions("job:view")
+    @GetMapping("/{id}")
+    public String view(@PathVariable("id")Long id, ModelMap modelMap){
+        ScheduleJob model = scheduleJobService.findById(id);
+        if(null != model){
+            //创建者
+            User userCreate = userService.findById(model.getCreateBy());
+            if(null != userCreate){
+                model.setCreateByName(userCreate.getUsername());
+            }
+            //修改者
+            User userModify = userService.findById(model.getModifyBy());
+            if(null != userModify){
+                model.setModifyByName(userModify.getUsername());
+            }
+        }
+        modelMap.put("model", model);
+        return BASE_PATH + "job-view";
     }
 
     /**

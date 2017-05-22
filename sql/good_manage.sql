@@ -617,6 +617,8 @@ INSERT INTO `permission` VALUES ('74', '删除', '2', null, 'job:delete', '67', 
 INSERT INTO `permission` VALUES ('75', '暂停', '2', null, 'job:pause', '67', '调度列表', null, '', '4', '', '2017-05-19 12:43:12', '2017-05-19 12:43:12');
 INSERT INTO `permission` VALUES ('76', '恢复', '2', null, 'job:resume', '67', '调度列表', null, '', '5', '', '2017-05-19 12:46:22', '2017-05-19 12:46:22');
 INSERT INTO `permission` VALUES ('77', '运行一次', '2', null, 'job:run', '67', '调度列表', null, '', '6', '', '2017-05-19 12:48:10', '2017-05-19 12:48:10');
+INSERT INTO `permission` VALUES ('78', '查看详情', '2', null, 'job:view', '67', '调度列表', null, '', '7', '', '2017-05-22 16:28:28', '2017-05-22 16:28:28');
+INSERT INTO `permission` VALUES ('79', '调度历史', '2', null, 'job:history', '67', '调度列表', null, '', '8', '', '2017-05-22 16:28:54', '2017-05-22 16:28:54');
 
 -- ----------------------------
 -- Table structure for `qrtz_blob_triggers`
@@ -920,45 +922,47 @@ INSERT INTO `role_permission` VALUES ('400', '8', '1', '2017-02-21 12:08:11', '2
 INSERT INTO `role_permission` VALUES ('401', '8', '3', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('402', '8', '11', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
 INSERT INTO `role_permission` VALUES ('403', '8', '14', '2017-02-21 12:08:11', '2017-02-21 12:08:11');
-INSERT INTO `role_permission` VALUES ('956', '1', '1', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('957', '1', '3', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('958', '1', '11', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('959', '1', '12', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('960', '1', '13', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('961', '1', '14', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('962', '1', '32', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('963', '1', '9', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('964', '1', '15', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('965', '1', '31', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('966', '1', '17', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('967', '1', '18', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('968', '1', '10', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('969', '1', '19', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('970', '1', '20', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('971', '1', '21', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('972', '1', '22', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('973', '1', '64', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('974', '1', '66', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('975', '1', '67', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('976', '1', '68', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('977', '1', '73', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('978', '1', '74', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('979', '1', '75', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('980', '1', '76', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('981', '1', '77', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('982', '1', '51', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('983', '1', '52', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('984', '1', '57', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('985', '1', '58', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('986', '1', '59', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('987', '1', '53', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('988', '1', '55', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('989', '1', '56', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('990', '1', '54', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('991', '1', '69', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('992', '1', '70', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('993', '1', '71', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
-INSERT INTO `role_permission` VALUES ('994', '1', '72', '2017-05-19 12:48:21', '2017-05-19 12:48:21');
+INSERT INTO `role_permission` VALUES ('995', '1', '1', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('996', '1', '3', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('997', '1', '11', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('998', '1', '12', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('999', '1', '13', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1000', '1', '14', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1001', '1', '32', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1002', '1', '9', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1003', '1', '15', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1004', '1', '31', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1005', '1', '17', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1006', '1', '18', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1007', '1', '10', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1008', '1', '19', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1009', '1', '20', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1010', '1', '21', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1011', '1', '22', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1012', '1', '64', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1013', '1', '66', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1014', '1', '67', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1015', '1', '68', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1016', '1', '73', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1017', '1', '74', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1018', '1', '75', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1019', '1', '76', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1020', '1', '77', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1021', '1', '78', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1022', '1', '79', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1023', '1', '51', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1024', '1', '52', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1025', '1', '57', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1026', '1', '58', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1027', '1', '59', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1028', '1', '53', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1029', '1', '55', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1030', '1', '56', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1031', '1', '54', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1032', '1', '69', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1033', '1', '70', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1034', '1', '71', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('1035', '1', '72', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
 
 -- ----------------------------
 -- Table structure for `schedule_job`
@@ -969,8 +973,8 @@ CREATE TABLE `schedule_job` (
   `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
   `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
   `cron` varchar(200) DEFAULT NULL COMMENT '执行计划',
-  `is_local` bit(1) DEFAULT NULL COMMENT '是否本地执行',
-  `remote_request_method` varchar(10) DEFAULT NULL COMMENT '远程请求方式 (GET,POST,DELETE,PUT)',
+  `is_local` bit(1) DEFAULT NULL COMMENT '调度方式 false 远程 true 本地',
+  `remote_request_method` varchar(10) DEFAULT NULL COMMENT '远程请求方式 只支持POST',
   `remote_url` varchar(200) DEFAULT NULL COMMENT '远程执行url',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
@@ -1005,8 +1009,8 @@ CREATE TABLE `schedule_job_log` (
   `job_name` varchar(200) DEFAULT NULL COMMENT '任务名称',
   `job_group` varchar(200) DEFAULT NULL COMMENT '任务分组',
   `cron` varchar(200) DEFAULT NULL COMMENT '执行计划',
-  `is_local` bit(1) DEFAULT NULL COMMENT '是否本地执行',
-  `remote_request_method` varchar(10) DEFAULT NULL COMMENT '远程请求方式 (GET,POST,DELETE,PUT)',
+  `is_local` bit(1) DEFAULT NULL COMMENT '调度方式 false 远程 true 本地',
+  `remote_request_method` varchar(10) DEFAULT NULL COMMENT '远程请求方式 只支持POST',
   `remote_url` varchar(200) DEFAULT NULL COMMENT '远程执行url',
   `bean_class` varchar(500) DEFAULT NULL COMMENT '执行类名称 包名+类名',
   `method_name` varchar(200) DEFAULT NULL COMMENT '执行方法名称',
