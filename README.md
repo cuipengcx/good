@@ -111,3 +111,9 @@ Good权限管理系统是作者学习springBoot时基于springBoot开发的一�
 - [abel533 / Mybatis_PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)   Mybatis分页插件
 - [人人开源 / renren-security](http://git.oschina.net/babaio/renren-security)   renren-security是一个轻量级权限管理系统
 - [H-ui / admin](http://store.h-ui.net/H-ui.admin_v3.0/index.html)   H-ui.admin是用H-ui前端框架开发的轻量级网站后台模版
+
+## 更新日志
+
+### 2017年5月22日
+1. 新增调度任务查看详情
+2. 新增调度日志查看
