@@ -1,4 +1,4 @@
-package com.jk.util.xss;
+package com.jk.util.security.xss;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,4 +1,4 @@
-package com.jk.util.xss;
+package com.jk.util.security.xss;
 
 import com.jk.exception.MyException;
 import org.apache.commons.lang3.StringUtils;

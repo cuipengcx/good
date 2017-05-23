@@ -8,6 +8,7 @@
 <body layout:fragment="content">
 <article class="page-container">
     <form class="form form-horizontal" id="form-job-edit" >
+        <input type="hidden" name="x-form-token" th:value="${#session.getAttribute('x-form-token')}" />
         <input type="hidden" th:id="id" th:value="${model?.id}"/>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务分组：</label>

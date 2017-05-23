@@ -24,6 +24,7 @@
 
 package com.jk.config;
 
+import com.jk.interceptor.FormTokenInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -54,7 +55,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
 //        registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**").excludePathPatterns("/admin/login");
-//        registry.addInterceptor(new FrontInterceptor()).addPathPatterns("/front/**").excludePathPatterns("/front/login");
+        //配置防止表单重复提交拦截器
+        registry.addInterceptor(new FormTokenInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 }

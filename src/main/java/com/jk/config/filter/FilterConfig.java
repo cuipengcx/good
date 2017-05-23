@@ -1,6 +1,6 @@
 package com.jk.config.filter;
 
-import com.jk.util.xss.XssFilter;
+import com.jk.util.security.xss.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

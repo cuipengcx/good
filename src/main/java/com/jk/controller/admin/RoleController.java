@@ -9,6 +9,7 @@ import com.jk.service.PermissionService;
 import com.jk.service.RolePermissionService;
 import com.jk.service.RoleService;
 import com.jk.service.UserRoleService;
+import com.jk.util.security.token.FormToken;
 import com.jk.vo.TreeNode;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -95,6 +96,7 @@ public class RoleController extends BaseController{
      * 跳转到角色添加页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("role:create")
     @GetMapping(value = "/add")
     public String add(ModelMap modelMap){
@@ -109,6 +111,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "添加角色")
     @RequiresPermissions("role:create")
     @ResponseBody
@@ -136,6 +139,7 @@ public class RoleController extends BaseController{
      * 跳转到角色编辑页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("role:update")
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
@@ -159,6 +163,7 @@ public class RoleController extends BaseController{
      * @param role
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "编辑角色")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("role:update")

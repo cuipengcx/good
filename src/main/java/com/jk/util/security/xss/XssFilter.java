@@ -1,4 +1,4 @@
-package com.jk.util.xss;
+package com.jk.util.security.xss;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

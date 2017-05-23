@@ -10,7 +10,7 @@
 
 <article class="page-container">
     <form class="form form-horizontal" id="form-content-edit">
-
+        <input type="hidden" name="x-form-token" th:value="${#session.getAttribute('x-form-token')}" />
         <input type="hidden" th:name="id" th:value="${content?.id}"/>
 
         <div class="row cl">

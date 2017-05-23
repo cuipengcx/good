@@ -1,4 +1,4 @@
-package com.jk.util.xss;
+package com.jk.util.security.xss;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

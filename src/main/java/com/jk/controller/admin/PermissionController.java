@@ -5,7 +5,8 @@ import com.jk.annotation.OperationLog;
 import com.jk.controller.BaseController;
 import com.jk.model.Permission;
 import com.jk.service.PermissionService;
-import com.jk.util.xss.XssHttpServletRequestWrapper;
+import com.jk.util.security.token.FormToken;
+import com.jk.util.security.xss.XssHttpServletRequestWrapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -80,6 +81,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限添加页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("permission:create")
     @GetMapping("/add")
     public String add(){
@@ -92,6 +94,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "添加权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:create")
@@ -137,6 +140,7 @@ public class PermissionController extends BaseController{
      * 跳转到权限编辑页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("permission:update")
     @GetMapping(value = "/edit/{id}/{type}")
     public String edit(@PathVariable("id") Long id, @PathVariable("type") String type, ModelMap modelMap){
@@ -162,6 +166,7 @@ public class PermissionController extends BaseController{
      * @param permission
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "编辑权限")
     @CacheEvict(value = "menuListCache", allEntries = true)
     @RequiresPermissions("permission:update")

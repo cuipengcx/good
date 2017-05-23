@@ -7,7 +7,8 @@ import com.jk.model.ScheduleJob;
 import com.jk.model.User;
 import com.jk.service.ScheduleJobService;
 import com.jk.service.UserService;
-import com.jk.util.xss.XssHttpServletRequestWrapper;
+import com.jk.util.security.token.FormToken;
+import com.jk.util.security.xss.XssHttpServletRequestWrapper;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
@@ -63,6 +64,7 @@ public class JobController extends BaseController{
      * 跳转到调度任务添加页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("job:create")
     @GetMapping(value = "/add")
     public String add(ModelMap modelMap){
@@ -76,6 +78,7 @@ public class JobController extends BaseController{
      * @param scheduleJob
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "添加调度任务")
     @RequiresPermissions("job:create")
     @ResponseBody
@@ -110,6 +113,7 @@ public class JobController extends BaseController{
      * 跳转到调度任务编辑页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("job:update")
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
@@ -128,6 +132,7 @@ public class JobController extends BaseController{
      * @param scheduleJob
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "编辑调度任务")
     @RequiresPermissions("job:update")
     @ResponseBody

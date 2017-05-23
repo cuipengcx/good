@@ -7,6 +7,7 @@ import com.jk.model.Content;
 import com.jk.model.ContentCat;
 import com.jk.service.ContentCatService;
 import com.jk.service.ContentService;
+import com.jk.util.security.token.FormToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,6 +70,7 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("content:create")
     @GetMapping("/add")
     public String add(Long catId, ModelMap modelMap) {
@@ -82,6 +84,7 @@ public class ContentController extends BaseController {
      * @param content
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "添加内容")
     @RequiresPermissions("content:create")
     @ResponseBody
@@ -100,6 +103,7 @@ public class ContentController extends BaseController {
      * @param modelMap
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("content:update")
     @GetMapping("/edit")
     public String edit(Long id, ModelMap modelMap) {
@@ -119,6 +123,7 @@ public class ContentController extends BaseController {
      * @param content
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "编辑内容")
     @RequiresPermissions("content:update")
     @ResponseBody

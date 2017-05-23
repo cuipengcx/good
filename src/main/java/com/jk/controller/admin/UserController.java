@@ -7,6 +7,7 @@ import com.jk.model.Role;
 import com.jk.model.User;
 import com.jk.service.RoleService;
 import com.jk.service.UserService;
+import com.jk.util.security.token.FormToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,13 +48,17 @@ public class UserController extends BaseController {
     public String list(
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             String username, String startTime, String endTime, ModelMap modelMap) throws Exception {
-        log.debug("分页查询管理员列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, username, startTime, endTime);
-        PageInfo<User> pageInfo = userService.findPage(pageNum, PAGESIZE, username, startTime, endTime);
-        log.info("分页查询管理员列表结果！ pageInfo = {}", pageInfo);
-        modelMap.put("pageInfo", pageInfo);
-        modelMap.put("username", username);
-        modelMap.put("startTime", startTime);
-        modelMap.put("endTime", endTime);
+        try {
+            log.debug("分页查询管理员列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, username, startTime, endTime);
+            PageInfo<User> pageInfo = userService.findPage(pageNum, PAGESIZE, username, startTime, endTime);
+            log.info("分页查询管理员列表结果！ pageInfo = {}", pageInfo);
+            modelMap.put("pageInfo", pageInfo);
+            modelMap.put("username", username);
+            modelMap.put("startTime", startTime);
+            modelMap.put("endTime", endTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return BASE_PATH + "admin-list";
     }
 
@@ -139,6 +144,7 @@ public class UserController extends BaseController {
      * 跳转到管理员添加页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("user:create")
     @GetMapping(value = "/user/add")
     public String add(ModelMap modelMap){
@@ -154,6 +160,7 @@ public class UserController extends BaseController {
      * @param roleId  角色ID
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "添加管理员")
     @RequiresPermissions("user:create")
     @ResponseBody
@@ -179,6 +186,7 @@ public class UserController extends BaseController {
      * 跳转到管理员编辑页面
      * @return
      */
+    @FormToken(save = true)
     @RequiresPermissions("user:update")
     @GetMapping(value = "/user/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
@@ -201,6 +209,7 @@ public class UserController extends BaseController {
      * @param roleId     角色ID
      * @return
      */
+    @FormToken(remove = true)
     @OperationLog(value = "编辑管理员")
     @RequiresPermissions("user:update")
     @ResponseBody
