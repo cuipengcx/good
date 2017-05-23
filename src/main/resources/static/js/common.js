@@ -311,17 +311,24 @@ $.ajaxSetup({
 	complete:function(XMLHttpRequest,textStatus){
 		//通过XMLHttpRequest取得响应头，Session-Status和No-Permission，
 		var status = XMLHttpRequest.status;
+		//登录状态
 		var sessionStatus=XMLHttpRequest.getResponseHeader("Session-Status");
+		//权限状态
 		var noPermission=XMLHttpRequest.getResponseHeader("No-Permission");
+		//表单重复提交验证
+		var formToken = XMLHttpRequest.getResponseHeader("x-form-token");
+
 		var sessionStatusJson = eval('('+sessionStatus+')');
 		var noPermissionJson = eval('('+noPermission+')');
+		var formTokenJson = eval('('+formToken+')');
 
 		//session超时
-		if(status == '408' && sessionStatusJson != '' && sessionStatusJson.code == '408'){
+		if(status == '408' && sessionStatusJson != '' && sessionStatusJson.code == '408' && sessionStatusJson.msg == 'Session Timeout'){
 			errorMessage("登录超时，请重新登录！");
-		}
-		if(status == '403' && noPermissionJson != '' && noPermissionJson.code == '403'){
+		} else if(status == '403' && noPermissionJson != '' && noPermissionJson.code == '403' && noPermission.msg == 'No Permission'){
 			errorMessage('没有操作权限！');
+		} else if(status == '400' && formTokenJson != '' && formTokenJson.code == '400' && formTokenJson.msg == 'bad request'){
+			errorMessage('当前页面已过期，请刷新页面重试！');
 		}
 	}
 });

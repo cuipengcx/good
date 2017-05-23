@@ -32,7 +32,6 @@ $(function () {
         focusCleanup:true,
         success:"valid",
         submitHandler:function(form){
-            $(form).find(":submit").attr("disabled", true);
             $(form).ajaxSubmit({
                 type: 'post',
                 url: "/admin/role",
@@ -44,7 +43,6 @@ $(function () {
                         parent.location.reload();
                         parent.layer.close(index);
                     }else {
-                        $(form).find(":submit").attr("disabled", false);
                         warningMessage(data.message);
                     }
                 }

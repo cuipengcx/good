@@ -40,6 +40,9 @@ public class FormTokenInterceptor implements HandlerInterceptor {
                 if (needRemoveSession) {
                     if (isRepeatSubmit(request)) {
                         //不允许重复提交
+                        response.setStatus(HttpServletResponse.SC_BAD_REQUEST); //请求参数不合法 ajax请求时前台提示，增强客户体验
+                        response.setHeader(TOKEN_FORM_KEY, "{\"code\":400,\"msg\":'bad request'}");
+                        response.setContentType("text/html;charset=utf-8");
                         return false;
                     }
                     //移除session中保存的token
