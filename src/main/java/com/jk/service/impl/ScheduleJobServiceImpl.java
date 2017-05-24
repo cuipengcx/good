@@ -105,41 +105,37 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         //根据ID获取修改前的任务记录
         ScheduleJob record = super.findById(scheduleJob.getId());
 
-        //复制一份数据库中的原始数据
-        ScheduleJob recordCopy = new ScheduleJob();
-        BeanUtil.copyProperties(record, recordCopy);
-
         //参数赋值
-        record.setJobName(scheduleJob.getJobName());
-        record.setJobGroup(scheduleJob.getJobGroup());
-        record.setCron(scheduleJob.getCron());
-        record.setParams(scheduleJob.getParams());
-        record.setIsAsync(scheduleJob.getIsAsync());
-        record.setRemarks(scheduleJob.getRemarks());
+        scheduleJob.setRemoteRequestMethod(record.getRemoteRequestMethod());
+        scheduleJob.setStatus(record.getStatus());
+        scheduleJob.setCreateBy(record.getCreateBy());
+        scheduleJob.setModifyBy(record.getModifyBy());
+        scheduleJob.setCreateTime(record.getCreateTime());
+        scheduleJob.setModifyTime(record.getModifyTime());
         if(scheduleJob.getIsLocal()){
-            record.setIsLocal(true);
-            record.setBeanClass(scheduleJob.getBeanClass());
-            record.setMethodName(scheduleJob.getMethodName());
-            record.setRemoteUrl(null);
-            record.setRemoteRequestMethod(null);
+            scheduleJob.setIsLocal(true);
+            scheduleJob.setBeanClass(scheduleJob.getBeanClass());
+            scheduleJob.setMethodName(scheduleJob.getMethodName());
+            scheduleJob.setRemoteUrl(null);
+            scheduleJob.setRemoteRequestMethod(null);
         }else {
-            record.setIsLocal(false);
-            record.setRemoteUrl(scheduleJob.getRemoteUrl());
-            record.setRemoteRequestMethod("POST"); //默认只支持post
-            record.setBeanClass(null);
-            record.setMethodName(null);
+            scheduleJob.setIsLocal(false);
+            scheduleJob.setRemoteUrl(scheduleJob.getRemoteUrl());
+            scheduleJob.setRemoteRequestMethod("POST"); //默认只支持post
+            scheduleJob.setBeanClass(null);
+            scheduleJob.setMethodName(null);
         }
 
         //因为Quartz只能更新cron表达式，当更改了cron表达式以外的属性时，执行的逻辑是：先删除旧的再创建新的。注:equals排除了cron属性
-        if(!recordCopy.equals(record)){
+        if(!scheduleJob.equals(record)){
             //删除旧的任务
             ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), record.getJobName(), record.getJobGroup());
-            //创建新的任务
+            //创建新的任务,保持原来任务的状态
             scheduleJob.setStatus(record.getStatus());
             ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
         }else {
             //当cron表达式和原来不一致才做更新
-            if(!recordCopy.getCron().equals(record.getCron())){
+            if(!scheduleJob.getCron().equals(record.getCron())){
                 //更新调度任务
                 ScheduleUtils.updateScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
             }
@@ -147,8 +143,8 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
         //更新数据库
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        record.setModifyBy(user.getId());
-        super.update(record);
+        scheduleJob.setModifyBy(user.getId());
+        super.update(scheduleJob);
     }
 
     @Override
