@@ -8,6 +8,9 @@
 *.war
 *.ear
 /target/
+*.zip
+*.tar.gz
+*.rar
 
 # IDE
 .idea
