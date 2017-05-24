@@ -9,7 +9,7 @@
 <body layout:fragment="content">
 <article class="page-container">
 	<form action="" method="post" class="form form-horizontal" id="form-admin-role-edit" th:object="${model}">
-		<input type="hidden" name="x-form-token" th:value="${#session.getAttribute('x-form-token')}" />
+		<input type="hidden" name="tokenForm" th:value="${#session.getAttribute('tokenForm')}" />
 		<input type="hidden" th:value="*{id}" th:id="rid"/>
 		<input type="hidden" th:name="permissionIds" th:id="permissionIds" th:value="${permissionIds}"/>
 		<div class="row cl">

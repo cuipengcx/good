@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+import static com.jk.common.Constant.HEAD_NO_PERMISSION_KEY;
+import static com.jk.common.Constant.HEAD_NO_PERMISSION_VALUE;
+
 public class BaseController {
 
 //	protected final transient Logger log = LoggerFactory.getLogger(this.getClass());
@@ -87,7 +90,8 @@ public class BaseController {
 		if (exception instanceof UnauthorizedException) {
 			if(WebUtil.isAjaxRequest(request)){
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);//无权限异常  主要用于ajax请求返回
-				response.setHeader("No-Permission", "{\"code\":403,\"msg\":'No Permission'}");
+				response.setHeader(HEAD_NO_PERMISSION_KEY, HEAD_NO_PERMISSION_VALUE);
+//				response.setHeader("No-Permission", "{\"code\":403,\"msg\":'No Permission'}");
 				response.setContentType("text/html;charset=utf-8");
 			}else {
 				response.sendRedirect("/admin/403");

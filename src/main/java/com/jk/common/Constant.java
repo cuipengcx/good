@@ -33,4 +33,38 @@ public class Constant {
         }
     }
 
+    /**
+     * 表单token
+     */
+    public static final String TOKEN_FORM = "tokenForm";
+
+    /**
+     * Ajax操作验证表单重复后的响应头key
+     */
+    public static final String HEAD_TOKEN_FORM_KEY = "X-Form-Token";
+
+    /**
+     * Ajax操作验证表单重复后的响应头value
+     */
+    public static final String HEAD_TOKEN_FORM_VALUE = "Repeat-Submit";
+
+    /**
+     * Ajax操作没有权限的响应头key
+     */
+    public static final String HEAD_NO_PERMISSION_KEY = "X-No-Permission";
+
+    /**
+     * Ajax操作没有权限的响应头value
+     */
+    public static final String HEAD_NO_PERMISSION_VALUE = "No-Permission";
+
+    /**
+     * Ajax操作登陆超时的响应头key
+     */
+    public static final String HEAD_SESSION_STATUS_KEY = "X-Session-Status";
+
+    /**
+     * Ajax操作登陆超时的响应头value
+     */
+    public static final String HEAD_SESSION_STATUS_VALUE = "Session-Timeout";
 }

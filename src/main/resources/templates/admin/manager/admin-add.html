@@ -8,7 +8,7 @@
 <body layout:fragment="content">
 <article class="page-container">
 	<form class="form form-horizontal" id="form-admin-add" >
-		<input type="hidden" name="x-form-token" th:value="${#session.getAttribute('x-form-token')}" />
+		<input type="hidden" name="tokenForm" th:value="${#session.getAttribute('tokenForm')}" />
 	<div class="row cl">
 		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>管理员：</label>
 		<div class="formControls col-xs-8 col-sm-9">

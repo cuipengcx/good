@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static com.jk.common.Constant.HEAD_SESSION_STATUS_KEY;
+import static com.jk.common.Constant.HEAD_SESSION_STATUS_VALUE;
+
 /**
  * 登录
  * Created by JK on 2017/1/24.
@@ -44,7 +47,8 @@ public class LoginController extends BaseController {
         log.info("跳转到登录页面！");
         if(WebUtil.isAjaxRequest(request)){
             response.setStatus(HttpServletResponse.SC_REQUEST_TIMEOUT);
-            response.setHeader("Session-Status","{\"code\":408,\"msg\":'Session Timeout'}");
+            response.setHeader(HEAD_SESSION_STATUS_KEY, HEAD_SESSION_STATUS_VALUE);
+//            response.setHeader("X-Session-Status","{\"code\":408,\"msg\":'Session Timeout'}");
             response.setContentType("text/html;charset=utf-8");
         }
         return "admin/login";

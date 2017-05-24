@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import static com.jk.common.Constant.*;
+
 /**
  * 防止表单重复提交拦截器
  * @author cuiP
@@ -19,8 +21,6 @@ import java.util.UUID;
  */
 @Slf4j
 public class FormTokenInterceptor implements HandlerInterceptor {
-
-    private static final String TOKEN_FORM_KEY = "x-form-token";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -33,7 +33,7 @@ public class FormTokenInterceptor implements HandlerInterceptor {
                 boolean needSaveSession = annotation.save();
                 if (needSaveSession) {
                     //跳转到页面前将token设置到session中
-                    request.getSession(false).setAttribute(TOKEN_FORM_KEY, UUID.randomUUID().toString());
+                    request.getSession(false).setAttribute(TOKEN_FORM, UUID.randomUUID().toString());
                 }
 
                 boolean needRemoveSession = annotation.remove();
@@ -41,12 +41,13 @@ public class FormTokenInterceptor implements HandlerInterceptor {
                     if (isRepeatSubmit(request)) {
                         //不允许重复提交
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST); //请求参数不合法 ajax请求时前台提示，增强客户体验
-                        response.setHeader(TOKEN_FORM_KEY, "{\"code\":400,\"msg\":'bad request'}");
+                        response.setHeader(HEAD_TOKEN_FORM_KEY, HEAD_TOKEN_FORM_VALUE);
+//                        response.setHeader(TOKEN_FORM_KEY, "{\"code\":400,\"msg\":'Repeat-Submit'}");
                         response.setContentType("text/html;charset=utf-8");
                         return false;
                     }
                     //移除session中保存的token
-                    request.getSession(false).removeAttribute(TOKEN_FORM_KEY);
+                    request.getSession(false).removeAttribute(TOKEN_FORM);
                 }
 
             }
@@ -66,11 +67,11 @@ public class FormTokenInterceptor implements HandlerInterceptor {
     }
 
     private boolean isRepeatSubmit(HttpServletRequest request) {
-        String serverToken = (String) request.getSession(false).getAttribute(TOKEN_FORM_KEY);
+        String serverToken = (String) request.getSession(false).getAttribute(TOKEN_FORM);
         if (serverToken == null) {
             return true;
         }
-        String clientToken = request.getParameter(TOKEN_FORM_KEY);
+        String clientToken = request.getParameter(TOKEN_FORM);
 
         if(StrUtil.isEmpty(clientToken)){
             return true;

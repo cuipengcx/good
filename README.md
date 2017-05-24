@@ -107,7 +107,6 @@
 > **注:不定期发放福利干货!!**
 
 ## 特别鸣谢
-
 - [Looly / hutool](http://git.oschina.net/loolly/hutool)   一个Java基础工具类，对文件、流、加密解密、转码、正则、线程、XML等JDK方法进行封装，组成各种Util工具类
 - [abel533 / Mapper](http://git.oschina.net/free/Mapper)   极其方便的使用Mybatis单表的增删改查
 - [abel533 / Mybatis_PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)   Mybatis分页插件
@@ -116,18 +115,19 @@
 
 ## 更新日志
 
-### 2017年5月23日
+### 2017年5月24日
+1. 后台对Ajax操作的,无权限、登陆超时、表单重复提交等情况响应头信息进行统一配置,前台提示的逻辑重新改造
 
+### 2017年5月23日
 1. 添加防止表单重复提交token验证
     - 对Ajax请求,提交时由于验证机制用户名已存在,返回页面修改后再次提交出现token无法验证通过做了处理 (待处理)
-    > 解决方案: 利用ajax的全局方法 提交时自动加上token值 判断如果有返回的refresh_token就更新页面所有的x-form-token值
+    > 解决方案: 利用ajax的全局方法 提交时自动加上token值 判断如果有返回的refresh_token就更新页面所有的tokenForm值
     - 由于session是存储在服务器内存中的,在集群环境下不能保证生成token的服务器和验证token的服务器就是同一台,所以需要一种机制可以解决多服务器节点的数据共享. 
     > 解决方案: 使用spring session实现session共享或者将token放入redis中
     - 对于多开窗口操作同一个功能 比如: 添加用户，进行限制
     > 采用最后打开的窗口有效的方式,并进行页面过期弹窗友好提示
 
 ### 2017年5月22日
-
 1. 新增调度任务查看详情
 2. 新增调度日志查看
 3. 正在执行，执行完成(待实现)
