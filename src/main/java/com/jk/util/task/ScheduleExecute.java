@@ -3,10 +3,10 @@ package com.jk.util.task;
 import com.jk.model.ScheduleJob;
 import com.jk.model.ScheduleJobLog;
 import com.jk.service.ScheduleJobLogService;
-import com.jk.util.SpringUtils;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,9 +21,9 @@ import java.util.Map;
 @Slf4j
 public class ScheduleExecute {
 
-    public static void execute(ScheduleJob scheduleJob){
+    public static void execute(ApplicationContext applicationContext, ScheduleJob scheduleJob){
 
-        ScheduleJobLogService scheduleJobLogService = SpringUtils.getBean(ScheduleJobLogService.class);
+        ScheduleJobLogService scheduleJobLogService = applicationContext.getBean(ScheduleJobLogService.class);
 
         ScheduleJobLog scheduleJobLog = new ScheduleJobLog();
         scheduleJobLog.setJobId(scheduleJob.getId());
@@ -57,7 +57,7 @@ public class ScheduleExecute {
 
             }else {                     //远程http请求调度
 
-				RestTemplate restTemplate = SpringUtils.getBean(RestTemplate.class);
+				RestTemplate restTemplate = applicationContext.getBean(RestTemplate.class);
                 String params = scheduleJob.getParams();
                 if(StrUtil.isEmpty(params)){
                     //执行调用

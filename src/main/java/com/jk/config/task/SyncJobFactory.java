@@ -3,10 +3,8 @@ package com.jk.config.task;
 import com.jk.model.ScheduleJob;
 import com.jk.util.task.ScheduleExecute;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.DisallowConcurrentExecution;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.PersistJobDataAfterExecution;
+import org.quartz.*;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 /**
@@ -20,11 +18,18 @@ public class SyncJobFactory extends QuartzJobBean {
 
 	@Override
 	public void executeInternal(JobExecutionContext context) throws JobExecutionException {
-		log.info("SyncJobFactory execute");
-		ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
+		try {
+			log.info("SyncJobFactory execute,执行开始...");
+			//获取任务记录
+			ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleJob.JOB_PARAM_KEY);
+			//获取spring上下文
+			ApplicationContext applicationContext = (ApplicationContext)context.getScheduler().getContext().get("applicationContextKey");
 
-		//执行调度任务
-		ScheduleExecute.execute(scheduleJob);
+			//执行调度任务
+			ScheduleExecute.execute(applicationContext, scheduleJob);
+		} catch (SchedulerException e) {
+			log.error("SyncJobFactory execute,执行失败...");
+		}
 	}
 
 }
