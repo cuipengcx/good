@@ -72,12 +72,12 @@ function admin_status(obj,urls,isLock){
                         $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_status(this,\''+urls+'\',\'false\')" href="javascript:;" title="启用" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>');
                         $(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">已禁用</span>');
                         $(obj).remove();
-                        closedMessage('已禁用!');
+                        sadMessage('已禁用!');
                     }else {
                         $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_status(this,\''+urls+'\',\'true\')" href="javascript:;" title="禁用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
                         $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
                         $(obj).remove();
-                        openMessage('已启用!');
+                        smileMessage('已启用!');
                     }
                 },
                 404 : function(data){

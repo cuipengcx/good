@@ -85,36 +85,36 @@
         },
         statusCode: {
           200: function(){
-            succeedMessage("登录成功!",1000);
+            smileMessage("登录成功!");
             window.location.href = "/admin/index";
           },
           404: function(){
-            warningMessage('用户不存在!',1000);
+            sadMessage('用户不存在!');
           },
           401: function () {
-            warningMessage('用户或密码错误!',1000);
+            sadMessage('用户或密码错误!');
           },
           403: function () {
-            warningMessage('用户或密码错误!',1000);
+            sadMessage('用户或密码错误!');
           },
           405: function () {
-            warningMessage('账户已锁定!',1000);
+            sadMessage('账户已锁定!');
           },
           408: function () {
-            warningMessage('错误次数过多!',1000);
+            sadMessage('错误次数过多!');
           },
           500: function(){
-            errorMessage('系统错误!',1000);
+            errorMessage('系统错误!');
           }
         },
         beforeSend:function () {
            if(usernameObj.val() == ""){
-              warningMessage("请输入用户名!",1000);
+              warningMessage("请输入用户名!");
               usernameObj.focus();
               return false;
            }
            if(passwordObj.val() == ""){
-             warningMessage("请输入密码!",1000);
+             warningMessage("请输入密码!");
              passwordObj.focus();
              return false;
            }

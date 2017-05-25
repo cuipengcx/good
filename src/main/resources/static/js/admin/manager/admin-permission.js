@@ -33,7 +33,7 @@ function admin_permission_del(obj, url){
                     succeedMessage(data.responseText);
                 },
                 404 : function(data){
-                    warningMessage(data.responseText);
+                    errorMessage(data.responseText);
                 },
                 500 : function(){
                     errorMessage('系统错误!');

@@ -58,7 +58,7 @@ $(function () {
                         parent.layer.close(index);
                     }else {
                         $(form).find(":submit").attr("disabled", false);
-                        warningMessage(data.message);
+                        errorMessage(data.message);
                     }
                 }
             });

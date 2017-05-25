@@ -40,7 +40,7 @@ function inintTree(){
             zTree = $.fn.zTree.getZTreeObj("treeDemo");
         },
         error : function() {
-            alert("加载失败!");
+            errorMessage("加载失败!");
         }
     });
 }

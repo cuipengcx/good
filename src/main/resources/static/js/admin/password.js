@@ -32,15 +32,7 @@ $(function () {
                         parent.location.reload();
                         parent.layer.close(index);
                     }else {
-                        warningMessage(data.message);
-                    }
-                },
-                error: function(XmlHttpRequest, textStatus, errorThrown){
-                    if(XMLHttpRequest.status == 403){
-                        layer_close();
-                        errorMessage('无权操作!');
-                    }else {
-                        errorMessage("系统错误!");
+                        errorMessage(data.message);
                     }
                 }
             });

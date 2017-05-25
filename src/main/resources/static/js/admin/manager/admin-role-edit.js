@@ -44,7 +44,7 @@ $(function () {
                         parent.location.reload();
                         parent.layer.close(index);
                     }else {
-                        warningMessage(data.message);
+                        errorMessage(data.message);
                     }
                 }
             });

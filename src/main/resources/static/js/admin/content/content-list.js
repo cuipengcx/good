@@ -94,7 +94,7 @@ function inintTree(){
             $.fn.zTree.init($("#treeDemo"), setting, data);
         },
         error : function() {
-            alert("加载失败!");
+            errorMessage("加载失败!");
         }
     });
 }
