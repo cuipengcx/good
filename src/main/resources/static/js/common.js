@@ -321,6 +321,7 @@ $.ajaxSetup({
 			var sessionStatus=XMLHttpRequest.getResponseHeader("X-Session-Status");
 			if(sessionStatus == 'Session-Timeout'){
 				errorMessage("登录超时，请重新登录！");
+				top.location = "/admin/login";
 			}
 		}else if(status == 403){      //没用权限
 			//权限状态,通过XMLHttpRequest取得响应头,X-No-Permission
