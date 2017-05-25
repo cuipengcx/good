@@ -1,5 +1,6 @@
 package com.jk.interceptor;
 
+import com.jk.util.WebUtil;
 import com.jk.util.security.token.FormToken;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -46,10 +47,21 @@ public class FormTokenInterceptor implements HandlerInterceptor {
                         response.setContentType("text/html;charset=utf-8");
                         return false;
                     }
-                    //移除session中保存的token
-                    request.getSession(false).removeAttribute(TOKEN_FORM);
-                }
 
+                    //移除session中保存的旧token
+                    request.getSession(false).removeAttribute(TOKEN_FORM);
+
+                    //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
+                    if(WebUtil.isAjaxRequest(request)){
+                        String uuid = UUID.randomUUID().toString();
+                        //往session重新set个值
+                        request.getSession(false).setAttribute(TOKEN_FORM, uuid);
+
+                        response.setStatus(HttpServletResponse.SC_OK);
+                        response.setHeader(HEAD_REFRESH_TOKEN_FORM, uuid);
+                        response.setContentType("text/html;charset=utf-8");
+                    }
+                }
             }
         }
 

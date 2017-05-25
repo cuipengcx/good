@@ -308,11 +308,19 @@ String.prototype.replaceAll  = function(s1,s2){
  */
 $.ajaxSetup({
 	contentType:"application/x-www-form-urlencoded;charset=utf-8",
-	beforeSend: function () {
+	beforeSend: function (XMLHttpRequest) {
+		//弹出遮罩层
 		loadingMessage();
+		//禁用页面submit按钮既可以一定程度防止表单的重复提交，又能大大减轻服务器端压力.
+		$("form").find(":submit").attr("disabled", true);
 	},
 	complete:function(XMLHttpRequest,textStatus,errorMsg){
+		//关闭遮罩层
 		closeMessage(loading);
+
+		//重新启用页面submit按钮,使其可以再次点击
+		$("form").find(":submit").attr("disabled", false);
+
 		//Http响应状态码
 		var status = XMLHttpRequest.status;
 
@@ -333,6 +341,12 @@ $.ajaxSetup({
 			var formToken = XMLHttpRequest.getResponseHeader("X-Form-Token");
 			if(formToken == 'Repeat-Submit'){
 				errorMessage('当前页面已过期，请刷新页面重试！');
+			}
+		}else if (status == 200){       //通过XMLHttpRequest取得响应头,X-Refresh-Token-Form,获取refreshTokenForm用于刷新页面tokenForm
+			var refreshTokenForm = XMLHttpRequest.getResponseHeader("X-Refresh-Token-Form");
+			//刷新页面所有的tokenForm
+			if(refreshTokenForm != "" && refreshTokenForm != null){
+				$("input[name='tokenForm']").val(refreshTokenForm);
 			}
 		}
 	}

@@ -39,6 +39,11 @@ public class Constant {
     public static final String TOKEN_FORM = "tokenForm";
 
     /**
+     * 刷新表单token
+     */
+    public static final String HEAD_REFRESH_TOKEN_FORM = "X-Refresh-Token-Form";
+
+    /**
      * Ajax操作验证表单重复后的响应头key
      */
     public static final String HEAD_TOKEN_FORM_KEY = "X-Form-Token";
