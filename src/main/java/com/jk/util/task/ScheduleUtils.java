@@ -3,7 +3,7 @@ package com.jk.util.task;
 import com.jk.common.Constant.JobStatus;
 import com.jk.config.task.AsyncJobFactory;
 import com.jk.config.task.SyncJobFactory;
-import com.jk.exception.MyException;
+import com.jk.exception.GoodException;
 import com.jk.model.ScheduleJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -56,7 +56,7 @@ public class ScheduleUtils {
             return (CronTrigger) scheduler.getTrigger(triggerKey);
         } catch (SchedulerException e) {
             log.error("获取定时任务CronTrigger出现异常", e);
-            throw new MyException("获取定时任务CronTrigger出现异常");
+            throw new GoodException("获取定时任务CronTrigger出现异常");
         }
     }
 
@@ -110,7 +110,7 @@ public class ScheduleUtils {
             }
         } catch (SchedulerException e) {
             log.error("创建定时任务失败", e);
-            throw new MyException("创建定时任务失败");
+            throw new GoodException("创建定时任务失败");
         }
     }
 
@@ -127,7 +127,7 @@ public class ScheduleUtils {
             scheduler.triggerJob(jobKey);
         } catch (SchedulerException e) {
             log.error("运行一次定时任务失败", e);
-            throw new MyException("运行一次定时任务失败");
+            throw new GoodException("运行一次定时任务失败");
         }
     }
 
@@ -145,7 +145,7 @@ public class ScheduleUtils {
             scheduler.pauseJob(jobKey);
         } catch (SchedulerException e) {
             log.error("暂停定时任务失败", e);
-            throw new MyException("暂停定时任务失败");
+            throw new GoodException("暂停定时任务失败");
         }
     }
 
@@ -163,7 +163,7 @@ public class ScheduleUtils {
             scheduler.resumeJob(jobKey);
         } catch (SchedulerException e) {
             log.error("暂停定时任务失败", e);
-            throw new MyException("暂停定时任务失败");
+            throw new GoodException("暂停定时任务失败");
         }
     }
 
@@ -210,7 +210,7 @@ public class ScheduleUtils {
             }
         } catch (SchedulerException e) {
             log.error("更新定时任务失败", e);
-            throw new MyException("更新定时任务失败");
+            throw new GoodException("更新定时任务失败");
         }
     }
 
@@ -226,7 +226,7 @@ public class ScheduleUtils {
             scheduler.deleteJob(getJobKey(jobName, jobGroup));
         } catch (SchedulerException e) {
             log.error("删除定时任务失败", e);
-            throw new MyException("删除定时任务失败");
+            throw new GoodException("删除定时任务失败");
         }
     }
 }

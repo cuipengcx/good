@@ -10,6 +10,8 @@ import com.jk.service.RolePermissionService;
 import com.jk.service.RoleService;
 import com.jk.service.UserRoleService;
 import com.jk.util.security.token.FormToken;
+import com.jk.util.validator.group.Create;
+import com.jk.util.validator.group.Update;
 import com.jk.vo.TreeNode;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -18,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,6 +30,7 @@ import java.util.List;
  * 角色controller
  * Created by cuiP on 2017/1/19.
  */
+@Validated  //开启方法级别验证支持
 @Controller
 @RequestMapping("/admin/role")
 public class RoleController extends BaseController{
@@ -116,7 +120,7 @@ public class RoleController extends BaseController{
     @RequiresPermissions("role:create")
     @ResponseBody
     @PostMapping
-    public ModelMap saveRole(Role role,Long[] permissionIds){
+    public ModelMap saveRole(@Validated({Create.class}) Role role, Long[] permissionIds){
         ModelMap messagesMap = new ModelMap();
 
         log.debug("添加角色并分配权限参数! role = {}, permissionIds = {}", role, permissionIds);
@@ -169,7 +173,7 @@ public class RoleController extends BaseController{
     @RequiresPermissions("role:update")
     @ResponseBody
     @PutMapping(value = "/{id}")
-    public ModelMap updateRole(@PathVariable("id") Long id, Long[] permissionIds, Role role){
+    public ModelMap updateRole(@PathVariable("id") Long id, Long[] permissionIds, @Validated({Update.class}) Role role){
         ModelMap messagesMap = new ModelMap();
 
         log.debug("编辑角色参数! id= {}, permissionIds= {}, role = {}", id, permissionIds, role);

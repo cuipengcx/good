@@ -9,30 +9,30 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class MyException extends RuntimeException{
+public class GoodException extends RuntimeException{
 
-    private String msg;
     private int code = 500;
+    private String msg;
 
-    public MyException(String msg) {
+    public GoodException(String msg) {
         super(msg);
         this.msg = msg;
     }
 
-    public MyException(String msg, Throwable e) {
+    public GoodException(String msg, Throwable e) {
         super(msg, e);
         this.msg = msg;
     }
 
-    public MyException(String msg, int code) {
+    public GoodException(int code, String msg) {
         super(msg);
-        this.msg = msg;
         this.code = code;
+        this.msg = msg;
     }
 
-    public MyException(String msg, int code, Throwable e) {
+    public GoodException(int code, String msg, Throwable e) {
         super(msg, e);
-        this.msg = msg;
         this.code = code;
+        this.msg = msg;
     }
 }

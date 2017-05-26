@@ -328,10 +328,10 @@ $.ajaxSetup({
 			//登录状态,通过XMLHttpRequest取得响应头,X-Session-Status
 			var sessionStatus=XMLHttpRequest.getResponseHeader("X-Session-Status");
 			if(sessionStatus == 'Session-Timeout'){
-				errorMessage("登录超时，请重新登录！");
+				sadMessage("登录超时，请重新登录！");
 				top.location = "/admin/login";
 			}
-		}else if(status == 403){      //没用权限
+		}else if(status == 401){      //没用权限
 			//权限状态,通过XMLHttpRequest取得响应头,X-No-Permission
 			var noPermission=XMLHttpRequest.getResponseHeader("X-No-Permission");
 			if(noPermission == 'No-Permission'){
@@ -340,7 +340,7 @@ $.ajaxSetup({
 		}else if (status == 400){       //表单重复提交验证,通过XMLHttpRequest取得响应头,X-Form-Token
 			var formToken = XMLHttpRequest.getResponseHeader("X-Form-Token");
 			if(formToken == 'Repeat-Submit'){
-				errorMessage('当前页面已过期，请刷新页面重试！');
+				sadMessage('当前页面已过期，请刷新页面重试！');
 			}
 		}else if (status == 200){       //通过XMLHttpRequest取得响应头,X-Refresh-Token-Form,获取refreshTokenForm用于刷新页面tokenForm
 			var refreshTokenForm = XMLHttpRequest.getResponseHeader("X-Refresh-Token-Form");

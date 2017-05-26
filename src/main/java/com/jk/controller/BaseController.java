@@ -2,27 +2,15 @@ package com.jk.controller;
 
 import com.jk.common.DateEditor;
 import com.jk.common.StringEditor;
-import com.jk.util.WebUtil;
 import com.xiaoleilu.hutool.log.Log;
 import com.xiaoleilu.hutool.log.LogFactory;
-import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-import static com.jk.common.Constant.HEAD_NO_PERMISSION_KEY;
-import static com.jk.common.Constant.HEAD_NO_PERMISSION_VALUE;
-
 public class BaseController {
-
-//	protected final transient Logger log = LoggerFactory.getLogger(this.getClass());
 
 	protected final transient Log log = LogFactory.get(this.getClass());
 
@@ -80,44 +68,5 @@ public class BaseController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 		binder.registerCustomEditor(Date.class, new DateEditor(true));
 		binder.registerCustomEditor(String.class, "password", new StringEditor(true));
-	}
-
-	@ExceptionHandler
-	public void exceptionHandler(Exception exception,
-										 HttpServletRequest request,
-										 HttpServletResponse response) throws Exception {
-
-		if (exception instanceof UnauthorizedException) {
-			if(WebUtil.isAjaxRequest(request)){
-				response.setStatus(HttpServletResponse.SC_FORBIDDEN);//无权限异常  主要用于ajax请求返回
-				response.setHeader(HEAD_NO_PERMISSION_KEY, HEAD_NO_PERMISSION_VALUE);
-//				response.setHeader("No-Permission", "{\"code\":403,\"msg\":'No Permission'}");
-				response.setContentType("text/html;charset=utf-8");
-			}else {
-				response.sendRedirect("/admin/403");
-			}
-		}
-	}
-	
-	public static String getSession(String key) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes()).getRequest();
-		Object obj = request.getSession().getAttribute(key);
-		if (obj == null) {
-			return null;
-		}
-		return obj.toString();
-	}
-
-	public static void setSession(String key, Object value) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes()).getRequest();
-		request.getSession().setAttribute(key, value);
-	}
-
-	public static void removeSession(String key) {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
-				.getRequestAttributes()).getRequest();
-		request.getSession().removeAttribute(key);
 	}
 }
