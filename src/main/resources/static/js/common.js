@@ -324,14 +324,16 @@ $.ajaxSetup({
 		//Http响应状态码
 		var status = XMLHttpRequest.status;
 
-		if(status == 408){    //session超时
+		console.log(XMLHttpRequest.responseText);
+
+		if(status == 401){    //session超时
 			//登录状态,通过XMLHttpRequest取得响应头,X-Session-Status
 			var sessionStatus=XMLHttpRequest.getResponseHeader("X-Session-Status");
 			if(sessionStatus == 'Session-Timeout'){
 				sadMessage("登录超时，请重新登录！");
 				top.location = "/admin/login";
 			}
-		}else if(status == 401){      //没用权限
+		}else if(status == 403){      //没有权限
 			//权限状态,通过XMLHttpRequest取得响应头,X-No-Permission
 			var noPermission=XMLHttpRequest.getResponseHeader("X-No-Permission");
 			if(noPermission == 'No-Permission'){

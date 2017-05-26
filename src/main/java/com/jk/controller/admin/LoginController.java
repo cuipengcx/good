@@ -46,7 +46,7 @@ public class LoginController extends BaseController {
     public String toLogin(HttpServletRequest request, HttpServletResponse response) {
         log.info("跳转到登录页面！");
         if(WebUtil.isAjaxRequest(request)){
-            response.setStatus(HttpServletResponse.SC_REQUEST_TIMEOUT);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader(HEAD_SESSION_STATUS_KEY, HEAD_SESSION_STATUS_VALUE);
 //            response.setHeader("X-Session-Status","{\"code\":408,\"msg\":'Session Timeout'}");
             response.setContentType("text/html;charset=utf-8");
