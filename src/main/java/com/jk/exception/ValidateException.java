@@ -1,5 +1,8 @@
 package com.jk.exception;
 
+import com.jk.common.ExecStatus;
+import lombok.Getter;
+
 import javax.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,35 +14,26 @@ import java.util.Set;
  * @author cuiP
  * Created by JK on 2017/5/26.
  */
-public class ValidateException extends GoodException{
-
+@Getter
+public class ValidateException extends BaseException {
 
     private static final long serialVersionUID = 2239780575292471688L;
     private final Map<String, String> errors = new HashMap<>();
 
     public ValidateException() {
-        this("数据验证失败，请检查数据是否满足约束条件。");
+        this(ExecStatus.VALIDATION_FAIL);
+    }
+
+    public ValidateException(ExecStatus execStatus) {
+        this(execStatus.getCode(), execStatus.getMsg());
     }
 
     public ValidateException(String msg) {
-        super(msg);
-    }
-
-    public ValidateException(String msg, Throwable e) {
-        super(msg, e);
+        super(ExecStatus.VALIDATION_FAIL.getCode(), msg);
     }
 
     public ValidateException(int code, String msg) {
         super(code, msg);
-    }
-
-    public ValidateException(int code, String msg, Throwable e) {
-        super(code, msg, e);
-    }
-
-
-    public Map<String, String> getErrors() {
-        return errors;
     }
 
     public ValidateException addError(String name, String message) {

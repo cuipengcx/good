@@ -44,16 +44,6 @@ public class Constant {
     public static final String HEAD_REFRESH_TOKEN_FORM = "X-Refresh-Token-Form";
 
     /**
-     * Ajax操作验证表单重复后的响应头key
-     */
-    public static final String HEAD_TOKEN_FORM_KEY = "X-Form-Token";
-
-    /**
-     * Ajax操作验证表单重复后的响应头value
-     */
-    public static final String HEAD_TOKEN_FORM_VALUE = "Repeat-Submit";
-
-    /**
      * Ajax操作没有权限的响应头key
      */
     public static final String HEAD_NO_PERMISSION_KEY = "X-No-Permission";

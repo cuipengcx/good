@@ -69,4 +69,64 @@ public class BaseController {
 		binder.registerCustomEditor(Date.class, new DateEditor(true));
 		binder.registerCustomEditor(String.class, "password", new StringEditor(true));
 	}
+
+
+//	/**
+//	 * 生成api执行结果的通用方法
+//	 *
+//	 * @param <T> - 结果类型
+//	 * @param code - api执行结果代码，不能为空
+//	 * @param msg - 结果描述
+//	 * @param res - 结果数据，可以为空
+//	 * @return
+//	 */
+//	public <T> DataResult<T> makeResult(int code, String msg, T res) {
+//		return new DataResult<>(code, msg, res);
+//	}
+//
+//	public <T> DataResult<T> makeResult(ExecStatus status, T res) {
+//		return new DataResult<>(status.getCode(), status.getMsg(), res);
+//	}
+//
+//	public <T> DataResult<T> makeResult(ExecStatus status, String detail) {
+//		return new DataResult<>(status.getCode(), status.getMsg() + "：" + detail, null);
+//	}
+//
+//	public <T> DataResult<T> success(String msg, T res) {
+//		return this.makeResult(ExecStatus.SUCCESS.getCode(), msg, res);
+//	}
+//
+//	public <T> DataResult<T> success(T res) {
+//		return this.makeResult(ExecStatus.SUCCESS, res);
+//	}
+//
+//	/**
+//	 *
+//	 * @param error
+//	 * @return
+//	 */
+//	public <T> DataResult<T> fail(ExecStatus error) {
+//		return this.makeResult(error, null);
+//	}
+//
+//	public <T> DataResult<T> fail(ExecStatus error, String detail) {
+//		return this.makeResult(error, detail);
+//	}
+//
+//	public <T> DataResult<T> fail(int code, String msg) {
+//		return this.makeResult(code, msg, null);
+//	}
+//
+//	public <T> DataResult<T> fail(int code, String msg,T res) {
+//		return this.makeResult(code, msg, res);
+//	}
+//
+//	public <T> DataResult<T> fail(String msg) {
+//		return this.makeResult(ExecStatus.FAIL.getCode(), msg, null);
+//	}
+//
+//	public <T> DataResult<T> fail() {
+//		return this.makeResult(ExecStatus.FAIL, "系统繁忙，请稍后重试！");
+//	}
+
 }

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
  * @author cuiP
  * Created by cuip on 2017/5/26.
  */
-public class AuthenticationException extends GoodException{
+public class AuthenticationException extends BaseException {
 
     public AuthenticationException(){
         super(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
@@ -15,10 +15,6 @@ public class AuthenticationException extends GoodException{
 
     public AuthenticationException(String msg) {
         super(msg);
-    }
-
-    public AuthenticationException(String msg, Throwable e) {
-        super(msg, e);
     }
 
     public AuthenticationException(int code, String msg) {

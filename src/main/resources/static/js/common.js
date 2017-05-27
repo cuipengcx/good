@@ -324,9 +324,26 @@ $.ajaxSetup({
 		//Http响应状态码
 		var status = XMLHttpRequest.status;
 
-		console.log(XMLHttpRequest.responseText);
+		if(status == 400){  //请求参数不合法
+			var resJson = eval('('+XMLHttpRequest.responseText+')');
 
-		if(status == 401){    //session超时
+			//后端数据校验未通过
+			if(resJson.code == 2000){
+				console.log(resJson.result);
+
+				//通过XMLHttpRequest取得响应头,X-Refresh-Token-Form,获取refreshTokenForm用于刷新页面tokenForm
+				var refreshTokenForm = XMLHttpRequest.getResponseHeader("X-Refresh-Token-Form");
+				//刷新页面所有的tokenForm
+				if(refreshTokenForm != "" && refreshTokenForm != null){
+					$("input[name='tokenForm']").val(refreshTokenForm);
+				}
+			}
+
+			//表单重复提交
+			if(resJson.code == 2075){
+				sadMessage(resJson.msg);
+			}
+		}else if(status == 401){    //session超时
 			//登录状态,通过XMLHttpRequest取得响应头,X-Session-Status
 			var sessionStatus=XMLHttpRequest.getResponseHeader("X-Session-Status");
 			if(sessionStatus == 'Session-Timeout'){
@@ -338,17 +355,6 @@ $.ajaxSetup({
 			var noPermission=XMLHttpRequest.getResponseHeader("X-No-Permission");
 			if(noPermission == 'No-Permission'){
 				sadMessage('没有操作权限！');
-			}
-		}else if (status == 400){       //表单重复提交验证,通过XMLHttpRequest取得响应头,X-Form-Token
-			var formToken = XMLHttpRequest.getResponseHeader("X-Form-Token");
-			if(formToken == 'Repeat-Submit'){
-				sadMessage('当前页面已过期，请刷新页面重试！');
-			}
-		}else if (status == 200){       //通过XMLHttpRequest取得响应头,X-Refresh-Token-Form,获取refreshTokenForm用于刷新页面tokenForm
-			var refreshTokenForm = XMLHttpRequest.getResponseHeader("X-Refresh-Token-Form");
-			//刷新页面所有的tokenForm
-			if(refreshTokenForm != "" && refreshTokenForm != null){
-				$("input[name='tokenForm']").val(refreshTokenForm);
 			}
 		}
 	}

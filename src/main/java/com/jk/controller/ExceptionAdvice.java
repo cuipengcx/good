@@ -1,6 +1,7 @@
 package com.jk.controller;
 
-import com.jk.common.GoodResult;
+import com.jk.common.DataResult;
+import com.jk.exception.RepeatedSubmitFormException;
 import com.jk.exception.ValidateException;
 import com.jk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,10 +18,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
-import static com.jk.common.Constant.HEAD_NO_PERMISSION_KEY;
-import static com.jk.common.Constant.HEAD_NO_PERMISSION_VALUE;
+import static com.jk.common.Constant.*;
 
 /**
  * 全局异常处理
@@ -32,22 +32,57 @@ import static com.jk.common.Constant.HEAD_NO_PERMISSION_VALUE;
 public class ExceptionAdvice {
 
     /**
-     * spring validator校驗結果處理
+     * 处理表单重复提交异常
+     * @param ex
+     * @param request
+     * @param response
+     * @return
+     */
+    @ExceptionHandler(RepeatedSubmitFormException.class)
+    public ResponseEntity<DataResult> handleBindExceptionException(RepeatedSubmitFormException ex,
+                                                                  HttpServletRequest request,
+                                                                  HttpServletResponse response) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataResult(ex.getCode(), ex.getMsg()));
+    }
+
+    /**
+     * spring validator实体对象参数校验结果处理
      * @param ex
      * @return
      */
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<GoodResult<Map<String, String>>> handleBindExceptionException(BindException ex) {
+    public ResponseEntity<DataResult> handleBindExceptionException(BindException ex,
+                                                                   HttpServletRequest request,
+                                                                   HttpServletResponse response) {
+
+        //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
+        if(WebUtil.isAjaxRequest(request)){
+            String uuid = UUID.randomUUID().toString();
+            //往session重新set个值
+            request.getSession(false).setAttribute(TOKEN_FORM, uuid);
+            //refresh_token放在header中
+            response.setHeader(HEAD_REFRESH_TOKEN_FORM, uuid);
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(extractMsg(ex.getBindingResult()));
     }
 
     /**
-     * spring validator校驗結果處理
+     * spring validator方法参数校验结果处理
      * @param ex
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<GoodResult<Map<String, String>>> handleMethodArgumentException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<DataResult> handleMethodArgumentException(MethodArgumentNotValidException ex,
+                                                                    HttpServletRequest request,
+                                                                    HttpServletResponse response) {
+        //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
+        if(WebUtil.isAjaxRequest(request)){
+            String uuid = UUID.randomUUID().toString();
+            //往session重新set个值
+            request.getSession(false).setAttribute(TOKEN_FORM, uuid);
+            //refresh_token放在header中
+            response.setHeader(HEAD_REFRESH_TOKEN_FORM, uuid);
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(extractMsg(ex.getBindingResult()));
     }
 
@@ -87,11 +122,11 @@ public class ExceptionAdvice {
     }
 
     /**
-     * 封裝校驗結果
+     * 封装spring validator校验结果
      * @param bindingResult
      * @return
      */
-    private GoodResult<Map<String, String>> extractMsg(BindingResult bindingResult) {
+    private DataResult extractMsg(BindingResult bindingResult) {
         ValidateException vex = new ValidateException();
         if (bindingResult.hasFieldErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -100,6 +135,6 @@ public class ExceptionAdvice {
             }
         }
         log.debug("数据验证失败：{}", vex.getMessage());
-        return new GoodResult<>(vex.getCode(), vex.getMsg(), vex.getErrors());
+        return new DataResult<>(vex.getCode(), vex.getMsg(), vex.getErrors());
     }
 }

@@ -1,6 +1,6 @@
 package com.jk.util.security.xss;
 
-import com.jk.exception.GoodException;
+import com.jk.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -32,7 +32,7 @@ public class SQLFilter {
         //判断是否包含非法字符
         for(String keyword : keywords){
             if(str.indexOf(keyword) != -1){
-                throw new GoodException("包含非法字符");
+                throw new BaseException("包含非法字符");
             }
         }
 
