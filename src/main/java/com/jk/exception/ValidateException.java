@@ -41,17 +41,19 @@ public class ValidateException extends BaseException {
         return this;
     }
 
-    private <T> Map<String, String> toErrorMap(Set<ConstraintViolation<T>> violations) {
+    public <T> ValidateException(Set<ConstraintViolation<T>> violations) {
+        super(ExecStatus.VALIDATION_FAIL.getCode(), ExecStatus.VALIDATION_FAIL.getMsg());
+        this.errors.putAll(toErrorMap(violations));
+    }
 
+    private <T> Map<String, String> toErrorMap(Set<ConstraintViolation<T>> violations) {
         Map<String, String> errs = new HashMap<>();
         if (!violations.isEmpty()) {
             Iterator<ConstraintViolation<T>> iter = violations.iterator();
             while (iter.hasNext()) {
-
                 ConstraintViolation<T> it = iter.next();
                 errs.put(it.getPropertyPath().toString(), it.getMessage());
             }
-            this.errors.putAll(errors);
         }
         return errs;
     }

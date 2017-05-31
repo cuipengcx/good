@@ -1,6 +1,8 @@
 package com.jk.controller;
 
 import com.jk.common.DataResult;
+import com.jk.common.ExecStatus;
+import com.jk.exception.BaseException;
 import com.jk.exception.RepeatedSubmitFormException;
 import com.jk.exception.ValidateException;
 import com.jk.util.WebUtil;
@@ -119,6 +121,29 @@ public class ExceptionAdvice {
         }else {
             response.sendRedirect("/admin/403");
         }
+    }
+
+    /**
+     *
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<DataResult> handleBaseException(BaseException ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DataResult<>(ex.getCode(), ex.getMessage(), null));
+    }
+
+    /**
+     * 统一处理其他异常，非RuntimeException
+     *
+     * @param ex
+     * @return
+     */
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<DataResult> handleAllException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DataResult(ExecStatus.FAIL.getCode(), "系统繁忙，请稍后重试！"));
     }
 
     /**
