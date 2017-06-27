@@ -9,33 +9,48 @@ spring:
     active: dev
  #数据源
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     # 使用druid数据源
     type: com.alibaba.druid.pool.DruidDataSource
     # 下面为连接池的补充设置，应用到上面所有数据源中
     # 初始化大小，最小，最大
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    # 配置获取连接等待超时的时间
-    maxWait: 60000
-    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-    timeBetweenEvictionRunsMillis: 60000
-    # 配置一个连接在池中最小生存的时间，单位是毫秒
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    # 打开PSCache，并且指定每个连接上PSCache的大小
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-    filters: stat,wall,log4j
-    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    # 合并多个DruidDataSource的监控数据
-    #useGlobalDataSourceStat: true
+    druid:
+      initialSize: 5
+      minIdle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,log4j,config
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=true;config.decrypt.key=${publicKey}
+      # 合并多个DruidDataSource的监控数据
+      #useGlobalDataSourceStat: true
+
+      #Druid监控web配置
+      web-stat-filter:
+        url-pattern: /*
+#        exclusions: *.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
+      stat-view-servlet:
+        url-pattern: /druid/*
+        #设置白名单
+        allow: 10.105.0.220
+        #设置黑名单
+        deny:
+        #设置登录查看信息的账号密码
+        login-username: admin
+        login-password: admin
   #视图
   mvc:
     view:
@@ -78,7 +93,13 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
-    password: 123456
+    password: ${password}
+#数据库密码加密
+#java –cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
+privateKey: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAjKmaxt2W/isMlR0tO/snRgcu7F1zihvy4f9Hj45E1MForf6VBr4vL8J+5TbaRWubLBcVXfjfOGLVUWD8l54gkwIDAQABAkANcTvoW07NtWF7cpFbFRJYv+D9F6UuAqPAczvsfSUYy8qmhSR0VPVWd5m7w4wI6b5G3wfi4mqw2lbf4+eU1WZRAiEAwAx77SrxmwhXF9EIa9DpnKWSytLiQ/+YHK/KocAxr7kCIQC7gJ1OpmZIO1QDkwFF2PJaD290cZHnEyUQ6WnnizvAqwIgO/PpwAk28WnyHlpAIcBPHXrGz5Bz2DxzVQk/3aztFekCIQCdAEi3/qVOfj8O7xz1u37S4nHU8vPUpTc4Pforo25ZGQIgGuXpycaauYe8ea4PeXtBUwxyqFGOb8jsDuRkKuBUR2c=
+publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIypmsbdlv4rDJUdLTv7J0YHLuxdc4ob8uH/R4+ORNTBaK3+lQa+Ly/CfuU22kVrmywXFV343zhi1VFg/JeeIJMCAwEAAQ==
+password: dpCDgovbI8DVbkIkyJe6Jqep64P2wc3MNnA6k0U0NyywFCbSeupWWpeFeXRa2gW44ZvywMgN/y8AHHn5cCYHDw==
+
 #日志
 logging:
   config: classpath:logback-jk.xml
