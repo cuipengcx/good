@@ -115,6 +115,10 @@
 
 ## 更新日志
 
+## 2017年6月28日
+
+1. 添加SpringBoot jar方式打包时,下载jar包内的文件和响应jar包内文本文件内容的例子
+
 ## 2017年6月27日
 
 1. 添加druid-spring-boot-starter
