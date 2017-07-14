@@ -65,7 +65,9 @@ spring:
 
 #mybatis
 mybatis:
+  #指定目录类型别名扫描
   type-aliases-package: com.jk.model
+  #指定mapper.xml的位置
   mapper-locations: classpath:mapper/*.xml
   configuration:
     #开启驼峰命名法转换字段支持,用于对象关系绑定
