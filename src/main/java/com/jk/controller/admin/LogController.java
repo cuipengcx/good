@@ -98,7 +98,7 @@ public class LogController extends BaseController {
                 log.info("批量删除日志不存在! ids = {}", ids);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-            logService.deleteByIds(Log.class, "id", ids);
+            logService.deleteByCondition(Log.class, "id", ids);
             log.info("批量删除日志成功! ids = {}", ids);
 
             return ResponseEntity.ok("已删除!");

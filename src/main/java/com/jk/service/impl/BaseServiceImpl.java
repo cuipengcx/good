@@ -151,6 +151,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 		return this.mapper.deleteByPrimaryKey(id);
 	}
 
+	@Override
+	public Integer deleteByIds(String ids) {
+		return mapper.deleteByIds(ids);
+	}
+
 	/**
 	 * 批量删除
 	 * 
@@ -160,7 +165,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 	 * @return
 	 */
 	@Override
-	public Integer deleteByIds(Class<T> clazz, String property,
+	public Integer deleteByCondition(Class<T> clazz, String property,
 			List<Object> values) {
 		Example example = new Example(clazz);
 		example.createCriteria().andIn(property, values);

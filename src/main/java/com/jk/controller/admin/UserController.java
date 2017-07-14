@@ -104,7 +104,7 @@ public class UserController extends BaseController {
             log.info("批量删除管理员不存在! ids = {}", ids);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        userService.deleteByIds(User.class, "id", ids);
+        userService.deleteByCondition(User.class, "id", ids);
         log.info("批量删除管理员成功! ids = {}", ids);
 
         return ResponseEntity.ok(null);
