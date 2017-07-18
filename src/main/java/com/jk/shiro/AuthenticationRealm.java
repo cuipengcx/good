@@ -6,6 +6,7 @@ import com.jk.mapper.UserMapper;
 import com.jk.model.Permission;
 import com.jk.model.Role;
 import com.jk.model.User;
+import com.jk.util.EhCacheUtils;
 import com.xiaoleilu.hutool.log.Log;
 import com.xiaoleilu.hutool.log.LogFactory;
 import org.apache.shiro.SecurityUtils;
@@ -109,7 +110,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
 
 
     /**
-     * 清除认证缓存信息
+     * 清除当前用户认证缓存信息
      */
   	public void clearCachedAuthenticationInfo() {
   		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
@@ -117,7 +118,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
   	}
 
     /**
-     * 清除授权缓存信息
+     * 清除当前用户授权缓存信息
      */
     public void clearCachedAuthorizationInfo() {
         PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
@@ -125,10 +126,18 @@ public class AuthenticationRealm extends AuthorizingRealm {
     }
 
     /**
-     * 清除认证和授权缓存信息
+     * 清除当前用户认证和授权缓存信息
      */
     public void clearCache() {
         PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
         super.clearCache(principals);
+    }
+
+    /**
+     * 清除所有用户授权缓存信息
+     */
+    public void clearCachedAuthorizationInfoAll(){
+        //TODO
+        EhCacheUtils.removeAll("authorizationCache");
     }
 }

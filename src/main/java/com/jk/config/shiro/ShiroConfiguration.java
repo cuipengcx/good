@@ -112,9 +112,17 @@ public class ShiroConfiguration {
         //将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列
         authenticationRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
         authenticationRealm.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
+
+        //配置缓存
+        //开启缓存
+        authenticationRealm.setCachingEnabled(true);
+        //开启认证缓存
+        authenticationRealm.setAuthenticationCachingEnabled(true);
+        //设置认证缓存的名称对应ehcache中配置
+        authenticationRealm.setAuthenticationCacheName("shiro-activeSessionCache");
         //开启授权信息缓存
         authenticationRealm.setAuthorizationCachingEnabled(true);
-        //设置授权缓存对应ehcache中配置
+        //设置授权缓存的名称对应ehcache中配置
         authenticationRealm.setAuthorizationCacheName("authorizationCache");
         return authenticationRealm;
     }
@@ -160,6 +168,8 @@ public class ShiroConfiguration {
         sessionManager.setSessionIdCookie(getSessionIdCookie());
         sessionManager.setSessionDAO(getSessionDao());
         sessionManager.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
+        //去除浏览器地址栏中url中JSESSIONID参数
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
         // -----可以添加session 创建、删除的监听器
 
         return sessionManager;
