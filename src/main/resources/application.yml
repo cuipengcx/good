@@ -100,7 +100,7 @@ spring:
     username: root
     password: ${password}
 #数据库密码加密
-#java –cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
+#java -cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
 privateKey: MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAjKmaxt2W/isMlR0tO/snRgcu7F1zihvy4f9Hj45E1MForf6VBr4vL8J+5TbaRWubLBcVXfjfOGLVUWD8l54gkwIDAQABAkANcTvoW07NtWF7cpFbFRJYv+D9F6UuAqPAczvsfSUYy8qmhSR0VPVWd5m7w4wI6b5G3wfi4mqw2lbf4+eU1WZRAiEAwAx77SrxmwhXF9EIa9DpnKWSytLiQ/+YHK/KocAxr7kCIQC7gJ1OpmZIO1QDkwFF2PJaD290cZHnEyUQ6WnnizvAqwIgO/PpwAk28WnyHlpAIcBPHXrGz5Bz2DxzVQk/3aztFekCIQCdAEi3/qVOfj8O7xz1u37S4nHU8vPUpTc4Pforo25ZGQIgGuXpycaauYe8ea4PeXtBUwxyqFGOb8jsDuRkKuBUR2c=
 publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIypmsbdlv4rDJUdLTv7J0YHLuxdc4ob8uH/R4+ORNTBaK3+lQa+Ly/CfuU22kVrmywXFV343zhi1VFg/JeeIJMCAwEAAQ==
 password: dpCDgovbI8DVbkIkyJe6Jqep64P2wc3MNnA6k0U0NyywFCbSeupWWpeFeXRa2gW44ZvywMgN/y8AHHn5cCYHDw==
