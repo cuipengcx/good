@@ -197,7 +197,6 @@ public class RoleController extends BaseController{
         return BASE_PATH + "admin-role-permission";
     }
 
-    //TODO 校验不对
     /**
      * 执行角色授权
      * @param roleId
