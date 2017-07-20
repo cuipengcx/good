@@ -11,7 +11,6 @@
 	<form action="" method="post" class="form form-horizontal" id="form-admin-role-edit" th:object="${model}">
 		<input type="hidden" name="tokenForm" th:value="${#session.getAttribute('tokenForm')}" />
 		<input type="hidden" th:value="*{id}" th:id="rid"/>
-		<input type="hidden" th:name="permissionIds" th:id="permissionIds" th:value="${permissionIds}"/>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
 			<div class="formControls col-xs-8 col-sm-9">
@@ -30,10 +29,7 @@
 				<input type="text" class="input-text" value="" placeholder="" id="" name="" th:name="remark" th:value="*{remark}"/>
 			</div>
 		</div>
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-3" style="float:left;">角色授权：</label>
-			<ul id="tree" th:class="ztree" style="float:left;"></ul>
-		</div>
+
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
 				<button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
@@ -42,87 +38,6 @@
 	</form>
 </article>
 
-<link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
-<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
-<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-role-edit.js}"></script>
-
-<script th:inline="javascript">
-	$(function () {
-//		 var zNodes = [
-//		     {"name":"a","open":true,"id":1,"parentId":0},
-//		     {"name":"b","open":true,"id":2,"parentId":0},
-//		     {"name":"c","open":true,"id":3,"parentId":0},
-//		     {"name":"aa","open":true,"id":4,"parentId":1},
-//		     {"name":"aaa","open":true,"id":5,"parentId":1},
-//		     {"name":"bb","open":true,"id":6,"parentId":2},
-//		     {"name":"bbb","open":true,"id":7,"parentId":2},
-//		     {"name":"cc","open":true,"id":8,"parentId":3},
-//		     {"name":"ccc","open":true,"id":9,"parentId":3}
-//		 ];
-
-
-		var zNodes = [[${treeNodeList}]];
-		var setting = {
-			check : {
-				enable : true	//是否复选框
-			},
-			data : {
-				simpleData : {
-					enable : true,
-					idKey : "id",
-					pIdKey : "parentId",
-					rootPId : 0
-				}
-			},
-			callback: {
-				onCheck:zTreeOnCheck
-			}
-		};
-
-		$.fn.zTree.init($("#tree"), setting, eval('('+zNodes+')'));
-
-		/**
-		 * 获取选中节点
-		 * @param event
-		 * @param treeId
-		 * @param treeNode
-		 */
-		function zTreeOnCheck(event,treeId,treeNode){
-			var treeObj=$.fn.zTree.getZTreeObj("tree");
-			var nodes=treeObj.getCheckedNodes(true);
-			var ids = [];
-			for(var i=0;i<nodes.length;i++){
-				//获取选中节点的值
-				ids.push(nodes[i].id);
-			}
-			$("#permissionIds").val(ids);
-		}
-
-		//处理回显
-		var zTreeObj = $.fn.zTree.getZTreeObj("tree");  //获取tree对象
-		var zTree = zTreeObj.getCheckedNodes(false);    //获取未被选中的tree节点集合
-		var pid = $("#permissionIds").val(); /**此处数据前后必须拼接,*/
-		var pidArray = pid.split(",");
-
-		for (var i = 0; i < zTree.length; i++) {
-			for (var j = 0; j < pidArray.length; j++){
-				if(zTree[i].id == pidArray[j]){
-					zTreeObj.expandNode(zTree[i], true); //展开选中的
-					zTreeObj.checkNode(zTree[i], true);  //勾选
-				}
-			}
-		}
-//
-//		for (var i = 0; i < zTree.length; i++) {
-//			if (pid.indexOf(zTree[i].id) != -1) {
-//				zTreeObj.expandNode(zTree[i], true); //展开选中的
-//				zTreeObj.checkNode(zTree[i], true);  //勾选
-//			}
-//		}
-	});
-
-</script>
-
 </body>
 </html>

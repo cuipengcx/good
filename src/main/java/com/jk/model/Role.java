@@ -33,6 +33,6 @@ public class Role extends BaseEntity{
     /**
      * 备注
      */
-    @NotNull(message = "备注!", groups = {Create.class})
+    @NotNull(message = "备注不能为空!", groups = {Create.class})
     private String remark;
 }

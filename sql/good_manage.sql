@@ -618,7 +618,8 @@ INSERT INTO `permission` VALUES ('75', '暂停', '2', null, 'job:pause', '67', '
 INSERT INTO `permission` VALUES ('76', '恢复', '2', null, 'job:resume', '67', '调度列表', null, '', '5', '', '2017-05-19 12:46:22', '2017-05-19 12:46:22');
 INSERT INTO `permission` VALUES ('77', '运行一次', '2', null, 'job:run', '67', '调度列表', null, '', '6', '', '2017-05-19 12:48:10', '2017-05-19 12:48:10');
 INSERT INTO `permission` VALUES ('78', '查看详情', '2', null, 'job:view', '67', '调度列表', null, '', '7', '', '2017-05-22 16:28:28', '2017-05-22 16:28:28');
-INSERT INTO `permission` VALUES ('79', '调度日志', '2', null, 'job:history', '67', '调度列表', null, '', '8', '', '2017-05-22 16:28:54', '2017-05-22 16:28:54');
+INSERT INTO `permission` VALUES ('79', '调度日志', '2', null, 'job:log', '67', '调度列表', null, '', '8', '', '2017-05-22 16:28:54', '2017-05-22 16:28:54');
+INSERT INTO `permission` VALUES ('80', '授权', '2', null, 'role:permission', '9', '角色管理', null, '', '5', '', '2017-07-20 14:17:54', '2017-07-20 14:18:37');
 
 -- ----------------------------
 -- Table structure for `qrtz_blob_triggers`
@@ -963,6 +964,7 @@ INSERT INTO `role_permission` VALUES ('1032', '1', '69', '2017-05-22 16:29:05', 
 INSERT INTO `role_permission` VALUES ('1033', '1', '70', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
 INSERT INTO `role_permission` VALUES ('1034', '1', '71', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
 INSERT INTO `role_permission` VALUES ('1035', '1', '72', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
+INSERT INTO `role_permission` VALUES ('2341', '1', '80', '2017-05-22 16:29:05', '2017-05-22 16:29:05');
 
 -- ----------------------------
 -- Table structure for `schedule_job`

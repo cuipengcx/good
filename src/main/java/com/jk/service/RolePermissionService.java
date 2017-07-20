@@ -23,4 +23,11 @@ public interface RolePermissionService extends BaseService<RolePermission>{
      * @throws Exception
      */
     String findPermissionIdsByRoleId(Long roleId) throws Exception;
+
+    /**
+     * 角色授权
+     * @param roleId 角色ID
+     * @param permissionIds 权限id集合
+     */
+    void saveOrUpdate(Long roleId, Long[] permissionIds);
 }

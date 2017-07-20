@@ -25,7 +25,9 @@
 package com.jk.config;
 
 import com.jk.interceptor.FormTokenInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -58,5 +60,14 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         //配置防止表单重复提交拦截器
         registry.addInterceptor(new FormTokenInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
+    }
+
+    /**
+     * SR和Hibernate validator的校验只能对Object的属性进行校验，不能对单个的参数进行校验，spring 在此基础上进行了扩展，添加了MethodValidationPostProcessor拦截器
+     * @return
+     */
+    @Bean
+    public MethodValidationPostProcessor methodValidationPostProcessor(){
+        return new MethodValidationPostProcessor();
     }
 }

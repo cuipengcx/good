@@ -161,7 +161,7 @@ function job_view(title, url, w, h) {
 }
 
 /**
- * 调度历史
+ * 调度日志
  * @param title
  * @param url
  */

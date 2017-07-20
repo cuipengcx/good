@@ -44,7 +44,7 @@
 					<!--<td><a href="#">admin</a></td>-->
 					<td th:text="*{remark}">拥有至高无上的权利</td>
 					<td class="f-14">
-						<a title="授权" href="javascript:;" style="text-decoration:none"><i class="iconfont">&#xe68f;</i></a>
+						<a title="授权" href="javascript:;" style="text-decoration:none" th:onclick="'javascript:admin_role_permission(\'角色授权\',\'/admin/role/'+*{id}+'/permission\',\'380\',\'600\');'"><i class="iconfont">&#xe68f;</i></a>
 						<a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','admin-role-add.html','1')" th:onclick="'javascript:admin_role_edit(\'角色编辑\',\'/admin/role/edit/'+*{id}+'\',\'800\',\'500\');'" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 						<a title="删除" href="javascript:;" onclick="admin_role_del(this,'1')" th:onclick="'javascript:admin_role_del(this, \'/admin/role/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 						<!--iconfontyyy-->

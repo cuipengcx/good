@@ -49,3 +49,14 @@ function admin_role_del(obj, url){
 function admin_role_edit(title,url,w,h){
     layer_show(title,url,w,h);
 }
+
+/**
+ * 角色授权
+ * @param title
+ * @param url
+ * @param w
+ * @param h
+ */
+function admin_role_permission(title,url,w,h) {
+    layer_show(title,url,w,h);
+}
