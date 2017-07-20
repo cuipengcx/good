@@ -137,7 +137,7 @@ public class AuthenticationRealm extends AuthorizingRealm {
      * 清除所有用户授权缓存信息
      */
     public void clearCachedAuthorizationInfoAll(){
-        //TODO
-        EhCacheUtils.removeAll("authorizationCache");
+        String cacheName = this.getClass().getName()+".authorizationCache";
+        EhCacheUtils.removeAll(cacheName);
     }
 }

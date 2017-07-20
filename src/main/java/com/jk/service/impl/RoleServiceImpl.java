@@ -74,8 +74,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
         }
 
         //清空认证和授权信息，使其重新加载
-        //TODO
-//        authenticationRealm.clearCache();
         authenticationRealm.clearCachedAuthorizationInfoAll();
         return count == 1;
     }
