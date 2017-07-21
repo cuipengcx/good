@@ -4,6 +4,7 @@ import com.jk.common.ExecStatus;
 import lombok.Getter;
 
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -36,6 +37,13 @@ public class ValidateException extends BaseException {
         super(code, msg);
     }
 
+    public ValidateException(ConstraintViolationException ex) {
+        super(ExecStatus.VALIDATION_FAIL.getCode(), ExecStatus.VALIDATION_FAIL.getMsg());
+
+        this.errors.putAll(toMap(ex.getConstraintViolations()));
+
+    }
+
     public ValidateException addError(String name, String message) {
         this.errors.put(name, message);
         return this;
@@ -54,6 +62,21 @@ public class ValidateException extends BaseException {
                 ConstraintViolation<T> it = iter.next();
                 errs.put(it.getPropertyPath().toString(), it.getMessage());
             }
+        }
+        return errs;
+    }
+
+    private Map<String, String> toMap(Set<ConstraintViolation<?>> violations) {
+
+        Map<String, String> errs = new HashMap<>();
+        if (!violations.isEmpty()) {
+            Iterator<ConstraintViolation<?>> iter = violations.iterator();
+            while (iter.hasNext()) {
+
+                ConstraintViolation<?> it = iter.next();
+                errs.put(it.getPropertyPath().toString(), it.getMessage());
+            }
+            this.errors.putAll(errors);
         }
         return errs;
     }
