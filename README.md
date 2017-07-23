@@ -52,21 +52,21 @@
 
 1、后端
 
-* 核心框架：Spring Boot 1.4.3
-* 视图框架：Spring MVC 4.3.5
+* 核心框架：Spring Boot 1.5.4
+* 视图框架：Spring MVC 4.3.9
 * 安全框架：Apache Shiro 1.3.2
 * 任务调度：Spring+Quartz 2.x 
-* 持久层框架：Mybatis 3.4.2 + 通用Mapper 3.3.9
-* 服务端验证：Hibernate validator 5.2.4
+* 持久层框架：Mybatis 3.4.4 + 通用Mapper 3.4.2
+* 服务端验证：Hibernate validator 5.3.5
 * API生成工具: Swagger2
 * 单元测试：Junit 4.12
 * 网络客户端：Spring RestTemplate(OKGO) + OKHttp
 * Email客户端：Spring + JavaMail
 * 模板引擎：Thymeleaf 3.0.0
-* 数据库连接池：Alibaba Druid 1.0.18
+* 数据库连接池：Alibaba Druid 1.1.0
 * 缓存框架：Spring Cache + Ehcache 2.5.3
 * 日志管理：SLF4J 1.7.22 + Logback 1.1.8
-* 分页插件：PageHelper 5.0.0
+* 分页插件：PageHelper 5.0.3
 * 工具类：Apache Commons、Jackson 2.2、Lombok 1.16.14、Hutool 2.16.0
 
 1、前端
@@ -125,10 +125,11 @@
 
 1. 修复BUG
 2. 重构角色授权功能和添加角色分离
-3. 富文本编辑器更换为UEditor(待完成)
-4. 升级springBoot版本到1.5.4(待完成)
-5. 升级Mybatis到3.4.1,mapper-spring-boot-starter到,pagehelper-spring-boot-starter到(待完成)
-6. 升级druid-spring-boot-starter到1.1.2(待完成)
+3. 富文本编辑器更换为UEditor(待完成),去除h-ui中多余的依赖
+4. 升级springBoot版本到1.5.4
+5. 升级Mybatis到3.4.4,mapper-spring-boot-starter到1.3.0,pagehelper-spring-boot-starter到1.1.2
+6. 升级druid-spring-boot-starter到1.1.1(待完成,升级到1.1.1后密码加密访问不好使)
+7. 重新配置和实现文件上传
 
 ### 2017年7月18日
 
