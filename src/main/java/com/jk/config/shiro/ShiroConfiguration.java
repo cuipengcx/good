@@ -2,11 +2,13 @@ package com.jk.config.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.jk.shiro.AuthenticationRealm;
+import com.jk.shiro.KickoutSessionControlFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -18,17 +20,13 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.web.filter.DelegatingFilterProxy;
 
 import javax.servlet.Filter;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,7 +48,7 @@ public class ShiroConfiguration {
      * 3、部分过滤器可指定参数，如perms，roles
      */
     @Bean(name = "shiroFilter")
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(SecurityManager securityManager, KickoutSessionControlFilter kickoutSessionControlFilter) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -64,9 +62,13 @@ public class ShiroConfiguration {
 
         //自定义登出过滤器，设置登出后跳转地址
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+
+        //自定义退出跳转页面
         LogoutFilter logoutFilter = new LogoutFilter();
         logoutFilter.setRedirectUrl("/admin/login");
         filters.put("myLogout", logoutFilter);
+
+        filters.put("kickout", kickoutSessionControlFilter);
         shiroFilterFactoryBean.setFilters(filters);
 
         //过虑器链定义，从上向下顺序执行，一般将/**放在最下边
@@ -78,7 +80,7 @@ public class ShiroConfiguration {
 
         //过滤链定义，从上向下顺序执行，一般将放在最为下边:这是一个坑呢，一不小心代码就不好使了;
         //authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问
-        filterChainDefinitionMap.put("/admin/**", "authc");
+        filterChainDefinitionMap.put("/admin/**", "authc,kickout");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
@@ -279,6 +281,28 @@ public class ShiroConfiguration {
 //        meManager.setCookie(getRememberMeCookie());
 //        return meManager;
 //    }
+
+    /**
+     * 并发登录人数控制，限制一个账号只能一处登录，踢出前者
+     * @return
+     */
+    @Bean
+    public KickoutSessionControlFilter kickoutSessionControlFilter(CacheManager cacheManager, SessionManager sessionManager){
+        KickoutSessionControlFilter kickoutSessionControlFilter = new KickoutSessionControlFilter();
+        //使用cacheManager获取相应的cache来缓存用户登录的会话；用于保存用户—会话之间的关系的；
+        //这里我们还是用之前shiro使用的redisManager()实现的cacheManager()缓存管理
+        //也可以重新另写一个，重新配置缓存时间之类的自定义缓存属性
+        kickoutSessionControlFilter.setCacheManager(cacheManager);
+        //用于根据会话ID，获取会话进行踢出操作的；
+        kickoutSessionControlFilter.setSessionManager(sessionManager);
+        //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
+        kickoutSessionControlFilter.setKickoutAfter(false);
+        //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
+        kickoutSessionControlFilter.setMaxSession(1);
+        //被踢出后重定向到的地址；
+        kickoutSessionControlFilter.setKickoutUrl("/admin/login");
+        return kickoutSessionControlFilter;
+    }
 
     /**
      * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
