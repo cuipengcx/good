@@ -120,6 +120,7 @@
 1. 会话管理
     - 并发登录人数控制，限制一个账号只能一处登录，踢出前者.
     - 对在线用户session管理和基本信息查看;可以手动踢出.
+2. 字典管理
 
 ### 2017年7月20日
 
@@ -128,7 +129,7 @@
 3. 富文本编辑器更换为UEditor(待完成),去除h-ui中多余的依赖
 4. 升级springBoot版本到1.5.4
 5. 升级Mybatis到3.4.4,mapper-spring-boot-starter到1.3.0,pagehelper-spring-boot-starter到1.1.2
-6. 升级druid-spring-boot-starter到1.1.1(待完成,升级到1.1.1后密码加密访问不好使)
+6. 升级druid-spring-boot-starter到1.1.2 注:V1.1.1不支持connectionPropreties配置，所以无法配置ConfigFilter进行密码加密访问.
 7. 重新配置和实现文件上传
 
 ### 2017年7月18日
