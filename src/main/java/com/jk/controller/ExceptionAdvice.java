@@ -197,7 +197,6 @@ public class ExceptionAdvice {
         if(WebUtil.isAjaxRequest(request)){
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);//无权限异常  主要用于ajax请求返回
             response.setHeader(HEAD_NO_PERMISSION_KEY, HEAD_NO_PERMISSION_VALUE);
-//				response.setHeader("No-Permission", "{\"code\":403,\"msg\":'No Permission'}");
             response.setContentType("text/html;charset=utf-8");
         }else {
             response.sendRedirect("/admin/403");

@@ -1,5 +1,6 @@
 package com.jk.shiro;
 
+import com.jk.common.ExecStatus;
 import com.jk.model.User;
 import com.jk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -150,14 +151,14 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
             saveRequest(request);
 
+            //Ajax请求
             if(WebUtil.isAjaxRequest((HttpServletRequest) request)){
-                //TODO
                 Map<String, Object> resultMap = new HashMap<String, Object>();
                 HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-                resultMap.put("status", HttpServletResponse.SC_UNAUTHORIZED);
-                resultMap.put("message", "您已经在其他地方登录，请重新登录！");
-                WebUtil.writeJson(httpResponse, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
+                resultMap.put("status", ExecStatus.KICK_OUT_SESSION.getCode());
+                resultMap.put("message", ExecStatus.KICK_OUT_SESSION.getMsg());
+                WebUtil.writeText(httpResponse, resultMap, HttpServletResponse.SC_REQUEST_TIMEOUT);
                 return false;
             }else {
                 //重定向

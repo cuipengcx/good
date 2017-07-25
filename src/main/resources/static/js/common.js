@@ -329,8 +329,6 @@ $.ajaxSetup({
 
 			//后端数据校验未通过
 			if(resJson.code == 2000){
-				console.log(resJson.result);
-
 				//通过XMLHttpRequest取得响应头,X-Refresh-Token-Form,获取refreshTokenForm用于刷新页面tokenForm
 				var refreshTokenForm = XMLHttpRequest.getResponseHeader("X-Refresh-Token-Form");
 				//刷新页面所有的tokenForm
@@ -355,6 +353,13 @@ $.ajaxSetup({
 			var noPermission=XMLHttpRequest.getResponseHeader("X-No-Permission");
 			if(noPermission == 'No-Permission'){
 				sadMessage('没有操作权限！');
+			}
+		}else if(status == 408){   //登陆/请求超时
+			var resJson = eval('('+XMLHttpRequest.responseText+')');
+			console.log(resJson.code);
+			//表单重复提交
+			if(resJson.code == 2076){
+				sadMessage(resJson.msg);
 			}
 		}
 	}

@@ -48,7 +48,6 @@ public class LoginController extends BaseController {
         if(WebUtil.isAjaxRequest(request)){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader(HEAD_SESSION_STATUS_KEY, HEAD_SESSION_STATUS_VALUE);
-//            response.setHeader("X-Session-Status","{\"code\":408,\"msg\":'Session Timeout'}");
             response.setContentType("text/html;charset=utf-8");
         }
         return "admin/login";

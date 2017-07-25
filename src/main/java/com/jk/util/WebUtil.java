@@ -45,7 +45,7 @@ public class WebUtil {
             response.setCharacterEncoding("UTF-8");
             response.setStatus(status);
             @Cleanup PrintWriter writer = response.getWriter();
-            writer.print(JSONUtil.toJsonStr(resultMap));
+            writer.print(JSONUtil.parseObj(resultMap));
         } catch (IOException e) {
             log.error("响应json数据失败，失败信息:{}", e);
         }
