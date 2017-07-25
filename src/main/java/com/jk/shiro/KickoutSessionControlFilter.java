@@ -2,6 +2,7 @@ package com.jk.shiro;
 
 import com.jk.common.ExecStatus;
 import com.jk.model.User;
+import com.jk.util.ShiroUtils;
 import com.jk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
@@ -16,7 +17,6 @@ import org.apache.shiro.web.util.WebUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Deque;
 import java.util.HashMap;
@@ -151,14 +151,15 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
             saveRequest(request);
 
+            //TODO
             //Ajax请求
             if(WebUtil.isAjaxRequest((HttpServletRequest) request)){
                 Map<String, Object> resultMap = new HashMap<String, Object>();
-                HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-                resultMap.put("status", ExecStatus.KICK_OUT_SESSION.getCode());
-                resultMap.put("message", ExecStatus.KICK_OUT_SESSION.getMsg());
-                WebUtil.writeText(httpResponse, resultMap, HttpServletResponse.SC_REQUEST_TIMEOUT);
+                resultMap.put("code", ExecStatus.KICK_OUT_SESSION.getCode());
+                resultMap.put("msg", ExecStatus.KICK_OUT_SESSION.getMsg());
+
+                ShiroUtils.writeJson(response, resultMap);
                 return false;
             }else {
                 //重定向

@@ -324,7 +324,15 @@ $.ajaxSetup({
 		//Http响应状态码
 		var status = XMLHttpRequest.status;
 
-		if(status == 400){  //请求参数不合法
+		if(status == 200){
+			//TODO
+			var resJson = eval('('+XMLHttpRequest.responseText+')');
+			console.log(resJson.code);
+			//已被踢出登录
+			if(resJson.code == 2076){
+				sadMessage(resJson.msg);
+			}
+		}else if(status == 400){  //请求参数不合法
 			var resJson = eval('('+XMLHttpRequest.responseText+')');
 
 			//后端数据校验未通过
@@ -346,20 +354,13 @@ $.ajaxSetup({
 			var sessionStatus=XMLHttpRequest.getResponseHeader("X-Session-Status");
 			if(sessionStatus == 'Session-Timeout'){
 				sadMessage("登录超时，请重新登录！");
-				top.location = "/admin/login";
+				// top.location = "/admin/login";
 			}
 		}else if(status == 403){      //没有权限
 			//权限状态,通过XMLHttpRequest取得响应头,X-No-Permission
 			var noPermission=XMLHttpRequest.getResponseHeader("X-No-Permission");
 			if(noPermission == 'No-Permission'){
 				sadMessage('没有操作权限！');
-			}
-		}else if(status == 408){   //登陆/请求超时
-			var resJson = eval('('+XMLHttpRequest.responseText+')');
-			console.log(resJson.code);
-			//表单重复提交
-			if(resJson.code == 2076){
-				sadMessage(resJson.msg);
 			}
 		}
 	}
