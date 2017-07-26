@@ -2,7 +2,6 @@ package com.jk.shiro;
 
 import com.jk.common.ExecStatus;
 import com.jk.model.User;
-import com.jk.util.ShiroUtils;
 import com.jk.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
@@ -17,6 +16,7 @@ import org.apache.shiro.web.util.WebUtils;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Deque;
 import java.util.HashMap;
@@ -140,18 +140,9 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             }
         }
 
-        //如果被踢出了，直接退出，重定向到踢出后的地址
+        //如果是一般请求,直接执行退出并重定向到踢出后的地址,然后提示被踢出了
+        //如果是Ajax请求,前端给出选择框，选择重新登录后执行退出并跳转到登录页面
         if (Boolean.valueOf(true).equals(session.getAttribute("kickout"))) {
-            //会话被踢出了
-            try {
-                //退出登录
-                subject.logout();
-            } catch (Exception e) { //ignore
-            }
-
-            saveRequest(request);
-
-            //TODO
             //Ajax请求
             if(WebUtil.isAjaxRequest((HttpServletRequest) request)){
                 Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -159,9 +150,13 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
                 resultMap.put("code", ExecStatus.KICK_OUT_SESSION.getCode());
                 resultMap.put("msg", ExecStatus.KICK_OUT_SESSION.getMsg());
 
-                ShiroUtils.writeJson(response, resultMap);
+                WebUtil.writeJson((HttpServletResponse) response, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }else {
+                //退出登录
+                subject.logout();
+                //保存上次请求的地址
+                saveRequest(request);
                 //重定向
                 WebUtils.issueRedirect(request, response, kickoutUrl);
                 return false;

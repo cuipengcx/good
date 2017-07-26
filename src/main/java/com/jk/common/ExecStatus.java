@@ -46,7 +46,7 @@ public enum ExecStatus {
     //表单重复提交等
     FORM_REP_REPEATED_SUBMIT(2075, "当前页面已过期，请刷新页面重试"),
     //强制踢出
-    KICK_OUT_SESSION(2076, "您已经在其他地方登录，请重新登录！"),
+    KICK_OUT_SESSION(2076, "当前账号已经在其他地方登录，请重新登录！"),
     //---------
 
     CHECKINFO_FAIL(2081, "无审核信息"),

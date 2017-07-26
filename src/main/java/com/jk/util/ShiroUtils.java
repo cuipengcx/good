@@ -1,17 +1,10 @@
 package com.jk.util;
 
 import com.jk.model.User;
-import com.xiaoleilu.hutool.json.JSONUtil;
-import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
-
-import javax.servlet.ServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
 
 /**
  * Shiro工具类
@@ -58,23 +51,5 @@ public class ShiroUtils {
 		String kaptcha = getSessionAttribute(key).toString();
 		getSession().removeAttribute(key);
 		return kaptcha;
-	}
-
-
-	/**
-	 * 响应json数据
-	 * @param response
-	 * @param resultMap
-	 */
-	public static void writeJson(ServletResponse response, Map<String, Object> resultMap){
-		try {
-			response.setContentType("application/json;charset=utf-8");
-			response.setCharacterEncoding("UTF-8");
-			@Cleanup PrintWriter writer = response.getWriter();
-			writer.print(JSONUtil.parseObj(resultMap));
-		} catch (IOException e) {
-			log.error("响应json数据失败，失败信息:{}", e);
-		}
-
 	}
 }
