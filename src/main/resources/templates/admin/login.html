@@ -67,6 +67,14 @@
 <script type="text/javascript" th:src="@{/js/common.js}"></script>
 <script th:inline="javascript">
 
+    $(function () {
+        var kit = [[${param.kit}]];
+        if(kit == '1'){
+           sadMessage("当前账号已经在其他地方登录，请重新登录！");
+        }
+    });
+
+
     if(self != top) {
       top.location = self.location;
     }
