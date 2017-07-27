@@ -604,7 +604,7 @@ INSERT INTO `permission` VALUES ('56', '修改', '2', null, 'content:update', '5
 INSERT INTO `permission` VALUES ('57', '添加', '2', null, 'content-cat:create', '52', '内容分类', null, null, '1', '', '2017-04-24 11:04:12', '2017-04-24 11:04:12');
 INSERT INTO `permission` VALUES ('58', '修改', '2', null, 'content-cat:update', '52', '内容分类', null, null, '2', '', '2017-04-24 11:04:40', '2017-04-24 11:04:40');
 INSERT INTO `permission` VALUES ('59', '删除', '2', null, 'content-cat:delete', '52', '内容分类', null, null, '3', '', '2017-04-24 11:05:01', '2017-04-24 11:05:01');
-INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/druid/sql.html', 'sql:list', '1', '系统管理', null, '', '5', '', '2017-05-05 15:31:41', '2017-05-16 23:19:19');
+INSERT INTO `permission` VALUES ('64', 'SQL监控', '1', '/admin/monitor/druid', 'druid:list', '1', '系统管理', null, '', '5', '', '2017-05-05 15:31:41', '2017-05-16 23:19:19');
 INSERT INTO `permission` VALUES ('66', '调度管理', '0', null, null, '0', null, null, '&#xe637;', '2', '', '2017-05-09 15:22:11', '2017-05-16 23:13:42');
 INSERT INTO `permission` VALUES ('67', '调度列表', '1', '/admin/job', 'job:list', '66', '调度管理', null, '', '1', '', '2017-05-09 15:22:37', '2017-05-16 23:19:40');
 INSERT INTO `permission` VALUES ('68', '添加', '2', null, 'job:create', '67', '调度列表', null, '', '1', '', '2017-05-09 15:23:22', '2017-05-16 23:19:43');
