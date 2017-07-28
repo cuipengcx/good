@@ -229,7 +229,7 @@
     </dependencies>
 
     <build>
-        <finalName>good-manage</finalName>
+        <finalName>${artifactId}</finalName>
         <plugins>
            <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
