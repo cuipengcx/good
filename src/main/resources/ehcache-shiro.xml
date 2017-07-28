@@ -60,6 +60,16 @@
            diskPersistent="true"
            diskExpiryThreadIntervalSeconds="600"/>
 
+    <!--登录session记录缓存,用于同一账号只允许登录一处,登录踢出功能-->
+    <cache name="shiro-kickout-session"
+           maxElementsInMemory="10000"
+           overflowToDisk="true"
+           eternal="true"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="600"/>
+
 
     <!-- 登录记录缓存锁定10分钟 -->
     <!--<cache name="passwordRetryCache"-->

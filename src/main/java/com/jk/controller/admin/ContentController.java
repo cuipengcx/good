@@ -45,20 +45,24 @@ public class ContentController extends BaseController {
     @GetMapping
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        Long catId,
+                       String title,
+                       String startTime,
+                       String endTime,
                        ModelMap modelMap) {
         log.debug("分页查询内容列表参数! pageNum = {}", pageNum);
 
         ContentCat contentCat = contentCatService.findById(catId);
 
         if (null != catId) {
-            Content content = new Content();
-            content.setContentCatId(catId);
-            PageInfo<Content> pageInfo = contentService.findPageListByWhere(pageNum, PAGESIZE, content);
+            PageInfo<Content> pageInfo = contentService.findPage(pageNum, PAGESIZE, catId, title, startTime, endTime);
             log.info("分页查询内容列表结果！ pageInfo = {}", pageInfo);
 
             modelMap.put("pageInfo", pageInfo);
         }
 
+        modelMap.put("title", title);
+        modelMap.put("startTime", startTime);
+        modelMap.put("endTime", endTime);
         modelMap.put("contentCat", contentCat);
         return BASE_PATH + "content-list";
     }

@@ -68,26 +68,29 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
     /**
      * 是否允许访问，返回true表示允许
-     * @param request
-     * @param response
+     * @param servletRequest
+     * @param servletResponse
      * @param o
      * @return
      * @throws Exception
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object o) throws Exception {
+    protected boolean isAccessAllowed(ServletRequest servletRequest, ServletResponse servletResponse, Object o) throws Exception {
         return false;
     }
 
     /**
      * 表示访问拒绝时是否自己处理，如果返回true表示自己不处理且继续拦截器链执行，返回false表示自己已经处理了（比如重定向到另一个页面）。
-     * @param request
-     * @param response
+     * @param servletRequest
+     * @param servletResponse
      * @return
      * @throws Exception
      */
     @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+    protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
+
+        HttpServletRequest request = WebUtils.toHttp(servletRequest);
+        HttpServletResponse response = WebUtils.toHttp(servletResponse);
 
         Subject subject = getSubject(request, response);
         if(!subject.isAuthenticated() && !subject.isRemembered()) {
@@ -144,13 +147,13 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         //如果是Ajax请求,前端给出选择框，选择重新登录后执行退出并跳转到登录页面
         if (Boolean.valueOf(true).equals(session.getAttribute("kickout"))) {
             //Ajax请求
-            if(WebUtil.isAjaxRequest((HttpServletRequest) request)){
+            if(WebUtil.isAjaxRequest(request)){
                 Map<String, Object> resultMap = new HashMap<String, Object>();
 
                 resultMap.put("code", ExecStatus.KICK_OUT_SESSION.getCode());
                 resultMap.put("msg", ExecStatus.KICK_OUT_SESSION.getMsg());
 
-                WebUtil.writeJson((HttpServletResponse) response, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
+                WebUtil.writeJson(response, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }else {
                 //退出登录

@@ -3,6 +3,7 @@ package com.jk.config.shiro;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.jk.shiro.AuthenticationRealm;
 import com.jk.shiro.KickoutSessionControlFilter;
+import com.jk.shiro.LoginFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -70,6 +71,8 @@ public class ShiroConfiguration {
 
         filters.put("kickout", kickoutSessionControlFilter);
 
+        filters.put("myLogin", loginFilter());
+
         shiroFilterFactoryBean.setFilters(filters);
 
         //过虑器链定义，从上向下顺序执行，一般将/**放在最下边
@@ -77,7 +80,7 @@ public class ShiroConfiguration {
         //配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
         filterChainDefinitionMap.put("/admin/logout", "myLogout");
         //登录请求匿名访问
-        filterChainDefinitionMap.put("/admin/login", "anon");
+        filterChainDefinitionMap.put("/admin/login", "myLogin");
 
         //过滤链定义，从上向下顺序执行，一般将放在最为下边:这是一个坑呢，一不小心代码就不好使了;
         //authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问
@@ -299,10 +302,24 @@ public class ShiroConfiguration {
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
         kickoutSessionControlFilter.setKickoutAfter(false);
         //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
-        kickoutSessionControlFilter.setMaxSession(1);
+        kickoutSessionControlFilter.setMaxSession(5);
         //被踢出后重定向到的地址；
         kickoutSessionControlFilter.setKickoutUrl("/admin/login?kit=1");
         return kickoutSessionControlFilter;
+    }
+
+    /*
+     * @methodName: loginFilter
+     * @param: []
+     * @description:登录过滤器
+     * @return: com.jk.shiro.LoginFilter
+     * @author: cuiP
+     * @date: 2017/7/28 16:27 
+     * @version: V1.0.0
+     */
+    @Bean
+    public LoginFilter loginFilter(){
+        return new LoginFilter();
     }
 
     /**

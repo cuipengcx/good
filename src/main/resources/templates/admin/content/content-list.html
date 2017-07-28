@@ -21,13 +21,14 @@
         </a>
     </nav>
     <form id="myForm" th:action="@{/admin/content}" th:method="get">
+        <input type="hidden" th:name="catId" th:value="${contentCat?.id}"/>
     <div class="page-container">
         <div class="text-c">
             日期范围：
             <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'dateMax\')}'})" id="dateMin" class="input-text Wdate" style="width:120px;" name="startTime" th:value="${startTime}" readonly="readonly"/>
             -
             <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'dateMin\')}'})" id="dateMax" class="input-text Wdate" style="width:120px;" name="endTime" th:value="${endTime}" readonly="readonly"/>
-            <input type="text" class="input-text" style="width:250px" placeholder="输入管理员名称" name="username" th:value="${username}"/>
+            <input type="text" class="input-text" style="width:250px" placeholder="输入标题名称" name="title" th:value="${title}"/>
             <button type="submit" class="btn btn-success">
                 <i class="Hui-iconfont">&#xe665;</i>
                 搜索
@@ -76,6 +77,7 @@
     </form>
 </div>
 
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
 <link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
 <script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>
