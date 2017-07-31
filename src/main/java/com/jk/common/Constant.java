@@ -62,4 +62,11 @@ public class Constant {
      * Ajax操作登陆超时的响应头value
      */
     public static final String HEAD_SESSION_STATUS_VALUE = "Session-Timeout";
+
+    /**
+     * 同一个帐号最大会话数
+     */
+    public static final int MAX_SESSION = 1;
+
+
 }

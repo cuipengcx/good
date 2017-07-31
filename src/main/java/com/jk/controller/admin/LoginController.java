@@ -45,6 +45,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/login")
     public String toLogin(HttpServletRequest request, HttpServletResponse response) {
         log.info("跳转到登录页面！");
+        //Ajax登录超时校验,如果超时，进行前台响应提示
         if(WebUtil.isAjaxRequest(request)){
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setHeader(HEAD_SESSION_STATUS_KEY, HEAD_SESSION_STATUS_VALUE);

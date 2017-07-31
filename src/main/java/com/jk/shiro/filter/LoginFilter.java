@@ -1,10 +1,13 @@
-package com.jk.shiro;
+package com.jk.shiro.filter;
 
+import com.feilong.core.DatePattern;
+import com.jk.common.Constant;
 import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
 import com.jk.util.EhCacheUtils;
 import com.jk.util.WebUtil;
 import com.jk.vo.LoginSession;
+import com.xiaoleilu.hutool.date.DateUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -18,6 +21,7 @@ import java.util.Deque;
 /**
  * @package: com.jk.shiro
  * @description: 登录过滤器
+ * 1. 判断登录账号是否已经在其他地方登录，并进行踢出询问，并展示已经登录用户的信息包括IP和登录时间
  * @author: cuiP
  * @date: 2017/7/28 16:08
  * @version: V1.0.0
@@ -34,14 +38,16 @@ public class LoginFilter extends AccessControlFilter {
         HttpServletRequest request = WebUtils.toHttp(servletRequest);
         HttpServletResponse response = WebUtils.toHttp(servletResponse);
 
+        //如果登录账号已经在其他地方登录，进行登录询问,是否踢出
         String tc = request.getParameter("tc");
         String username = request.getParameter("username");
         Deque<LoginSession> deque = (Deque<LoginSession>) EhCacheUtils.get("shiro-kickout-session", username);
 
-        if(deque != null && StrUtil.isEmpty(tc)){
-            if(WebUtil.isAjaxRequest(request)){
-                DataResult result = new DataResult(ExecStatus.KICK_OUT_SESSION.getCode(), ExecStatus.KICK_OUT_SESSION.getMsg());
-
+        if(deque != null && deque.size() >= Constant.MAX_SESSION){
+            //当tc为空时，询问是否踢出，否则放行KickoutSessionControlFilter会进行拦截进行踢出操作
+            if(WebUtil.isAjaxRequest(request) &&  StrUtil.isEmpty(tc)){
+                LoginSession loginSession = deque.peekLast();
+                DataResult result = new DataResult(ExecStatus.KICK_OUT_ASK.getCode(), StrUtil.format(ExecStatus.KICK_OUT_ASK.getMsg(), loginSession.getLoginIP(), DateUtil.format(loginSession.getLoginTime(), DatePattern.CHINESE_COMMON_DATE_AND_TIME)));
                 WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }

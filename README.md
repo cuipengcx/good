@@ -34,6 +34,7 @@
      - 组织机构(未完成)
      - 字典管理(未完成)
      - SQL监控(已完成)
+     - 在线用户管理
 2. 调度管理(完成)
 3. 内容管理(未完成)
 4. 日志管理(已完成)
@@ -67,7 +68,7 @@
 * 缓存框架：Spring Cache + Ehcache 2.5.3
 * 日志管理：SLF4J 1.7.22 + Logback 1.1.8
 * 分页插件：PageHelper 5.0.3
-* 工具类：Apache Commons、Jackson 2.2、Lombok 1.16.14、Hutool 2.16.0
+* 工具类：Apache Commons、Jackson 2.2、Lombok 1.16.14、Hutool 2.16.0、feilong-core 1.10.5
 
 1、前端
 
@@ -98,6 +99,8 @@
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210720_3ac69a9d_798427.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0521/210733_c4f35d0e_798427.png "在这里输入图片标题")
 ![输入图片说明](https://git.oschina.net/uploads/images/2017/0726/174534_da8e44f7_798427.jpeg "F))1%[4%K)(4AV26JRZ(KQF.jpg")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0801/010933_e3a2c8a1_798427.png "]6A~)`7ZYGFV_ZN4)MOEL1V.png")
+![输入图片说明](https://git.oschina.net/uploads/images/2017/0801/011035_7bfa014a_798427.png "9U2H[$G@DHZEG7P}(ZD6PLR.png")
 
 ## 特别说明
 
@@ -119,12 +122,17 @@
 ### 计划更新
 
 1. 会话管理
-    - 并发登录人数控制，限制一个账号只能一处登录，踢出前者.
-        - Ajax请求,前端给出选择框，选择重新登录后执行退出并跳转到登录页面
-        - 传统请求，被踢出后跳转到登录页面，弹窗提示
     - 对在线用户session管理和基本信息查看;可以手动踢出.
-    - 添加登录过滤器，登录提示是否踢出
 2. 字典管理
+
+### 2017年7月31日
+
+1. 引入feilong-core 1.10.5包
+2. 并发登录人数控制，限制一个账号只能一处登录，踢出前者(自定义KickoutSessionControlFilter和LoginFilter)
+    - Ajax请求,前端给出选择框，选择重新登录后执行退出并跳转到登录页面
+    - 传统请求，被踢出后跳转到登录页面，弹窗提示
+    - 添加登录过滤器，判断登录账号是否已经在其他地方登录，并进行踢出询问，并展示已经登录用户的信息包括IP和登录时间   
+3. 自定义退出过滤器，实现清除缓存
 
 ### 2017年7月20日
 

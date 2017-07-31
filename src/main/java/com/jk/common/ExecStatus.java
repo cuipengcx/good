@@ -45,8 +45,10 @@ public enum ExecStatus {
     INVALID_SIGNATURE(2074, "签名错误"),
     //表单重复提交等
     FORM_REP_REPEATED_SUBMIT(2075, "当前页面已过期，请刷新页面重试"),
-    //强制踢出
-    KICK_OUT_SESSION(2076, "当前账号已经在其他地方登录，请重新登录！"),
+    //强制踢出提示
+    KICK_OUT_TIPS(2076, "账号已经在其他地方登录，请重新登录！"),
+    //强制踢出询问
+    KICK_OUT_ASK(2077, "账号已在其他地方登录，IP: {} <br/>登录时间: {} "),
     //---------
 
     CHECKINFO_FAIL(2081, "无审核信息"),

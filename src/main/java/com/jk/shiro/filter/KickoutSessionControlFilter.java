@@ -1,5 +1,6 @@
-package com.jk.shiro;
+package com.jk.shiro.filter;
 
+import com.feilong.core.util.CollectionsUtil;
 import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
 import com.jk.model.User;
@@ -112,9 +113,9 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             cache.put(username, deque);
         }
 
-        //TODO
+
         //如果队列里没有此sessionId，且用户没有被踢出；放入队列
-        if(!deque.contains(sessionId) && session.getAttribute("kickout") == null) {
+        if(CollectionsUtil.find(deque, "sessionId", sessionId) == null && session.getAttribute("kickout") == null) {
             //将sessionId存入队列
             LoginSession loginSession = new LoginSession();
             loginSession.setSessionId(sessionId);
@@ -155,7 +156,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         if (Boolean.valueOf(true).equals(session.getAttribute("kickout"))) {
             //Ajax请求
             if(WebUtil.isAjaxRequest(request)){
-                DataResult result = new DataResult(ExecStatus.KICK_OUT_SESSION.getCode(), ExecStatus.KICK_OUT_SESSION.getMsg());
+                DataResult result = new DataResult(ExecStatus.KICK_OUT_TIPS.getCode(), ExecStatus.KICK_OUT_TIPS.getMsg());
 
                 WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;

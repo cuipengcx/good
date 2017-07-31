@@ -1,9 +1,11 @@
 package com.jk.config.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.jk.common.Constant;
 import com.jk.shiro.AuthenticationRealm;
-import com.jk.shiro.KickoutSessionControlFilter;
-import com.jk.shiro.LoginFilter;
+import com.jk.shiro.filter.KickoutSessionControlFilter;
+import com.jk.shiro.filter.LoginFilter;
+import com.jk.shiro.filter.SystemLogoutFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -64,14 +66,14 @@ public class ShiroConfiguration {
         //自定义登出过滤器，设置登出后跳转地址
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
 
+        //自定义登录过滤器
+        filters.put("myLogin", loginFilter());
+        //自定义限制同一账号登录数量filter
+        filters.put("kickout", kickoutSessionControlFilter);
         //自定义退出跳转页面
-        LogoutFilter logoutFilter = new LogoutFilter();
+        LogoutFilter logoutFilter = new SystemLogoutFilter();
         logoutFilter.setRedirectUrl("/admin/login");
         filters.put("myLogout", logoutFilter);
-
-        filters.put("kickout", kickoutSessionControlFilter);
-
-        filters.put("myLogin", loginFilter());
 
         shiroFilterFactoryBean.setFilters(filters);
 
@@ -302,7 +304,7 @@ public class ShiroConfiguration {
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
         kickoutSessionControlFilter.setKickoutAfter(false);
         //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
-        kickoutSessionControlFilter.setMaxSession(1);
+        kickoutSessionControlFilter.setMaxSession(Constant.MAX_SESSION);
         //被踢出后重定向到的地址；
         kickoutSessionControlFilter.setKickoutUrl("/admin/login?kit=1");
         return kickoutSessionControlFilter;
