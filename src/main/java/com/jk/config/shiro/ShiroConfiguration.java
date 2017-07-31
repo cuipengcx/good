@@ -302,7 +302,7 @@ public class ShiroConfiguration {
         //是否踢出后来登录的，默认是false；即后者登录的用户踢出前者登录的用户；踢出顺序。
         kickoutSessionControlFilter.setKickoutAfter(false);
         //同一个用户最大的会话数，默认1；比如2的意思是同一个用户允许最多同时两个人登录；
-        kickoutSessionControlFilter.setMaxSession(5);
+        kickoutSessionControlFilter.setMaxSession(1);
         //被踢出后重定向到的地址；
         kickoutSessionControlFilter.setKickoutUrl("/admin/login?kit=1");
         return kickoutSessionControlFilter;

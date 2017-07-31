@@ -99,26 +99,28 @@
         },
         statusCode: {
           200: function(){
-            smileMessage("登录成功!");
-            window.location.href = "/admin/index";
+              smileMessage("登录成功!");
+              window.location.href = "/admin/index";
           },
           404: function(){
-            sadMessage('用户不存在!');
+              sadMessage('用户不存在!');
           },
-          401: function () {
-            sadMessage('用户或密码错误!');
+          401: function (data) {
+              var dataJson = data.responseText;
+              console.log(dataJson);
+              sadMessage('用户或密码错误!');
           },
           403: function () {
-            sadMessage('用户或密码错误!');
+              sadMessage('用户或密码错误!');
           },
           405: function () {
-            sadMessage('账户已锁定!');
+              sadMessage('账户已锁定!');
           },
           408: function () {
             sadMessage('错误次数过多!');
           },
           500: function(){
-            errorMessage('系统错误!');
+              errorMessage('系统错误!');
           }
         },
         beforeSend:function () {
@@ -135,6 +137,8 @@
         }
       });
     }
+
+
 
     $("body").keydown(function() {
       if (event.keyCode == "13") {//keyCode=13是回车键

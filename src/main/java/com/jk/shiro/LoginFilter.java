@@ -1,8 +1,11 @@
 package com.jk.shiro;
 
+import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
 import com.jk.util.EhCacheUtils;
 import com.jk.util.WebUtil;
+import com.jk.vo.LoginSession;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
@@ -10,10 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.Serializable;
 import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @package: com.jk.shiro
@@ -34,21 +34,15 @@ public class LoginFilter extends AccessControlFilter {
         HttpServletRequest request = WebUtils.toHttp(servletRequest);
         HttpServletResponse response = WebUtils.toHttp(servletResponse);
 
-//        boolean isLogin = isLoginRequest(request, response);
-
-
+        String tc = request.getParameter("tc");
         String username = request.getParameter("username");
-        Deque<Serializable> deque = (Deque<Serializable>) EhCacheUtils.get("shiro-kickout-session", username);
+        Deque<LoginSession> deque = (Deque<LoginSession>) EhCacheUtils.get("shiro-kickout-session", username);
 
-        if(deque != null) {
-            //Ajax请求
-            if(WebUtil.isAjaxRequest(request)) {
-                Map<String, Object> resultMap = new HashMap<String, Object>();
+        if(deque != null && StrUtil.isEmpty(tc)){
+            if(WebUtil.isAjaxRequest(request)){
+                DataResult result = new DataResult(ExecStatus.KICK_OUT_SESSION.getCode(), ExecStatus.KICK_OUT_SESSION.getMsg());
 
-                resultMap.put("code", ExecStatus.KICK_OUT_SESSION.getCode());
-                resultMap.put("msg", "");
-
-                WebUtil.writeJson(response, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
+                WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }
         }

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 
 /**
  * @author cuiP
@@ -36,16 +35,16 @@ public class WebUtil {
     /**
      * 响应json数据
      * @param response
-     * @param resultMap
+     * @param obj
      * @param status
      */
-    public static void writeJson(HttpServletResponse response, Map<String, Object> resultMap, int status){
+    public static void writeJson(HttpServletResponse response, Object obj, int status){
         try {
             response.setContentType("application/json;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
             response.setStatus(status);
             @Cleanup PrintWriter writer = response.getWriter();
-            writer.print(JSONUtil.parseObj(resultMap));
+            writer.print(JSONUtil.parseObj(obj));
         } catch (IOException e) {
             log.error("响应json数据失败，失败信息:{}", e);
         }
@@ -55,16 +54,16 @@ public class WebUtil {
     /**
      * 响应text数据
      * @param response
-     * @param resultMap
+     * @param obj
      * @param status
      */
-    public static void writeText(HttpServletResponse response, Map<String, Object> resultMap, int status){
+    public static void writeText(HttpServletResponse response, Object obj, int status){
         try {
             response.setContentType("text/html;charset=utf-8");
             response.setCharacterEncoding("UTF-8");
             response.setStatus(status);
             @Cleanup PrintWriter writer = response.getWriter();
-            writer.print(JSONUtil.toJsonStr(resultMap));
+            writer.print(JSONUtil.toJsonStr(obj));
         } catch (IOException e) {
             log.error("响应text数据失败，失败信息:{}", e);
         }

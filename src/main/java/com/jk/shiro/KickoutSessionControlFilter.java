@@ -1,8 +1,11 @@
 package com.jk.shiro;
 
+import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
 import com.jk.model.User;
 import com.jk.util.WebUtil;
+import com.jk.vo.LoginSession;
+import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
@@ -18,10 +21,9 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Deque;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * @className KickoutSessionControlFilter
@@ -43,7 +45,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
     private int maxSession = 1; //同一个帐号最大会话数 默认1
 
     private SessionManager sessionManager;
-    private Cache<String, Deque<Serializable>> cache;
+    private Cache<String, Deque<LoginSession>> cache;
 
     public void setKickoutUrl(String kickoutUrl) {
         this.kickoutUrl = kickoutUrl;
@@ -104,28 +106,33 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         Serializable sessionId = session.getId();
 
         //读取缓存   没有就存入
-        Deque<Serializable> deque = cache.get(username);
+        Deque<LoginSession> deque = cache.get(username);
         if(deque == null) {
-            deque = new LinkedList<Serializable>();
+            deque = new LinkedList<LoginSession>();
             cache.put(username, deque);
         }
 
-
+        //TODO
         //如果队列里没有此sessionId，且用户没有被踢出；放入队列
         if(!deque.contains(sessionId) && session.getAttribute("kickout") == null) {
             //将sessionId存入队列
-            deque.push(sessionId);
+            LoginSession loginSession = new LoginSession();
+            loginSession.setSessionId(sessionId);
+            loginSession.setLoginTime(new Date());
+            loginSession.setLoginIP(HttpUtil.getClientIP(request));
+            deque.push(loginSession);
             //将用户的sessionId队列缓存
             cache.put(username, deque);
         }
 
         //如果队列里的sessionId数超出最大会话数，开始踢人
         while(deque.size() > maxSession) {
-            Serializable kickoutSessionId = null;
+            //要踢出的登录用户信息
+            LoginSession kickoutLoginSession = null;
             if(kickoutAfter) { //如果踢出后者
-                kickoutSessionId = deque.removeFirst();
+                kickoutLoginSession = deque.removeFirst();
             } else { //否则踢出前者
-                kickoutSessionId = deque.removeLast();
+                kickoutLoginSession = deque.removeLast();
             }
 
             //踢出后再更新下缓存队列
@@ -133,7 +140,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
 
             try {
                 //获取被踢出的sessionId的session对象
-                Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutSessionId));
+                Session kickoutSession = sessionManager.getSession(new DefaultSessionKey(kickoutLoginSession.getSessionId()));
                 if(kickoutSession != null) {
                     //设置会话的kickout属性表示踢出了
                     kickoutSession.setAttribute("kickout", true);
@@ -148,12 +155,9 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         if (Boolean.valueOf(true).equals(session.getAttribute("kickout"))) {
             //Ajax请求
             if(WebUtil.isAjaxRequest(request)){
-                Map<String, Object> resultMap = new HashMap<String, Object>();
+                DataResult result = new DataResult(ExecStatus.KICK_OUT_SESSION.getCode(), ExecStatus.KICK_OUT_SESSION.getMsg());
 
-                resultMap.put("code", ExecStatus.KICK_OUT_SESSION.getCode());
-                resultMap.put("msg", ExecStatus.KICK_OUT_SESSION.getMsg());
-
-                WebUtil.writeJson(response, resultMap, HttpServletResponse.SC_UNAUTHORIZED);
+                WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }else {
                 //退出登录
