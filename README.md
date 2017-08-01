@@ -112,6 +112,7 @@
 
 ## 特别鸣谢
 - [Looly / hutool](http://git.oschina.net/loolly/hutool)   一个Java基础工具类，对文件、流、加密解密、转码、正则、线程、XML等JDK方法进行封装，组成各种Util工具类
+- [feilong / feilong-core](https://github.com/venusdrogon/feilong-core)   让Java开发更简便的工具包，让你从大量重复的底层代码中脱身,提高工作效率
 - [abel533 / Mapper](http://git.oschina.net/free/Mapper)   极其方便的使用Mybatis单表的增删改查
 - [abel533 / Mybatis_PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)   Mybatis分页插件
 - [人人开源 / renren-security](http://git.oschina.net/babaio/renren-security)   renren-security是一个轻量级权限管理系统
@@ -124,6 +125,11 @@
 1. 会话管理
     - 对在线用户session管理和基本信息查看;可以手动踢出.
 2. 字典管理
+
+### 2017年8月1日
+
+1. 重写规划包的目录结构，按模块进行划分
+2. 判断如果已经登录了，还访问login登录地址，做重定向到原来的地址
 
 ### 2017年7月31日
 

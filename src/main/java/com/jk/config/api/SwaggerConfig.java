@@ -26,7 +26,7 @@ public class SwaggerConfig {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jk.api"))//过滤的接口
+                .apis(RequestHandlerSelectors.basePackage("com.jk.modules.api"))//过滤的接口
                 .paths(PathSelectors.any())
                 .build();
         return docket;

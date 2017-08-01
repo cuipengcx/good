@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.modules.sys.mapper.PermissionMapper">
+	<resultMap id="PermissionResultMap" type="com.jk.modules.sys.model.Permission">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="perms" property="perms" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="BIGINT" />
+		<result column="parent_name" property="parentName" jdbcType="VARCHAR" />
+		<result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+		<result column="icon" property="icon" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="BIGINT" />
+		<result column="is_lock" property="isLock" jdbcType="BIT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!--<resultMap id="PermissionChildRenListMap" type="permission" extends="PermissionResultMap">-->
+		<!--&lt;!&ndash; ofType指定students集合中的对象类型 &ndash;&gt;-->
+		<!--<collection property="childrenList" ofType="Permission">-->
+			<!--<id column="id" property="id"/>-->
+			<!--<result column="name" property="name"/>-->
+		<!--</collection>-->
+	<!--</resultMap>-->
+	
+	<resultMap id="treeMap" type="com.jk.modules.sys.vo.TreeNode">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="parent_id" property="parentId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!--根据用户ID查询该用户所拥有的权限列表-->
+	<select id="findListPermissionByUserId" parameterType="java.lang.Long" resultMap="PermissionResultMap">
+		SELECT
+			*
+		FROM
+			permission p
+		WHERE
+ 			p.type != '0'
+ 			AND p.id IN
+ 			(SELECT
+				rp.permission_id
+			FROM
+				role_permission rp
+			WHERE
+				rp.role_id IN (
+					SELECT
+						ur.role_id
+					FROM
+						user_role ur
+					WHERE
+						ur.user_id = #{userId}
+				)
+		);
+	</select>
+
+	<!--根据用户ID查询用户菜单列表-->
+	<select id="findMenuListByUserId" parameterType="java.lang.Long" resultMap="PermissionResultMap">
+		SELECT
+		*
+		FROM
+		permission p
+		WHERE
+		(p.type = '0' or p.type = '1')
+		AND p.id IN
+		(SELECT
+		rp.permission_id
+		FROM
+		role_permission rp
+		WHERE
+		rp.role_id IN (
+		SELECT
+		ur.role_id
+		FROM
+		user_role ur
+		WHERE
+		ur.user_id = #{userId}
+		)
+		) order by p.sort asc;
+	</select>
+
+	<!--返回树列表-->
+	<select id="findTreeList" resultMap="treeMap">
+		SELECT id,parent_id,name FROM permission p  order by p.sort asc
+	</select>
+</mapper>

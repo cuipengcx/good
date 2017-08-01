@@ -2,7 +2,8 @@ package com.jk.service;
 
 import com.github.pagehelper.PageInfo;
 import com.jk.BaseTest;
-import com.jk.model.User;
+import com.jk.modules.sys.model.User;
+import com.jk.modules.sys.service.UserService;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,8 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.BaseTest;
-import com.jk.model.User;
-import org.junit.Assert;
+import com.jk.modules.sys.mapper.UserMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

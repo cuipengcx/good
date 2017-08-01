@@ -1,7 +1,8 @@
 package com.jk.service;
 
 import com.jk.BaseTest;
-import com.jk.model.Role;
+import com.jk.modules.sys.model.Role;
+import com.jk.modules.sys.service.RoleService;
 import org.junit.Assert;
 import org.junit.Test;
 

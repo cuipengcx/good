@@ -2,8 +2,9 @@ package com.jk.service;
 
 import com.github.pagehelper.PageInfo;
 import com.jk.BaseTest;
-import com.jk.model.Permission;
-import com.jk.vo.TreeNode;
+import com.jk.modules.sys.model.Permission;
+import com.jk.modules.sys.service.PermissionService;
+import com.jk.modules.sys.vo.TreeNode;
 import org.junit.Assert;
 import org.junit.Test;
 

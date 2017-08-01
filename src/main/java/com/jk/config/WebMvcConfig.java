@@ -24,7 +24,7 @@
 
 package com.jk.config;
 
-import com.jk.interceptor.FormTokenInterceptor;
+import com.jk.config.interceptor.FormTokenInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

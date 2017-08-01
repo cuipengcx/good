@@ -2,10 +2,10 @@ package com.jk.config.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.jk.common.Constant;
-import com.jk.shiro.AuthenticationRealm;
-import com.jk.shiro.filter.KickoutSessionControlFilter;
-import com.jk.shiro.filter.LoginFilter;
-import com.jk.shiro.filter.SystemLogoutFilter;
+import com.jk.modules.sys.shiro.AuthenticationRealm;
+import com.jk.modules.sys.shiro.filter.KickoutSessionControlFilter;
+import com.jk.modules.sys.shiro.filter.LoginFilter;
+import com.jk.modules.sys.shiro.filter.SystemLogoutFilter;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;

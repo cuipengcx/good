@@ -18,7 +18,7 @@
 
         <!--通用Mapper生成插件-->
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="com.jk.util.MyMapper"/>
+            <property name="mappers" value="com.jk.common.base.mapper.BaseMapper"/>
         </plugin>
 
         <!--数据库连接 -->
@@ -34,7 +34,7 @@
            注意：如果在key class或者record class中有root class相同的属性，MBG就不会重新生成这些属性了，包括：
                1，属性名相同，类型相同，有相同的getter/setter方法；
         -->
-            <property name="rootClass" value="com.jk.model.BaseEntity"/>
+            <property name="rootClass" value="com.jk.common.base.model.BaseEntity"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="mapper" targetProject="D:\develop\MyProject\src\main\resources"/>
