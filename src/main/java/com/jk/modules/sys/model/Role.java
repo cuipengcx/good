@@ -1,8 +1,8 @@
 package com.jk.modules.sys.model;
 
 import com.jk.common.base.model.BaseEntity;
-import com.jk.util.validator.group.All;
-import com.jk.util.validator.group.Create;
+import com.jk.common.validator.group.All;
+import com.jk.common.validator.group.Create;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

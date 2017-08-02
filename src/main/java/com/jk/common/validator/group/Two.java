@@ -1,4 +1,4 @@
-package com.jk.util.validator.group;
+package com.jk.common.validator.group;
 
 /**
  *

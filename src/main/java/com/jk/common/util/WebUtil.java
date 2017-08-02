@@ -1,4 +1,4 @@
-package com.jk.util;
+package com.jk.common.util;
 
 import com.xiaoleilu.hutool.json.JSONUtil;
 import lombok.Cleanup;

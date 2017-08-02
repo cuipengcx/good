@@ -1,7 +1,7 @@
 package com.jk.common.base.interceptor;
 
 import com.jk.common.exception.RepeatedSubmitFormException;
-import com.jk.util.security.token.FormToken;
+import com.jk.common.security.token.FormToken;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-import static com.jk.common.Constant.*;
+import static com.jk.common.Constant.TOKEN_FORM;
 
 /**
  * 防止表单重复提交拦截器

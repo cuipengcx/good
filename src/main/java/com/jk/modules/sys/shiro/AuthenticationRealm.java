@@ -1,12 +1,12 @@
 package com.jk.modules.sys.shiro;
 
+import com.jk.common.util.EhCacheUtils;
 import com.jk.modules.sys.mapper.PermissionMapper;
 import com.jk.modules.sys.mapper.RoleMapper;
 import com.jk.modules.sys.mapper.UserMapper;
 import com.jk.modules.sys.model.Permission;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.model.User;
-import com.jk.util.EhCacheUtils;
 import com.xiaoleilu.hutool.log.Log;
 import com.xiaoleilu.hutool.log.LogFactory;
 import org.apache.shiro.SecurityUtils;

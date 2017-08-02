@@ -1,11 +1,13 @@
 package com.jk.modules.sys.controller;
 
-import com.jk.annotation.OperationLog;
+
+import com.jk.common.Constant;
+import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.security.token.FormToken;
+import com.jk.common.util.WebUtil;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.UserService;
-import com.jk.util.WebUtil;
-import com.jk.util.security.token.FormToken;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -62,7 +64,7 @@ public class LoginController extends BaseController {
      * @return
      */
     @PostMapping(value = "/login")
-    public ResponseEntity<Void> login(String username, String password){
+    public ResponseEntity<String> login(String username, String password){
         try {
             //获取当前的Subject
             Subject currentUser = SecurityUtils.getSubject();
@@ -75,27 +77,27 @@ public class LoginController extends BaseController {
             //验证是否登录成功
             if(currentUser.isAuthenticated()){
                 log.info("对用户进行登录验证..验证通过! username = {}", username);
-                return ResponseEntity.ok(null);
+                return ResponseEntity.ok(Constant.USER_LOGIN_IN);
             }
         }catch (UnknownAccountException e) {  //账号不存在
             log.info("对用户进行登录验证..验证未通过,未知账户! username = {}", username);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constant.USER_NOT_FIND);
         } catch (IncorrectCredentialsException e) {
             log.info("对用户进行登录验证..验证未通过,错误的凭证! username = {}", username);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constant.USER_INVALID);
         } catch (LockedAccountException e) {
             log.info("对用户进行登录验证..验证未通过,账户已锁定! username = {}", username);
-            return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constant.USER_HAS_LOCK);
         }catch(ExcessiveAttemptsException eae) {
             log.info("对用户进行登录验证..验证未通过,错误次数过多! username = {}", username);
-            return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constant.USER_ERROR_MANY);
         } catch (AuthenticationException e) {
             log.info("对用户进行登录验证..验证未通过,身份验证失败! username = {}" ,username);
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constant.USER_INVALID);
         } catch (Exception e) {
             log.error("对用户进行登录验证失败! username = {} e = {}", username, e);
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Constant.SYSTEM_ERRORS);
     }
 
     /**

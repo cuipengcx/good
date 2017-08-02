@@ -1,10 +1,10 @@
-package com.jk.util.validator.group;
+package com.jk.common.validator.group;
 
 /**
  * hibernate validator 验证分组标识空接口
  *
  * @author cuiP
  */
-public interface Create extends All{
+public interface Create extends All {
 
 }

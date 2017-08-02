@@ -1,4 +1,4 @@
-package com.jk.util;
+package com.jk.common.util;
 
 import com.jk.modules.sys.model.User;
 import lombok.extern.slf4j.Slf4j;

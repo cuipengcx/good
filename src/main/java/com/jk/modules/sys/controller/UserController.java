@@ -1,13 +1,13 @@
 package com.jk.modules.sys.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.jk.annotation.OperationLog;
+import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.security.token.FormToken;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.RoleService;
 import com.jk.modules.sys.service.UserService;
-import com.jk.util.security.token.FormToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

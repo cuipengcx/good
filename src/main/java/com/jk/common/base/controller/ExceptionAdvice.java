@@ -5,7 +5,7 @@ import com.jk.common.ExecStatus;
 import com.jk.common.exception.BaseException;
 import com.jk.common.exception.RepeatedSubmitFormException;
 import com.jk.common.exception.ValidateException;
-import com.jk.util.WebUtil;
+import com.jk.common.util.WebUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;

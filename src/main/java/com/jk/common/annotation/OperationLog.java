@@ -1,4 +1,4 @@
-package com.jk.annotation;
+package com.jk.common.annotation;
 
 import java.lang.annotation.*;
 

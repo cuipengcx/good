@@ -1,9 +1,10 @@
-package com.jk.aop;
+package com.jk.common.aop;
 
-import com.jk.annotation.OperationLog;
+
+import com.jk.common.annotation.OperationLog;
+import com.jk.common.util.ShiroUtils;
 import com.jk.modules.log.model.Log;
 import com.jk.modules.log.service.LogService;
-import com.jk.util.ShiroUtils;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.aspectj.lang.JoinPoint;
@@ -46,7 +47,7 @@ public class OperationLogAspect {
     /**
      * 定义日志切入点
      */
-    @Pointcut("@annotation(com.jk.annotation.OperationLog)")
+    @Pointcut("@annotation(com.jk.common.annotation.OperationLog)")
     public void logPointCut(){
     }
 

@@ -69,4 +69,17 @@ public class Constant {
     public static final int MAX_SESSION = 1;
 
 
+    /**
+     * 用户登录相关提示
+     */
+
+    public static final String USER_LOGIN_IN = "登录成功!";
+    public static final String USER_NOT_FIND = "用户不存在!";
+    public static final String USER_INVALID = "用户或密码错误!";
+    public static final String USER_HAS_LOCK = "账户已锁定!";
+    public static final String USER_ERROR_MANY  = "密码错误次数过多!";
+
+
+    public static final String SYSTEM_ERRORS  = "系统错误!";
+
 }

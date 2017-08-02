@@ -1,17 +1,17 @@
 package com.jk.modules.sys.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.jk.annotation.OperationLog;
+import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.security.token.FormToken;
+import com.jk.common.validator.group.Create;
+import com.jk.common.validator.group.Update;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.model.UserRole;
 import com.jk.modules.sys.service.PermissionService;
 import com.jk.modules.sys.service.RolePermissionService;
 import com.jk.modules.sys.service.RoleService;
 import com.jk.modules.sys.service.UserRoleService;
-import com.jk.util.security.token.FormToken;
-import com.jk.util.validator.group.Create;
-import com.jk.util.validator.group.Update;
 import com.jk.modules.sys.vo.TreeNode;
 import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;

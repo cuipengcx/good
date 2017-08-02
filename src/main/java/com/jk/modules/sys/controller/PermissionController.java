@@ -1,12 +1,12 @@
 package com.jk.modules.sys.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.jk.annotation.OperationLog;
+import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.security.token.FormToken;
+import com.jk.common.security.xss.XssHttpServletRequestWrapper;
 import com.jk.modules.sys.model.Permission;
 import com.jk.modules.sys.service.PermissionService;
-import com.jk.util.security.token.FormToken;
-import com.jk.util.security.xss.XssHttpServletRequestWrapper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.jk.util;
+package com.jk.common.util;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;

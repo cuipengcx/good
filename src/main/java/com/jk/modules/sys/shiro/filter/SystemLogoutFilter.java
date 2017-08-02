@@ -1,8 +1,8 @@
 package com.jk.modules.sys.shiro.filter;
 
 import com.feilong.core.util.CollectionsUtil;
-import com.jk.util.EhCacheUtils;
-import com.jk.util.ShiroUtils;
+import com.jk.common.util.EhCacheUtils;
+import com.jk.common.util.ShiroUtils;
 import com.jk.modules.sys.vo.LoginSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.SessionException;

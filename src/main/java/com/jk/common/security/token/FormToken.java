@@ -1,4 +1,4 @@
-package com.jk.util.security.token;
+package com.jk.common.security.token;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

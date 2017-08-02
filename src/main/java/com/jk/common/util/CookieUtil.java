@@ -1,4 +1,4 @@
-package com.jk.util;
+package com.jk.common.util;
 
 import org.springframework.web.util.WebUtils;
 

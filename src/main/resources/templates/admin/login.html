@@ -92,37 +92,28 @@
           "timestamp":new Date().getTime()
         },
         statusCode: {
-          200: function(){
-              smileMessage("登录成功!");
+          200: function(data){
+              smileMessage(data.responseText);
               window.location.href = "/admin/index";
           },
-          404: function(){
-              sadMessage('用户不存在!');
-          },
           401: function (data) {
-              var dataJson = eval('('+data.responseText+')');
-              //踢出询问"当前账号已经登录IP: 192.168.1.126<br/>登录时间: 2017-7-28 15:52:05 "
-              if(dataJson.code == 2077){
+            if(data != ""){
+                var dataJson = eval('('+data.responseText+')');
+                //踢出询问"当前账号已经登录IP: 192.168.1.126<br/>登录时间: 2017-7-28 15:52:05 "
+                if(dataJson.code == 2077){
                   layer.confirm(dataJson.msg, {icon: 5, title:'提示',btn: ['踢出', '取消']}, function(index){
                     //执行踢出并登录
                     onLine(url+"?tc=1");
                     closeMessage(index);
                   });
-              }else {
-                sadMessage('用户或密码错误!');
-              }
+                }
+            }
           },
-          403: function () {
-              sadMessage('用户或密码错误!');
+          404: function(data){
+            sadMessage(data.responseText);
           },
-          405: function () {
-              sadMessage('账户已锁定!');
-          },
-          408: function () {
-            sadMessage('错误次数过多!');
-          },
-          500: function(){
-              errorMessage('系统错误!');
+          500: function(data){
+              sadMessage(data.responseText);
           }
         },
         beforeSend:function () {

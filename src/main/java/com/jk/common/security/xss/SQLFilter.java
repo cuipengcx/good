@@ -1,4 +1,4 @@
-package com.jk.util.security.xss;
+package com.jk.common.security.xss;
 
 import com.jk.common.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
