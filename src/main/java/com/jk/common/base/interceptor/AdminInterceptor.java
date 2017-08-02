@@ -1,4 +1,4 @@
-package com.jk.config.interceptor;
+package com.jk.common.base.interceptor;
 
 import com.jk.modules.sys.model.User;
 import com.jk.util.SessionUtil;

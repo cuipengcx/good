@@ -1,4 +1,4 @@
-package com.jk.config.interceptor;
+package com.jk.common.base.interceptor;
 
 import com.jk.common.exception.RepeatedSubmitFormException;
 import com.jk.util.security.token.FormToken;

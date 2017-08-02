@@ -78,5 +78,11 @@
 </article>
 
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-add.js}"></script>
+<script th:inline="javascript">
+	// 初始化头像上传
+	var avatarUp = new $WebUpload("filePicker");
+	avatarUp.setUploadBarId("fileListPreId");
+	avatarUp.init();
+</script>
 </body>
 </html>
