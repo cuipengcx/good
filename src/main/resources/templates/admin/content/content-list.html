@@ -58,7 +58,7 @@
                 <tr class="text-c va-m" th:each="model:${pageInfo?.list}" th:object="${model}">
                     <td>
                         <a onClick="product_show('哥本哈根橡木地板','product-show.html','10001')" href="javascript:;">
-                            <img width="60" class="product-thumb" src="temp/product/Thumb/6204.jpg" th:src="*{img}">
+                            <img width="60" class="product-thumb" src="temp/product/Thumb/6204.jpg" th:src="${imageUrl} + *{img}">
                         </a>
                     </td>
                     <td class="text-l" th:text="*{title}"></td>

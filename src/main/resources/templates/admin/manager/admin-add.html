@@ -62,20 +62,6 @@
 			</span>
 		</div>
 	</div>
-
-		<div class="row cl">
-			<label class="form-label col-xs-4 col-sm-2">缩略图：</label>
-			<div class="formControls col-xs-8 col-sm-9">
-				<div class="uploader-thum-container">
-					<div id="fileListPreId" class="uploader-list">
-						<img th:src="@{/h-ui/lib/webuploader/0.1.5/images/image.png}" height="75" width="88"/>
-					</div>
-					<div id="filePicker">选择图片</div>
-					<!--<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>-->
-				</div>
-			</div>
-		</div>
-
 	<!--<div class="row cl">-->
 		<!--<label class="form-label col-xs-4 col-sm-3">备注：</label>-->
 		<!--<div class="formControls col-xs-8 col-sm-9">-->
@@ -92,27 +78,5 @@
 </article>
 
 <script type="text/javascript" th:src="@{/js/admin/manager/admin-add.js}"></script>
-<script th:inline="javascript">
-	// 初始化头像上传
-	var options = {
-		uploadBtnId: '#filePicker',
-		picturePreId: 'fileListPreId',
-		hiddenPictureId: 'hiddenPictureId',
-		serverUrl: '/upload/images',
-		accept : {
-			title : 'Images',
-			extensions : 'gif,jpg,jpeg,bmp,png',
-			mimeTypes : 'image/gif,image/jpg,image/jpeg,image/bmp,image/png'
-		},
-		width: 88,
-		height: 75,
-		fileSizeLimit: 100 * 1024 * 1024,
-		fileSingleSizeLimit: 2 * 1024 * 1024
-//		fileNumLimit: 1
-	};
-	var avatarUp = new $WebUpload(options);
-//	avatarUp.setUploadBarId("fileListPreId");
-	avatarUp.init();
-</script>
 </body>
 </html>

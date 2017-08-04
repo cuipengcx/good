@@ -59,9 +59,19 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-2"><span>图片上传：</span></label>
             <div class="formControls col-xs-8 col-sm-9">
-                <img id="editImage2" name="editImage2" width="100" height="100" th:src="${content?.img}"/>
-                <div id="filePicker"><input type="file" name="imgFile" id="imgFile2" onchange="uploadImage('imgFile2','editImage2');"></div>
-                <input type="hidden" name="img" id="img" th:value="${content?.img}" />
+                <div class="uploader-thum-container">
+                    <div id="fileListPreId" class="uploader-list">
+                        <th:block th:if="${content?.img} == null">
+                            <img th:src="@{/h-ui/lib/webuploader/0.1.5/images/image.png}" height="81" width="81"/>
+                        </th:block>
+                        <th:block th:unless="${content?.img} == null">
+                            <img th:src="${imageUrl} + ${content?.img}" height="81" width="81"/>
+                        </th:block>
+                    </div>
+                    <div id="filePicker">选择图片</div>
+                    <input type="hidden" name="img" id="img" th:value="${content?.img}"/>
+                    <!--<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>-->
+                </div>
             </div>
         </div>
         <div class="row cl">
@@ -74,7 +84,8 @@
     </form>
 </article>
 
-<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/ajaxfileupload.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/kindeditor-4.1.7/kindeditor-min.js}"></script>
+<script type="text/javascript" charset="utf-8" th:src="@{/h-ui/lib/kindeditor-4.1.7/lang/zh_CN.js}"></script>
 <script type="text/javascript" th:src="@{/js/admin/content/content-edit.js}"></script>
 <script th:inline="javascript">
 
@@ -92,64 +103,27 @@
         });
     });
 
-    /**
-     * 上传图片
-     * @param fileElementId
-     * @param imageElementId
-     */
-    function uploadImage(fileElementId, imageElementId) {
-        var path = $("#" + fileElementId).val();
-
-        if(path == "") {
-            alert("请选择上传的图片");
-            return;
-        }
-        if (!isImageFile(path)) {
-            alert("请上传图片");
-            return;
-        }
-        jQuery.ajaxFileUpload({
-            url : "/upload/uploadimage",
-            secureuri : false,
-            fileElementId : fileElementId,
-            dataType : 'text',
-            success : function(data) {
-                var data = eval('(' + data + ')');
-
-                if (data.error > 0) {
-                    $("#" + imageElementId).attr("src", "");
-                    $("#img").val("");
-                    alert(data.message);
-                    return;
-                }
-                $("#" + imageElementId).attr("src", data.dataurl);
-                $("#img").val(data.dataurl);
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("上传图片失败!");
-            }
-        })
-    }
-
-
-    /**
-     * 根据扩展名判断是否为图片
-     */
-    function isImageFile(path) {
-
-        if (path.length == 0) {
-            return false;
-        }
-        var lowerPath = path.toLowerCase();
-        var number = lowerPath.lastIndexOf(".");
-        if(number == -1)
-            return false;
-        var checkKey = lowerPath.substring(number+1,lowerPath.length);
-        if(checkKey == "jpg" || checkKey =="jpeg"  || checkKey =="png" || checkKey == "gif" ) {
-            return true;
-        }
-        return false;
-    }
+    // 初始化头像上传
+    var options = {
+        uploadBtnId: '#filePicker',
+        picturePreId: 'fileListPreId',
+        hiddenPictureId: 'img',
+        serverUrl: '/upload/images',
+        accept : {
+            title : 'Images',
+            extensions : 'gif,jpg,jpeg,bmp,png',
+            mimeTypes : 'image/gif,image/jpg,image/jpeg,image/bmp,image/png'
+        },
+        append: false,
+        width: 81,
+        height: 81,
+        fileSizeLimit: 100 * 1024 * 1024,
+        fileSingleSizeLimit: 2 * 1024 * 1024
+//		fileNumLimit: 1
+    };
+    var avatarUp = new $WebUpload(options);
+    //	avatarUp.setUploadBarId("fileListPreId");
+    avatarUp.init();
 
     /**
      * 取消

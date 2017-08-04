@@ -9,6 +9,7 @@ import com.jk.modules.cms.model.ContentCat;
 import com.jk.modules.cms.service.ContentCatService;
 import com.jk.modules.cms.service.ContentService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ public class ContentController extends BaseController {
     private ContentService contentService;
     @Resource
     private ContentCatService contentCatService;
+    @Value("${imageUrl}")
+    public String IMAGE_URL;
 
     /**
      * 分页查询内容列表
@@ -63,6 +66,7 @@ public class ContentController extends BaseController {
         modelMap.put("title", title);
         modelMap.put("startTime", startTime);
         modelMap.put("endTime", endTime);
+        modelMap.put("imageUrl", IMAGE_URL);
         modelMap.put("contentCat", contentCat);
         return BASE_PATH + "content-list";
     }
@@ -119,6 +123,7 @@ public class ContentController extends BaseController {
         }
 
         modelMap.put("content", content);
+        modelMap.put("imageUrl", IMAGE_URL);
         return BASE_PATH + "content-edit";
     }
 

@@ -98,6 +98,8 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
 
+
+
 ---
 #开发环境配置
 server:
@@ -110,11 +112,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: ${password}
-  http:
-    multipart:
-    # 指定上传文件的临时目录
-      location: D:\\goodmanage\\attachment
-
 #日志
 logging:
   config: classpath:logback-jk.xml
@@ -124,6 +121,16 @@ logging:
 #java -cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
 publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIypmsbdlv4rDJUdLTv7J0YHLuxdc4ob8uH/R4+ORNTBaK3+lQa+Ly/CfuU22kVrmywXFV343zhi1VFg/JeeIJMCAwEAAQ==
 password: dpCDgovbI8DVbkIkyJe6Jqep64P2wc3MNnA6k0U0NyywFCbSeupWWpeFeXRa2gW44ZvywMgN/y8AHHn5cCYHDw==
+
+#上传文件配置信息
+#文件仓库地址
+repositoryPath: D:\\good
+#图片访问路径
+imageUrl: http://image.good.com
+#文档访问路径
+docUrl: http://doc.good.com
+
+
 
 ---
 #测试环境配置
@@ -137,10 +144,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: ${password}
-  http:
-    multipart:
-    # 指定上传文件的临时目录
-      location: D:\\goodmanage\\attachment
   #thymeleaf模版
   thymeleaf:
     cache: true
@@ -153,6 +156,15 @@ logging:
 #java -cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
 publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIypmsbdlv4rDJUdLTv7J0YHLuxdc4ob8uH/R4+ORNTBaK3+lQa+Ly/CfuU22kVrmywXFV343zhi1VFg/JeeIJMCAwEAAQ==
 password: dpCDgovbI8DVbkIkyJe6Jqep64P2wc3MNnA6k0U0NyywFCbSeupWWpeFeXRa2gW44ZvywMgN/y8AHHn5cCYHDw==
+
+#上传文件配置信息
+#文件仓库地址
+repositoryPath: D:\\good
+#图片访问路径
+imageUrl: http://image.good.com
+#文档访问路径
+docUrl: http://doc.good.com
+
 
 
 ---
@@ -167,10 +179,6 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: ${password}
-  http:
-    multipart:
-    # 指定上传文件的临时目录
-      location: D:\\goodmanage\\attachment
   #thymeleaf模版
   thymeleaf:
     cache: true
@@ -183,3 +191,11 @@ logging:
 #java -cp druid-1.1.0.jar com.alibaba.druid.filter.config.ConfigTools 你的密码
 publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIypmsbdlv4rDJUdLTv7J0YHLuxdc4ob8uH/R4+ORNTBaK3+lQa+Ly/CfuU22kVrmywXFV343zhi1VFg/JeeIJMCAwEAAQ==
 password: dpCDgovbI8DVbkIkyJe6Jqep64P2wc3MNnA6k0U0NyywFCbSeupWWpeFeXRa2gW44ZvywMgN/y8AHHn5cCYHDw==
+
+#上传文件配置信息
+#文件仓库地址
+repositoryPath: D:\\good
+#图片访问路径
+imageUrl: http://image.good.com
+#文档访问路径
+docUrl: http://doc.good.com

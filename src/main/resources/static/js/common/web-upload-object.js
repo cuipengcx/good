@@ -6,18 +6,19 @@
 (function() {
 	
 	var $WebUpload = function(options) {
-		this.auto = true;  //开启自动上传
-		this.uploadBtnId = options.uploadBtnId; //选择图片按钮，id|class自己定义
-		this.uploadPreId = options.picturePreId; //图片预览ID
-		this.uploadUrl = options.serverUrl;    //上传URL
+		this.auto = options.auto || true;  //开启自动上传
+		this.uploadBtnId = options.uploadBtnId || '#filePicker'; //选择图片按钮，id|class自己定义
+		this.uploadPreId = options.picturePreId || 'fileListPreId'; //图片预览ID
+		this.uploadUrl = options.serverUrl || '/upload/images';    //上传URL
 		this.swf = '/h-ui/lib/webuploader/0.1.5/Uploader.swf';
 		this.pictureId = options.hiddenPictureId;   //隐藏域ID,用于往后台传值
 		this.picWidth = options.width;  //图片宽度
 		this.picHeight = options.height; //图片高度
-		this.fileSizeLimit = options.fileSizeLimit;   //验证文件总大小是否超出限制, 超出则不允许加入队列
-		this.fileSingleSizeLimit = options.fileSingleSizeLimit;   // 验证单个文件大小是否超出限制, 超出则不允许加入队列
-		this.fileNumLimit = options.fileNumLimit;   // 验证文件总数量, 超出则不允许加入队列
+		this.fileSizeLimit = options.fileSizeLimit || 100 * 1024 * 1024;   //验证文件总大小是否超出限制, 超出则不允许加入队列
+		this.fileSingleSizeLimit = options.fileSingleSizeLimit || 2 * 1024 * 1024;   // 验证单个文件大小是否超出限制, 超出则不允许加入队列
+		this.fileNumLimit = options.fileNumLimit || undefined;   // 验证文件总数量, 超出则不允许加入队列
 		this.accept = options.accept;  //指定接受哪些类型的文件
+		this.append = options.append || false;  //是否开启追加多个图片
         this.uploadBarId = null;      //图片上传的进度条的id
 	};
 
@@ -38,8 +39,8 @@
 			return WebUploader.create({
 				auto : this.auto,
 				pick : {
-					id : this.uploadBtnId
-					// multiple : false // 只上传一个
+					id : this.uploadBtnId,
+					multiple : false // 只上传一个
 				},
 				accept : this.accept,
 				swf : this.swf,
@@ -62,14 +63,17 @@
 			bindObj.on('fileQueued', function(file) {
 				var $li = $(
 						'<div id="' + file.id + '" class="file-item thumbnail">' +
-						'<img>' +
+						'<img width="'+me.picWidth+'" height="'+me.picHeight+'">' +
 						'<div class="info">' + file.name + '</div>' +
 						'</div>'
 					);
 				// var $li = $('<div><img width="100px" height="100px"></div>');
 				var $img = $li.find('img');
-
-				$("#" + me.uploadPreId).html($li);
+				if(me.append){
+					$("#" + me.uploadPreId).append($li);
+				}else {
+					$("#" + me.uploadPreId).html($li);
+				}
 
 				// 生成缩略图
 				bindObj.makeThumb(file, function(error, src) {
@@ -78,12 +82,11 @@
 						return;
 					}
 					$img.attr('src', src);
-				}, me.picWidth, me.picHeight);
+				}, 1, 1);
 			});
 
 			// 文件上传过程中创建进度条实时显示。
 			bindObj.on('uploadProgress', function(file, percentage) {
-				console.log(percentage);
                 // $("#"+me.uploadBarId).css("width",percentage * 100 + "%");
 				var $li = $( '#'+file.id ),
 					$percent = $li.find('.progress span');
@@ -102,7 +105,7 @@
 			bindObj.on('uploadSuccess', function(file,response) {
 				succeedMessage("上传成功");
 				//隐藏域ID,用于往后台传值
-				$("#" + me.pictureId).val(response);
+				$("#" + me.pictureId).val(response.imageUrl);
 				$('#' + file.id).addClass('upload-state-done');
 			});
 
