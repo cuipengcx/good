@@ -29,7 +29,8 @@ $(function () {
                     if(data.status == "success"){
                         succeedMessage(data.message);
                         var index = parent.layer.getFrameIndex(window.name);
-                        parent.location.reload();
+                        // parent.location.reload();
+                        parent.location.href = "/admin/logout";
                         parent.layer.close(index);
                     }else {
                         errorMessage(data.message);

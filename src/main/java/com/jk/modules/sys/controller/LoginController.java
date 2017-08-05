@@ -138,8 +138,8 @@ public class LoginController extends BaseController {
             newUser.setPassword(SecureUtil.md5().digestHex(newPassword));
             userService.updateSelective(newUser);
 
-            //清除登录信息
-            subject.logout();
+//            //清除登录信息
+//            subject.logout();
 
             log.info("修改密码成功!");
             messagesMap.put("status",SUCCESS);
