@@ -1,7 +1,7 @@
 package com.jk.common.base.interceptor;
 
+import com.jk.common.util.SessionUtil;
 import com.jk.modules.sys.model.User;
-import com.jk.util.SessionUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

@@ -12,7 +12,7 @@
     > 密码: 123
     
 - 演示地址
-      - http://manage.good.com
+      - http://139.224.112.51:8082/admin/index
       - 账号:test  密码:test
 
 - 待完成:
@@ -134,7 +134,7 @@
 
 1. 定义welcome-file-list页面
 2. 部署外网演示地址
-    - http://manage.good.com
+    - http://139.224.112.51:8082/admin/index 
     - 账号:test  密码:test
 3. 配置Nginx访问图片(配置文件见群共享)
 
