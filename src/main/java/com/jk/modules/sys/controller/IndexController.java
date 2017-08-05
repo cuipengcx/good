@@ -8,7 +8,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -18,7 +18,6 @@ import java.util.List;
  * Created by JK on 2017/1/22.
  */
 @Controller
-@RequestMapping("/admin")
 public class IndexController extends BaseController{
 
     private static final String BASE_PATH = "admin/";
@@ -26,11 +25,25 @@ public class IndexController extends BaseController{
     @Resource
     private PermissionService permissionService;
 
+    /*
+     * @methodName: toIndex
+     * @param: []
+     * @description: 定义welcome-file-list页面
+     * @return: java.lang.String
+     * @author: cuiP
+     * @date: 2017/8/5 18:48
+     * @version: V1.0.0
+     */
+    @GetMapping(value = "")
+    public String toIndex(){
+        return "redirect:/admin/index";
+    }
+
     /**
      * 首页
      * @return
      */
-    @RequestMapping(value = {"","/index"})
+    @GetMapping(value = "/admin/index")
     public String index(ModelMap modelMap){
         //从shiro的session中取user
         Subject subject = SecurityUtils.getSubject();
@@ -48,7 +61,7 @@ public class IndexController extends BaseController{
      * 欢迎页
      * @return
      */
-    @RequestMapping(value = "/welcome")
+    @GetMapping(value = "/admin/welcome")
     public String welcome(){
         log.info("------进入欢迎页-------");
         return BASE_PATH+"welcome";
@@ -58,7 +71,7 @@ public class IndexController extends BaseController{
      * 未授权页面
      * @return
      */
-    @RequestMapping(value = "/403")
+    @GetMapping(value = "/admin/403")
     public String unauthorized(){
         log.info("------没有权限-------");
         return BASE_PATH+"common/403";
