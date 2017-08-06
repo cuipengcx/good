@@ -32,6 +32,26 @@
             diskExpiryThreadIntervalSeconds="120"
     />
 
+    <!--认证缓存的名称-->
+    <cache name="goodAuthenticationCache"
+           maxElementsInMemory="10000"
+           overflowToDisk="true"
+           eternal="true"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="600"/>
+
+    <!--授权缓存的名称-->
+    <cache name="goodAuthorizationCache"
+           maxElementsInMemory="10000"
+           overflowToDisk="true"
+           eternal="true"
+           timeToLiveSeconds="0"
+           timeToIdleSeconds="0"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="600"/>
+
     <!--活动session缓存-->
     <cache name="shiro-activeSessionCache"
            maxElementsInMemory="10000"

@@ -61,7 +61,7 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermission> i
             super.saveList(rolePermissionList);
         }
 
-        //清空认证和授权信息，使其重新加载
+        //清除所有用户授权缓存信息，使其重新加载
         authenticationRealm.clearCachedAuthorizationInfoAll();
     }
 

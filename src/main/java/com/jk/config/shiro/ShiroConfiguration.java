@@ -101,11 +101,11 @@ public class ShiroConfiguration {
     public SecurityManager getSecurityManager(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //注入自定义Realm
-        securityManager.setRealm(getAuthenticationRealm(ehCacheManagerFactoryBean));
+        securityManager.setRealm(getAuthenticationRealm());
         //注入缓存管理器
         securityManager.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
         //注入session管理器
-        securityManager.setSessionManager(getSessionManage(ehCacheManagerFactoryBean));
+        securityManager.setSessionManager(getSessionManage());
         return securityManager;
     }
 
@@ -115,11 +115,10 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean
-    public AuthenticationRealm getAuthenticationRealm(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
+    public AuthenticationRealm getAuthenticationRealm() {
         AuthenticationRealm authenticationRealm = new AuthenticationRealm();
         //将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列
         authenticationRealm.setCredentialsMatcher(getHashedCredentialsMatcher());
-        authenticationRealm.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
 
         //配置缓存
         //开启缓存
@@ -127,11 +126,11 @@ public class ShiroConfiguration {
         //开启认证缓存
         authenticationRealm.setAuthenticationCachingEnabled(true);
         //设置认证缓存的名称对应ehcache中配置
-        authenticationRealm.setAuthenticationCacheName("shiro-activeSessionCache");
+        authenticationRealm.setAuthenticationCacheName("goodAuthenticationCache");
         //开启授权信息缓存
         authenticationRealm.setAuthorizationCachingEnabled(true);
         //设置授权缓存的名称对应ehcache中配置
-        authenticationRealm.setAuthorizationCacheName("authorizationCache");
+        authenticationRealm.setAuthorizationCacheName("goodAuthorizationCache");
         return authenticationRealm;
     }
 
@@ -164,7 +163,7 @@ public class ShiroConfiguration {
      * @return
      */
     @Bean(name = "sessionManager")
-    public DefaultWebSessionManager getSessionManage(EhCacheManagerFactoryBean ehCacheManagerFactoryBean) {
+    public DefaultWebSessionManager getSessionManage() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //session的失效时长，单位毫秒
         sessionManager.setGlobalSessionTimeout(3600000);  //60分钟失效
@@ -175,7 +174,6 @@ public class ShiroConfiguration {
         sessionManager.setSessionIdCookieEnabled(true);
         sessionManager.setSessionIdCookie(getSessionIdCookie());
         sessionManager.setSessionDAO(getSessionDao());
-        sessionManager.setCacheManager(getCacheShiroManage(ehCacheManagerFactoryBean));
         //去除浏览器地址栏中url中JSESSIONID参数
         sessionManager.setSessionIdUrlRewritingEnabled(false);
         // -----可以添加session 创建、删除的监听器
