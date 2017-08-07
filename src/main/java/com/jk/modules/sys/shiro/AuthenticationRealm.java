@@ -36,35 +36,6 @@ public class AuthenticationRealm extends AuthorizingRealm {
     @Resource
     private RoleMapper roleMapper;
 
-    
-    /*
-     * @methodName: setAuthenticationCacheName
-     * @param: [authenticationCacheName]
-     * @description: 认证缓存节点
-     * @return: void
-     * @author: cuiP
-     * @date: 2017/8/6 20:44 
-     * @version: V1.0.0
-     */
-    @Override
-    public void setAuthenticationCacheName(String authenticationCacheName) {
-        super.setAuthenticationCacheName(authenticationCacheName);
-    }
-
-    /*
-     * @methodName: setAuthorizationCacheName
-     * @param: [authorizationCacheName]
-     * @description: 授权缓存节点
-     * @return: void
-     * @author: cuiP
-     * @date: 2017/8/6 20:45 
-     * @version: V1.0.0
-     */
-    @Override
-    public void setAuthorizationCacheName(String authorizationCacheName) {
-        super.setAuthorizationCacheName(authorizationCacheName);
-    }
-
 
     /**
      * 认证  校验用户身份是否合法

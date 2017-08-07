@@ -15,6 +15,9 @@ public class EhCacheUtils {
 
     private static EhCacheCacheManager ehCacheCacheManager = ((EhCacheCacheManager) SpringUtils.getBean("ehCacheCacheManager"));
 
+    private static final String DEFAULT_CACHE = "defaultCache";
+
+
     /**
      * 根据节点名称为cacheName和键为key获取一条数据
      * @param cacheName
@@ -27,12 +30,29 @@ public class EhCacheUtils {
     }
 
     /**
+     * 获取默认节点下键为key的一条数据
+     * @param key
+     * @return
+     */
+    public static Object get(String key){
+        return get(DEFAULT_CACHE, key);
+    }
+
+    /**
      * 返回节点cacheName下所有的key
      * @param cacheName
      * @return
      */
     public static List getKeys(String cacheName){
         return getCache(cacheName).getKeys();
+    }
+
+    /**
+     * 返回节点默认节点下所有的key
+     * @return
+     */
+    public static List getKeys(){
+        return getCache(DEFAULT_CACHE).getKeys();
     }
 
     /**
@@ -47,6 +67,15 @@ public class EhCacheUtils {
     }
 
     /**
+     * 默认节点添加一条缓存数据
+     * @param key
+     * @param value
+     */
+    public static void put(String key, Object value) {
+        put(DEFAULT_CACHE, key, value);
+    }
+
+    /**
      * 移除节点cacheName下键为key的一条缓存数据
      * @param cacheName
      * @param key
@@ -56,11 +85,26 @@ public class EhCacheUtils {
     }
 
     /**
+     * 移除默认节点下键为key的一条缓存数据
+     * @param key
+     */
+    public static void remove(String key) {
+        remove(DEFAULT_CACHE, key);
+    }
+
+    /**
      * 移除节点cacheName下所有的键值对
      * @param cacheName
      */
     public static void removeAll(String cacheName) {
         getCache(cacheName).removeAll();
+    }
+
+    /**
+     * 移除默认节点下所有的键值对
+     */
+    public static void removeAll() {
+        removeAll(DEFAULT_CACHE);
     }
 
     /**
@@ -73,11 +117,19 @@ public class EhCacheUtils {
     }
 
     /**
+     * 移除默认节点下键为keys的数据
+     * @param keys
+     */
+    public static void removeAll(List keys) {
+        removeAll(DEFAULT_CACHE, keys);
+    }
+
+    /**
      * 返回一个缓存对象
      * @param cacheName
      * @return
      */
-    public static Cache getCache(String cacheName){
+    private static Cache getCache(String cacheName){
         Cache cache = getCacheManager().getCache(cacheName);
         if (cache == null){
             getCacheManager().addCache(cacheName);
@@ -86,7 +138,7 @@ public class EhCacheUtils {
         return cache;
     }
 
-    public static CacheManager getCacheManager() {
+    private static CacheManager getCacheManager() {
         return ehCacheCacheManager.getCacheManager();
     }
 }
