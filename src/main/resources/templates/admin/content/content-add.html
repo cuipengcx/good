@@ -65,7 +65,8 @@
                         <img th:src="@{/h-ui/lib/webuploader/0.1.5/images/image.png}" height="81" width="81"/>
                     </div>
                     <div id="filePicker">选择图片</div>
-                    <input type="hidden" name="img" id="img" />
+                    <input type="hidden" name="img" id="imgUrl" />
+                    <input type="hidden" name="imgName" id="imgName" />
                     <!--<button id="btn-star" class="btn btn-default btn-uploadstar radius ml-10">开始上传</button>-->
                 </div>
             </div>
@@ -104,8 +105,8 @@
     var options = {
         uploadBtnId: '#filePicker',
         picturePreId: 'fileListPreId',
-        hiddenPictureId: 'img',
-        serverUrl: '/upload/images',
+        hiddenPictureUrlId: 'imgUrl',
+        hiddenPictureNameId: 'imgName',
         accept : {
             title : 'Images',
             extensions : 'gif,jpg,jpeg,bmp,png',
@@ -118,9 +119,11 @@
         fileSingleSizeLimit: 2 * 1024 * 1024
 //		fileNumLimit: 1
     };
-    var avatarUp = new $WebUpload(options);
-    //	avatarUp.setUploadBarId("fileListPreId");
-    avatarUp.init();
+
+    var webUploadPicture = new $WebUploadPicture(options);
+    //	webUploadPicture.setUploadBarId("fileListPreId");
+    webUploadPicture.init();
+
 
     /**
      * 取消
