@@ -4,15 +4,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jk.common.Constant.JobStatus;
 import com.jk.common.base.service.impl.BaseServiceImpl;
+import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.job.ScheduleUtils;
 import com.jk.modules.job.mapper.ScheduleJobMapper;
 import com.jk.modules.job.model.ScheduleJob;
-import com.jk.modules.sys.model.User;
 import com.jk.modules.job.service.ScheduleJobService;
+import com.jk.modules.sys.model.User;
 import com.xiaoleilu.hutool.date.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -83,7 +83,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         ScheduleUtils.createScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob);
 
         //保存到数据库
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = ShiroUtils.getUserEntity();
 
         scheduleJob.setId(null);
         scheduleJob.setStatus(1);
@@ -142,7 +142,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }
 
         //更新数据库
-        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        User user = ShiroUtils.getUserEntity();
         scheduleJob.setModifyBy(user.getId());
         super.update(scheduleJob);
     }

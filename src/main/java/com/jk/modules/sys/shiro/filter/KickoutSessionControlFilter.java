@@ -3,8 +3,8 @@ package com.jk.modules.sys.shiro.filter;
 import com.feilong.core.util.CollectionsUtil;
 import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
+import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.WebUtil;
-import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.vo.LoginSession;
 import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -102,8 +102,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         }
 
         Session session = subject.getSession();
-        User user = (User) subject.getPrincipal();
-        String username = user.getUsername();
+        String username = ShiroUtils.getUserName();
         Serializable sessionId = session.getId();
 
         //读取缓存   没有就存入
@@ -162,7 +161,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
                 return false;
             }else {
                 //退出登录
-                subject.logout();
+                ShiroUtils.logout();
                 //保存上次请求的地址
                 saveRequest(request);
                 //重定向

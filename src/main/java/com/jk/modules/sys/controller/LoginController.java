@@ -5,11 +5,11 @@ import com.jk.common.Constant;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
+import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.WebUtil;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.UserService;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class LoginController extends BaseController {
     public ResponseEntity<String> login(String username, String password){
         try {
             //获取当前的Subject
-            Subject currentUser = SecurityUtils.getSubject();
+            Subject currentUser = ShiroUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             //在调用了login方法后,SecurityManager会收到AuthenticationToken,并将其发送给已配置的Realm执行必须的认证检查
             //每个Realm都能在必要时对提交的AuthenticationTokens作出反应
@@ -124,8 +124,7 @@ public class LoginController extends BaseController {
         ModelMap messagesMap = new ModelMap();
         try {
             //获得当前登陆用户
-            Subject subject = SecurityUtils.getSubject();
-            User user = (User) subject.getPrincipal();
+            User user = ShiroUtils.getUserEntity();
 
             if(!user.getPassword().equals(SecureUtil.md5().digestHex(oldPassword))){
                 log.info("修改密码失败，原始密码不正确!");
@@ -138,9 +137,6 @@ public class LoginController extends BaseController {
             newUser.setId(user.getId());
             newUser.setPassword(SecureUtil.md5().digestHex(newPassword));
             userService.updateSelective(newUser);
-
-//            //清除登录信息
-//            subject.logout();
 
             log.info("修改密码成功!");
             messagesMap.put("status",SUCCESS);

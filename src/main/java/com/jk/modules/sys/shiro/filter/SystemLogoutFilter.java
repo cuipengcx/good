@@ -38,8 +38,8 @@ public class SystemLogoutFilter extends LogoutFilter{
         Subject subject = this.getSubject(request, response);
         String redirectUrl = this.getRedirectUrl(request, response, subject);
 
-        //当前登录用户的账号
-        String username = ShiroUtils.getUserEntity().getUsername();
+        //清除账号登陆限制缓存
+        String username = ShiroUtils.getUserName();
         Serializable sessionId = ShiroUtils.getSession().getId();
 
         Deque<LoginSession> deque = (Deque<LoginSession>) EhCacheUtils.get("shiro-kickout-session", username);
@@ -54,9 +54,8 @@ public class SystemLogoutFilter extends LogoutFilter{
         //更新缓存
         EhCacheUtils.put("shiro-kickout-session", username, deque);
 
-
         try {
-            subject.logout();
+            ShiroUtils.logout();
         } catch (SessionException var6) {
             log.debug("Encountered session exception during logout.  This can generally safely be ignored.", var6);
         }

@@ -68,7 +68,7 @@ public class OperationLogAspect {
             //*========数据库日志=========*//
             Log log = new Log();
             log.setAppName("");
-            log.setUsername(ShiroUtils.getUserEntity().getUsername());
+            log.setUsername(ShiroUtils.getUserName());
             log.setLogType(0);
             log.setMethodName(getFullMethodName(joinPoint));
             log.setRequestMethod(request.getMethod());

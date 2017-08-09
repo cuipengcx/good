@@ -1,11 +1,10 @@
 package com.jk.modules.sys.controller;
 
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.util.ShiroUtils;
 import com.jk.modules.sys.model.Permission;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.PermissionService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,9 +45,7 @@ public class IndexController extends BaseController{
     @GetMapping(value = "/admin/index")
     public String index(ModelMap modelMap){
         //从shiro的session中取user
-        Subject subject = SecurityUtils.getSubject();
-        //取身份信息
-        User user = (User) subject.getPrincipal();
+        User user = ShiroUtils.getUserEntity();
 
         List<Permission> menuList = permissionService.findMenuListByUserId(user.getId());
         //通过model传到页面
