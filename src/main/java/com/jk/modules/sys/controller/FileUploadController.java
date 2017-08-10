@@ -1,6 +1,5 @@
 package com.jk.modules.sys.controller;
 
-import com.feilong.core.DatePattern;
 import com.jk.common.base.controller.BaseController;
 import com.xiaoleilu.hutool.date.DateUtil;
 import com.xiaoleilu.hutool.http.HttpUtil;
@@ -15,15 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @className: FileUploadControl
@@ -47,8 +43,10 @@ public class FileUploadController extends BaseController {
     @Value("${docUrl}")
     public String DOC_URL;
 
-    // 允许上传的格式
+    // 允许上传图片的格式
     private static final String[] IMAGE_TYPE = new String[] { "image/gif", "image/jpeg", "image/bmp", "image/jpg", "image/png" };
+    // 允许上传文件的格式
+    private static final String[] DOC_TYPE = new String[] { "application/msword", "application/vnd.ms-powerpoint", "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" };
 
     /*
      * @methodName: uploadImage
@@ -59,10 +57,8 @@ public class FileUploadController extends BaseController {
      * @date: 2017/8/4 13:17
      * @version: V1.0.0
      */
-    @ResponseBody
     @PostMapping(value="/images")
-    public ResponseEntity<Map<String, Object>> uploadImage(HttpServletRequest request, @RequestParam("file") MultipartFile file){
-        Map<String, Object> resultMap = new HashMap<>();
+    public ResponseEntity<String> uploadImage(HttpServletRequest request, @RequestParam("file") MultipartFile file){
 
         if(file.isEmpty()){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -88,18 +84,66 @@ public class FileUploadController extends BaseController {
 
         //图片数据库存储路径
         String imageUrl =StringUtils.replace(StrUtil.subSuf(path, REPOSITORY_PATH.length()), "\\", "/");
-        resultMap.put("imageUrl", imageUrl);
 
         File newFile = new File(path);
         try {
             // 写文件到磁盘
             file.transferTo(newFile);
-            return ResponseEntity.status(HttpStatus.OK).body(resultMap);
+            return ResponseEntity.status(HttpStatus.OK).body(imageUrl);
+        } catch (IOException e) {
+            log.error("上传图片错误！{}", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    /*
+     * @methodName: uploadDoc
+     * @param: [request, file]
+     * @description: 上传文件
+     * @return: org.springframework.http.ResponseEntity<java.lang.String>
+     * @author: cuiP
+     * @date: 2017/8/10 11:58
+     * @version: V1.0.0
+     */
+    @PostMapping(value="/docs")
+    public ResponseEntity<String> uploadDoc(HttpServletRequest request, @RequestParam("file") MultipartFile file){
+
+        if(file.isEmpty()){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+        //文件类型
+        String fileMimeType = HttpUtil.getMimeType(file.getOriginalFilename());
+
+        boolean flag = false;
+        for (String s : DOC_TYPE) {
+            if (s.equalsIgnoreCase(fileMimeType)) {
+                flag = true;
+                break;
+            }
+        }
+
+        //文件格式不允许上传
+        if(!flag){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+        String path = getFilePath(file.getOriginalFilename(), "docs");
+
+        //文件数据库存储路径
+        String docUrl =StringUtils.replace(StrUtil.subSuf(path, REPOSITORY_PATH.length()), "\\", "/");
+
+        File newFile = new File(path);
+        try {
+            // 写文件到磁盘
+            file.transferTo(newFile);
+            return ResponseEntity.status(HttpStatus.OK).body(docUrl);
         } catch (IOException e) {
             log.error("上传文件错误！{}", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
 
     /*
      * @methodName: getFilePath
@@ -115,8 +159,8 @@ public class FileUploadController extends BaseController {
         String baseFolder = REPOSITORY_PATH + File.separator + typeFolder;
         Date nowDate = new Date();
         // yyyy/MM/dd
-        String fileFolder = baseFolder + File.separator + DateUtil.format(nowDate, DatePattern.yyyy)
-                + File.separator + DateUtil.format(nowDate, DatePattern.MM) + File.separator
+        String fileFolder = baseFolder + File.separator + DateUtil.format(nowDate, "yyyy")
+                + File.separator + DateUtil.format(nowDate, "MM") + File.separator
                 + DateUtil.format(nowDate, "dd");
 
         File file = new File(fileFolder);
@@ -127,7 +171,7 @@ public class FileUploadController extends BaseController {
         }
 
         // 生成新的文件名
-        String fileName = DateUtil.format(nowDate, DatePattern.TIMESTAMP_WITH_MILLISECOND)
+        String fileName = DateUtil.format(nowDate, "yyyyMMddHHmmssSSS")
                 + RandomUtils.nextInt(100, 9999) + "." + StringUtils.substringAfterLast(sourceFileName, ".");
         return fileFolder + File.separator + fileName;
     }

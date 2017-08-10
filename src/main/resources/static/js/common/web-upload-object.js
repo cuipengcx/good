@@ -5,14 +5,18 @@
  */
 (function() {
 
+	/**
+	 * 图片
+	 * @param options
+	 */
 	var $WebUploadPicture = function(options) {
 		this.auto = options.auto || true;  //开启自动上传
 		this.uploadBtnId = options.uploadBtnId || '#filePicker'; //选择图片按钮，id|class自己定义
-		this.uploadPreId = options.picturePreId || 'fileListPreId'; //图片预览ID
+		this.uploadPreId = options.picturePreId || 'fileListPre'; //图片预览ID
 		this.uploadUrl = options.serverUrl || '/upload/images';    //上传URL
 		this.swf = '/h-ui/lib/webuploader/0.1.5/Uploader.swf';
-		this.pictureUrlId = options.hiddenPictureUrlId;   //隐藏域ID,用于往后台传值
-		this.pictureNameId = options.hiddenPictureNameId;   //隐藏域原文件名,用于往后台传值
+		this.pictureUrl = options.hiddenPictureUrl || 'pictureUrl';   //隐藏域name,用于往后台传值
+		this.pictureName = options.hiddenPictureName || 'pictureName';   //隐藏域原文件名,用于往后台传值
 		this.picWidth = options.width;  //图片宽度
 		this.picHeight = options.height; //图片高度
 		this.fileSizeLimit = options.fileSizeLimit || 100 * 1024 * 1024;   //验证文件总大小是否超出限制, 超出则不允许加入队列
@@ -65,6 +69,8 @@
 				var $li = $(
 					'<div id="' + file.id + '" class="file-item thumbnail">' +
 					'<img width="'+me.picWidth+'" height="'+me.picHeight+'">' +
+					'<input type="hidden" name="'+me.pictureUrl+'" id="' + file.id + 'PicUrl" />'+
+					'<input type="hidden" name="'+me.pictureName+'" id="' + file.id + 'PicName" />'+
 					'<div class="info">' + file.name + '</div>' +
 					'</div>'
 				);
@@ -106,9 +112,10 @@
 			bindObj.on('uploadSuccess', function(file,response) {
 				succeedMessage("上传成功");
 				//隐藏域ID,用于往后台传值
-				$("#" + me.pictureUrlId).val(response.imageUrl);
+				console.log(response._raw);
+				$("#" + file.id + "PicUrl").val(response._raw);
 				//隐藏域原文件名,用于往后台传值
-				$("#" + me.pictureNameId).val(file.name);
+				$("#" + file.id + "PicName").val(file.name);
 				$('#' + file.id).addClass('upload-state-done');
 			});
 
@@ -130,6 +137,10 @@
 				}
 
 				$error.text('上传失败');
+
+				//移除上传失败的隐藏域input值
+				$('#' + file.id + 'PicUrl').remove();
+				$('#' + file.id + 'PicName').remove();
 			});
 
 			// 其他错误
@@ -157,19 +168,23 @@
 		}
 	};
 
-
+	/**
+	 * 文件
+	 * @param options
+	 */
 	var $WebUploadDoc = function(options) {
 		this.auto = options.auto || true;  //开启自动上传
 		this.uploadBtnId = options.uploadBtnId || '#filePicker'; //选择上传按钮，id|class自己定义
-		this.uploadPreId = options.docPreId || 'fileListPreId'; //预览ID
+		this.uploadPreId = options.docPreId || 'fileListPre'; //预览ID
 		this.uploadUrl = options.serverUrl || '/upload/docs';    //上传URL
 		this.swf = '/h-ui/lib/webuploader/0.1.5/Uploader.swf';
-		this.docUrlId = options.hiddenDocUrlId;   //隐藏域ID,用于往后台传值
-		this.docNameId = options.hiddenDocNameId;   //隐藏域原文件名,用于往后台传值
+		this.docUrl = options.hiddenDocUrl || 'docUrl';   //隐藏域name,用于往后台传值
+		this.docName = options.hiddenDocName || 'docName';   //隐藏域原文件名,用于往后台传值
 		this.fileSizeLimit = options.fileSizeLimit || 100 * 1024 * 1024;   //验证文件总大小是否超出限制, 超出则不允许加入队列
 		this.fileSingleSizeLimit = options.fileSingleSizeLimit || 2 * 1024 * 1024;   // 验证单个文件大小是否超出限制, 超出则不允许加入队列
 		this.fileNumLimit = options.fileNumLimit || undefined;   // 验证文件总数量, 超出则不允许加入队列
 		this.accept = options.accept;  //指定接受哪些类型的文件
+		this.append = options.append || false;  //是否开启追加多个
 		this.uploadBarId = null;      //上传的进度条的id
 	};
 
@@ -216,10 +231,16 @@
 				var $li = $(
 					'<div id="' + file.id + '" class="item">' +
 					'<h4 class="info">' + file.name + '</h4>' +
+					'<input type="hidden" name="'+me.docUrl+'" id="' + file.id + 'DocUrl" />'+
+					'<input type="hidden" name="'+me.docName+'" id="' + file.id + 'DocName" />'+
 					'<p class="state">等待上传...</p>' +
 					'</div>'
 				);
-				$("#" + me.uploadPreId).append($li);
+				if(me.append){
+					$("#" + me.uploadPreId).append($li);
+				}else {
+					$("#" + me.uploadPreId).html($li);
+				}
 			});
 
 			// 文件上传过程中创建进度条实时显示。
@@ -245,17 +266,17 @@
 			bindObj.on('uploadSuccess', function(file,response) {
 				succeedMessage("上传成功");
 				//隐藏域ID,用于往后台传值
-				$("#" + me.docUrlId).val(response.docUrl);
+				$("#" + file.id + "DocUrl").val(response._raw);
 				//隐藏域原文件名,用于往后台传值
-				$("#" + me.docNameId).val(file.name);
+				$("#" + file.id + "DocName").val(file.name);
 
 				$( '#'+file.id ).find('p.state').text('已上传');
 			});
 
 			// 完成上传完了，成功或者失败，先删除进度条。
 			bindObj.on('uploadComplete', function(file) {
-				$( '#'+file.id ).find('.progress').fadeOut();
-				// $( '#'+file.id ).find('.progress').remove();
+				// $( '#'+file.id ).find('.progress').fadeOut();
+				$( '#'+file.id ).find('.progress').remove();
 			});
 
 
@@ -263,6 +284,9 @@
 			bindObj.on('uploadError', function(file) {
 				errorMessage("上传失败");
 				$( '#'+file.id ).find('p.state').text('上传出错');
+				//移除上传失败的隐藏域input值
+				$('#' + file.id + 'DocUrl').remove();
+				$('#' + file.id + 'DocName').remove();
 			});
 
 			// 其他错误
