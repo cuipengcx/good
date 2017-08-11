@@ -153,6 +153,8 @@
 					errorMessage("上传数量超过限制");
 				} else if ("F_DUPLICATE" == type) {
 					errorMessage("图片选择重复");
+				} else if("F_EXCEED_SIZE" == type){
+					errorMessage("文件大小超出了限制");
 				} else {
 					errorMessage("上传过程中出错");
 				}
@@ -233,6 +235,7 @@
 					'<h4 class="info">' + file.name + '</h4>' +
 					'<input type="hidden" name="'+me.docUrl+'" id="' + file.id + 'DocUrl" />'+
 					'<input type="hidden" name="'+me.docName+'" id="' + file.id + 'DocName" />'+
+					'<a href="javascript:;" onclick="delDoc(this);">删除</a>'+
 					'<p class="state">等待上传...</p>' +
 					'</div>'
 				);
@@ -299,11 +302,12 @@
 					errorMessage("上传数量超过限制");
 				} else if ("F_DUPLICATE" == type) {
 					errorMessage("文件选择重复");
-				} else {
+				} else if("F_EXCEED_SIZE" == type){
+					errorMessage("文件大小超出了限制");
+				} else{
 					errorMessage("上传过程中出错");
 				}
 			});
-
 		},
 
 		/**
@@ -314,8 +318,13 @@
 		}
 	};
 
-
 	window.$WebUploadPicture = $WebUploadPicture;
 	window.$WebUploadDoc = $WebUploadDoc;
 
 }());
+
+
+function delDoc(obj) {
+	var $this = $(obj);
+	$this.parent("div").remove();
+}

@@ -1,8 +1,8 @@
 package com.jk.modules.sys.controller;
 
 import com.jk.common.base.controller.BaseController;
+import com.jk.common.util.FileValidateUtil;
 import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.http.HttpUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
@@ -44,9 +44,9 @@ public class FileUploadController extends BaseController {
     public String DOC_URL;
 
     // 允许上传图片的格式
-    private static final String[] IMAGE_TYPE = new String[] { "image/gif", "image/jpeg", "image/bmp", "image/jpg", "image/png" };
+    private static final String[] IMAGE_TYPE = new String[] { ".gif", ".jpeg", ".bmp", ".jpg", ".png" };
     // 允许上传文件的格式
-    private static final String[] DOC_TYPE = new String[] { "application/msword", "application/vnd.ms-powerpoint", "application/pdf", "application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" };
+    private static final String[] DOC_TYPE = new String[] { ".doc", ".ppt", ".pdf", ".xls", ".xlsx" };
 
     /*
      * @methodName: uploadImage
@@ -64,18 +64,10 @@ public class FileUploadController extends BaseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
-        //文件类型
-        String fileMimeType = HttpUtil.getMimeType(file.getOriginalFilename());
+        //校验文件是否合法
+        boolean flag = FileValidateUtil.validateType(file, DOC_TYPE);
 
-        boolean flag = false;
-        for (String s : IMAGE_TYPE) {
-            if (s.equalsIgnoreCase(fileMimeType)) {
-                flag = true;
-                break;
-            }
-        }
-
-        //图片格式不允许上传
+        //图片不允许上传
         if(!flag){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
@@ -112,16 +104,8 @@ public class FileUploadController extends BaseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
-        //文件类型
-        String fileMimeType = HttpUtil.getMimeType(file.getOriginalFilename());
-
-        boolean flag = false;
-        for (String s : DOC_TYPE) {
-            if (s.equalsIgnoreCase(fileMimeType)) {
-                flag = true;
-                break;
-            }
-        }
+        //校验文件是否合法
+        boolean flag = FileValidateUtil.validateType(file, DOC_TYPE);
 
         //文件格式不允许上传
         if(!flag){
