@@ -15,24 +15,30 @@ public class ShiroUtils {
 
 	private ShiroUtils(){}
 
-	public static Session getSession() {
-        return SecurityUtils.getSubject().getSession();
-	}
 
 	/**
 	 * 获取当前主体
 	 * @return
-     */
+	 */
 	public static Subject getSubject() {
 		return SecurityUtils.getSubject();
 	}
+
+	/**
+	 * 获取当前用户session
+	 * @return
+     */
+	public static Session getSession() {
+        return getSubject().getSession();
+	}
+
 
 	/**
 	 * 获取当前登录对象
 	 * @return
      */
 	public static User getUserEntity() {
-		return (User)SecurityUtils.getSubject().getPrincipal();
+		return (User)getSubject().getPrincipal();
 	}
 
 	/**
@@ -52,7 +58,7 @@ public class ShiroUtils {
 	}
 
 	/**
-	 * session赋值
+	 * 当前登录用户session赋值
 	 * @param key
 	 * @param value
      */
@@ -61,7 +67,7 @@ public class ShiroUtils {
 	}
 
 	/**
-	 * session取值
+	 * 当前登录用户session取值
 	 * @param key
 	 * @return
      */
@@ -74,7 +80,7 @@ public class ShiroUtils {
 	 * @return
      */
 	public static boolean isLogin() {
-		return SecurityUtils.getSubject().getPrincipal() != null;
+		return getSubject().getPrincipal() != null;
 	}
 
 	/**
@@ -83,10 +89,14 @@ public class ShiroUtils {
 	public static void logout() {
 		//清除认证缓存(由于认证时放入的是整个对象的信息,subject.logout()无法清除认证信息，所以手动清除)
 		EhCacheUtils.remove("goodAuthenticationCache", ShiroUtils.getUserName());
-		SecurityUtils.getSubject().logout();
+		getSubject().logout();
 	}
 
-
+	/**
+	 * 获取验证码，获取一次后删除
+	 * @param key
+	 * @return
+     */
 	public static String getKaptcha(String key) {
 		String kaptcha = getSessionAttribute(key).toString();
 		getSession().removeAttribute(key);

@@ -28,7 +28,7 @@
 
     <!--<script type="text/javascript" th:src="@{/h-ui/lib/jquery/1.9.1/jquery.min.js}"></script>-->
     <script type="text/javascript" th:src="@{/js/lib/jquery-1.11.0.min.js}"></script>
-    <!--<script type="text/javascript" th:src="@{/h-ui/lib/html5.js}"></script>-->
+    <!--<script type="text/javascript" th:src="@{/h-ui/lib/html5shiv.js}"></script>-->
     <!--<script type="text/javascript" th:src="@{/h-ui/lib/respond.min.js}"></script>-->
     <!--<script type="text/javascript" th:src="@{/h-ui/lib/PIE_IE678.js}"></script>-->
     <script type="text/javascript" th:src="@{/h-ui/lib/layer/2.4/layer.js}"></script>
@@ -53,5 +53,6 @@
     <div layout:fragment="content"></div>
 
     <!--<div th:replace="~{admin/common/footer :: footer}"></div>-->
+    <script th:src="@{/js/lib/canvas-nest.min.js}" count="100" zindex="-2" opacity="0.7" color="47,135,193" type="text/javascript"></script>
 </body>
 </html>
