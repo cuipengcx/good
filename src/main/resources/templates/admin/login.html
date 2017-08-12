@@ -16,12 +16,29 @@
   <link rel="stylesheet" type="text/css" th:href="@{/h-ui/static/h-ui.admin/css/style.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/h-ui/static/h-ui.admin/css/H-ui.login.css}" />
   <link rel="stylesheet" type="text/css" th:href="@{/h-ui/extend/login/css/supersized.css}" />
+  <style>
+    h3{
+      margin:120px auto;
+      text-align:center;
+      color:#FFFFFF;
+    }
+    .title{
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      right: 0;
+    }
+  </style>
 </head>
 
 <body>
 <input type="hidden" id="TenantId" name="TenantId" value="" />
-<div class="">
-  <h1>Good通用后台系统</h1>
+<div class="title">
+
+  <h3>后台通用管理系统</h3>
+
   <div id="loginform" class="loginBox">
     <form class="form form-horizontal" action="index.html" method="post" th:action="@{/admin/login}">
       <div class="row cl">
