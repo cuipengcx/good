@@ -38,7 +38,7 @@ import java.util.Map;
  * Created by JK on 2017/2/9.
  */
 @Configuration
-public class ShiroConfiguration {
+public class ShiroConfig {
 
     /**
      * ShiroFilterFactoryBean 处理拦截资源文件问题。

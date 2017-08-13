@@ -39,20 +39,23 @@ public class SystemLogoutFilter extends LogoutFilter{
         String redirectUrl = this.getRedirectUrl(request, response, subject);
 
         //清除账号登陆限制缓存
-        String username = ShiroUtils.getUserName();
-        Serializable sessionId = ShiroUtils.getSession().getId();
+        if(ShiroUtils.isLogin()){
+            String username = ShiroUtils.getUserName();
+            Serializable sessionId = ShiroUtils.getSession().getId();
 
-        Deque<LoginSession> deque = (Deque<LoginSession>) EhCacheUtils.get("shiro-kickout-session", username);
+            Deque<LoginSession> deque = (Deque<LoginSession>) EhCacheUtils.get("shiro-kickout-session", username);
 
-        if(deque == null) {
-            deque = new LinkedList<LoginSession>();
+            if(deque == null) {
+                deque = new LinkedList<LoginSession>();
+                EhCacheUtils.put("shiro-kickout-session", username, deque);
+            }
+
+            LoginSession loginSession = CollectionsUtil.find(deque, "sessionId", sessionId);
+            deque.remove(loginSession);
+            //更新缓存
             EhCacheUtils.put("shiro-kickout-session", username, deque);
         }
 
-        LoginSession loginSession = CollectionsUtil.find(deque, "sessionId", sessionId);
-        deque.remove(loginSession);
-        //更新缓存
-        EhCacheUtils.put("shiro-kickout-session", username, deque);
 
         try {
             ShiroUtils.logout();

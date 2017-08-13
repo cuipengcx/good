@@ -18,26 +18,4 @@ public class RootApplication {
     public static void main(String[] args) {
         SpringApplication.run(RootApplication.class, args);
     }
-
-    
-    /**
-     * 增加string 转date转换器
-     * @return
-     */
-//    @Bean
-//    public Converter<String, Date> addNewConvert() {
-//        return new Converter<String, Date>() {
-//            @Override
-//            public Date convert(String source) {
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//                Date date = null;
-//                try {
-//                    date = sdf.parse((String) source);
-//                } catch (ParseException e) {
-//                    e.printStackTrace();
-//                }
-//                return date;
-//            }
-//        };
-//    }
 }

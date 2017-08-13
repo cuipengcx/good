@@ -38,7 +38,11 @@ public class ShiroUtils {
 	 * @return
      */
 	public static User getUserEntity() {
-		return (User)getSubject().getPrincipal();
+		Object subject = getSubject().getPrincipal();
+		if(null == subject){
+			return new User();
+		}
+		return (User)subject;
 	}
 
 	/**
@@ -80,7 +84,7 @@ public class ShiroUtils {
 	 * @return
      */
 	public static boolean isLogin() {
-		return getSubject().getPrincipal() != null;
+		return getSubject().getPrincipal() != null && getSubject().isAuthenticated();
 	}
 
 	/**
