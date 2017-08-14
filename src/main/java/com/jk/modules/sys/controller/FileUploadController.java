@@ -65,7 +65,7 @@ public class FileUploadController extends BaseController {
         }
 
         //校验文件是否合法
-        boolean flag = FileValidateUtil.validateType(file, DOC_TYPE);
+        boolean flag = FileValidateUtil.validateType(file, IMAGE_TYPE);
 
         //图片不允许上传
         if(!flag){
