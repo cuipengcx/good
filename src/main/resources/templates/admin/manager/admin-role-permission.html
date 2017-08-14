@@ -47,7 +47,8 @@
         var zNodes = [[${treeNodeList}]];
         var setting = {
             check : {
-                enable : true	//是否复选框
+                enable : true,	//是否复选框
+                chkboxType: { "Y" : "ps", "N" : "s" }  //子节点取消勾选时不影响父节点
             },
             data : {
                 simpleData : {
