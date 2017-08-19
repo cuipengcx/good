@@ -12,6 +12,7 @@ import com.jk.modules.sys.model.UserRole;
 import com.jk.modules.sys.service.UserService;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         Criteria criteria = example.createCriteria();
         if(StringUtils.isNotEmpty(username)){
             criteria.andLike("username", "%"+username+"%");
-        }if(startTime != null && endTime != null){
+        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
         PageHelper.startPage(pageNum,pageSize);

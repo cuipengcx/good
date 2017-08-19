@@ -6,6 +6,7 @@ import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.modules.job.model.ScheduleJobLog;
 import com.jk.modules.job.service.ScheduleJobLogService;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +31,7 @@ public class ScheduleJobLogServiceImpl extends BaseServiceImpl<ScheduleJobLog> i
         criteria.andEqualTo("jobId", jobId);
         if(StringUtils.isNotEmpty(jobName)){
             criteria.andLike("jobName", "%"+jobName+"%");
-        }if(startTime != null && endTime != null){
+        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
         //倒序

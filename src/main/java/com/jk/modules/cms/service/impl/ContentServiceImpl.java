@@ -6,6 +6,7 @@ import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.modules.cms.model.Content;
 import com.jk.modules.cms.service.ContentService;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class ContentServiceImpl extends BaseServiceImpl<Content> implements Cont
             criteria.andEqualTo("contentCatId", catId);
         }if(StringUtils.isNotEmpty(title)){
             criteria.andLike("title", "%"+title+"%");
-        }if(startTime != null && endTime != null){
+        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
 

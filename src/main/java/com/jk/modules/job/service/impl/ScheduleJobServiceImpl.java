@@ -11,6 +11,7 @@ import com.jk.modules.job.model.ScheduleJob;
 import com.jk.modules.job.service.ScheduleJobService;
 import com.jk.modules.sys.model.User;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
@@ -63,7 +64,7 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         Example.Criteria criteria = example.createCriteria();
         if(StringUtils.isNotEmpty(jobName)){
             criteria.andLike("jobName", "%"+jobName+"%");
-        }if(startTime != null && endTime != null){
+        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
         //倒序

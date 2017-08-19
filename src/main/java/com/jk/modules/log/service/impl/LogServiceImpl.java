@@ -6,6 +6,7 @@ import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.modules.log.model.Log;
 import com.jk.modules.log.service.LogService;
 import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService{
         Example.Criteria criteria = example.createCriteria();
         if(StringUtils.isNotEmpty(username)){
             criteria.andLike("username", "%"+username+"%");
-        }if(startTime != null && endTime != null){
+        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
             criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
         //倒序
