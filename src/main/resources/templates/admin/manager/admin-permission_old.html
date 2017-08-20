@@ -1,0 +1,77 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{admin/common/common}">
+<head>
+	<title>权限管理</title>
+</head>
+
+<body layout:fragment="content">
+<nav class="breadcrumb">
+	<i class="Hui-iconfont">&#xe67f;</i>
+	首页 <span class="c-gray en">&gt;</span>
+	系统管理 <span class="c-gray en">&gt;</span>
+	权限管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+<form id="myForm" th:action="@{/admin/permission}" th:method="get">
+	<div class="page-container">
+		<div class="text-c">
+			<form class="Huiform" method="post" action="" target="_self">
+				<input type="text" class="input-text" style="width:250px" placeholder="权限名称" id="" name="" th:name="name" th:value="${model.name}">
+				<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜权限节点</button>
+			</form>
+		</div>
+		<div class="cl pd-5 bg-1 bk-gray mt-20">
+			<span class="l">
+				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
+				<a href="javascript:;" onclick="admin_permission_add('添加权限节点','admin-permission-add.html','','310')"  th:onclick="'javascript:admin_permission_add(\'添加权限节点\',\'/admin/permission/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加权限节点</a>
+			</span>
+			<span class="r">共有数据：<strong th:text="${pageInfo?.total}">54</strong> 条</span> </div>
+		<table class="table table-border table-bordered table-bg table-hover">
+			<thead>
+				<tr>
+					<th scope="col" colspan="8">权限节点</th>
+				</tr>
+				<tr class="text-c">
+					<!--<th width="25"><input type="checkbox" name="" value=""></th>-->
+					<th>权限名称</th>
+					<th>父节点名称</th>
+					<th>图标</th>
+					<th>访问URL</th>
+					<th>权限标识</th>
+					<th>类型</th>
+					<th>排序号</th>
+					<th width="100">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
+					<!--<td><input type="checkbox" value="1" name=""></td>-->
+					<td th:text="*{name}">权限名称</td>
+					<td th:text="*{parentName}">父节点名称</td>
+					<td>
+						<i class="Hui-iconfont" th:utext="*{icon}">&#xe6df;</i>
+					</td>
+					<td th:text="*{url}">访问URL</td>
+					<td th:text="*{perms}">权限标识</td>
+					<td>
+						<span class="label label-default radius"  th:if="*{type} == '0'">目录</span>
+						<span class="label label-primary radiu"  th:if="*{type} == '1'">菜单</span>
+						<span class="label label-secondary radius"  th:if="*{type} == '2'">按钮</span>
+					</td>
+					<td th:text="*{sort}">排序号</td>
+					<td>
+						<a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','admin-permission-add.html','1','','310')" th:onclick="'javascript:admin_permission_add(\'编辑权限节点\',\'/admin/permission/edit/'+*{id}+'/'+*{type}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+						<a title="删除" href="javascript:;" onclick="admin_permission_del(this,'1')" th:onclick="'javascript:admin_permission_del(this, \'/admin/permission/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div th:replace="admin/common/page :: page"></div>
+	</div>
+</form>
+
+<script type="text/javascript" th:src="@{/js/common/page.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/manager/admin-permission.js}"></script>
+</body>
+</html>

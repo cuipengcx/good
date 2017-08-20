@@ -1,6 +1,52 @@
 $(function () {
-
+    var colunms = Menu.initColumn();
+    var table = new TreeTable(Menu.id, "/admin/permission/list", colunms);
+    table.setExpandColumn(2);
+    table.setIdField("id");
+    table.setCodeField("id");
+    table.setParentCodeField("parentId");
+    table.setExpandAll(false);
+    table.init();
+    Menu.table = table;
 });
+
+var Menu = {
+    id: "menuTable",
+    table: null,
+    layerIndex: -1
+};
+
+/**
+ * 初始化表格的列
+ */
+Menu.initColumn = function () {
+    var columns = [
+        {field: 'selectItem', radio: true},
+        {title: '菜单ID', field: 'id', visible: false, align: 'center', valign: 'middle'/*, width: '80px'*/},
+        {title: '权限名称', field: 'name', visible: false, align: 'center', valign: 'middle'/*, width: '180px'*/},
+        {title: '父节点名称', field: 'parentName', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/, formatter: function(item, index){
+            return item.parentName == null ? '' : item.parentName;
+        }},
+        {title: '图标', field: 'icon', align: 'center', valign: 'middle', sortable: true/*, width: '80px'*/, formatter: function(item, index){
+            return item.icon == null ? '' : '<i class="Hui-iconfont">'+item.icon+'</i>';
+        }},
+        {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/, formatter: function(item, index){
+            if(item.type === "0"){
+                return '<span class="label label-default radius">目录</span>';
+            }
+            if(item.type === "1"){
+                return '<span class="label label-primary radiu">菜单</span>';
+            }
+            if(item.type === "2"){
+                return '<span class="label label-secondary radius">按钮</span>';
+            }
+        }},
+        {title: '排序号', field: 'sort', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/},
+        {title: '访问URL', field: 'url', align: 'center', valign: 'middle', sortable: true/*, width: '160px'*/},
+        {title: '权限标识', field: 'perms', align: 'center', valign: 'middle', sortable: true}];
+    return columns;
+};
+
 
 /*
  参数解释：

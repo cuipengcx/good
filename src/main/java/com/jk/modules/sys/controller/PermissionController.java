@@ -1,6 +1,5 @@
 package com.jk.modules.sys.controller;
 
-import com.github.pagehelper.PageInfo;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
@@ -33,22 +32,25 @@ public class PermissionController extends BaseController{
     private PermissionService permissionService;
 
     /**
-     * 分页查询权限列表
-     * @param pageNum 当前页码
-     * @param modelMap
+     * 跳转到权限列表页面
      * @return
      */
     @RequiresPermissions("permission:list")
     @GetMapping
-    public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                       Permission model,
-                       ModelMap modelMap){
-        log.debug("分页查询权限列表参数! pageNum = {}, name = {}", pageNum, model.getName());
-        PageInfo<Permission> pageInfo = permissionService.findPage(pageNum, PAGESIZE, model.getName());
-        log.info("分页查询权限列表结果！ pageInfo = {}", pageInfo);
-        modelMap.put("pageInfo", pageInfo);
-        modelMap.put("model", model);
+    public String toList(){
         return BASE_PATH + "admin-permission";
+    }
+
+    /**
+     * 查询权限列表
+     *
+     * @return
+     */
+    @RequiresPermissions("permission:list")
+    @ResponseBody
+    @GetMapping("/list")
+    public List<Permission> list(){
+        return permissionService.findAll();
     }
 
     /**
