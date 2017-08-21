@@ -55,4 +55,11 @@ public interface PermissionService extends BaseService<Permission> {
      * @return
      */
     Boolean deletePermissionAndRolePermissionByPermissionId(Long permissionId);
+
+    /**
+     * 根据资源名称模糊匹配
+     * @param menuName
+     * @return
+     */
+    List<Permission> findListByMenuName(String menuName);
 }

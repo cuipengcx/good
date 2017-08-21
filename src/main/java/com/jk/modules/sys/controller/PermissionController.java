@@ -49,8 +49,8 @@ public class PermissionController extends BaseController{
     @RequiresPermissions("permission:list")
     @ResponseBody
     @GetMapping("/list")
-    public List<Permission> list(){
-        return permissionService.findAll();
+    public List<Permission> list(String menuName){
+        return permissionService.findListByMenuName(menuName);
     }
 
     /**
@@ -144,16 +144,18 @@ public class PermissionController extends BaseController{
      */
     @FormToken(save = true)
     @RequiresPermissions("permission:update")
-    @GetMapping(value = "/edit/{id}/{type}")
-    public String edit(@PathVariable("id") Long id, @PathVariable("type") String type, ModelMap modelMap){
-        log.info("跳转到权限编辑页面！id = {}, type = {}", id, type);
+    @GetMapping(value = "/edit/{id}")
+    public String edit(@PathVariable("id") Long id, ModelMap modelMap){
+        log.info("跳转到权限编辑页面！id = {}", id);
         Permission permission = permissionService.findById(id);
+
         String parentType = "";
-        if("1".equals(type)){
+        if("1".equals(permission.getType())){
             parentType = "0";
-        }else if("2".equals(type)){
+        }else if("2".equals(permission.getType())){
             parentType = "1";
         }
+
         //父节点列表
         List<Permission> permissionList = permissionService.findListByType(parentType);
 

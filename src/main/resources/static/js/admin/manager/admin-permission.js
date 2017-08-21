@@ -12,6 +12,7 @@ $(function () {
 
 var Menu = {
     id: "menuTable",
+    seItem: null,	//选中的条目
     table: null,
     layerIndex: -1
 };
@@ -22,15 +23,15 @@ var Menu = {
 Menu.initColumn = function () {
     var columns = [
         {field: 'selectItem', radio: true},
-        {title: '菜单ID', field: 'id', visible: false, align: 'center', valign: 'middle'/*, width: '80px'*/},
-        {title: '权限名称', field: 'name', visible: false, align: 'center', valign: 'middle'/*, width: '180px'*/},
-        {title: '父节点名称', field: 'parentName', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/, formatter: function(item, index){
+        {title: '菜单ID', field: 'id', visible: false, align: 'center', valign: 'middle', width: '7%'},
+        {title: '权限名称', field: 'name', visible: false, align: 'center', valign: 'middle', width: '15%'},
+        {title: '父节点名称', field: 'parentName', align: 'center', valign: 'middle', sortable: true, width: '15%', formatter: function(item, index){
             return item.parentName == null ? '' : item.parentName;
         }},
-        {title: '图标', field: 'icon', align: 'center', valign: 'middle', sortable: true/*, width: '80px'*/, formatter: function(item, index){
+        {title: '图标', field: 'icon', align: 'center', valign: 'middle', sortable: true, formatter: function(item, index){
             return item.icon == null ? '' : '<i class="Hui-iconfont">'+item.icon+'</i>';
         }},
-        {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/, formatter: function(item, index){
+        {title: '类型', field: 'type', align: 'center', valign: 'middle', sortable: true, formatter: function(item, index){
             if(item.type === "0"){
                 return '<span class="label label-default radius">目录</span>';
             }
@@ -41,10 +42,34 @@ Menu.initColumn = function () {
                 return '<span class="label label-secondary radius">按钮</span>';
             }
         }},
-        {title: '排序号', field: 'sort', align: 'center', valign: 'middle', sortable: true/*, width: '100px'*/},
-        {title: '访问URL', field: 'url', align: 'center', valign: 'middle', sortable: true/*, width: '160px'*/},
-        {title: '权限标识', field: 'perms', align: 'center', valign: 'middle', sortable: true}];
+        {title: '访问URL', field: 'url', align: 'center', valign: 'middle', sortable: true, width: '17%'},
+        {title: '权限标识', field: 'perms', align: 'center', valign: 'middle', sortable: true, width: '15%'},
+        {title: '排序号', field: 'sort', align: 'center', valign: 'middle', sortable: true}];
     return columns;
+};
+
+/**
+ * 检查是否选中
+ */
+Menu.check = function () {
+    var selected = $('#' + this.id).bootstrapTreeTable('getSelections');
+    if (selected.length == 0) {
+        errorMessage("请先选中一条记录！");
+        return false;
+    } else {
+        Menu.seItem = selected[0];
+        return true;
+    }
+};
+
+/**
+ * 搜索
+ */
+Menu.search = function () {
+    var queryData = {};
+
+    queryData['menuName'] = $("#menuName").val();
+    Menu.table.refresh({query: queryData});
 };
 
 
@@ -60,35 +85,38 @@ Menu.initColumn = function () {
 function admin_permission_add(title,url,w,h){
     layer_show(title,url,w,h);
 }
+
 /*管理员-权限-删除*/
 function admin_permission_del(obj, url){
-    layer.confirm('确认要删除吗？',function(index){
-        //此处请求后台程序，下方是成功后的前台处理……
-        $.ajax({
-            type:"DELETE",
-            dataType:"json",
-            url: url,
-            data:{
-                "timestamp":new Date().getTime()
-            },
-            statusCode: {
-                200 : function(data){
-                    $(obj).parents("tr").remove();
-                    var total = $("#total").text();
-                    $("#total").text(parseInt(total)-1);
-                    succeedMessage(data.responseText);
+    if(Menu.check()){
+        layer.confirm('确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            $.ajax({
+                type:"DELETE",
+                dataType:"json",
+                url: url+"/"+Menu.seItem.id,
+                data:{
+                    "timestamp":new Date().getTime()
                 },
-                404 : function(data){
-                    errorMessage(data.responseText);
-                },
-                500 : function(){
-                    errorMessage('系统错误!');
+                statusCode: {
+                    200 : function(data){
+                        window.location.reload();
+                    },
+                    404 : function(data){
+                        errorMessage(data.responseText);
+                    },
+                    500 : function(){
+                        errorMessage('系统错误!');
+                    }
                 }
-            }
+            });
         });
-    });
+    }
 }
+
 /*管理员-权限-编辑*/
 function admin_permission_edit(title,url,w,h){
-    layer_show(title,url,w,h);
+    if(Menu.check()){
+        layer_show(title,url+"/"+Menu.seItem.id,w,h);
+    }
 }

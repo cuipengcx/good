@@ -62,6 +62,7 @@ spring:
     mode: HTML
     encoding: UTF-8
     content-type: text/html
+  #文件上传配置
   http:
     multipart:
       #开启文件上传
@@ -73,6 +74,11 @@ spring:
       max-file-size: 1MB
       #整个请求文件的大小限制
       max-request-size: 10MB
+  #jackson配置
+  jackson:
+    # 属性为NULL 不序列化
+    default-property-inclusion: non_null
+
 
 #mybatis
 mybatis:

@@ -9,6 +9,7 @@ import com.jk.modules.sys.model.Permission;
 import com.jk.modules.sys.model.RolePermission;
 import com.jk.modules.sys.service.PermissionService;
 import com.jk.modules.sys.vo.TreeNode;
+import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -83,5 +84,17 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
         rolePermission.setPermissionId(permissionId);
         rolePermissionMapper.delete(rolePermission);
         return count1 == 1;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Permission> findListByMenuName(String menuName) {
+        Example example = new Example(Permission.class);
+        Criteria criteria = example.createCriteria();
+
+        if(StrUtil.isNotEmpty(menuName)){
+            criteria.andLike("name", "%"+menuName+"%");
+        }
+        return this.selectByExample(example);
     }
 }

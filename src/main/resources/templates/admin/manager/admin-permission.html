@@ -5,6 +5,14 @@
 <head>
 	<title>权限管理</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/js/lib/treegrid/jquery.treegrid.css}"/>
+	<style>
+		.glyphicon-chevron-right:before{
+			content: "\e6d7";
+		}
+		.glyphicon-chevron-down:before{
+			content: "\e6d5";
+		}
+	</style>
 </head>
 
 <body layout:fragment="content">
@@ -17,22 +25,20 @@
 <form id="myForm" th:action="@{/admin/permission}" th:method="get">
 	<div class="page-container">
 		<div class="text-c">
-			<!--<form class="Huiform" method="post" action="" target="_self">-->
-				<!--<input type="text" class="input-text" style="width:250px" placeholder="权限名称" id="" name="" th:name="name" th:value="${model.name}">-->
-				<!--<button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜权限节点</button>-->
-			<!--</form>-->
+			<input type="text" class="input-text" style="width:250px" placeholder="权限名称" id="menuName">
+			<a class="btn btn-success" onclick="Menu.search();"><i class="Hui-iconfont">&#xe665;</i> 搜权限节点</a>
 		</div>
 		<div class="cl pd-5 bg-1 bk-gray mt-20">
 			<span class="l">
-				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>-->
-				<a href="javascript:;" onclick="admin_permission_add('添加权限节点','admin-permission-add.html','','310')"  th:onclick="'javascript:admin_permission_add(\'添加权限节点\',\'/admin/permission/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加权限节点</a>
+				<a href="javascript:;" th:onclick="'javascript:admin_permission_del(this, \'/admin/permission\');'" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i>删除</a>
+				<a href="javascript:;" th:onclick="'javascript:admin_permission_add(\'添加权限节点\',\'/admin/permission/add\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加</a>
+				<a href="javascript:;" th:onclick="'javascript:admin_permission_edit(\'编辑权限节点\',\'/admin/permission/edit\',\'800\',\'500\');'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe6df;</i>编辑</a>
 			</span>
-			<!--<span class="r">共有数据：<strong th:text="${pageInfo?.total}">54</strong> 条</span> </div>-->
+		</div>
+
 		<table class="table table-border table-bordered table-bg table-hover" id="menuTable">
 
 		</table>
-
-	</div>
     </div>
 </form>
 
