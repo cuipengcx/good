@@ -1,12 +1,13 @@
 package com.jk.common.util;
 
 import com.xiaoleilu.hutool.util.StrUtil;
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.InputStream;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @package: com.jk.common.util
@@ -18,10 +19,11 @@ import java.util.Map;
  * @date: 2017/8/11 13:44
  * @version: V1.0.0
  */
+@Slf4j
 public class FileValidateUtil {
 
     //记录各个常见文件头信息及对应的文件类型
-    public static Map<String, String> FILE_TYPES = new HashMap<String, String>();
+    private static Map<String, String> FILE_TYPES = new ConcurrentHashMap<String, String>();
 
     static {
         // images
@@ -40,19 +42,10 @@ public class FileValidateUtil {
 
         //办公文档类
         FILE_TYPES.put("D0CF11E0", ".doc .ppt .xls"); //ppt、doc、xls
-        FILE_TYPES.put("504B0304", ".docx .pptx .xlsx");//pptx、docx、xlsx
+        FILE_TYPES.put("504B0304", ".docx .pptx .xlsx .jar .zip");//pptx、docx、xlsx
 
-        /**注意由于文本文档录入内容过多，则读取文件头时较为多变-START**/
-        FILE_TYPES.put("0D0A0D0A", ".txt");//txt
-        FILE_TYPES.put("0D0A2D2D", ".txt");//txt
-        FILE_TYPES.put("0D0AB4B4", ".txt");//txt
-        FILE_TYPES.put("B4B4BDA8", ".txt");//文件头部为汉字
-        FILE_TYPES.put("73646673", ".txt");//txt,文件头部为英文字母
-        FILE_TYPES.put("32323232", ".txt");//txt,文件头部内容为数字
-        FILE_TYPES.put("0D0A09B4", ".txt");//txt,文件头部内容为数字
-        FILE_TYPES.put("3132330D", ".txt");//txt,文件头部内容为数字
-        /**注意由于文本文档录入内容过多，则读取文件头时较为多变-END**/
-
+        //txt
+        //注意由于文本文档录入内容过多，则读取文件头时较为多变,故特殊处理只要是以.txt后缀结尾的不进行文件头信息校验都可以允许上传
 
         FILE_TYPES.put("7B5C7274", ".rtf"); // 日记本
 
@@ -60,34 +53,31 @@ public class FileValidateUtil {
 
         //视频或音频类
         FILE_TYPES.put("3026B275",".wma");
-        FILE_TYPES.put("57415645", ".wav");
-        FILE_TYPES.put("41564920", ".avi");
+        FILE_TYPES.put("52494646", ".wav .avi");  // wav与avi相同
+        FILE_TYPES.put("3026B275", ".wmv .asf"); // wmv与asf相同
         FILE_TYPES.put("4D546864", ".mid");
-        FILE_TYPES.put("2E524D46", ".rm");
+        FILE_TYPES.put("2E524D46", ".rmvb .rm"); // rmvb/rm相同
+        FILE_TYPES.put("464C5601", ".flv .f4v"); // flv与f4v相同
         FILE_TYPES.put("000001BA", ".mpg");
         FILE_TYPES.put("000001B3", ".mpg");
         FILE_TYPES.put("6D6F6F76", ".mov");
-        FILE_TYPES.put("3026B275", ".asf");
 
         //压缩包
         FILE_TYPES.put("52617221", ".rar");
         FILE_TYPES.put("1F8B0800", ".gz");
-        FILE_TYPES.put("504B0304", ".zip");
 
         //程序文件
         FILE_TYPES.put("3C3F786D", ".xml");
-        FILE_TYPES.put("68746D6C", ".html");
+        FILE_TYPES.put("23546869", ".ini");
+        FILE_TYPES.put("3C21444F", ".html");
         FILE_TYPES.put("7061636B", ".java");
         FILE_TYPES.put("3C254020", ".jsp");
         FILE_TYPES.put("4D5A9000", ".exe");
-        FILE_TYPES.put("504B0304","jar");
 
 
-        FILE_TYPES.put("44656C69", ".eml"); // 邮件
+        FILE_TYPES.put("46726F6D", ".eml"); // 邮件
         FILE_TYPES.put("5374616E", ".mdb");//Access数据库文件
 
-        FILE_TYPES.put("46726F6D", ".mht");
-        FILE_TYPES.put("4D494D45", ".mhtml");
         FILE_TYPES.put("null", "null");
         FILE_TYPES.put("", "");
     }
@@ -122,18 +112,10 @@ public class FileValidateUtil {
             //2. 校验上传文件的头信息，防止非法用户通过更改文件后缀名绕过第一步校验
             if(flag){
                 try {
-                    //获取文件头信息
-                    String headInfo = bytesToHexString(file.getBytes());
-                    if (StringUtils.isNotEmpty(headInfo)) {
-                        //根据文件头信息前四位(2个算1位)key获取对应的扩展名
-                        String suffixValue = FILE_TYPES.get(StrUtil.subPre(headInfo, 8));
-                        //判断根据头文件信息获取的文件后缀是否和第一步根据上传文件获取的后缀名一致
-                        if (suffixValue.toLowerCase().contains(suffix)) {
-                            flag = true;
-                        }else {
-                            flag = false;
-                        }
-                    }
+                    //根据文件头信息前四位(2个算1位)key获取对应的真实的扩展名
+                    String realSuffix = getRealFileType(file.getInputStream(), 4);
+                    //判断根据头文件信息获取的文件后缀是否和第一步根据上传文件获取的后缀名一致
+                    flag = StrUtil.isNotEmpty(realSuffix) && realSuffix.toLowerCase().contains(suffix);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -143,7 +125,36 @@ public class FileValidateUtil {
     }
 
     /**
+     * 解析文件真实的后缀名
+     * @param is 文件输入流
+     * @param length 读取的长度
+     * @return
+     */
+    private static String getRealFileType(InputStream is, int length){
+        byte[] bytes = new byte[length];
+        if(is != null){
+            try {
+                is.read(bytes, 0, bytes.length);
+            } catch (IOException e) {
+                log.error("解析文件真实的后缀名失败! e = {}", e);
+            }
+        }
+        String headerInfo = getHeaderInfo(bytes);
+        System.out.println(headerInfo);
+        return FILE_TYPES.get(headerInfo);
+    }
+
+    /**
      * 得到上传文件的文件头
+     * @param bytes
+     * @return
+     */
+    private static String getHeaderInfo(byte[] bytes){
+        return bytesToHexString(bytes);
+    }
+
+    /**
+     * 将字节数组转换为二进制字符串
      * @param src
      * @return
      */
