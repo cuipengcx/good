@@ -6,6 +6,7 @@ import com.jk.modules.job.service.ScheduleJobLogService;
 import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.SchedulerException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.client.RestTemplate;
@@ -107,7 +108,7 @@ public class ScheduleExecute {
      *
      * @param scheduleJob
      */
-    public static void invokMethod(ScheduleJob scheduleJob) {
+    private static void invokMethod(ScheduleJob scheduleJob) throws Exception {
         Object object = null;
         Class<?> clazz = null;
         if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
@@ -115,14 +116,12 @@ public class ScheduleExecute {
                 clazz = Class.forName(scheduleJob.getBeanClass());
                 object = clazz.newInstance();
             } catch (Exception e) {
-                log.error(e.getMessage(), e);
+                throw new SchedulerException("请检查是否配置正确！！！");
             }
-
         }
+
         if (object == null) {
-            log.error("任务名称 = [" + scheduleJob.getJobName()
-                    + "]---------------未启动成功，请检查是否配置正确！！！");
-            return;
+            throw new SchedulerException("请检查是否配置正确！！！");
         }
 
 
@@ -136,10 +135,9 @@ public class ScheduleExecute {
             }
 
         } catch (NoSuchMethodException e) {
-            log.error("任务名称 = [" + scheduleJob.getJobName()
-                    + "]---------------未启动成功，方法名设置错误！！！");
+            throw new SchedulerException("方法名设置错误！！！");
         } catch (SecurityException e) {
-            log.error(e.getMessage(), e);
+            throw new SchedulerException("任务启动失败！");
         }
 
 
@@ -151,10 +149,10 @@ public class ScheduleExecute {
                 }else{
                     method.invoke(object);
                 }
+                log.debug("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功!");
             } catch (Exception e) {
-                log.error(e.getMessage(), e);
+                throw new SchedulerException(e.getMessage());
             }
         }
-        log.debug("任务名称 = [" + scheduleJob.getJobName() + "]----------启动成功");
     }
 }
