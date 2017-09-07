@@ -1,5 +1,6 @@
 package com.jk.common.util.job;
 
+import com.jk.common.util.SpringUtils;
 import com.jk.modules.job.model.ScheduleJob;
 import com.jk.modules.job.model.ScheduleJobLog;
 import com.jk.modules.job.service.ScheduleJobLogService;
@@ -114,7 +115,9 @@ public class ScheduleExecute {
         if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
             try {
                 clazz = Class.forName(scheduleJob.getBeanClass());
-                object = clazz.newInstance();
+                // 特别注意: 这里应该通过字节码去spring中查找对应的bean，这样才能在实例中通过注解注入所有spring管理的bean
+                //错误用法: object = clazz.newInstance();
+                object = SpringUtils.getBean(clazz);
             } catch (Exception e) {
                 throw new SchedulerException("请检查是否配置正确！！！");
             }
