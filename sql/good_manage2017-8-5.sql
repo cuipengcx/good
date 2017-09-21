@@ -1025,12 +1025,12 @@ CREATE TABLE `schedule_job` (
 -- ----------------------------
 -- Records of schedule_job
 -- ----------------------------
-INSERT INTO `schedule_job` VALUES ('20', '测试无参数的本地调度', '测试组', '0/10 * * * * ?', '', null, null, 'com.jk.modules.job.task.JobTest', 'run1', null, '', '83', '83', '测试无参数的本地调度', '0', '2017-05-20 20:01:45', '2017-08-05 18:39:16');
-INSERT INTO `schedule_job` VALUES ('21', '测试带参数的本地调度', '测试组', '0/10 * * * * ?', '', null, null, 'com.jk.modules.job.task.JobTest', 'run2', '我是参数', '', '83', '83', '测试带参数的本地调度', '0', '2017-05-20 20:02:52', '2017-08-05 18:39:08');
-INSERT INTO `schedule_job` VALUES ('22', '测试同步异步有效性本地调度', '测试组', '0/10 * * * * ?', '', null, null, 'com.jk.modules.job.task.JobTest', 'run3', null, '', '83', '83', '测试同步异步有效性本地调度', '0', '2017-05-20 20:04:38', '2017-08-05 18:38:53');
-INSERT INTO `schedule_job` VALUES ('25', '测试带参数远程调度', '测试组', '0/10 * * * * ?', '', 'POST', 'http://manage.good.com/test/{key1}/{key2}?key3={key3}', null, null, 'key1=100,key2=200,key3=300', '', '83', '83', '测试带参数远程调度', '0', '2017-05-20 21:33:00', '2017-08-05 18:36:45');
-INSERT INTO `schedule_job` VALUES ('26', '测试无参数远程调度', '测试组', '0/10 * * * * ?', '', 'POST', 'http://manage.good.com/test', null, null, null, '', '83', '83', '测试无参数远程调度', '0', '2017-05-21 20:04:54', '2017-08-05 18:36:34');
-INSERT INTO `schedule_job` VALUES ('27', '测试远程调度request接收参数', '测试组', '0/10 * * * * ?', '', 'POST', 'http://manage.good.com/test3?key1={key1}&key2={key2}&key3={key3}', null, null, 'key1=100,key2=200,key3=300', '', '83', '83', '测试远程调度request接收参数', '0', '2017-05-21 20:13:15', '2017-08-05 18:36:22');
+INSERT INTO `schedule_job` VALUES ('20', '测试无参数的本地调度', '测试组', '0 0 1 * * ?	', '', null, null, 'com.jk.modules.job.task.JobTest', 'run1', '', '', '83', '83', '测试无参数的本地调度', '0', '2017-05-20 20:01:45', '2017-09-20 16:46:32');
+INSERT INTO `schedule_job` VALUES ('21', '测试带参数的本地调度', '测试组', '0 0 1 * * ?	', '', null, null, 'com.jk.modules.job.task.JobTest', 'run2', '我是参数', '', '83', '83', '测试带参数的本地调度', '0', '2017-05-20 20:02:52', '2017-09-20 16:46:39');
+INSERT INTO `schedule_job` VALUES ('22', '测试同步异步有效性本地调度', '测试组', '0 0 1 * * ?	', '', null, null, 'com.jk.modules.job.task.JobTest', 'run3', '', '', '83', '83', '测试同步异步有效性本地调度', '0', '2017-05-20 20:04:38', '2017-09-20 16:46:45');
+INSERT INTO `schedule_job` VALUES ('25', '测试带参数远程调度', '测试组', '0 0 1 * * ?	', '', 'POST', 'http://www.good.com/test/{key1}/{key2}?key3={key3}', null, null, 'key1=100,key2=200,key3=300', '', '83', '83', '测试带参数远程调度', '0', '2017-05-20 21:33:00', '2017-05-21 20:05:39');
+INSERT INTO `schedule_job` VALUES ('26', '测试无参数远程调度', '测试组', '0 0 1 * * ?	', '', 'POST', 'http://www.good.com/test', null, null, null, '', '83', null, '测试无参数远程调度', '0', '2017-05-21 20:04:54', '2017-05-21 20:06:17');
+INSERT INTO `schedule_job` VALUES ('27', '测试远程调度request接收参数', '测试组', '0 0 1 * * ?	', '', 'POST', 'http://www.good.com/test3?key1={key1}&key2={key2}&key3={key3}', null, null, 'key1=100,key2=200,key3=300', '', '83', '83', '测试远程调度request接收参数', '0', '2017-05-21 20:13:15', '2017-05-21 20:36:34');
 
 -- ----------------------------
 -- Table structure for `schedule_job_log`
