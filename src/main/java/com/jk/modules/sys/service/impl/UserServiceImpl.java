@@ -15,6 +15,7 @@ import com.xiaoleilu.hutool.date.DateUtil;
 import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -99,6 +100,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         return count == 1;
     }
 
+    @CacheEvict(value = "goodAuthenticationCache", key = "#user.username")
     @Override
     public Boolean updateUserAndUserRole(User user, Long oldRoleId, Long roleId) throws Exception {
         int count = 0;
