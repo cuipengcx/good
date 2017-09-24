@@ -29,9 +29,12 @@ public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService{
         Example.Criteria criteria = example.createCriteria();
         if(StringUtils.isNotEmpty(username)){
             criteria.andLike("username", "%"+username+"%");
-        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
-            criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
+        }if(StrUtil.isNotEmpty(startTime)){
+            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
+        }if(StrUtil.isNotEmpty(endTime)){
+            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
+
         //倒序
         example.orderBy("createTime").desc();
 

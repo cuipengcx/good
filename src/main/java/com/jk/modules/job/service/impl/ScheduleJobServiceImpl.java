@@ -64,9 +64,12 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         Example.Criteria criteria = example.createCriteria();
         if(StringUtils.isNotEmpty(jobName)){
             criteria.andLike("jobName", "%"+jobName+"%");
-        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
-            criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
+        }if(StrUtil.isNotEmpty(startTime)){
+            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
+        }if(StrUtil.isNotEmpty(endTime)){
+            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
+
         //倒序
         example.orderBy("createTime").desc();
 
