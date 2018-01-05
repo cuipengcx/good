@@ -84,7 +84,10 @@ spring:
   jackson:
     # 属性为NULL 不序列化
     default-property-inclusion: non_null
-
+  #异步线程池配置
+  task:
+    pool:
+      maxPoolSize: 100
 
 #mybatis
 mybatis:
