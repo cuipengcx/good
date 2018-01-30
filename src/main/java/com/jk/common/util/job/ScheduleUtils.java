@@ -1,12 +1,14 @@
 package com.jk.common.util.job;
 
 import com.jk.common.Constant.JobStatus;
+import com.jk.common.exception.BaseException;
 import com.jk.config.job.AsyncJobFactory;
 import com.jk.config.job.SyncJobFactory;
-import com.jk.common.exception.BaseException;
 import com.jk.modules.job.model.ScheduleJob;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+
+import java.util.Date;
 
 /**
  * author : fengjing
@@ -175,44 +177,32 @@ public class ScheduleUtils {
      * @param scheduleJob the schedule job
      */
     public static void updateScheduleJob(Scheduler scheduler, ScheduleJob scheduleJob) {
-        updateScheduleJob(scheduler, scheduleJob.getJobName(), scheduleJob.getJobGroup(),
-            scheduleJob.getCron());
-    }
-
-    /**
-     * 更新定时任务的cron表达式
-     *
-     * @param scheduler the scheduler
-     * @param jobName the job name
-     * @param jobGroup the job group
-     * @param cronExpression the cron expression
-     */
-    public static void updateScheduleJob(Scheduler scheduler, String jobName, String jobGroup,
-                                         String cronExpression) {
-
-
         try {
 
-            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(jobName, jobGroup);
+            TriggerKey triggerKey = ScheduleUtils.getTriggerKey(scheduleJob.getJobName(), scheduleJob.getJobGroup());
 
             //表达式调度构建器
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression);
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(scheduleJob.getCron());
 
             CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
 
             //按新的cronExpression表达式重新构建trigger
-            trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+            trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).startAt(new Date()).build();
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
             // 忽略状态为PAUSED的任务，解决集群环境中在其他机器设置定时任务为PAUSED状态后，集群环境启动另一台主机时定时任务全被唤醒的bug
             if(!triggerState.name().equalsIgnoreCase("PAUSED")){
                 //按新的trigger重新设置job执行
                 scheduler.rescheduleJob(triggerKey, trigger);
             }
+
+            //更新放入参数的值，运行时的方法可以获取
+            trigger.getJobDataMap().put(ScheduleJob.JOB_PARAM_KEY, scheduleJob);
         } catch (SchedulerException e) {
             log.error("更新定时任务失败", e);
             throw new BaseException("更新定时任务失败");
         }
     }
+
 
     /**
      * 删除定时任务

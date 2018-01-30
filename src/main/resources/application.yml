@@ -84,11 +84,14 @@ spring:
   jackson:
     # 属性为NULL 不序列化
     default-property-inclusion: non_null
-
+  #异步线程池配置
+  task:
+    pool:
+      maxPoolSize: 100
 
 #mybatis
 mybatis:
-  #指定目录类型别名扫描
+  #指定目录类型别名扫描,多个包用;号分割
 #  type-aliases-package: com.jk.model
   #指定mapper.xml的位置
   mapper-locations: classpath:mapper/**/*.xml

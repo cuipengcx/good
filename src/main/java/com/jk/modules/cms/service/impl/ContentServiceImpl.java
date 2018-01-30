@@ -34,8 +34,10 @@ public class ContentServiceImpl extends BaseServiceImpl<Content> implements Cont
             criteria.andEqualTo("contentCatId", catId);
         }if(StringUtils.isNotEmpty(title)){
             criteria.andLike("title", "%"+title+"%");
-        }if(StrUtil.isNotEmpty(startTime) && StrUtil.isNotEmpty(endTime)){
-            criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
+        }if(StrUtil.isNotEmpty(startTime)){
+            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
+        }if(StrUtil.isNotEmpty(endTime)){
+            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
         }
 
         //排序
