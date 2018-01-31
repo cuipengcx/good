@@ -2609,3 +2609,26 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 INSERT INTO `user_role` VALUES ('1', '83', '1', '2017-02-13 11:02:06', '2017-02-13 11:02:08');
 INSERT INTO `user_role` VALUES ('3', '84', '8', '2017-08-05 18:54:22', '2017-08-05 18:54:22');
+
+
+
+-- ----------------------------
+-- Table structure for `dept`
+-- ----------------------------
+DROP TABLE IF EXISTS `dept`;
+CREATE TABLE `dept` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `simple_name` varchar(50) DEFAULT NULL COMMENT '简称',
+  `full_name` varchar(255) DEFAULT NULL COMMENT '全称',
+  `is_parent` bit(1) DEFAULT NULL COMMENT '是否是父节点',
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '上级部门ID，一级部门为0',
+  `sort` bigint(20) DEFAULT NULL COMMENT '排序号',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门表';
+
+-- ----------------------------
+-- Records of dept
+-- ----------------------------

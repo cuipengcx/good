@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/common}">
+<head>
+    <title>部门列表</title>
+</head>
+
+<body class="pos-r" layout:fragment="content">
+<div class="pos-a" style="width:200px;left:0;top:0; bottom:0; height:100%; border-right:1px solid #e5e5e5; background-color:#f5f5f5; overflow:auto;">
+    <ul id="treeDemo" class="ztree"></ul>
+</div>
+<div style="margin-left:200px;">
+    <nav class="breadcrumb">
+        <i class="Hui-iconfont">&#xe67f;</i> 首页
+        <span class="c-gray en">&gt;</span> 系统管理
+        <span class="c-gray en">&gt;</span> 部门列表
+        <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+            <i class="Hui-iconfont">&#xe68f;</i>
+        </a>
+    </nav>
+    <form id="myForm" th:action="@{/admin/dept}" th:method="get">
+        <input type="hidden" th:name="deptId" th:value="${deptId}"/>
+        <div class="page-container">
+            <div class="text-c">
+                日期范围：
+                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',maxDate:'#F{$dp.$D(\'dateMax\')}'})" id="dateMin" class="input-text Wdate" style="width:120px;" name="startTime" th:value="${startTime}" readonly="readonly"/>
+                -
+                <input type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',minDate:'#F{$dp.$D(\'dateMin\')}'})" id="dateMax" class="input-text Wdate" style="width:120px;" name="endTime" th:value="${endTime}" readonly="readonly"/>
+                <input type="text" class="input-text" style="width:250px" placeholder="输入部门名称" name="name" th:value="${name}"/>
+                <button type="submit" class="btn btn-success">
+                    <i class="Hui-iconfont">&#xe665;</i>
+                    搜索
+                </button>
+            </div>
+            <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a class="btn btn-primary radius" th:onclick="'javascript:content_add(\'添加部门\',\'/admin/content/add?catId='+${contentCat?.id}+'\','+${contentCat?.id}+');'" href="javascript:;">
+                    <i class="Hui-iconfont">&#xe600;</i>
+                    添加部门
+                </a>
+            </span>
+                <span class="r">共有数据：<strong th:text="${pageInfo?.total}">54</strong> 条</span>
+            </div>
+            <div class="mt-20">
+                <table class="table table-border table-bordered table-bg table-hover table-sort">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="60">简称</th>
+                        <th width="100">全称</th>
+                        <th width="60">上级部门</th>
+                        <th>排序</th>
+                        <th>备注</th>
+                        <th width="80">创建时间</th>
+                        <th width="80">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-c va-m" th:each="model:${pageInfo?.list}">
+                        <td class="text-l" th:text="${model?.simpleName}"></td>
+                        <td class="text-l" th:text="${model?.fullName}"></td>
+                        <td class="text-l">上级部门</td>
+                        <td class="text-l" th:text="${model?.sort}"></td>
+                        <td class="text-l" th:text="${model?.remark}"></td>
+                        <td class="text-l" th:text="${#dates.format(model?.createTime,'yyyy-MM-dd')}"></td>
+                        <td class="td-manage">
+                            <a style="text-decoration:none" class="ml-5" onClick="content_edit('产品编辑','product-add.html','10001')" th:onclick="'javascript:content_edit(\'编辑内容\',\'/admin/content/edit?id='+*{id}+'\');'" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a style="text-decoration:none" class="ml-5" onClick="content_del(this,'10001')" th:onclick="'javascript:content_del(this, \'/admin/content/'+*{id}+'\');'" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div th:replace="admin/common/page :: page"></div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" th:src="@{/js/common/page.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/h-ui/lib/zTree/v3/css/metroStyle/metroStyle.css}" />
+<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.core-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/h-ui/lib/zTree/v3/js/jquery.ztree.excheck-3.5.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/admin/manager/admin-dept-list.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function(){
+        inintTree();
+    });
+</script>
+</body>
+</html>
