@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 public class Dept extends BaseEntity{
 
     private static final long serialVersionUID = 7898278922679296948L;
-    
+
     /**
      * 简称
      */

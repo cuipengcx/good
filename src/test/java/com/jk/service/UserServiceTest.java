@@ -1,6 +1,5 @@
 package com.jk.service;
 
-import com.github.pagehelper.PageInfo;
 import com.jk.BaseTest;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.UserService;
@@ -39,14 +38,14 @@ public class UserServiceTest extends BaseTest{
      * 根据开始时间和结束时间 分页模糊匹配某个用户
      * @throws Exception
      */
-    @Test
-    public void testFindPage() throws Exception {
-        String startTime = "2017-01-20";
-        String endTime = "2017-01-20";
-        PageInfo<User> pageInfo = userService.findPage(1 ,10 ,"小三", startTime,endTime);
-        log.info("总条数:"+pageInfo.getList().size());
-        Assert.assertTrue(pageInfo.getList().size() > 0);
-    }
+//    @Test
+//    public void testFindPage() throws Exception {
+//        String startTime = "2017-01-20";
+//        String endTime = "2017-01-20";
+//        PageInfo<User> pageInfo = userService.findPage(1 ,10 ,"小三", startTime,endTime);
+//        log.info("总条数:"+pageInfo.getList().size());
+//        Assert.assertTrue(pageInfo.getList().size() > 0);
+//    }
 
     /**
      * 根据用户名查询用户

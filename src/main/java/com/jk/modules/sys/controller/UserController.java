@@ -1,6 +1,7 @@
 package com.jk.modules.sys.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.common.annotation.DataScope;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
@@ -50,7 +51,7 @@ public class UserController extends BaseController {
             String username, String startTime, String endTime, ModelMap modelMap) throws Exception {
         try {
             log.debug("分页查询管理员列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, username, startTime, endTime);
-            PageInfo<User> pageInfo = userService.findPage(pageNum, PAGESIZE, username, startTime, endTime);
+            PageInfo<User> pageInfo = userService.findPage(new DataScope(), pageNum, PAGESIZE, username, startTime, endTime);
             log.info("分页查询管理员列表结果！ pageInfo = {}", pageInfo);
             modelMap.put("pageInfo", pageInfo);
             modelMap.put("username", username);

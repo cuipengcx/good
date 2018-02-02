@@ -2,6 +2,8 @@ package com.jk.modules.sys.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jk.common.annotation.DataFilter;
+import com.jk.common.annotation.DataScope;
 import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.modules.sys.mapper.RoleMapper;
 import com.jk.modules.sys.mapper.UserMapper;
@@ -11,15 +13,10 @@ import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.model.UserRole;
 import com.jk.modules.sys.service.UserService;
 import com.xiaoleilu.hutool.crypto.SecureUtil;
-import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.entity.Example.Criteria;
 
 import java.util.List;
 
@@ -38,24 +35,28 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     @Autowired
     private RoleMapper roleMapper;
 
+    @DataFilter(tableAlias = "u")
     @Transactional(readOnly=true)
     @Override
-    public PageInfo<User> findPage(Integer pageNum ,Integer pageSize ,String username, String startTime, String endTime) throws Exception {
-        Example example = new Example(User.class);
-        Criteria criteria = example.createCriteria();
-        if(StringUtils.isNotEmpty(username)){
-            criteria.andLike("username", "%"+username+"%");
-        }if(StrUtil.isNotEmpty(startTime)){
-            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
-        }if(StrUtil.isNotEmpty(endTime)){
-            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
-        }
-
-        //倒序
-        example.orderBy("createTime").desc();
+    public PageInfo<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception {
+//        /        Example example = new Example(User.class);
+//        Example.Criteria criteria = example.createCriteria();
+//        if(StringUtils.isNotEmpty(username)){
+//            criteria.andLike("username", "%"+username+"%");
+//        }if(startTime != null && endTime != null){
+//            criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
+//        }
 
         PageHelper.startPage(pageNum,pageSize);
-        List<User> userList = this.selectByExample(example);
+
+        List<User> userList = userMapper.findListDataFilter(dataScope, username, startTime, endTime);
+
+
+        //倒序
+//        example.orderBy("createTime").desc();
+
+//        PageHelper.startPage(pageNum,pageSize);
+//        List<User> userList = this.selectByExample(example);
 
         for (User user : userList) {
             Role role = roleMapper.findByUserId(user.getId());

@@ -61,4 +61,11 @@ public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptServic
         List<Dept> deptList = this.selectByExample(example);
         return new PageInfo<Dept>(deptList);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public String getDeptIdList(Long deptId) {
+
+        return null;
+    }
 }

@@ -26,5 +26,23 @@
     <select id="findByUserName" resultMap="UserResultMap">
       SELECT * FROM user u WHERE  u.username = #{username}
     </select>
-    
+
+    <select id="findListDataFilter" resultType="com.jk.modules.sys.model.User">
+        SELECT * FROM t_user u
+        <where>
+            <if test="username != null and username.trim() != ''">
+                and u.`username` like concat('%',#{username},'%')
+            </if>
+            <if test="startTime != null and startTime != ''">
+                and createTime &gt;= CONCAT(#{startTime},' 00:00:00')
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and createTime &lt;= CONCAT(#{endTime},' 23:59:59')
+            </if>
+
+            <!--数据过滤-->
+            ${dataScope.filterSql}
+        </where>
+    </select>
+
 </mapper>

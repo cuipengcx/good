@@ -1,7 +1,11 @@
 package com.jk.modules.sys.mapper;
 
-import com.jk.modules.sys.model.User;
+import com.jk.common.annotation.DataScope;
 import com.jk.common.base.mapper.BaseMapper;
+import com.jk.modules.sys.model.User;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * Created by JK on 2017/1/19.
@@ -20,4 +24,14 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User findByUserName(String username);
+
+    /**
+     * 数据权限筛选用户集合
+     * @param dataScope
+     * @param username
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<User> findListDataFilter(@Param("dataScope") DataScope dataScope, @Param("username") String username, @Param("startTime") String startTime, @Param("endTime") String endTime);
 }

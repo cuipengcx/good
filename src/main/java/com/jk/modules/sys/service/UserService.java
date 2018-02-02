@@ -1,6 +1,7 @@
 package com.jk.modules.sys.service;
 
 import com.github.pagehelper.PageInfo;
+import com.jk.common.annotation.DataScope;
 import com.jk.common.base.service.BaseService;
 import com.jk.modules.sys.model.User;
 
@@ -18,7 +19,7 @@ public interface UserService extends BaseService<User> {
      * @return
      * @throws Exception
      */
-    PageInfo<User> findPage(Integer pageNum ,Integer pageSize ,String username, String startTime, String endTime) throws Exception;
+    PageInfo<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception;
 
     /**
      * 根据用户名查询用户

@@ -2575,6 +2575,7 @@ CREATE TABLE `user` (
   `real_name` varchar(255) DEFAULT NULL COMMENT '真实姓名',
   `sex` bit(1) DEFAULT NULL COMMENT '性别  1 男  0 女',
   `mobile_phone` varchar(255) DEFAULT NULL COMMENT '手机号',
+  `dept_id` bigint(20) DEFAULT NULL COMMENT '部门ID',
   `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
   `is_lock` bit(1) DEFAULT NULL COMMENT '账号是否锁定，1：锁定，0未锁定',
   `is_del` bit(1) DEFAULT NULL COMMENT '账号是否删除，1：删除，0未删除',
@@ -2588,8 +2589,8 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('83', 'admin', '202cb962ac59075b964b07152d234b70', '202cb962ac59075b964b07152d234b70', '崔朋', '', '18568820939', '228727120@qq.com', '', '', '', null, '2017-02-07 11:45:57', '2017-02-20 16:45:07');
-INSERT INTO `user` VALUES ('84', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, '', '15001338253', '228727120@qq.com', '', '', '', null, '2017-08-05 18:54:22', '2017-08-05 18:54:22');
+INSERT INTO `user` VALUES ('83', 'admin', '202cb962ac59075b964b07152d234b70', '202cb962ac59075b964b07152d234b70', '崔朋', '', '18568820939', 3 , '228727120@qq.com', '', '', '', null, '2017-02-07 11:45:57', '2017-02-20 16:45:07');
+INSERT INTO `user` VALUES ('84', 'test', '098f6bcd4621d373cade4e832627b4f6', null, null, '', '15001338253', 4, '228727120@qq.com', '', '', '', null, '2017-08-05 18:54:22', '2017-08-05 18:54:22');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -2613,10 +2614,10 @@ INSERT INTO `user_role` VALUES ('3', '84', '8', '2017-08-05 18:54:22', '2017-08-
 
 
 -- ----------------------------
--- Table structure for `dept`
+-- Table structure for `t_dept`
 -- ----------------------------
-DROP TABLE IF EXISTS `dept`;
-CREATE TABLE `dept` (
+DROP TABLE IF EXISTS `t_dept`;
+CREATE TABLE `t_dept` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `simple_name` varchar(50) DEFAULT NULL COMMENT '简称',
   `full_name` varchar(255) DEFAULT NULL COMMENT '全称',
@@ -2627,8 +2628,21 @@ CREATE TABLE `dept` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `modify_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='部门表';
 
 -- ----------------------------
--- Records of dept
+-- Records of t_dept
 -- ----------------------------
+INSERT INTO `t_dept` VALUES ('1', '金恪集团', '金恪投资控股集团', '', '0', '1', null, '2018-01-31 15:28:20', '2018-01-31 15:28:23');
+INSERT INTO `t_dept` VALUES ('2', '研发部', '技术研发中心', '', '1', '1', null, '2018-01-31 15:29:16', '2018-01-31 15:29:18');
+INSERT INTO `t_dept` VALUES ('3', '研发一组', '研发一组', '', '2', '1', null, '2018-01-31 15:29:45', '2018-01-31 15:29:48');
+INSERT INTO `t_dept` VALUES ('4', '研发二组', '研发二组', '', '2', '2', null, '2018-01-31 15:30:08', '2018-01-31 15:30:11');
+INSERT INTO `t_dept` VALUES ('5', '研发三组', '研发三组', '', '2', '3', null, '2018-01-31 15:30:32', '2018-01-31 15:30:34');
+INSERT INTO `t_dept` VALUES ('6', '采购部', '采购部', '', '1', '2', null, '2018-01-31 15:31:00', '2018-01-31 15:31:03');
+INSERT INTO `t_dept` VALUES ('7', '采购一组', '采购一组', '', '6', '1', null, '2018-01-31 15:31:54', '2018-01-31 15:31:56');
+INSERT INTO `t_dept` VALUES ('8', '采购二组', '采购二组', '', '6', '2', null, '2018-01-31 15:32:19', '2018-01-31 15:32:21');
+INSERT INTO `t_dept` VALUES ('9', '采购三组', '采购三组', '', '6', '3', null, '2018-01-31 15:32:37', '2018-01-31 15:32:39');
+INSERT INTO `t_dept` VALUES ('10', '行政部', '行政部', '', '1', '3', null, '2018-01-31 15:33:25', '2018-01-31 15:33:27');
+INSERT INTO `t_dept` VALUES ('11', '行政一组', '行政一组', '', '10', '1', null, '2018-01-31 15:34:22', '2018-01-31 15:34:24');
+INSERT INTO `t_dept` VALUES ('12', '行政二组', '行政二组', '', '10', '2', null, '2018-01-31 15:34:43', '2018-01-31 15:34:46');
+INSERT INTO `t_dept` VALUES ('13', '行政三组', '行政三组', '', '10', '3', null, '2018-01-31 15:35:08', '2018-01-31 15:35:11');
