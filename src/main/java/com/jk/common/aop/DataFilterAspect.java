@@ -1,5 +1,7 @@
-package com.jk.common.annotation;
+package com.jk.common.aop;
 
+import com.jk.common.annotation.DataFilter;
+import com.jk.common.annotation.DataScope;
 import com.jk.common.util.ShiroUtils;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.DeptService;
@@ -24,7 +26,7 @@ public class DataFilterAspect {
     @Autowired
     private DeptService deptService;
 
-    @Pointcut("@annotation(com.jkinvest.annotation.DataFilter)")
+    @Pointcut("@annotation(com.jk.common.annotation.DataFilter)")
     public void dataFilterCut() {
 
     }

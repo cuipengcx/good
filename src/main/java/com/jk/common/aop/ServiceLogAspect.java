@@ -1,4 +1,4 @@
-package com.jk.common.annotation;
+package com.jk.common.aop;
 
 import com.jk.common.exception.BaseException;
 import com.xiaoleilu.hutool.json.JSONUtil;
