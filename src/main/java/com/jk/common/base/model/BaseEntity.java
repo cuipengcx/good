@@ -25,7 +25,9 @@
 package com.jk.common.base.model;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.FieldFill;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -45,8 +47,10 @@ public abstract class BaseEntity <T extends Model> extends Model<T> {
     @TableId("id")
     private Long id;
 
+    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
     @Override

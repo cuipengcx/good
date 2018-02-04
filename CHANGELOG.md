@@ -12,6 +12,7 @@
 
 1. 解决通用mapper替换为Mybatis-Plus遇到的坑
     > 参考: [加入 mybatisplus-spring-boot后，@ConfigurationProperties( prefix = "task.pool" ) 注解报错了](https://gitee.com/baomidou/mybatisplus-spring-boot/issues/IHR21#only_comment)
+2. 修复字符串转日期转换器异常
 
 ### 2018年2月3日
 

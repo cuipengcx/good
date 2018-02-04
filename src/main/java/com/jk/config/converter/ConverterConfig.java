@@ -1,6 +1,7 @@
 package com.jk.config.converter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +34,9 @@ public class ConverterConfig {
             public Date convert(String source) {
                 Date date = null;
                 try {
-                    date = DateUtils.parseDate(source,DATE_PATTERNS);
+                    if(StringUtils.isNotEmpty(source)){
+                        date = DateUtils.parseDate(source,DATE_PATTERNS);
+                    }
                 } catch (ParseException e) {
                     log.error("字符串转换器成日期类型错误!{}", e);
                 }
