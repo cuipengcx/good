@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.mapper.ISqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,15 @@ public class MybatisPlusConfig {
 //    public MetaObjectHandler metaObjectHandler(){
 //        return new MyMetaObjectHandler();
 //    }
+
+    /**
+     * 性能拦截器，兼打印sql，不建议生产环境配置
+     * @return
+     */
+    @Bean
+    public PerformanceInterceptor performanceInterceptor() {
+        return new PerformanceInterceptor();
+    }
 
     /**
      *	 mybatis-plus分页插件
