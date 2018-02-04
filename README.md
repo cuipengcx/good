@@ -61,7 +61,7 @@
 * 视图框架：Spring MVC 4.3.9
 * 安全框架：Apache Shiro 1.3.2
 * 任务调度：Spring+Quartz 2.x 
-* 持久层框架：Mybatis 3.4.4 + 通用Mapper 3.4.2
+* 持久层框架：Mybatis 3.4.4 + Mybatis Plus 2.1.9
 * 服务端验证：Hibernate validator 5.3.5
 * API生成工具: Swagger2
 * 单元测试：Junit 4.12
@@ -117,7 +117,6 @@
 ## 特别鸣谢
 - [Looly / hutool](http://git.oschina.net/loolly/hutool)   一个Java基础工具类，对文件、流、加密解密、转码、正则、线程、XML等JDK方法进行封装，组成各种Util工具类
 - [feilong / feilong-core](https://github.com/venusdrogon/feilong-core)   让Java开发更简便的工具包，让你从大量重复的底层代码中脱身,提高工作效率
-- [abel533 / Mapper](http://git.oschina.net/free/Mapper)   极其方便的使用Mybatis单表的增删改查
-- [abel533 / Mybatis_PageHelper](http://git.oschina.net/free/Mybatis_PageHelper)   Mybatis分页插件
+- [baomidou / mybatis-plus](https://gitee.com/baomidou/mybatis-plus)   mybatis 增强工具包，简化 CRUD 操作。 文档：http://mp.baomidou.com
 - [人人开源 / renren-security](http://git.oschina.net/babaio/renren-security)   renren-security是一个轻量级权限管理系统
 - [H-ui / admin](http://store.h-ui.net/H-ui.admin_v3.0/index.html)   H-ui.admin是用H-ui前端框架开发的轻量级网站后台模版
