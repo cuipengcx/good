@@ -59,7 +59,7 @@
             <tbody>
             <tr class="text-c" th:each="model:${pageInfo?.records}" th:object="${model}">
                 <td><input type="checkbox" th:value="*{id}" id=""/></td>
-                <td th:text="${((pageInfo?.pageNum - 1) * pageInfo?.pageSize) + modelStat.count}">d</td>
+                <td th:text="${((pageInfo?.current - 1) * pageInfo?.size) + modelStat.count}">d</td>
                 <td th:text="*{username}">2</td>
                 <td th:text="*{operation}">3</td>
                 <!--<td th:text="*{methodName}"></td>-->
