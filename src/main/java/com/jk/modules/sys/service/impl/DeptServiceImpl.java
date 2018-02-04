@@ -1,17 +1,18 @@
 package com.jk.modules.sys.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.modules.sys.mapper.DeptMapper;
 import com.jk.modules.sys.model.Dept;
+import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.DeptService;
 import com.jk.modules.sys.vo.TreeNode;
-import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -23,9 +24,9 @@ import java.util.List;
  * @date: 2018/1/30 14:58
  * @version: V1.0.0
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptService {
+public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements DeptService {
 
     @Resource
     private DeptMapper deptMapper;
@@ -38,28 +39,17 @@ public class DeptServiceImpl extends BaseServiceImpl<Dept> implements DeptServic
 
     @Transactional(readOnly=true)
     @Override
-    public PageInfo<Dept> findPage(Integer pageNum, Integer pageSize, Long deptId, String name, String startTime, String endTime) {
-        Example example = new Example(Dept.class);
-        Example.Criteria criteria = example.createCriteria();
+    public Page<Dept> findPage(Integer pageNum, Integer pageSize, Long deptId, String name, String startTime, String endTime) {
+        return this.selectPage(
+                new Page<Dept>(pageNum, pageSize),
+                new EntityWrapper<Dept>()
+                        .eq(null != deptId, "parent_id", deptId)
+                        .like(StringUtils.isNotBlank(name), "name", name)
+                        .ge(StringUtils.isNotBlank(startTime), "create_time", startTime + "00:00:00")
+                        .le(StringUtils.isNotBlank(endTime), "create_time", endTime + "23:59:59")
+                        .orderBy("sort", false)
+        );
 
-        if(null != deptId){
-            criteria.andEqualTo("parentId", deptId);
-        }if(StrUtil.isNotEmpty(name)){
-            criteria.andLike("name", "%" + name + "%");
-        }if(StrUtil.isNotEmpty(startTime)){
-            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
-        }if(StrUtil.isNotEmpty(endTime)){
-            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
-        }
-
-        //排序
-        example.orderBy("sort").desc();
-
-        //分页
-        PageHelper.startPage(pageNum,pageSize);
-
-        List<Dept> deptList = this.selectByExample(example);
-        return new PageInfo<Dept>(deptList);
     }
 
     @Transactional(readOnly = true)

@@ -1,6 +1,6 @@
 package com.jk.modules.job.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.base.controller.BaseController;
 import com.jk.modules.job.model.ScheduleJobLog;
 import com.jk.modules.job.service.ScheduleJobLogService;
@@ -44,7 +44,7 @@ public class JobLogController extends BaseController{
             @PathVariable("jobId") Long jobId,
             String jobName, String startTime, String endTime, ModelMap modelMap) {
         log.debug("根据ID分页查询调度任务历史参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, jobName, startTime, endTime);
-        PageInfo<ScheduleJobLog> pageInfo = scheduleJobLogService.findPage(pageNum, PAGESIZE, jobId, jobName, startTime, endTime);
+        Page<ScheduleJobLog> pageInfo = scheduleJobLogService.findPage(pageNum, PAGESIZE, jobId, jobName, startTime, endTime);
         log.info("根据ID分页查询调度任务历史结果！ pageInfo = {}", pageInfo);
         modelMap.put("pageInfo", pageInfo);
         modelMap.put("jobId", jobId);

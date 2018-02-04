@@ -1,6 +1,6 @@
 package com.jk.modules.sys.service;
 
-import com.jk.common.base.service.BaseService;
+import com.baomidou.mybatisplus.service.IService;
 import com.jk.modules.sys.model.RolePermission;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author cuiP
  * Created by JK on 2017/2/16.
  */
-public interface RolePermissionService extends BaseService<RolePermission> {
+public interface RolePermissionService extends IService<RolePermission> {
     /**
      * 根据角色ID获取当前角色下所有权限ID集合
      * @param roleId    角色ID

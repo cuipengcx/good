@@ -37,7 +37,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
+				<tr class="text-c" th:each="model:${pageInfo?.records}" th:object="${model}">
 					<!--<td><input type="checkbox" value="" name=""></td>-->
 					<!--<td th:text="*{id}">1</td>-->
 					<td th:text="*{name}">超级管理员</td>

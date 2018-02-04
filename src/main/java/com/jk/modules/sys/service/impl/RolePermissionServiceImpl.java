@@ -1,10 +1,12 @@
 package com.jk.modules.sys.service.impl;
 
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.jk.modules.sys.mapper.RolePermissionMapper;
 import com.jk.modules.sys.model.RolePermission;
 import com.jk.modules.sys.service.RolePermissionService;
 import com.jk.modules.sys.shiro.AuthenticationRealm;
-import com.xiaoleilu.hutool.util.StrUtil;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +21,9 @@ import java.util.List;
  * @author cuiP
  * Created by JK on 2017/2/16.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermission> implements RolePermissionService{
+public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermission> implements RolePermissionService{
 
     @Resource
     private AuthenticationRealm authenticationRealm;
@@ -30,10 +32,14 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermission> i
     @Transactional(readOnly = true)
     @Override
     public List<Long> findListPermissionIdsByRoleId(Long roleId) throws Exception {
-        RolePermission rolePermission = new RolePermission();
-        rolePermission.setRoleId(roleId);
-        List<RolePermission> rolePermissionList = this.findListByWhere(rolePermission);
-        List<Long> permissionIds = new ArrayList<Long>();
+
+        List<RolePermission> rolePermissionList = this.selectList(
+                new EntityWrapper<RolePermission>()
+                        .eq("role_id", roleId)
+        );
+
+        //TODO Lambda改造
+        List<Long> permissionIds = new ArrayList<Long>(rolePermissionList.size());
         for (RolePermission permission : rolePermissionList) {
             permissionIds.add(permission.getPermissionId());
         }
@@ -44,22 +50,18 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermission> i
     @Override
     public String findPermissionIdsByRoleId(Long roleId) throws Exception {
         List<Long> permissionIds = this.findListPermissionIdsByRoleId(roleId);
-//        StringUtils.join(permissionIds, ",");
-        return  StrUtil.join(",", permissionIds);
+        return StrUtil.join(",", permissionIds);
     }
 
     @CacheEvict(value = "menuListCache", allEntries = true)
     @Override
     public void saveOrUpdate(Long roleId, Long[] permissionIds) {
         //先删除当前角色所拥有的权限再重现插入
-        RolePermission delRolePermission = new RolePermission();
-        delRolePermission.setRoleId(roleId);
-        super.deleteByWhere(delRolePermission);
+        this.deleteByMap(Collections.singletonMap("role_id", roleId));
 
+        //TODO Lambda改造
         List<RolePermission> rolePermissionList = this.getRolePermissionList(roleId, permissionIds);
-        if(rolePermissionList.size() > 0){
-            super.saveList(rolePermissionList);
-        }
+        this.insertBatch(rolePermissionList);
 
         //清除所有用户授权缓存信息，使其重新加载
         authenticationRealm.clearCachedAuthorizationInfoAll();
@@ -73,11 +75,8 @@ public class RolePermissionServiceImpl extends BaseServiceImpl<RolePermission> i
      * @return
      */
     private List<RolePermission> getRolePermissionList(Long roleId, Long[] permissionIds){
-        List<RolePermission> rolePermissionList = new ArrayList<RolePermission>();
+        List<RolePermission> rolePermissionList = new ArrayList<RolePermission>(permissionIds.length);
         RolePermission rolePermission = null;
-        if(permissionIds == null){
-            return Collections.emptyList();
-        }
         for (Long permissionId : permissionIds) {
             rolePermission = new RolePermission();
             rolePermission.setPermissionId(permissionId);

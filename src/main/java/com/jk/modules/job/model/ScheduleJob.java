@@ -1,10 +1,9 @@
 package com.jk.modules.job.model;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.jk.common.base.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.persistence.Transient;
 
 /**
  * 任务调度
@@ -14,7 +13,7 @@ import javax.persistence.Transient;
  */
 @Data
 @EqualsAndHashCode(callSuper = true, exclude = {"cron"})
-public class ScheduleJob extends BaseEntity {
+public class ScheduleJob extends BaseEntity<ScheduleJob> {
 
 	/** 任务调度的参数key */
 	public static final String JOB_PARAM_KEY    = "jobParam";
@@ -92,13 +91,13 @@ public class ScheduleJob extends BaseEntity {
 	/**
 	 * 创建者姓名
      */
-	@Transient
+	@TableField(exist = false)
 	private String createByName;
 
 	/**
 	 * 修改者姓名
 	 */
-	@Transient
+	@TableField(exist = false)
 	private String modifyByName;
 
 }

@@ -1,14 +1,14 @@
 package com.jk.modules.cms.service;
 
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.BaseService;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
 import com.jk.modules.cms.model.Content;
 
 /**
  * @author cuiP
  * Created by JK on 2017/4/19.
  */
-public interface ContentService extends BaseService<Content> {
+public interface ContentService extends IService<Content> {
 
     /**
      * @methodName: findPage
@@ -19,14 +19,14 @@ public interface ContentService extends BaseService<Content> {
      * @date: 2017/7/28 15:09
      * @version: V1.0.0
      */
-    PageInfo<Content> findPage(Integer pageNum, Integer pageSize, Long catId, String title, String startTime, String endTime);
+    Page<Content> findPage(Integer pageNum, Integer pageSize, Long catId, String title, String startTime, String endTime);
 
     /**
      * 分页根据新闻类型查询新闻列表
      * @param catId
      * @return
      */
-    PageInfo<Content> findPageNews(Integer pageNum, Integer pageSize, Long catId);
+    Page<Content> findPageNews(Integer pageNum, Integer pageSize, Long catId);
 
     /**
      * @methodName: findTop3ByCatId
@@ -37,5 +37,5 @@ public interface ContentService extends BaseService<Content> {
      * @date: 2017/7/28 15:34 
      * @version: V1.0.0
      */
-    PageInfo<Content> findTop3ByCatId(Long catId);
+    Page<Content> findTop3ByCatId(Long catId);
 }

@@ -1,17 +1,16 @@
 package com.jk.modules.job.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import cn.hutool.core.date.DateUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.common.Constant.JobStatus;
-import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.job.ScheduleUtils;
 import com.jk.modules.job.mapper.ScheduleJobMapper;
 import com.jk.modules.job.model.ScheduleJob;
 import com.jk.modules.job.service.ScheduleJobService;
 import com.jk.modules.sys.model.User;
-import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronTrigger;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -27,9 +25,9 @@ import java.util.List;
  * @author cuiP
  * Created by JK on 2017/5/4.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> implements ScheduleJobService{
+public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, ScheduleJob> implements ScheduleJobService{
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
@@ -59,25 +57,15 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
 
     @Override
-    public PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime) {
-        Example example = new Example(ScheduleJob.class);
-        Example.Criteria criteria = example.createCriteria();
-        if(StringUtils.isNotEmpty(jobName)){
-            criteria.andLike("jobName", "%"+jobName+"%");
-        }if(StrUtil.isNotEmpty(startTime)){
-            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
-        }if(StrUtil.isNotEmpty(endTime)){
-            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
-        }
-
-        //倒序
-        example.orderBy("createTime").desc();
-
-        //分页
-        PageHelper.startPage(pageNum,pageSize);
-        List<ScheduleJob> jobList = this.selectByExample(example);
-
-        return new PageInfo<ScheduleJob>(jobList);
+    public Page<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime) {
+        return this.selectPage(
+                new Page<>(pageNum, pageSize),
+                new EntityWrapper<ScheduleJob>()
+                        .like(StringUtils.isNotBlank(jobName), "job_name", jobName)
+                        .ge(StringUtils.isNotBlank(startTime), "create_time", startTime + "00:00:00")
+                        .le(StringUtils.isNotBlank(endTime), "create_time", endTime + "23:59:59")
+                        .orderBy("create_time", false)
+        );
     }
 
     @Override
@@ -98,16 +86,17 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }else {
             scheduleJob.setBeanClass(null);
             scheduleJob.setMethodName(null);
-            scheduleJob.setRemoteRequestMethod("POST"); //默认只支持post
+            //默认只支持post
+            scheduleJob.setRemoteRequestMethod("POST");
         }
-        super.save(scheduleJob);
+        this.insert(scheduleJob);
     }
 
     @Override
     public void updateScheduleJob(ScheduleJob scheduleJob) {
 
         //根据ID获取修改前的任务记录
-        ScheduleJob record = super.findById(scheduleJob.getId());
+        ScheduleJob record = this.selectById(scheduleJob.getId());
 
         //参数赋值
         scheduleJob.setRemoteRequestMethod(record.getRemoteRequestMethod());
@@ -125,7 +114,8 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         }else {
             scheduleJob.setIsLocal(false);
             scheduleJob.setRemoteUrl(scheduleJob.getRemoteUrl());
-            scheduleJob.setRemoteRequestMethod("POST"); //默认只支持post
+            //默认只支持post
+            scheduleJob.setRemoteRequestMethod("POST");
             scheduleJob.setBeanClass(null);
             scheduleJob.setMethodName(null);
         }
@@ -148,12 +138,12 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
         //更新数据库
         User user = ShiroUtils.getUserEntity();
         scheduleJob.setModifyBy(user.getId());
-        super.update(scheduleJob);
+        this.updateById(scheduleJob);
     }
 
     @Override
     public void deleteScheduleJob(Long jobId) {
-        ScheduleJob scheduleJob = super.findById(jobId);
+        ScheduleJob scheduleJob = this.selectById(jobId);
         //删除运行的任务
         ScheduleUtils.deleteScheduleJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
         //删除数据
@@ -162,31 +152,31 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
 
     @Override
     public void pauseJob(Long jobId) {
-        ScheduleJob scheduleJob = super.findById(jobId);
+        ScheduleJob scheduleJob = this.selectById(jobId);
         //暂停正在运行的调度任务
         ScheduleUtils.pauseJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
         //更新数据库状态为 禁用 0
         ScheduleJob model = new ScheduleJob();
         model.setId(jobId);
         model.setStatus(0);
-        super.updateSelective(model);
+        this.updateById(model);
     }
 
     @Override
     public void resumeJob(Long jobId) {
-        ScheduleJob scheduleJob = super.findById(jobId);
+        ScheduleJob scheduleJob = this.selectById(jobId);
         //恢复处于暂停中的调度任务
         ScheduleUtils.resumeJob(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
         //更新数据库状态 启用 1
         ScheduleJob model = new ScheduleJob();
         model.setId(jobId);
         model.setStatus(1);
-        super.updateSelective(model);
+        super.updateById(model);
     }
 
     @Override
     public void runOnce(Long jobId) {
-        ScheduleJob scheduleJob = super.findById(jobId);
+        ScheduleJob scheduleJob = this.selectById(jobId);
         //运行一次
         ScheduleUtils.runOnce(schedulerFactoryBean.getScheduler(), scheduleJob.getJobName(), scheduleJob.getJobGroup());
     }
@@ -194,9 +184,10 @@ public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJob> impleme
     @Transactional(readOnly = true)
     @Override
     public ScheduleJob findByJobNameAndJobGroup(String jobName, String jobGroup) {
-        ScheduleJob scheduleJob = new ScheduleJob();
-        scheduleJob.setJobName(jobName);
-        scheduleJob.setJobGroup(jobGroup);
-        return super.findOne(scheduleJob);
+        return this.selectOne(
+                new EntityWrapper<ScheduleJob>()
+                        .eq(StringUtils.isNotBlank(jobName), "job_name", jobName)
+                        .eq(StringUtils.isNotBlank(jobGroup), "job_group", jobGroup)
+        );
     }
 }

@@ -24,12 +24,12 @@
 
 package com.jk.common.base.model;
 
+import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -39,13 +39,18 @@ import java.util.Date;
  * @since 2016-01-31 21:42
  */
 @Data
-public abstract class BaseEntity implements java.io.Serializable{
-    @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@EqualsAndHashCode(callSuper = true)
+public abstract class BaseEntity <T extends Model> extends Model<T> {
+
+    @TableId("id")
     private Long id;
 
     private Date createTime;
 
     private Date modifyTime;
+
+    @Override
+    protected Serializable pkVal() {
+        return this.id;
+    }
 }

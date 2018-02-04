@@ -53,7 +53,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
+            <tr class="text-c" th:each="model:${pageInfo?.records}" th:object="${model}">
                 <!--<td><input type="checkbox" value="2" name=""/></td>-->
                 <td th:text="*{username}">d</td>
                 <td th:text="*{mobilePhone}">2</td>

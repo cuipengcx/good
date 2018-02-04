@@ -62,7 +62,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="text-c" th:each="model:${pageInfo?.list}" th:object="${model}">
+            <tr class="text-c" th:each="model:${pageInfo?.records}" th:object="${model}">
                 <!--<td><input type="checkbox" th:value="*{id}" name=""/></td>-->
                 <td th:text="*{jobGroup}">2</td>
                 <td th:title="*{jobName}">

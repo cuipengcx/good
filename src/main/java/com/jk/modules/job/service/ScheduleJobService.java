@@ -1,14 +1,15 @@
 package com.jk.modules.job.service;
 
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.BaseService;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
+
 import com.jk.modules.job.model.ScheduleJob;
 
 /**
  * @author cuiP
  * Created by JK on 2017/5/4.
  */
-public interface ScheduleJobService extends BaseService<ScheduleJob> {
+public interface ScheduleJobService extends IService<ScheduleJob> {
 
     /**
      * 初始化定时任务
@@ -24,7 +25,7 @@ public interface ScheduleJobService extends BaseService<ScheduleJob> {
      * @param endTime
      * @return
      */
-    PageInfo<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime);
+    Page<ScheduleJob> findPage(Integer pageNum, Integer pageSize, String jobName, String startTime, String endTime);
     /**
      * 保存定时任务
      */

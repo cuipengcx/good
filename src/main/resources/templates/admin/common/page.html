@@ -6,7 +6,7 @@
 </head>
 <body th:fragment="page">
     <!--当前页码-->
-    <input type="hidden" th:value="${pageInfo?.pageNum}" th:name="pageNum" id="pageNum"/>
+    <input type="hidden" th:value="${pageInfo?.current}" th:name="pageNum" id="pageNum"/>
     <!--总页数-->
     <input type="hidden" th:value="${pageInfo?.pages}" id="pages"/>
     <div  id="paging" style="float: right;"></div>

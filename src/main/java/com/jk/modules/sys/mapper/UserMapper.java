@@ -1,7 +1,7 @@
 package com.jk.modules.sys.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.jk.common.annotation.DataScope;
-import com.jk.common.base.mapper.BaseMapper;
 import com.jk.modules.sys.model.User;
 import org.apache.ibatis.annotations.Param;
 

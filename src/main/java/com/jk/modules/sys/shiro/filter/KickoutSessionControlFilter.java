@@ -1,12 +1,12 @@
 package com.jk.modules.sys.shiro.filter;
 
+import cn.hutool.http.HttpUtil;
 import com.feilong.core.util.CollectionsUtil;
 import com.jk.common.DataResult;
 import com.jk.common.ExecStatus;
 import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.WebUtil;
 import com.jk.modules.sys.vo.LoginSession;
-import com.xiaoleilu.hutool.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;

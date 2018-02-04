@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ScheduleJobLog extends BaseEntity {
+public class ScheduleJobLog extends BaseEntity<ScheduleJobLog> {
 
     /**
      * 任务ID

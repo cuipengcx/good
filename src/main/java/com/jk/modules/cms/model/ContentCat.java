@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ContentCat extends BaseEntity {
+public class ContentCat extends BaseEntity<ContentCat> {
 
     /**
      * 分类名称

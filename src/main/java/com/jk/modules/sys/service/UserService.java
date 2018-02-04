@@ -1,14 +1,14 @@
 package com.jk.modules.sys.service;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
 import com.jk.common.annotation.DataScope;
-import com.jk.common.base.service.BaseService;
 import com.jk.modules.sys.model.User;
 
 /**
  * Created by JK on 2017/1/19.
  */
-public interface UserService extends BaseService<User> {
+public interface UserService extends IService<User> {
     /**
      *
      * @param pageNum  当前页码
@@ -19,7 +19,7 @@ public interface UserService extends BaseService<User> {
      * @return
      * @throws Exception
      */
-    PageInfo<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception;
+    Page<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception;
 
     /**
      * 根据用户名查询用户
@@ -33,15 +33,14 @@ public interface UserService extends BaseService<User> {
      * @param user    用户对象
      * @param roleId  角色ID
      */
-    Boolean saveUserAndUserRole(User user, Long roleId) throws Exception;
+    void saveUserAndUserRole(User user, Long roleId) throws Exception;
 
     /**
      * 更新用户信息和关联用户和角色
      * @param user      用户对象
      * @param oldRoleId 旧角色ID
      * @param roleId    角色ID
-     * @return
      * @throws Exception
      */
-    Boolean updateUserAndUserRole(User user, Long oldRoleId, Long roleId) throws Exception;
+    void updateUserAndUserRole(User user, Long oldRoleId, Long roleId) throws Exception;
 }

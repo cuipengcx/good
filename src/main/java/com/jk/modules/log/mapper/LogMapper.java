@@ -1,7 +1,7 @@
 package com.jk.modules.log.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.jk.modules.log.model.Log;
-import com.jk.common.base.mapper.BaseMapper;
 
 /**
  * @author cuiP

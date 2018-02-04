@@ -1,23 +1,19 @@
 package com.jk.modules.sys.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.modules.sys.mapper.PermissionMapper;
-import com.jk.modules.sys.mapper.RolePermissionMapper;
 import com.jk.modules.sys.model.Permission;
-import com.jk.modules.sys.model.RolePermission;
 import com.jk.modules.sys.service.PermissionService;
+import com.jk.modules.sys.service.RolePermissionService;
 import com.jk.modules.sys.vo.TreeNode;
-import com.xiaoleilu.hutool.util.StrUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.entity.Example.Criteria;
-
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,26 +21,23 @@ import java.util.List;
  * Created by cuiP on 2017/2/8.
  */
 //@CacheConfig(cacheNames = "permission")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class PermissionServiceImpl extends BaseServiceImpl<Permission> implements PermissionService{
+public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permission> implements PermissionService{
 
     @Resource
     private PermissionMapper permissionMapper;
     @Resource
-    private RolePermissionMapper rolePermissionMapper;
+    private RolePermissionService rolePermissionService;
 
     @Transactional(readOnly=true)
     @Override
-    public PageInfo<Permission> findPage(Integer pageNum, Integer pageSize, String name) {
-        Example example = new Example(Permission.class);
-        Criteria criteria = example.createCriteria();
-        if(StringUtils.isNotEmpty(name)){
-            criteria.andLike("name", "%"+name+"%");
-        }
-        PageHelper.startPage(pageNum,pageSize);
-        List<Permission> PermissionList = this.selectByExample(example);
-        return new PageInfo<Permission>(PermissionList);
+    public Page<Permission> findPage(Integer pageNum, Integer pageSize, String name) {
+        return this.selectPage(
+                new Page<>(pageNum, pageNum),
+                new EntityWrapper<Permission>()
+                        .like(StrUtil.isNotEmpty(name), "name", name)
+        );
     }
 
     @Transactional(readOnly=true)
@@ -63,9 +56,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
     @Transactional(readOnly=true)
     @Override
     public List<Permission> findListByType(String type) {
-        Permission permission = new Permission();
-        permission.setType(type);
-        return this.findListByWhere(permission);
+        return this.selectByMap(Collections.singletonMap("type", type));
     }
 
     @Transactional(readOnly=true)
@@ -75,26 +66,20 @@ public class PermissionServiceImpl extends BaseServiceImpl<Permission> implement
     }
 
     @Override
-    public Boolean deletePermissionAndRolePermissionByPermissionId(Long permissionId) {
+    public void deletePermissionAndRolePermissionByPermissionId(Long permissionId) {
         //删除权限
-        int count1 = this.deleteById(permissionId);
+        this.deleteById(permissionId);
 
         //删除该权限和角色的关联信息
-        RolePermission rolePermission = new RolePermission();
-        rolePermission.setPermissionId(permissionId);
-        rolePermissionMapper.delete(rolePermission);
-        return count1 == 1;
+        rolePermissionService.deleteByMap(Collections.singletonMap("permission_id", permissionId));
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Permission> findListByMenuName(String menuName) {
-        Example example = new Example(Permission.class);
-        Criteria criteria = example.createCriteria();
-
-        if(StrUtil.isNotEmpty(menuName)){
-            criteria.andLike("name", "%"+menuName+"%");
-        }
-        return this.selectByExample(example);
+        return this.selectList(
+                new EntityWrapper<Permission>()
+                        .like(StrUtil.isNotEmpty(menuName), "name", menuName)
+        );
     }
 }

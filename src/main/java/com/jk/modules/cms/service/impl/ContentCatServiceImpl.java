@@ -1,6 +1,6 @@
 package com.jk.modules.cms.service.impl;
 
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.modules.cms.mapper.ContentCatMapper;
 import com.jk.modules.cms.model.ContentCat;
 import com.jk.modules.cms.service.ContentCatService;
@@ -9,15 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author cuiP
  * Created by JK on 2017/4/19.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class ContentCatServiceImpl extends BaseServiceImpl<ContentCat> implements ContentCatService {
+public class ContentCatServiceImpl extends ServiceImpl<ContentCatMapper, ContentCat> implements ContentCatService {
 
     @Resource
     private ContentCatMapper contentCatMapper;
@@ -25,9 +26,7 @@ public class ContentCatServiceImpl extends BaseServiceImpl<ContentCat> implement
     @Transactional(readOnly = true)
     @Override
     public List<ContentCat> findListNewsCat() {
-        ContentCat contentCat = new ContentCat();
-        contentCat.setParentName("新闻中心");
-        return super.findListByWhere(contentCat);
+        return this.selectByMap(Collections.singletonMap("parent_name", "新闻中心"));
     }
 
     @Transactional(readOnly=true)

@@ -1,6 +1,6 @@
 package com.jk.modules.cms.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
@@ -54,10 +54,10 @@ public class ContentController extends BaseController {
                        ModelMap modelMap) {
         log.debug("分页查询内容列表参数! pageNum = {}", pageNum);
 
-        ContentCat contentCat = contentCatService.findById(catId);
+        ContentCat contentCat = contentCatService.selectById(catId);
 
         if (null != catId) {
-            PageInfo<Content> pageInfo = contentService.findPage(pageNum, PAGESIZE, catId, title, startTime, endTime);
+            Page<Content> pageInfo = contentService.findPage(pageNum, PAGESIZE, catId, title, startTime, endTime);
             log.info("分页查询内容列表结果！ pageInfo = {}", pageInfo);
 
             modelMap.put("pageInfo", pageInfo);
@@ -82,7 +82,7 @@ public class ContentController extends BaseController {
     @RequiresPermissions("content:create")
     @GetMapping("/add")
     public String add(Long catId, ModelMap modelMap) {
-        ContentCat contentCat = contentCatService.findById(catId);
+        ContentCat contentCat = contentCatService.selectById(catId);
         modelMap.put("contentCat", contentCat);
         return BASE_PATH + "content-add";
     }
@@ -99,7 +99,7 @@ public class ContentController extends BaseController {
     @PostMapping("/save")
     public ModelMap saveContent(Content content){
         ModelMap messagesMap = new ModelMap();
-        contentService.save(content);
+        contentService.insert(content);
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","添加成功!");
         return messagesMap;
@@ -115,10 +115,10 @@ public class ContentController extends BaseController {
     @RequiresPermissions("content:update")
     @GetMapping("/edit")
     public String edit(Long id, ModelMap modelMap) {
-        Content content = contentService.findById(id);
+        Content content = contentService.selectById(id);
 
         if(null != content){
-            ContentCat contentCat = contentCatService.findById(content.getContentCatId());
+            ContentCat contentCat = contentCatService.selectById(content.getContentCatId());
             modelMap.put("contentCat", contentCat);
         }
 
@@ -139,7 +139,7 @@ public class ContentController extends BaseController {
     @PostMapping("/update")
     public ModelMap updateContent(Content content){
         ModelMap messagesMap = new ModelMap();
-        contentService.updateSelective(content);
+        contentService.updateById(content);
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","编辑成功!");
         return messagesMap;

@@ -1,10 +1,10 @@
 package com.jk.modules.sys.model;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.jk.common.base.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Transient;
 import java.util.Date;
 
 /**
@@ -12,8 +12,8 @@ import java.util.Date;
  * Created by cuiP on 2017/1/19.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class User extends BaseEntity {
+@EqualsAndHashCode(callSuper = true)
+public class User extends BaseEntity<User> {
     /**
      * 用户名
      */
@@ -61,6 +61,7 @@ public class User extends BaseEntity {
      */
     private Date loginTime;
 
-    @Transient
+
+    @TableField(exist=false)
     private String roleName;
 }

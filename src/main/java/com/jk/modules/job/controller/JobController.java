@@ -1,6 +1,7 @@
 package com.jk.modules.job.controller;
 
-import com.github.pagehelper.PageInfo;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
@@ -9,7 +10,6 @@ import com.jk.modules.job.model.ScheduleJob;
 import com.jk.modules.job.service.ScheduleJobService;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.UserService;
-import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +51,7 @@ public class JobController extends BaseController{
             @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
             String jobName, String startTime, String endTime, ModelMap modelMap) {
         log.debug("分页查询调度任务列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, jobName, startTime, endTime);
-        PageInfo<ScheduleJob> pageInfo = scheduleJobService.findPage(pageNum, PAGESIZE, jobName, startTime, endTime);
+        Page<ScheduleJob> pageInfo = scheduleJobService.findPage(pageNum, PAGESIZE, jobName, startTime, endTime);
         log.info("分页查询调度任务列表结果！ pageInfo = {}", pageInfo);
         modelMap.put("pageInfo", pageInfo);
         modelMap.put("jobName", jobName);
@@ -119,7 +119,7 @@ public class JobController extends BaseController{
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
         log.debug("跳转到编辑调度任务页面参数! id = {}", id);
 
-        ScheduleJob model = scheduleJobService.findById(id);
+        ScheduleJob model = scheduleJobService.selectById(id);
 
         log.info("跳转到编辑调度任务信息页面成功!, id = {}", id);
         modelMap.put("model", model);
@@ -264,15 +264,15 @@ public class JobController extends BaseController{
     @RequiresPermissions("job:view")
     @GetMapping("/{id}")
     public String view(@PathVariable("id")Long id, ModelMap modelMap){
-        ScheduleJob model = scheduleJobService.findById(id);
+        ScheduleJob model = scheduleJobService.selectById(id);
         if(null != model){
             //创建者
-            User userCreate = userService.findById(model.getCreateBy());
+            User userCreate = userService.selectById(model.getCreateBy());
             if(null != userCreate){
                 model.setCreateByName(userCreate.getUsername());
             }
             //修改者
-            User userModify = userService.findById(model.getModifyBy());
+            User userModify = userService.selectById(model.getModifyBy());
             if(null != userModify){
                 model.setModifyByName(userModify.getUsername());
             }

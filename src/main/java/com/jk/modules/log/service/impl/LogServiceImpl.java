@@ -1,47 +1,33 @@
 package com.jk.modules.log.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.jk.modules.log.mapper.LogMapper;
 import com.jk.modules.log.model.Log;
 import com.jk.modules.log.service.LogService;
-import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
-
-import java.util.List;
 
 /**
  * @author cuiP
  * Created by JK on 2017/4/27.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService{
+public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements LogService{
 
     @Transactional(readOnly = true)
     @Override
-    public PageInfo<Log> findPage(Integer pageNum, Integer pageSize, String username, String startTime, String endTime) {
-        Example example = new Example(Log.class);
-        Example.Criteria criteria = example.createCriteria();
-        if(StringUtils.isNotEmpty(username)){
-            criteria.andLike("username", "%"+username+"%");
-        }if(StrUtil.isNotEmpty(startTime)){
-            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
-        }if(StrUtil.isNotEmpty(endTime)){
-            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
-        }
-
-        //倒序
-        example.orderBy("createTime").desc();
-
-        //分页
-        PageHelper.startPage(pageNum,pageSize);
-        List<Log> logList = this.selectByExample(example);
-
-        return new PageInfo<Log>(logList);
+    public Page<Log> findPage(Integer pageNum, Integer pageSize, String username, String startTime, String endTime) {
+        return this.selectPage(
+                new Page<>(pageNum, pageSize),
+                new EntityWrapper<Log>()
+                        .like(StringUtils.isNotBlank(username), "username", username)
+                        .ge(StringUtils.isNotBlank(startTime), "create_time", startTime + "00:00:00")
+                        .le(StringUtils.isNotBlank(endTime), "create_time", endTime + "23:59:59")
+                        .orderBy("create_time", false)
+        );
     }
 }

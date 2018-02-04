@@ -1,8 +1,8 @@
 package com.jk.common.base.interceptor;
 
+import cn.hutool.core.util.StrUtil;
 import com.jk.common.exception.RepeatedSubmitFormException;
 import com.jk.common.security.token.FormToken;
-import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

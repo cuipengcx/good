@@ -1,6 +1,6 @@
 package com.jk.modules.log.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.base.controller.BaseController;
 import com.jk.modules.log.model.Log;
 import com.jk.modules.log.service.LogService;
@@ -46,7 +46,7 @@ public class LogController extends BaseController {
             String username, String startTime, String endTime, ModelMap modelMap) {
         try {
             log.debug("分页查询日志列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, username, startTime, endTime);
-            PageInfo<Log> pageInfo = logService.findPage(pageNum, PAGESIZE, username, startTime, endTime);
+            Page<Log> pageInfo = logService.findPage(pageNum, PAGESIZE, username, startTime, endTime);
             log.info("分页查询日志列表结果！ pageInfo = {}", pageInfo);
             modelMap.put("pageInfo", pageInfo);
             modelMap.put("username", username);
@@ -87,25 +87,19 @@ public class LogController extends BaseController {
      * @param ids
      * @return
      */
-//    @OperationLog(value = "批量删除日志")
     @RequiresPermissions("log:delete")
     @DeleteMapping(value = "/batch/{ids}")
-    public ResponseEntity<String> deleteBatch(@PathVariable("ids") List<Object> ids) {
-        try {
-            log.debug("批量删除日志! ids = {}", ids);
+    public ResponseEntity<String> deleteBatch(@PathVariable("ids") List<Long> ids) {
+        log.debug("批量删除日志! ids = {}", ids);
 
-            if (null == ids) {
-                log.info("批量删除日志不存在! ids = {}", ids);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-            logService.deleteByCondition(Log.class, "id", ids);
-            log.info("批量删除日志成功! ids = {}", ids);
-
-            return ResponseEntity.ok("已删除!");
-        } catch (Exception e) {
-            log.error("批量删除日志失败! ids = {}, e = {}", ids, e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        if (null == ids) {
+            log.info("批量删除日志不存在! ids = {}", ids);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+        logService.deleteBatchIds(ids);
+        log.info("批量删除日志成功! ids = {}", ids);
+
+        return ResponseEntity.ok("已删除!");
     }
 
     /**
@@ -116,7 +110,7 @@ public class LogController extends BaseController {
     @RequiresPermissions("log:view")
     @GetMapping("/{id}")
     public String view(@PathVariable("id")Long id, ModelMap modelMap){
-        Log log = logService.findById(id);
+        Log log = logService.selectById(id);
 
         modelMap.put("model", log);
         return BASE_PATH + "log-view";

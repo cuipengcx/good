@@ -1,7 +1,7 @@
 package com.jk.modules.cms.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.jk.modules.cms.model.ContentCat;
-import com.jk.common.base.mapper.BaseMapper;
 import com.jk.modules.sys.vo.TreeNode;
 
 import java.util.List;

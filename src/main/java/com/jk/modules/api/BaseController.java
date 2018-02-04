@@ -1,7 +1,7 @@
 package com.jk.modules.api;
 
-import com.xiaoleilu.hutool.log.Log;
-import com.xiaoleilu.hutool.log.LogFactory;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**

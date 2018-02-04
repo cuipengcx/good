@@ -1,94 +1,92 @@
 package com.jk.modules.sys.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.common.annotation.DataFilter;
 import com.jk.common.annotation.DataScope;
-import com.jk.common.base.service.impl.BaseServiceImpl;
 import com.jk.modules.sys.mapper.RoleMapper;
 import com.jk.modules.sys.mapper.UserMapper;
 import com.jk.modules.sys.mapper.UserRoleMapper;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.model.UserRole;
+import com.jk.modules.sys.service.UserRoleService;
 import com.jk.modules.sys.service.UserService;
-import com.xiaoleilu.hutool.crypto.SecureUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
 
 /**
  *
  * Created by JK on 2017/1/19.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
 
-    @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserRoleMapper userRoleMapper;
-    @Autowired
+    @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private UserRoleService userRoleService;
 
     @DataFilter(tableAlias = "u")
     @Transactional(readOnly=true)
     @Override
-    public PageInfo<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception {
-//        /        Example example = new Example(User.class);
-//        Example.Criteria criteria = example.createCriteria();
-//        if(StringUtils.isNotEmpty(username)){
-//            criteria.andLike("username", "%"+username+"%");
-//        }if(startTime != null && endTime != null){
-//            criteria.andBetween("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)), DateUtil.endOfDay(DateUtil.parse(endTime)));
-//        }
+    public Page<User> findPage(DataScope dataScope, Integer pageNum , Integer pageSize , String username, String startTime, String endTime) throws Exception {
 
-        PageHelper.startPage(pageNum,pageSize);
+        Page<User> page = this.selectPage(
+                new Page<User>(pageNum, pageSize),
+                new EntityWrapper<User>()
+                        .like(StringUtils.isNotBlank(username), "username", username)
+                        .ge(StringUtils.isNotBlank(startTime), "create_time", startTime + "00:00:00")
+                        .le(StringUtils.isNotBlank(endTime), "create_time", endTime + "23:59:59")
+                        .orderBy("create_time", false)
+        );
 
-        List<User> userList = userMapper.findListDataFilter(dataScope, username, startTime, endTime);
-
-
-        //倒序
-//        example.orderBy("createTime").desc();
-
-//        PageHelper.startPage(pageNum,pageSize);
-//        List<User> userList = this.selectByExample(example);
-
-        for (User user : userList) {
+        for (User user : page.getRecords()) {
             Role role = roleMapper.findByUserId(user.getId());
             if (null != role){
                 user.setRoleName(role.getName());
             }
         }
-        return new PageInfo<User>(userList);
+        return page;
     }
 
     @Transactional(readOnly=true)
     @Override
     public User findByUserName(String username) {
-        User user = new User();
-        user.setUsername(username);
-        return this.findOne(user);
+        return this.selectOne(
+                new EntityWrapper<User>()
+                        .eq(StringUtils.isNotBlank(username), "username", username)
+        );
     }
 
+
     @Override
-    public Boolean saveUserAndUserRole(User user, Long roleId) throws Exception{
-        int count = 0;
+    public void saveUserAndUserRole(User user, Long roleId) throws Exception{
         //加密
         user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));
         user.setIsLock(false);
         user.setIsDel(false);
-        Role role = roleMapper.selectByPrimaryKey(roleId);
+
+        Role role = roleMapper.selectById(roleId);
         if(Role.ROLE_TYPE.equalsIgnoreCase(role.getPerms())){
             user.setIsAdmin(true);
         }else {
             user.setIsAdmin(false);
         }
-        count = this.save(user);
+
+        this.insert(user);
 
         //关联用户和角色信息
         UserRole userRole = new UserRole();
@@ -96,37 +94,25 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         userRole.setUserId(user.getId());
         userRole.setCreateTime(user.getCreateTime());
         userRole.setModifyTime(user.getCreateTime());
-        count = userRoleMapper.insert(userRole);
-
-        return count == 1;
+        userRoleService.insert(userRole);
     }
 
     @CacheEvict(value = "goodAuthenticationCache", key = "#user.username")
     @Override
-    public Boolean updateUserAndUserRole(User user, Long oldRoleId, Long roleId) throws Exception {
-        int count = 0;
+    public void updateUserAndUserRole(User user, Long oldRoleId, Long roleId) throws Exception {
         //加密
         user.setPassword(SecureUtil.md5().digestHex(user.getPassword()));
         if(!oldRoleId.equals(roleId)){
-            Role role = roleMapper.selectByPrimaryKey(roleId);
+            Role role = roleMapper.selectById(roleId);
             if(Role.ROLE_TYPE.equalsIgnoreCase(role.getPerms())){
                 user.setIsAdmin(true);
             }else {
                 user.setIsAdmin(false);
             }
         }
-        count = this.updateSelective(user);
+        this.updateById(user);
 
-        //更新用户角色信息
-        if(!oldRoleId.equals(roleId)){
-            UserRole userRole = new UserRole();
-            userRole.setRoleId(oldRoleId);
-            userRole.setUserId(user.getId());
-            UserRole ur = userRoleMapper.selectOne(userRole);
-            ur.setRoleId(roleId);
-            ur.setModifyTime(user.getModifyTime());
-            count = userRoleMapper.updateByPrimaryKeySelective(ur);
-        }
-        return count == 1;
+        //更新用户与角色关系
+        userRoleService.saveOrUpdate(user.getId(), Collections.singletonList(roleId));
     }
 }

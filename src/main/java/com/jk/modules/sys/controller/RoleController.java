@@ -1,6 +1,7 @@
 package com.jk.modules.sys.controller;
 
-import com.github.pagehelper.PageInfo;
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
 import com.jk.common.security.token.FormToken;
@@ -13,7 +14,6 @@ import com.jk.modules.sys.service.RolePermissionService;
 import com.jk.modules.sys.service.RoleService;
 import com.jk.modules.sys.service.UserRoleService;
 import com.jk.modules.sys.vo.TreeNode;
-import com.xiaoleilu.hutool.json.JSONUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,7 +57,7 @@ public class RoleController extends BaseController{
     public String list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                        ModelMap modelMap){
         log.debug("分页查询角色列表参数! pageNum = {}", pageNum);
-        PageInfo<Role> pageInfo = roleService.findPageListByWhere(pageNum, PAGESIZE, null);
+        Page<Role> pageInfo = roleService.selectPage(new Page<>(pageNum, PAGESIZE));
         log.info("分页查询角色列表结果！ pageInfo = {}", pageInfo);
         modelMap.put("pageInfo", pageInfo);
         return BASE_PATH + "admin-role";
@@ -87,13 +87,10 @@ public class RoleController extends BaseController{
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
-        Boolean flag =  roleService.deleteRoleAndRolePermissionByRoleId(id);
-        if(flag){
-            log.info("删除角色成功! id = {}", id);
-            return ResponseEntity.ok("删除成功!");
-        }
-        log.info("删除角色失败，但没有抛出异常! id = {}", id);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        roleService.deleteRoleAndRolePermissionByRoleId(id);
+        log.info("删除角色成功! id = {}", id);
+
+        return ResponseEntity.ok("删除成功!");
     }
 
     /**
@@ -123,7 +120,7 @@ public class RoleController extends BaseController{
         log.debug("添加角色参数! role = {}", role);
 
         //执行保存
-        roleService.save(role);
+        roleService.insert(role);
         log.info("添加角色成功! roleId = {}", role.getId());
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","添加成功!");
@@ -139,7 +136,7 @@ public class RoleController extends BaseController{
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap) throws Exception {
         log.debug("跳转到编辑角色信息页面参数! id = {}", id);
-        Role role = roleService.findById(id);
+        Role role = roleService.selectById(id);
 
         log.info("跳转到编辑角色信息页面成功!, id = {}", id);
         modelMap.put("model", role);
@@ -163,7 +160,7 @@ public class RoleController extends BaseController{
         log.debug("编辑角色参数! roleId= {}, role = {}", roleId, role);
 
         role.setId(roleId);
-        roleService.updateSelective(role);
+        roleService.updateById(role);
         log.info("编辑角色成功! roleId= {}, role = {}", roleId, role);
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","编辑成功!");

@@ -69,14 +69,10 @@ public class PermissionController extends BaseController{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("删除权限不存在!");
         }
 
-        Boolean flag = permissionService.deletePermissionAndRolePermissionByPermissionId(id);
-        if(flag){
-            log.info("删除权限成功! id = {}", id);
-            return ResponseEntity.ok("删除成功！");
-        }
+        permissionService.deletePermissionAndRolePermissionByPermissionId(id);
+        log.info("删除权限成功! id = {}", id);
 
-        log.info("删除权限失败，但没有抛出异常! id = {}", id);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        return ResponseEntity.ok("删除成功！");
     }
 
     /**
@@ -112,7 +108,7 @@ public class PermissionController extends BaseController{
         permission.setIcon(orgRequest.getParameter("icon"));
         permission.setIsLock(false);
         permission.setParentId(permission.getParentId() == null ? 0 : permission.getParentId());
-        permissionService.save(permission);
+        permissionService.insert(permission);
         log.info("添加权限成功! permissionId = {}", permission.getId());
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","添加成功!");
@@ -147,7 +143,7 @@ public class PermissionController extends BaseController{
     @GetMapping(value = "/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
         log.info("跳转到权限编辑页面！id = {}", id);
-        Permission permission = permissionService.findById(id);
+        Permission permission = permissionService.selectById(id);
 
         String parentType = "";
         if("1".equals(permission.getType())){
@@ -191,7 +187,7 @@ public class PermissionController extends BaseController{
 
         permission.setIcon(orgRequest.getParameter("icon"));
 
-        permissionService.updateSelective(permission);
+        permissionService.updateById(permission);
         log.info("编辑权限成功! id= {}, permission = {}", id, permission);
         messagesMap.put("status",SUCCESS);
         messagesMap.put("message","编辑成功!");

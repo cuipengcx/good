@@ -1,10 +1,10 @@
 package com.jk.common.util.job;
 
+import cn.hutool.core.util.StrUtil;
 import com.jk.common.util.SpringUtils;
 import com.jk.modules.job.model.ScheduleJob;
 import com.jk.modules.job.model.ScheduleJobLog;
 import com.jk.modules.job.service.ScheduleJobLogService;
-import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.SchedulerException;
@@ -99,7 +99,7 @@ public class ScheduleExecute {
             scheduleJobLog.setStatus(0);
             scheduleJobLog.setError(StringUtils.substring(e.toString(), 0, 2000));
         }finally {
-            scheduleJobLogService.save(scheduleJobLog);
+            scheduleJobLogService.insert(scheduleJobLog);
         }
     }
 

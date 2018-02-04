@@ -1,7 +1,7 @@
 package com.jk.modules.job.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.jk.modules.job.model.ScheduleJob;
-import com.jk.common.base.mapper.BaseMapper;
 
 import java.util.List;
 

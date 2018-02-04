@@ -1,6 +1,6 @@
 package com.jk.modules.sys.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.base.controller.BaseController;
 import com.jk.modules.sys.model.Dept;
 import com.jk.modules.sys.service.DeptService;
@@ -54,7 +54,7 @@ public class DeptController extends BaseController{
         log.debug("分页查询部门列表参数! pageNum = {}, organizationId = {}, name = {}, startTime = {},endTime = {}",
                 pageNum, deptId, name, startTime, endTime);
 
-        PageInfo<Dept> pageInfo = deptService.findPage(pageNum, PAGESIZE, deptId, name, startTime, endTime);
+        Page<Dept> pageInfo = deptService.findPage(pageNum, PAGESIZE, deptId, name, startTime, endTime);
         log.info("分页查询部门列表结果！pageInfo = {}", pageInfo);
 
         modelMap.put("pageInfo", pageInfo);

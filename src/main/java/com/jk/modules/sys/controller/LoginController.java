@@ -1,6 +1,7 @@
 package com.jk.modules.sys.controller;
 
 
+import cn.hutool.crypto.SecureUtil;
 import com.jk.common.Constant;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
@@ -9,7 +10,6 @@ import com.jk.common.util.ShiroUtils;
 import com.jk.common.util.WebUtil;
 import com.jk.modules.sys.model.User;
 import com.jk.modules.sys.service.UserService;
-import com.xiaoleilu.hutool.crypto.SecureUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,7 +136,7 @@ public class LoginController extends BaseController {
             User newUser = new User();
             newUser.setId(user.getId());
             newUser.setPassword(SecureUtil.md5().digestHex(newPassword));
-            userService.updateSelective(newUser);
+            userService.updateById(newUser);
 
             log.info("修改密码成功!");
             messagesMap.put("status",SUCCESS);

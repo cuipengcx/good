@@ -1,36 +1,41 @@
 package com.jk.modules.sys.service.impl;
 
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.jk.modules.sys.mapper.RoleMapper;
 import com.jk.modules.sys.mapper.RolePermissionMapper;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.model.RolePermission;
+import com.jk.modules.sys.service.RolePermissionService;
 import com.jk.modules.sys.service.RoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 
 /**
  *
  * Created by cuiP on 2017/2/8.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService{
+public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService{
 
     @Resource
     private RoleMapper roleMapper;
     @Resource
-    private RolePermissionMapper rolePermissionMapper;
+    private RolePermissionService rolePermissionService;
 
 
     @Transactional(readOnly=true)
     @Override
     public Role findByName(String name) {
-        Role role = new Role();
-        role.setName(name);
-        return this.findOne(role);
+        return this.selectOne(
+                new EntityWrapper<Role>()
+                        .eq(StrUtil.isNotEmpty(name), "name", name)
+        );
     }
 
     @Override
@@ -39,14 +44,11 @@ public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleServic
     }
 
     @Override
-    public Boolean deleteRoleAndRolePermissionByRoleId(Long roleId) {
+    public void deleteRoleAndRolePermissionByRoleId(Long roleId) {
         //删除角色
-        int count1 = this.deleteById(roleId);
+        this.deleteById(roleId);
 
         //级联删除该角色所关联的权限
-        RolePermission rolePermission = new RolePermission();
-        rolePermission.setRoleId(roleId);
-        rolePermissionMapper.delete(rolePermission);
-        return count1 == 1;
+        rolePermissionService.deleteByMap(Collections.singletonMap("role_id", roleId));
     }
 }

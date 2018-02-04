@@ -1,6 +1,6 @@
 package com.jk.modules.sys.controller;
 
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.jk.common.annotation.DataScope;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.base.controller.BaseController;
@@ -51,7 +51,7 @@ public class UserController extends BaseController {
             String username, String startTime, String endTime, ModelMap modelMap) throws Exception {
         try {
             log.debug("分页查询管理员列表参数! pageNum = {}, username = {}, username = {}, startTime = {}, endTime = {}", pageNum, username, startTime, endTime);
-            PageInfo<User> pageInfo = userService.findPage(new DataScope(), pageNum, PAGESIZE, username, startTime, endTime);
+            Page<User> pageInfo = userService.findPage(new DataScope(), pageNum, PAGESIZE, username, startTime, endTime);
             log.info("分页查询管理员列表结果！ pageInfo = {}", pageInfo);
             modelMap.put("pageInfo", pageInfo);
             modelMap.put("username", username);
@@ -75,7 +75,7 @@ public class UserController extends BaseController {
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         log.debug("删除管理员! id = {}", id);
 
-        User user = userService.findById(id);
+        User user = userService.selectById(id);
         if (null == user) {
             log.info("删除管理员不存在! id = {}", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("管理员不存在!");
@@ -98,14 +98,14 @@ public class UserController extends BaseController {
      */
     @OperationLog(value = "批量删除管理员")
     @DeleteMapping(value = "/user/batch/{ids}")
-    public ResponseEntity<Void> deleteBatch(@PathVariable("ids") List<Object> ids) {
+    public ResponseEntity<Void> deleteBatch(@PathVariable("ids") List<Long> ids) {
         log.debug("批量删除管理员! ids = {}", ids);
 
         if (null == ids) {
             log.info("批量删除管理员不存在! ids = {}", ids);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        userService.deleteByCondition(User.class, "id", ids);
+        userService.deleteBatchIds(ids);
         log.info("批量删除管理员成功! ids = {}", ids);
 
         return ResponseEntity.ok(null);
@@ -121,7 +121,7 @@ public class UserController extends BaseController {
     @PutMapping(value = "/user/status/{id}")
     public ResponseEntity<String> updateStatus(@PathVariable("id") Long id){
         log.debug("禁用|启用管理员参数! id = {}", id);
-        User user = userService.findById(id);
+        User user = userService.selectById(id);
 
         if (null == user) {
             log.info("管理员不存在! id = {}", id);
@@ -135,7 +135,7 @@ public class UserController extends BaseController {
 
         //禁用启用
         user.setIsLock(!user.getIsLock());
-        userService.updateSelective(user);
+        userService.updateById(user);
 
         log.info("禁用|启用管理员成功! id = {}", id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -149,7 +149,7 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:create")
     @GetMapping(value = "/user/add")
     public String add(ModelMap modelMap){
-        List<Role> roleList = roleService.findAll();
+        List<Role> roleList = roleService.selectList(null);
         modelMap.put("roleList", roleList);
         log.info("跳转到管理员添加页面!");
         return BASE_PATH + "admin-add";
@@ -170,18 +170,15 @@ public class UserController extends BaseController {
         ModelMap messagesMap = new ModelMap();
 
         log.debug("添加管理员参数! user = {}", user);
-        Boolean flag = userService.saveUserAndUserRole(user, roleId);
-        if(flag){
-            log.info("添加管理员成功! userId = {}", user.getId());
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","添加成功!");
-            return messagesMap;
-        }
-        log.info("添加管理员失败, 但没有抛出异常! userId = {}", user.getId());
-        messagesMap.put("status",FAILURE);
-        messagesMap.put("message","添加失败!");
+
+        userService.saveUserAndUserRole(user, roleId);
+
+        log.info("添加管理员成功! userId = {}", user.getId());
+        messagesMap.put("status", SUCCESS);
+        messagesMap.put("message", "添加成功!");
         return messagesMap;
     }
+
 
     /**
      * 跳转到管理员编辑页面
@@ -191,8 +188,8 @@ public class UserController extends BaseController {
     @RequiresPermissions("user:update")
     @GetMapping(value = "/user/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap modelMap){
-        User user = userService.findById(id);
-        List<Role> roleList = roleService.findAll();
+        User user = userService.selectById(id);
+        List<Role> roleList = roleService.selectList(null);
         Role role = roleService.findByUserId(user.getId());
 
         log.info("跳转到管理员编辑页面！id = {}", id);
@@ -219,7 +216,7 @@ public class UserController extends BaseController {
         ModelMap messagesMap = new ModelMap();
         log.debug("编辑管理员参数! id= {}, user = {}", id, user);
 
-        User u = userService.findById(id);
+        User u = userService.selectById(id);
         if (null == u) {
             log.info("编辑管理员不存在! id = {}", id);
             messagesMap.put("status",FAILURE);
@@ -234,16 +231,11 @@ public class UserController extends BaseController {
             return messagesMap;
         }
 
-        Boolean flag = userService.updateUserAndUserRole(user, oldRoleId, roleId);
-        if(flag){
-            log.info("编辑管理员成功! id= {}, user = {}", id, user);
-            messagesMap.put("status",SUCCESS);
-            messagesMap.put("message","编辑成功!");
-            return messagesMap;
-        }
-        log.info("编辑管理员失败,但没有抛出异常 ! id= {}, user = {}", id, user);
-        messagesMap.put("status",FAILURE);
-        messagesMap.put("message","编辑失败!");
+        userService.updateUserAndUserRole(user, oldRoleId, roleId);
+        log.info("编辑管理员成功! id= {}, user = {}", id, user);
+
+        messagesMap.put("status",SUCCESS);
+        messagesMap.put("message","编辑成功!");
         return messagesMap;
     }
 

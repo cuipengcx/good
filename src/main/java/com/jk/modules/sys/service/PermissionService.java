@@ -1,7 +1,7 @@
 package com.jk.modules.sys.service;
 
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.BaseService;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.IService;
 import com.jk.modules.sys.model.Permission;
 import com.jk.modules.sys.vo.TreeNode;
 
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by cuiP on 2017/2/8.
  */
-public interface PermissionService extends BaseService<Permission> {
+public interface PermissionService extends IService<Permission> {
     /**
      * 分页查询权限列表
      *
@@ -19,19 +19,19 @@ public interface PermissionService extends BaseService<Permission> {
      * @param name     权限名称
      * @return
      */
-    PageInfo<Permission> findPage(Integer pageNum, Integer pageSize, String name);
+    Page<Permission> findPage(Integer pageNum, Integer pageSize, String name);
 
     /**
      * 根据用户ID查询该用户所拥有的权限
      *
-     * @param UserId
+     * @param userId
      * @return
      */
     List<Permission> findListPermissionByUserId(Long userId);
 
     /**
      * 根据用户ID查询用户菜单列表
-     * @param UserId
+     * @param userId
      * @return
      */
     List<Permission> findMenuListByUserId(Long userId);
@@ -54,7 +54,7 @@ public interface PermissionService extends BaseService<Permission> {
      * @param permissionId
      * @return
      */
-    Boolean deletePermissionAndRolePermissionByPermissionId(Long permissionId);
+    void deletePermissionAndRolePermissionByPermissionId(Long permissionId);
 
     /**
      * 根据资源名称模糊匹配

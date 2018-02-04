@@ -1,8 +1,8 @@
 package com.jk.common.base.controller;
 
-import com.xiaoleilu.hutool.io.IoUtil;
-import com.xiaoleilu.hutool.io.resource.ClassPathResource;
-import com.xiaoleilu.hutool.util.CharsetUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.util.CharsetUtil;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

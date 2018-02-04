@@ -1,12 +1,11 @@
 package com.jk.common.aop;
 
-
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
 import com.jk.common.annotation.OperationLog;
 import com.jk.common.util.ShiroUtils;
 import com.jk.modules.log.model.Log;
 import com.jk.modules.log.service.LogService;
-import com.xiaoleilu.hutool.http.HttpUtil;
-import com.xiaoleilu.hutool.json.JSONUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -102,7 +101,7 @@ public class OperationLogAspect {
         log.setTimeConsuming(System.currentTimeMillis() - startTime.get());
 
         // 保存数据库
-        logService.save(log);
+        logService.insert(log);
     }
 
     /**
@@ -128,7 +127,7 @@ public class OperationLogAspect {
             log.setExceptionDetail(e.getMessage());
 
             //保存数据库
-            logService.save(log);
+            logService.insert(log);
         }  catch (Exception ex) {
             //记录本地异常日志
             logger.error("异常方法全路径:{},异常信息:{},请求参数:{}", getFullMethodName(joinPoint), e.getMessage(), JSONUtil.toJsonStr(args));

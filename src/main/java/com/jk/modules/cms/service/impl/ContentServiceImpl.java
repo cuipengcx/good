@@ -1,64 +1,45 @@
 package com.jk.modules.cms.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.jk.common.base.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.jk.modules.cms.mapper.ContentMapper;
 import com.jk.modules.cms.model.Content;
 import com.jk.modules.cms.service.ContentService;
-import com.xiaoleilu.hutool.date.DateUtil;
-import com.xiaoleilu.hutool.util.StrUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.mybatis.mapper.entity.Example;
-
-import java.util.List;
 
 /**
  * @author cuiP
  * Created by JK on 2017/4/19.
  */
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @Service
-public class ContentServiceImpl extends BaseServiceImpl<Content> implements ContentService {
+public class ContentServiceImpl extends ServiceImpl<ContentMapper, Content> implements ContentService {
 
-
-    @Transactional(readOnly = true)
     @Override
-    public PageInfo<Content> findPage(Integer pageNum, Integer pageSize, Long catId, String title, String startTime, String endTime) {
-
-        Example example = new Example(Content.class);
-        Example.Criteria criteria = example.createCriteria();
-
-        if(null != catId){
-            criteria.andEqualTo("contentCatId", catId);
-        }if(StringUtils.isNotEmpty(title)){
-            criteria.andLike("title", "%"+title+"%");
-        }if(StrUtil.isNotEmpty(startTime)){
-            criteria.andGreaterThanOrEqualTo("createTime", DateUtil.beginOfDay(DateUtil.parse(startTime)));
-        }if(StrUtil.isNotEmpty(endTime)){
-            criteria.andLessThanOrEqualTo("createTime", DateUtil.endOfDay(DateUtil.parse(endTime)));
-        }
-
-        //排序
-        example.orderBy("createTime").desc();
-
-        //分页
-        PageHelper.startPage(pageNum,pageSize);
-
-        List<Content> contentList = this.selectByExample(example);
-        return new PageInfo<Content>(contentList);
+    public Page<Content> findPage(Integer pageNum, Integer pageSize, Long catId, String title, String startTime, String endTime) {
+        return this.selectPage(
+                new Page<>(pageNum, pageSize),
+                new EntityWrapper<Content>()
+                        .eq(null != catId, "content_cat_id", catId)
+                        .like(StringUtils.isNotBlank(title), "title", title)
+                        .ge(StringUtils.isNotBlank(startTime), "create_time", startTime + "00:00:00")
+                        .le(StringUtils.isNotBlank(endTime), "create_time", endTime + "23:59:59")
+                        .orderBy("create_time", false)
+        );
     }
 
     @Transactional(readOnly = true)
     @Override
-    public PageInfo<Content> findPageNews(Integer pageNum, Integer pageSize, Long catId) {
+    public Page<Content> findPageNews(Integer pageNum, Integer pageSize, Long catId) {
         return this.findPage(pageNum, pageSize, catId, null, null, null);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public PageInfo<Content> findTop3ByCatId(Long catId) {
+    public Page<Content> findTop3ByCatId(Long catId) {
         return this.findPageNews(1, 3, catId);
     }
 }

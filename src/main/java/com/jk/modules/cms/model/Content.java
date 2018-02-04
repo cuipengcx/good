@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Content extends BaseEntity {
+public class Content extends BaseEntity<Content> {
 
     /**
      * 内容分类ID

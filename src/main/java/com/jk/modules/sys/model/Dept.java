@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Dept extends BaseEntity{
+public class Dept extends BaseEntity<Dept> {
 
     private static final long serialVersionUID = 7898278922679296948L;
 

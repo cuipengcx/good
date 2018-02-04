@@ -1,6 +1,6 @@
 package com.jk.common.util;
 
-import com.xiaoleilu.hutool.json.JSONUtil;
+import cn.hutool.json.JSONUtil;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 

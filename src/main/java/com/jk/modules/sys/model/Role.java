@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseEntity {
+public class Role extends BaseEntity<Role> {
 
     //超级管理员标识
     public static final String ROLE_TYPE = "ROEL_ADMIN";

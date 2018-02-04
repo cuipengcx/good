@@ -56,7 +56,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="text-c va-m" th:each="model:${pageInfo?.list}">
+                    <tr class="text-c va-m" th:each="model:${pageInfo?.records}">
                         <td class="text-l" th:text="${model?.simpleName}"></td>
                         <td class="text-l" th:text="${model?.fullName}"></td>
                         <td class="text-l">上级部门</td>

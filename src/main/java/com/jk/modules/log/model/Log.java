@@ -1,7 +1,7 @@
 package com.jk.modules.log.model;
 
+import cn.hutool.core.util.StrUtil;
 import com.jk.common.base.model.BaseEntity;
-import com.xiaoleilu.hutool.util.StrUtil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Log extends BaseEntity {
+public class Log extends BaseEntity<Log> {
 
     /**
      * 应用名称

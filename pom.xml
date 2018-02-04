@@ -11,17 +11,18 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.4.RELEASE</version>
+        <version>1.5.9.RELEASE</version>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <thymeleaf.version>3.0.0.RELEASE</thymeleaf.version>
-        <thymeleaf-layout-dialect.version>2.0.0</thymeleaf-layout-dialect.version>
+        <java.version>1.8</java.version>
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.2.2</thymeleaf-layout-dialect.version>
         <shiro.version>1.3.2</shiro.version>
         <thymeleaf-shiro.version>2.0.0</thymeleaf-shiro.version>
-        <hutool.version>2.16.0</hutool.version>
+        <hutool.version>4.0.4</hutool.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang3.version>3.5</commons-lang3.version>
         <commons-fileupload.version>1.3.2</commons-fileupload.version>
@@ -29,10 +30,7 @@
         <commons-collections4.version>4.1</commons-collections4.version>
         <quartz.version>2.3.0</quartz.version>
         <lombok.version>1.16.14</lombok.version>
-        <mybatis-spring-boot.version>1.3.0</mybatis-spring-boot.version>
-        <pagehelper-spring-boot.version>1.1.2</pagehelper-spring-boot.version>
-        <mapper-spring-boot.version>1.1.3</mapper-spring-boot.version>
-        <java.version>1.8</java.version>
+        <mybatis-plus-boot-starter.version>2.1.9</mybatis-plus-boot-starter.version>
         <springfox.version>2.6.1</springfox.version>
         <httpclient.version>4.3.5</httpclient.version>
         <okhttp.version>3.8.0</okhttp.version>
@@ -89,24 +87,19 @@
             <!--<artifactId>spring-boot-starter-cache</artifactId>-->
         <!--</dependency>-->
 
-        <!--mybatis-->
+        <!-- mybatis-plus begin -->
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring-boot.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatis-plus-boot-starter.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tomcat-jdbc</artifactId>
+                    <groupId>org.apache.tomcat</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!--mapper-->
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>${mapper-spring-boot.version}</version>
-        </dependency>
-        <!--pagehelper-->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper-spring-boot.version}</version>
-        </dependency>
+        <!-- mybatis-plus end -->
 
         <dependency>
             <groupId>mysql</groupId>
@@ -119,12 +112,6 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid-spring-boot.version}</version>
         </dependency>
-        <!-- 只需引入spring-boot-devtools 即可实现热部署 -->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-devtools</artifactId>-->
-            <!--<optional>true</optional>-->
-        <!--</dependency>-->
 
         <!--thymeleaf模版支持-->
         <dependency>
@@ -182,8 +169,8 @@
             <version>${commons-collections4.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.xiaoleilu</groupId>
-            <artifactId>hutool</artifactId>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
         <dependency>
