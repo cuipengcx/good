@@ -8,7 +8,12 @@
 
 ## 更新日志
 
-### 2017年9月24日
+### 2018年2月4日
+
+1. 解决通用mapper替换为Mybatis-Plus遇到的坑
+    > 参考: [加入 mybatisplus-spring-boot后，@ConfigurationProperties( prefix = "task.pool" ) 注解报错了](https://gitee.com/baomidou/mybatisplus-spring-boot/issues/IHR21#only_comment)
+
+### 2018年2月3日
 
 1. sql文件分类整理
 2. 升级spring boot 1.5.4到spring boot 1.5.9
