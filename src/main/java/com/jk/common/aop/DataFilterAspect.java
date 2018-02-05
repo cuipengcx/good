@@ -10,9 +10,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
 /**
@@ -23,7 +23,7 @@ import java.util.Map;
 @Component
 public class DataFilterAspect {
 
-    @Autowired
+    @Resource
     private DeptService deptService;
 
     @Pointcut("@annotation(com.jk.common.annotation.DataFilter)")
@@ -54,7 +54,7 @@ public class DataFilterAspect {
      * 封装过滤sql片段
      * @return
      */
-    private static String getFilterSql(User userEntity, JoinPoint point){
+    private String getFilterSql(User userEntity, JoinPoint point){
         MethodSignature signature = (MethodSignature) point.getSignature();
         DataFilter dataFilter = signature.getMethod().getAnnotation(DataFilter.class);
 
@@ -64,7 +64,8 @@ public class DataFilterAspect {
         String column = dataFilter.column();
 
         //and temp.dept_id in(3,4);
-        String deptIds = "3,4";
+        String deptIds = deptService.getDeptIdAndSubDeptIdsAsStr(userEntity.getDeptId());
+
         StringBuilder filterSql = new StringBuilder(" and ");
         filterSql.append(tableAlias);
         filterSql.append(".");

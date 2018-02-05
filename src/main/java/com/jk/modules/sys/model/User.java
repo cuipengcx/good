@@ -61,6 +61,11 @@ public class User extends BaseEntity<User> {
      */
     private Date loginTime;
 
+    /**
+     * 部门ID
+     */
+    private Long deptId;
+
 
     @TableField(exist=false)
     private String roleName;
