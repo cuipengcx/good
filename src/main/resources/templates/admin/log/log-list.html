@@ -73,7 +73,7 @@
                     <span class="label radius label-danger" th:unless="*{logType} == 0">异常</span>
                 </td>
                 <td th:text="*{requestIp}"></td>
-                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
+                <td th:text="*{#temporals.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
                 <td class="td-manage">
                     <a title="详情" href="javascript:;" onclick="system_log_show(this,'10001')" th:onclick="'javascript:log_view(\'查看详情\', \'/admin/log/'+*{id}+'\',\'800\',\'500\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe665;</i></a>
                     <a title="删除" href="javascript:;" onclick="admin_del(this,'1')" th:onclick="'javascript:log_del(this, \'/admin/log/'+*{id}+'\');'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>

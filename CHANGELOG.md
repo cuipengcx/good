@@ -8,6 +8,10 @@
 
 ## 更新日志
 
+### 2018年4月23日
+
+1. 配置jackson,Mybatis,thymeleaf支持java8time API
+
 ### 2018年2月4日
 
 1. 解决通用mapper替换为Mybatis-Plus遇到的坑

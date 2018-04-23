@@ -3,7 +3,7 @@ package com.jk.modules.sys.vo;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @package: com.jk.vo
@@ -24,7 +24,7 @@ public class LoginSession implements Serializable{
     /**
      * 登录时间
      */
-    private Date loginTime;
+    private LocalDateTime loginTime;
 
     /**
      * 登录IP

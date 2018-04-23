@@ -22,7 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Deque;
 import java.util.LinkedList;
 
@@ -118,7 +118,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
             //将sessionId存入队列
             LoginSession loginSession = new LoginSession();
             loginSession.setSessionId(sessionId);
-            loginSession.setLoginTime(new Date());
+            loginSession.setLoginTime(LocalDateTime.now());
             loginSession.setLoginIP(HttpUtil.getClientIP(request));
             deque.push(loginSession);
             //将用户的sessionId队列缓存

@@ -99,8 +99,8 @@
                     <span class="label radius label-danger" th:if="*{status} == 0">禁用</span>
                     <span class="label radius label-success" th:if="*{status} == 1">启用</span>
                 </td>
-                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
-                <!--<td th:text="*{#dates.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>-->
+                <td th:text="*{#temporals.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
+                <!--<td th:text="*{#temporals.format(modifyTime, 'yyyy-MM-dd HH:mm')}">2014-6-11 11:11:42</td>-->
                 <td class="td-manage">
                     <!--暂停，恢复，运行一次，编辑，删除-->
                     <a style="text-decoration:none" th:onclick="'javascript:job_run(this, \'/admin/job/run/'+*{id}+'\');'" href="javascript:;" title="运行一次"><i class="Hui-iconfont">&#xe6e6;</i></a>

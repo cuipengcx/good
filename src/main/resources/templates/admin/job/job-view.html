@@ -97,7 +97,7 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">创建时间：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <span th:text="${#dates.format(model?.createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+                <span th:text="${#temporals.format(model?.createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
             </div>
         </div>
         <div class="row cl" th:if="${not #strings.isEmpty(model?.modifyByName)}">
@@ -109,7 +109,7 @@
         <div class="row cl" th:if="${model?.modifyByName != null}">
             <label class="form-label col-xs-4 col-sm-3">修改时间：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <span th:text="${#dates.format(model?.modifyTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
+                <span th:text="${#temporals.format(model?.modifyTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</span>
             </div>
         </div>
     </form>

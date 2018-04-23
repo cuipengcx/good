@@ -32,7 +32,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 基础信息
@@ -48,10 +48,10 @@ public abstract class BaseEntity <T extends Model> extends Model<T> {
     private Long id;
 
     @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date modifyTime;
+    private LocalDateTime modifyTime;
 
     @Override
     protected Serializable pkVal() {

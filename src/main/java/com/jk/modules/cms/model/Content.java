@@ -4,7 +4,7 @@ import com.jk.common.base.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 内容
@@ -53,6 +53,6 @@ public class Content extends BaseEntity<Content> {
     /**
      * 时间
      */
-    private Date time;
+    private LocalDateTime time;
 
 }

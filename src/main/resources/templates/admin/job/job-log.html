@@ -100,7 +100,7 @@
                     <span class="label radius label-success" th:if="*{status} == 1">成功</span>
                 </td>
                 <td th:text="*{times}"></td>
-                <td th:text="*{#dates.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
+                <td th:text="*{#temporals.format(createTime, 'yyyy-MM-dd HH:mm:ss')}">2014-6-11 11:11:42</td>
             </tr>
             </tbody>
         </table>

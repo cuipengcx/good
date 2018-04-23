@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -81,7 +81,7 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             rolePermission = new RolePermission();
             rolePermission.setPermissionId(permissionId);
             rolePermission.setRoleId(roleId);
-            rolePermission.setCreateTime(new Date());
+            rolePermission.setCreateTime(LocalDateTime.now());
             rolePermission.setModifyTime(rolePermission.getCreateTime());
             rolePermissionList.add(rolePermission);
         }

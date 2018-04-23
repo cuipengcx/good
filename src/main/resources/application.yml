@@ -82,8 +82,8 @@ spring:
       max-request-size: 10MB
   #jackson配置
   jackson:
-    # 属性为NULL 不序列化
-    default-property-inclusion: non_null
+    # 属性为NULL或者'' 不序列化
+    default-property-inclusion: non_empty
   #异步线程池配置
   task:
     pool:

@@ -37,6 +37,8 @@
         <jjwt.version>0.7.0</jjwt.version>
         <druid-spring-boot.version>1.1.2</druid-spring-boot.version>
         <feilong-platform.version>1.10.5</feilong-platform.version>
+        <mybatis-java8time.version>1.0.2</mybatis-java8time.version>
+        <thymeleaf-java8time.version>3.0.0.RELEASE</thymeleaf-java8time.version>
     </properties>
 
     <repositories>
@@ -236,6 +238,26 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>${jjwt.version}</version>
+        </dependency>
+
+        <!--jackson-LocalDateTime支持-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+
+        <!--mybatis-LocalDateTime支持-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>${mybatis-java8time.version}</version>
+        </dependency>
+
+        <!--thymeleaf-LocalDateTime支持-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-java8time</artifactId>
+            <version>${thymeleaf-java8time.version}</version>
         </dependency>
     </dependencies>
 
