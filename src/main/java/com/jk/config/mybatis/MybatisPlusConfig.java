@@ -3,6 +3,7 @@ package com.jk.config.mybatis;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.mapper.ISqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
+import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
 import com.baomidou.mybatisplus.plugins.OptimisticLockerInterceptor;
 import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
@@ -25,10 +26,10 @@ public class MybatisPlusConfig {
      * 公共对象自动填充
      * @return
      */
-//    @Bean
-//    public MetaObjectHandler metaObjectHandler(){
-//        return new MyMetaObjectHandler();
-//    }
+    @Bean
+    public MetaObjectHandler metaObjectHandler(){
+        return new MyMetaObjectHandler();
+    }
 
     /**
      * 性能拦截器，兼打印sql，不建议生产环境配置
