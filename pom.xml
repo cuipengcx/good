@@ -306,7 +306,7 @@
                     <!--</dependency>-->
                 <!--</dependencies>-->
                 <configuration>
-                    <mainClass>com.jk.RootApplication</mainClass>
+                    <mainClass>com.good.RootApplication</mainClass>
                     <jvmArguments>-Dfile.encoding=UTF-8 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
                     <executable>true</executable>
                     <fork>true</fork>

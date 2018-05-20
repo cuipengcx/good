@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jk.modules.sys.mapper.RoleMapper">
-    <resultMap id="BaseResultMap" type="com.jk.modules.sys.model.Role">
+<mapper namespace="com.good.modules.sys.mapper.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.good.modules.sys.model.Role">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="name" property="name" jdbcType="VARCHAR" />
         <result column="remark" property="remark" jdbcType="VARCHAR" />
@@ -12,7 +12,7 @@
     </resultMap>
 
     <!--根据用户ID查询角色对象信息-->
-    <select id="findByUserId" parameterType="java.lang.Long" resultType="com.jk.modules.sys.model.Role">
+    <select id="findByUserId" parameterType="java.lang.Long" resultType="com.good.modules.sys.model.Role">
         SELECT * FROM role r where r.id IN
         (
             SELECT ur.role_id FROM user_role ur where ur.user_id=#{userId}

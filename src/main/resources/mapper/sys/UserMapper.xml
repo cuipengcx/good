@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jk.modules.sys.mapper.UserMapper">
+<mapper namespace="com.good.modules.sys.mapper.UserMapper">
 
-    <resultMap id="UserResultMap" type="com.jk.modules.sys.model.User">
+    <resultMap id="UserResultMap" type="com.good.modules.sys.model.User">
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="username" property="username" jdbcType="VARCHAR" />
         <result column="password" property="password" jdbcType="VARCHAR" />
@@ -19,7 +19,7 @@
         <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
-    <select id="findById" parameterType="Long" resultType="com.jk.modules.sys.model.User">
+    <select id="findById" parameterType="Long" resultType="com.good.modules.sys.model.User">
         SELECT * FROM user u WHERE u.id = #{id}
     </select>
 
@@ -27,7 +27,7 @@
       SELECT * FROM user u WHERE  u.username = #{username}
     </select>
 
-    <select id="findListDataFilter" resultType="com.jk.modules.sys.model.User">
+    <select id="findListDataFilter" resultType="com.good.modules.sys.model.User">
         SELECT * FROM user u
         <where>
             <if test="username != null and username.trim() != ''">

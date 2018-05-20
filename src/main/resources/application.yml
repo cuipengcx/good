@@ -94,7 +94,7 @@ mybatis-plus:
   #指定mapper.xml的位置
   mapper-locations: classpath:mapper/**/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔，支持Ant操作符
-  typeAliasesPackage: com.jk.modules.*.model
+  typeAliasesPackage: com.good.modules.*.model
   #通用枚举扫描并自动关联注入，支持统配符 * 或者 ; 分割
 #  typeEnumsPackage: com.jk.modules.*.model.enums
   global-config:
@@ -139,7 +139,7 @@ spring:
     password: ${password}
 #日志
 logging:
-  config: classpath:logback-jk.xml
+  config: classpath:logback-good.xml
   path: D:\\log
 
 #数据库密码加密
@@ -174,7 +174,7 @@ spring:
     cache: true
 #日志
 logging:
-  config: classpath:logback-jk.xml
+  config: classpath:logback-good.xml
   path: log
 
 #数据库密码加密
@@ -209,7 +209,7 @@ spring:
     cache: true
 #日志
 logging:
-  config: classpath:logback-jk.xml
+  config: classpath:logback-good.xml
   path: log
 
 #数据库密码加密
