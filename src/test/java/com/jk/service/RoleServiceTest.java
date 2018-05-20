@@ -1,6 +1,6 @@
 package com.jk.service;
 
-import com.jk.BaseTest;
+import com.jk.RootApplicationTests;
 import com.jk.modules.sys.model.Role;
 import com.jk.modules.sys.service.RoleService;
 import org.junit.Assert;
@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 /**
  * Created by JK on 2017/2/13.
  */
-public class RoleServiceTest extends BaseTest {
+public class RoleServiceTest extends RootApplicationTests {
 
     @Resource
     private RoleService roleService;

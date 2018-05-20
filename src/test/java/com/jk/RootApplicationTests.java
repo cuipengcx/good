@@ -10,8 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * Created by JK on 2017/1/17.
  */
-@SpringBootTest
 @RunWith(SpringRunner.class)
-public abstract class BaseTest {
+@SpringBootTest
+public abstract class RootApplicationTests {
     protected final transient Log log = LogFactory.get(this.getClass());
 }

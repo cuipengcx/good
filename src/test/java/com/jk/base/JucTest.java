@@ -1,4 +1,4 @@
-package com.jk;
+package com.jk.base;
 
 import lombok.Data;
 
