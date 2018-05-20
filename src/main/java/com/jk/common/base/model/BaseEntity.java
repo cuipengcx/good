@@ -36,8 +36,7 @@ import java.time.LocalDateTime;
 
 /**
  * 基础信息
- *
- * @author liuzh
+ * @author cuiP
  * @since 2016-01-31 21:42
  */
 @Data

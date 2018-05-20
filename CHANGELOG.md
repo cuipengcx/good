@@ -8,6 +8,12 @@
 
 ## 更新日志
 
+### 2018年4月25日
+
+1. Mybatis Plus 配置公共对象填充，目前只对创建时间和更新时间做了自动填充
+
+    注意：这个只支持通过Mybatis Plus的insert和update，xml写原生sql的不会自动填充，需要写Mybatis拦截器
+
 ### 2018年4月23日
 
 1. 配置jackson,Mybatis,thymeleaf支持java8time API
