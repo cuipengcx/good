@@ -1,7 +1,7 @@
 package com.good.common.base.controller;
 
-import com.good.common.DataResult;
-import com.good.common.ExecStatus;
+import com.good.common.vo.ResultData;
+import com.good.common.constant.enums.ResultEnum;
 import com.good.common.exception.BaseException;
 import com.good.common.exception.RepeatedSubmitFormException;
 import com.good.common.exception.ValidateException;
@@ -24,7 +24,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.UUID;
 
-import static com.good.common.Constant.*;
+import static com.good.common.constant.Constant.*;
 
 /**
  * 全局异常处理
@@ -41,9 +41,9 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<DataResult> handleBaseException(BaseException ex) {
+    public ResponseEntity<ResultData> handleBaseException(BaseException ex) {
         log.error(ex.getMessage(), ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DataResult<>(ex.getCode(), ex.getMessage(), null));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResultData<>(ex.getCode(), ex.getMessage(), null));
     }
 
     /**
@@ -53,9 +53,9 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<DataResult> handleAllException(Exception ex) {
+    public ResponseEntity<ResultData> handleAllException(Exception ex) {
         log.error(ex.getMessage(), ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DataResult(ExecStatus.FAIL.getCode(), "系统繁忙，请稍后重试！"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResultData(ResultEnum.FAIL.getCode(), "系统繁忙，请稍后重试！"));
     }
 
     /**
@@ -64,9 +64,9 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<DataResult> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+    public ResponseEntity<ResultData> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
         log.error("缺少请求参数", ex);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataResult(ExecStatus.INVALID_PARAM.getCode(), ExecStatus.INVALID_PARAM.getMsg()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultData(ResultEnum.INVALID_PARAM.getCode(), ResultEnum.INVALID_PARAM.getMsg()));
     }
 
     /**
@@ -77,10 +77,10 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(RepeatedSubmitFormException.class)
-    public ResponseEntity<DataResult> handleBindExceptionException(RepeatedSubmitFormException ex,
-                                                                  HttpServletRequest request,
-                                                                  HttpServletResponse response) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataResult(ex.getCode(), ex.getMsg()));
+    public ResponseEntity<ResultData> handleBindExceptionException(RepeatedSubmitFormException ex,
+                                                                   HttpServletRequest request,
+                                                                   HttpServletResponse response) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultData(ex.getCode(), ex.getMsg()));
     }
 
     /**
@@ -91,7 +91,7 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(ValidateException.class)
-    public ResponseEntity<DataResult> handleConstraintViolationException(ValidateException ex,
+    public ResponseEntity<ResultData> handleConstraintViolationException(ValidateException ex,
                                                                          HttpServletRequest request,
                                                                          HttpServletResponse response) {
         //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
@@ -102,7 +102,7 @@ public class ExceptionAdvice {
             //refresh_token放在header中
             response.setHeader(HEAD_REFRESH_TOKEN_FORM, uuid);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataResult<>(ex.getCode(), ex.getMsg(), ex.getErrors()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultData<>(ex.getCode(), ex.getMsg(), ex.getErrors()));
     }
 
     /**
@@ -111,7 +111,7 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(BindException.class)
-    public ResponseEntity<DataResult> handleBindExceptionException(BindException ex,
+    public ResponseEntity<ResultData> handleBindExceptionException(BindException ex,
                                                                    HttpServletRequest request,
                                                                    HttpServletResponse response) {
 
@@ -132,7 +132,7 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<DataResult> handleMethodArgumentException(MethodArgumentNotValidException ex,
+    public ResponseEntity<ResultData> handleMethodArgumentException(MethodArgumentNotValidException ex,
                                                                     HttpServletRequest request,
                                                                     HttpServletResponse response) {
         //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
@@ -154,9 +154,9 @@ public class ExceptionAdvice {
      * @return
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<DataResult> handleConstraintViolationException(ConstraintViolationException ex,
-                                                                    HttpServletRequest request,
-                                                                    HttpServletResponse response) {
+    public ResponseEntity<ResultData> handleConstraintViolationException(ConstraintViolationException ex,
+                                                                         HttpServletRequest request,
+                                                                         HttpServletResponse response) {
         ValidateException vex = new ValidateException(ex);
         //判断提交表单的请求是否为Ajax请求,若是则生成refresh_token,以替换表单页面的formToken,解决Ajax提交后,验证不通过无法再次提交的问题
         if(WebUtil.isAjaxRequest(request)){
@@ -166,7 +166,7 @@ public class ExceptionAdvice {
             //refresh_token放在header中
             response.setHeader(HEAD_REFRESH_TOKEN_FORM, uuid);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DataResult<>(vex.getCode(), vex.getMsg(), vex.getErrors()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResultData<>(vex.getCode(), vex.getMsg(), vex.getErrors()));
     }
 
     /**
@@ -208,7 +208,7 @@ public class ExceptionAdvice {
      * @param bindingResult
      * @return
      */
-    private DataResult extractMsg(BindingResult bindingResult) {
+    private ResultData extractMsg(BindingResult bindingResult) {
         ValidateException vex = new ValidateException();
         if (bindingResult.hasFieldErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
@@ -217,6 +217,6 @@ public class ExceptionAdvice {
             }
         }
         log.debug("数据验证失败：{}", vex.getMessage());
-        return new DataResult<>(vex.getCode(), vex.getMsg(), vex.getErrors());
+        return new ResultData<>(vex.getCode(), vex.getMsg(), vex.getErrors());
     }
 }

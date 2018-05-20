@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-import static com.good.common.Constant.TOKEN_FORM;
+import static com.good.common.constant.Constant.TOKEN_FORM;
 
 /**
  * 防止表单重复提交拦截器

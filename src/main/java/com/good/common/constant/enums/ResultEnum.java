@@ -1,4 +1,4 @@
-package com.good.common;
+package com.good.common.constant.enums;
 
 import lombok.Getter;
 
@@ -8,7 +8,7 @@ import lombok.Getter;
  * Created by JK on 2017/5/27.
  */
 @Getter
-public enum ExecStatus {
+public enum ResultEnum {
 
     SUCCESS(0, "操作成功"),
     FAIL(-1, "操作失败"),
@@ -68,7 +68,7 @@ public enum ExecStatus {
     private final int code;
     private final String msg;
 
-    ExecStatus(int code, String msg){
+    ResultEnum(int code, String msg){
         this.code = code;
         this.msg = msg;
     }

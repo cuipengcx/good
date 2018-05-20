@@ -139,7 +139,7 @@ spring:
     password: ${password}
 #日志
 logging:
-  config: classpath:logback-good.xml
+  config: classpath:good-manage.xml
   path: D:\\log
 
 #数据库密码加密
@@ -174,7 +174,7 @@ spring:
     cache: true
 #日志
 logging:
-  config: classpath:logback-good.xml
+  config: classpath:good-manage.xml
   path: log
 
 #数据库密码加密
@@ -209,7 +209,7 @@ spring:
     cache: true
 #日志
 logging:
-  config: classpath:logback-good.xml
+  config: classpath:good-manage.xml
   path: log
 
 #数据库密码加密

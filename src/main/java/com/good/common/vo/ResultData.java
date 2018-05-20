@@ -1,4 +1,4 @@
-package com.good.common;
+package com.good.common.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Getter
-public class DataResult<T> {
+public class ResultData<T> {
 
     /**
      * 操作执行情况代码，0-表示成功，其他表示失败
@@ -27,11 +27,11 @@ public class DataResult<T> {
      */
     private final T result;
 
-    public DataResult(int code, String msg){
+    public ResultData(int code, String msg){
         this(code, msg, null);
     }
 
-    public DataResult(int code, String msg, T result) {
+    public ResultData(int code, String msg, T result) {
         this.code = code;
         this.msg = msg;
         this.result = result;

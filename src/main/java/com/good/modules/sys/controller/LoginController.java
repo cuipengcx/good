@@ -2,7 +2,7 @@ package com.good.modules.sys.controller;
 
 
 import cn.hutool.crypto.SecureUtil;
-import com.good.common.Constant;
+import com.good.common.constant.Constant;
 import com.good.common.annotation.OperationLog;
 import com.good.common.base.controller.BaseController;
 import com.good.common.security.token.FormToken;
@@ -25,8 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.good.common.Constant.HEAD_SESSION_STATUS_KEY;
-import static com.good.common.Constant.HEAD_SESSION_STATUS_VALUE;
+import static com.good.common.constant.Constant.HEAD_SESSION_STATUS_KEY;
+import static com.good.common.constant.Constant.HEAD_SESSION_STATUS_VALUE;
 
 /**
  * 登录

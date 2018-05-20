@@ -2,8 +2,8 @@ package com.good.modules.sys.shiro.filter;
 
 import cn.hutool.http.HttpUtil;
 import com.feilong.core.util.CollectionsUtil;
-import com.good.common.DataResult;
-import com.good.common.ExecStatus;
+import com.good.common.vo.ResultData;
+import com.good.common.constant.enums.ResultEnum;
 import com.good.common.util.ShiroUtils;
 import com.good.common.util.WebUtil;
 import com.good.modules.sys.vo.LoginSession;
@@ -155,7 +155,7 @@ public class KickoutSessionControlFilter extends AccessControlFilter {
         if (Boolean.valueOf(true).equals(session.getAttribute("kickout"))) {
             //Ajax请求
             if(WebUtil.isAjaxRequest(request)){
-                DataResult result = new DataResult(ExecStatus.KICK_OUT_TIPS.getCode(), ExecStatus.KICK_OUT_TIPS.getMsg());
+                ResultData result = new ResultData(ResultEnum.KICK_OUT_TIPS.getCode(), ResultEnum.KICK_OUT_TIPS.getMsg());
 
                 WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;

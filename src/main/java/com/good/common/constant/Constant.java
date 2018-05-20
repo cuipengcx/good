@@ -1,4 +1,4 @@
-package com.good.common;
+package com.good.common.constant;
 
 /**
  *

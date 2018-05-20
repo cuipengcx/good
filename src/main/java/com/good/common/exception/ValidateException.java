@@ -1,6 +1,6 @@
 package com.good.common.exception;
 
-import com.good.common.ExecStatus;
+import com.good.common.constant.enums.ResultEnum;
 import lombok.Getter;
 
 import javax.validation.ConstraintViolation;
@@ -22,15 +22,15 @@ public class ValidateException extends BaseException {
     private final Map<String, String> errors = new HashMap<>();
 
     public ValidateException() {
-        this(ExecStatus.VALIDATION_FAIL);
+        this(ResultEnum.VALIDATION_FAIL);
     }
 
-    public ValidateException(ExecStatus execStatus) {
-        this(execStatus.getCode(), execStatus.getMsg());
+    public ValidateException(ResultEnum resultEnum) {
+        this(resultEnum.getCode(), resultEnum.getMsg());
     }
 
     public ValidateException(String msg) {
-        super(ExecStatus.VALIDATION_FAIL.getCode(), msg);
+        super(ResultEnum.VALIDATION_FAIL.getCode(), msg);
     }
 
     public ValidateException(int code, String msg) {
@@ -38,7 +38,7 @@ public class ValidateException extends BaseException {
     }
 
     public ValidateException(ConstraintViolationException ex) {
-        super(ExecStatus.VALIDATION_FAIL.getCode(), ExecStatus.VALIDATION_FAIL.getMsg());
+        super(ResultEnum.VALIDATION_FAIL.getCode(), ResultEnum.VALIDATION_FAIL.getMsg());
 
         this.errors.putAll(toMap(ex.getConstraintViolations()));
 
@@ -50,7 +50,7 @@ public class ValidateException extends BaseException {
     }
 
     public <T> ValidateException(Set<ConstraintViolation<T>> violations) {
-        super(ExecStatus.VALIDATION_FAIL.getCode(), ExecStatus.VALIDATION_FAIL.getMsg());
+        super(ResultEnum.VALIDATION_FAIL.getCode(), ResultEnum.VALIDATION_FAIL.getMsg());
         this.errors.putAll(toErrorMap(violations));
     }
 

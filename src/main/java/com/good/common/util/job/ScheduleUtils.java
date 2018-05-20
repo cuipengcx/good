@@ -1,6 +1,6 @@
 package com.good.common.util.job;
 
-import com.good.common.Constant.JobStatus;
+import com.good.common.constant.Constant.JobStatus;
 import com.good.common.exception.BaseException;
 import com.good.config.job.AsyncJobFactory;
 import com.good.config.job.SyncJobFactory;

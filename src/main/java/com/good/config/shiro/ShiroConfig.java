@@ -1,7 +1,7 @@
 package com.good.config.shiro;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
-import com.good.common.Constant;
+import com.good.common.constant.Constant;
 import com.good.modules.sys.shiro.AuthenticationRealm;
 import com.good.modules.sys.shiro.filter.KickoutSessionControlFilter;
 import com.good.modules.sys.shiro.filter.LoginFilter;

@@ -3,7 +3,7 @@ package com.good.modules.job.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.good.common.Constant.JobStatus;
+import com.good.common.constant.Constant.JobStatus;
 import com.good.common.util.ShiroUtils;
 import com.good.common.util.job.ScheduleUtils;
 import com.good.modules.job.mapper.ScheduleJobMapper;

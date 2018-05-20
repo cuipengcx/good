@@ -1,6 +1,6 @@
 package com.good.common.exception;
 
-import com.good.common.ExecStatus;
+import com.good.common.constant.enums.ResultEnum;
 
 /**
  * 表单重复提交异常类
@@ -12,7 +12,7 @@ public class RepeatedSubmitFormException extends BaseException{
     private static final long serialVersionUID = 5341547962077784610L;
 
     public RepeatedSubmitFormException(){
-        this(ExecStatus.FORM_REP_REPEATED_SUBMIT);
+        this(ResultEnum.FORM_REP_REPEATED_SUBMIT);
     }
 
     public RepeatedSubmitFormException(String msg) {
@@ -27,7 +27,7 @@ public class RepeatedSubmitFormException extends BaseException{
         super(code, msg, e);
     }
 
-    public RepeatedSubmitFormException(ExecStatus status){
+    public RepeatedSubmitFormException(ResultEnum status){
         super(status.getCode(), status.getMsg());
     }
 }
