@@ -137,6 +137,19 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/good_manage?useUnicode=true&characterEncoding=utf-8&useSSL=true&autoReconnect=true&allowMultiQueries=true
     username: root
     password: ${password}
+  mail:
+     #企业邮箱
+#    host: smtp.exmail.qq.com
+    #个人邮箱
+    host: smtp.qq.com
+    port: 465
+    username: 228727120@qq.com
+    password: niiocskrvjvkcahh
+    properties:
+      mail.smtp.auth: true
+      mail.starttls.enable: true
+      mail.starttls.required: true
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
 #日志
 logging:
   config: classpath:good-manage.xml
