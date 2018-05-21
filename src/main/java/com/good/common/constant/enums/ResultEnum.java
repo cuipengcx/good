@@ -11,7 +11,7 @@ import lombok.Getter;
 public enum ResultEnum {
 
     SUCCESS(0, "操作成功"),
-    FAIL(-1, "操作失败"),
+    FAIL(-1, "系统繁忙，请稍后重试！"),
     //-----参数问题
     INVALID_PARAM(1000, "参数不合法"),
     //-----数据验证问题

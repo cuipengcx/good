@@ -3,10 +3,10 @@ package com.good.modules.sys.shiro.filter;
 import cn.hutool.core.util.StrUtil;
 import com.feilong.core.DatePattern;
 import com.good.common.constant.Constant;
-import com.good.common.vo.ResultData;
 import com.good.common.constant.enums.ResultEnum;
 import com.good.common.util.EhCacheUtils;
 import com.good.common.util.WebUtil;
+import com.good.common.vo.Response;
 import com.good.modules.sys.vo.LoginSession;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -57,7 +57,7 @@ public class LoginFilter extends AccessControlFilter {
             //当tc为空时，询问是否踢出，否则放行KickoutSessionControlFilter会进行拦截进行踢出操作
             if(WebUtil.isAjaxRequest(request) &&  StrUtil.isEmpty(tc)){
                 LoginSession loginSession = deque.peekLast();
-                ResultData result = new ResultData(ResultEnum.KICK_OUT_ASK.getCode(), StrUtil.format(ResultEnum.KICK_OUT_ASK.getMsg(), loginSession.getLoginIP(), loginSession.getLoginTime().format(DateTimeFormatter.ofPattern(DatePattern.CHINESE_COMMON_DATE_AND_TIME))));
+                Response result = new Response(ResultEnum.KICK_OUT_ASK.getCode(), StrUtil.format(ResultEnum.KICK_OUT_ASK.getMsg(), loginSession.getLoginIP(), loginSession.getLoginTime().format(DateTimeFormatter.ofPattern(DatePattern.CHINESE_COMMON_DATE_AND_TIME))));
                 WebUtil.writeJson(response, result, HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
             }

@@ -7,7 +7,7 @@ import com.good.common.constant.enums.ResultEnum;
  * @author cuiP
  * Created by JK on 2017/5/27.
  */
-public class RepeatedSubmitFormException extends BaseException{
+public class RepeatedSubmitFormException extends BaseException {
 
     private static final long serialVersionUID = 5341547962077784610L;
 
@@ -27,7 +27,7 @@ public class RepeatedSubmitFormException extends BaseException{
         super(code, msg, e);
     }
 
-    public RepeatedSubmitFormException(ResultEnum status){
-        super(status.getCode(), status.getMsg());
+    public RepeatedSubmitFormException(ResultEnum resultEnum){
+        super(resultEnum.getCode(), resultEnum.getMsg());
     }
 }

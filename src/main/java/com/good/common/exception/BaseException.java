@@ -1,5 +1,6 @@
 package com.good.common.exception;
 
+import com.good.common.constant.enums.ResultEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,12 +9,18 @@ import lombok.EqualsAndHashCode;
  * Created by JK on 2017/4/27.
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class BaseException extends RuntimeException{
 
     private static final long serialVersionUID = -9191765277576504662L;
     private int code = 500;
     private String msg;
+
+    public BaseException(ResultEnum resultEnum) {
+        super(resultEnum.getMsg());
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
+    }
 
     public BaseException(String msg) {
         super(msg);
